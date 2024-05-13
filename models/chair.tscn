@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl10kxpuc6my4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wewq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u2gvj"]
+size = Vector3(1, 1.87476, 1)
+
+[node name="Chair" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0697012, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_0wewq")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -3.04674e-09, 1, 0, -0.0697012, -4.37114e-08, 0, 0.467943, -0.465075)
+mesh = SubResource("BoxMesh_0wewq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, -0.336962, -0.48338, 0.403371)
+mesh = SubResource("BoxMesh_0wewq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, -0.336962, -0.48338, -0.364796)
+mesh = SubResource("BoxMesh_0wewq")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, 0.378221, -0.48338, -0.364796)
+mesh = SubResource("BoxMesh_0wewq")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, 0.378221, -0.48338, 0.434305)
+mesh = SubResource("BoxMesh_0wewq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_u2gvj")

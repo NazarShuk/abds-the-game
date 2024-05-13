@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://btj7odxogilms"]
+
+[ext_resource type="Texture2D" uid="uid://dcouwnrkmlr4s" path="res://vending machine.png" id="1_asg5w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_boo68"]
+albedo_texture = ExtResource("1_asg5w")
+uv1_scale = Vector3(3.145, 2, 1)
+uv1_offset = Vector3(0.91, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_17ab0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6xbun"]
+size = Vector3(1.38281, 2.80127, 1)
+
+[node name="VendingMachine" type="StaticBody3D" groups=["vending_machine"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.810454, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["vending_machine"]]
+transform = Transform3D(1.405, 0, 0, 0, 2.81, 0, 0, 0, 1, 0, 0.597213, 0)
+material_override = SubResource("StandardMaterial3D_boo68")
+mesh = SubResource("BoxMesh_17ab0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["vending_machine"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.597412, 0)
+shape = SubResource("BoxShape3D_6xbun")

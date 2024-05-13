@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://bylupyln8p7m8"]
+
+[ext_resource type="Script" path="res://evil leahy.gd" id="1_o0g30"]
+[ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
+[ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="3_06kop"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmd6h"]
+albedo_texture = ExtResource("1_xr5qm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_vx4ir"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmbo2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uh2wh"]
+size = Vector3(0.171875, 0.865234, 0.0390625)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_73hak"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AudioStreamPlayer3D:pitch_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("AudioStreamPlayer3D:playing")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rkeq3"]
+
+[node name="EvilLeahy" type="CharacterBody3D" groups=["enemies"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_o0g30")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_tmd6h")
+mesh = SubResource("QuadMesh_vx4ir")
+surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_tmd6h")
+mesh = SubResource("QuadMesh_vx4ir")
+surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_uh2wh")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_73hak")
+
+[node name="EvilLeahy" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EvilLeahy"]
+shape = SubResource("BoxShape3D_rkeq3")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_06kop")
+bus = &"Dialogs"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

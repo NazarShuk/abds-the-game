@@ -1,0 +1,229 @@
+[gd_scene load_steps=24 format=3 uid="uid://dmiwtnuhovfv5"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
+[ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
+[ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="3_jix2i"]
+[ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
+[ext_resource type="AudioStream" uid="uid://4ug2jt2muw6i" path="res://walk.mp3" id="5_muu2l"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="6_l1x2u"]
+[ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="7_mv5hh"]
+[ext_resource type="AudioStream" uid="uid://dxah3ehwibqt4" path="res://raawr.mp3" id="8_0po1s"]
+[ext_resource type="Texture2D" uid="uid://cc30vv6mhisgy" path="res://fruit snacks.png" id="9_2sbry"]
+[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="10_s1ndh"]
+[ext_resource type="Texture2D" uid="uid://clg1lq8iq3x2e" path="res://square pizza.png" id="11_hgbq5"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vlg3x"]
+albedo_texture = ExtResource("2_q3hoo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w88l"]
+albedo_texture = ExtResource("3_jix2i")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tu1hv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ndfqc"]
+albedo_texture = ExtResource("3_rutws")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8c5nr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AudioStreamPlayer3D:volume_db")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("nametag:text")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:visible")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+properties/5/path = NodePath("Hand/FruitSnacks:visible")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath("Hand/CloroxWipes:visible")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+properties/7/path = NodePath("Hand/Pizza:visible")
+properties/7/spawn = true
+properties/7/replication_mode = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2uvd1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oicg1"]
+bg_color = Color(0.2484, 0.2484, 0.2484, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rimgt"]
+albedo_texture = ExtResource("9_2sbry")
+
+[sub_resource type="QuadMesh" id="QuadMesh_qgndq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pc7n3"]
+albedo_texture = ExtResource("10_s1ndh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqvka"]
+albedo_texture = ExtResource("11_hgbq5")
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+script = ExtResource("1_lrwcd")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43934, -0.0894957)
+target_position = Vector3(0, 0, -2.5)
+
+[node name="visual_body" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="visual_body"]
+transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_orlgu")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_vlg3x")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="visual_body"]
+transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_orlgu")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3w88l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_tu1hv")
+
+[node name="Mouth" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.185531, 0, 5.96046e-08, 0, 0.132844, 0, -1.10585e-08, 0, -1, 0, 0.376155, -0.00135729)
+mesh = SubResource("QuadMesh_orlgu")
+surface_material_override/0 = SubResource("StandardMaterial3D_ndfqc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.502873, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8c5nr")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_tu1hv")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_muu2l")
+autoplay = true
+
+[node name="nametag" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.93642, 0)
+text = "name"
+font = ExtResource("6_l1x2u")
+font_size = 41
+outline_size = 7
+
+[node name="Stamina" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="Stamina_timeout" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ReviveTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 30
+visible = false
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 136.0
+offset_top = -23.0
+offset_right = -136.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_styles/background = SubResource("StyleBoxFlat_2uvd1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_oicg1")
+max_value = 50.0
+
+[node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.498039)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Died thing"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 81.0
+offset_bottom = 187.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 90
+text = "jumpscare"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Died thing"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = -127.0
+offset_right = 298.0
+offset_bottom = 273.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_mv5hh")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+stream = ExtResource("8_0po1s")
+bus = &"Non Mute"
+
+[node name="Hand" type="Node3D" parent="."]
+transform = Transform3D(0.262507, 0.127587, -0.40597, 0.124941, 0.432868, 0.21683, 0.406792, -0.215283, 0.19538, 0.513, 0.259, -0.78)
+
+[node name="FruitSnacks" type="MeshInstance3D" parent="Hand"]
+visible = false
+material_override = SubResource("StandardMaterial3D_rimgt")
+mesh = SubResource("QuadMesh_qgndq")
+
+[node name="CloroxWipes" type="MeshInstance3D" parent="Hand"]
+visible = false
+material_override = SubResource("StandardMaterial3D_pc7n3")
+mesh = SubResource("QuadMesh_qgndq")
+
+[node name="Pizza" type="MeshInstance3D" parent="Hand"]
+visible = false
+material_override = SubResource("StandardMaterial3D_oqvka")
+mesh = SubResource("QuadMesh_qgndq")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Stamina_timeout" to="." method="_on_stamina_timeout_timeout"]
+[connection signal="timeout" from="ReviveTimer" to="." method="_on_revive_timer_timeout"]
