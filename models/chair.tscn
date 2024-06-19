@@ -1,35 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://cl10kxpuc6my4"]
+[gd_scene load_steps=6 format=3 uid="uid://ict30wsv50m1"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_0wewq"]
+[ext_resource type="Texture2D" uid="uid://btfblce1m8uwh" path="res://models/chair.png" id="1_drk32"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u2gvj"]
-size = Vector3(1, 1.87476, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lo8b5"]
+transparency = 1
+albedo_texture = ExtResource("1_drk32")
 
-[node name="Chair" type="StaticBody3D"]
+[sub_resource type="QuadMesh" id="QuadMesh_wmr4g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_syuye"]
+transparency = 2
+alpha_scissor_threshold = 0.0
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_drk32")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_41flg"]
+
+[node name="Chair" type="StaticBody3D" groups=["localface"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.0697012, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_0wewq")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -3.04674e-09, 1, 0, -0.0697012, -4.37114e-08, 0, 0.467943, -0.465075)
-mesh = SubResource("BoxMesh_0wewq")
+material_override = SubResource("StandardMaterial3D_lo8b5")
+mesh = SubResource("QuadMesh_wmr4g")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, -0.336962, -0.48338, 0.403371)
-mesh = SubResource("BoxMesh_0wewq")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, -0.336962, -0.48338, -0.364796)
-mesh = SubResource("BoxMesh_0wewq")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, 0.378221, -0.48338, -0.364796)
-mesh = SubResource("BoxMesh_0wewq")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.07, 0, 0, 0, 0.998054, 0, 0, 0, 0.07, 0.378221, -0.48338, 0.434305)
-mesh = SubResource("BoxMesh_0wewq")
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_lo8b5")
+mesh = SubResource("QuadMesh_wmr4g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_u2gvj")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.316241, 0, 0, 0, 1, 0, 0, 0, 0.0379537, 0, 100, 0)
+material_override = SubResource("StandardMaterial3D_syuye")
+mesh = SubResource("PlaneMesh_41flg")

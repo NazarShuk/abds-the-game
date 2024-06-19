@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpyou6w048r5m"]
+
+[ext_resource type="Script" path="res://azzu.gd" id="1_s00pa"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="2_q42rl"]
+[ext_resource type="AudioStream" uid="uid://bwlexvmpwptwm" path="res://download_01.mp3" id="3_r52kj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5qd5"]
+transparency = 1
+albedo_texture = ExtResource("2_q42rl")
+
+[sub_resource type="QuadMesh" id="QuadMesh_dmors"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8gy6y"]
+size = Vector3(0.163818, 1, 0.0349121)
+
+[node name="Mr_Azzu" type="CharacterBody3D" groups=["fox"]]
+transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
+script = ExtResource("1_s00pa")
+
+[node name="Mr Fox2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_p5qd5")
+mesh = SubResource("QuadMesh_dmors")
+skeleton = NodePath("../..")
+
+[node name="Mr Fox3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -1.82972e-14, 0, 1, 0, 1.82972e-14, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_p5qd5")
+mesh = SubResource("QuadMesh_dmors")
+skeleton = NodePath("../..")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_r52kj")
+volume_db = 8.602
+autoplay = true
+max_distance = 15.0
+bus = &"Dialogs"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_8gy6y")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

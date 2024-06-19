@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg3ph3qf7gp3h"]
+
+[ext_resource type="Texture2D" uid="uid://bv7cybujaqr5" path="res://models/cafeteriaTable.png" id="1_cg0i4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x4whs"]
+transparency = 1
+albedo_texture = ExtResource("1_cg0i4")
+
+[sub_resource type="QuadMesh" id="QuadMesh_5o3cc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_drsn7"]
+albedo_color = Color(1, 0, 1, 1)
+albedo_texture = ExtResource("1_cg0i4")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wp1n8"]
+
+[node name="Cafeteriatable" type="StaticBody3D" groups=["localface"]]
+transform = Transform3D(3.5, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_x4whs")
+mesh = SubResource("QuadMesh_5o3cc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_x4whs")
+mesh = SubResource("QuadMesh_5o3cc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.489977, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+material_override = SubResource("StandardMaterial3D_drsn7")
+mesh = SubResource("PlaneMesh_wp1n8")

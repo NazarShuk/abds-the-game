@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bylupyln8p7m8"]
+[gd_scene load_steps=12 format=3 uid="uid://bylupyln8p7m8"]
 
 [ext_resource type="Script" path="res://evil leahy.gd" id="1_o0g30"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
@@ -12,7 +12,7 @@ albedo_texture = ExtResource("1_xr5qm")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmbo2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uh2wh"]
-size = Vector3(0.171875, 0.865234, 0.0390625)
+size = Vector3(0.0986328, 0.865234, 0.0390625)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_73hak"]
 properties/0/path = NodePath(".:position")
@@ -29,6 +29,11 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rkeq3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7s3wy"]
+albedo_texture = ExtResource("1_xr5qm")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ijt1y"]
 
 [node name="EvilLeahy" type="CharacterBody3D" groups=["enemies"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -60,10 +65,17 @@ shape = SubResource("BoxShape3D_rkeq3")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_06kop")
+volume_db = -11.61
 bus = &"Dialogs"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.5, 0)
+material_override = SubResource("StandardMaterial3D_7s3wy")
+mesh = SubResource("PlaneMesh_ijt1y")
+
+[connection signal="area_entered" from="EvilLeahy" to="." method="_on_evil_leahy_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7kb58x7l8qps"]
+[gd_scene load_steps=12 format=3 uid="uid://b7kb58x7l8qps"]
 
 [ext_resource type="Script" path="res://end.gd" id="1_5d8na"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_3ibbu"]
-[ext_resource type="AudioStream" uid="uid://vbrevrflftjl" path="res://sad.mp3" id="3_t060h"]
+[ext_resource type="VideoStream" path="res://azzu_angry.ogv" id="2_sha3l"]
+[ext_resource type="AudioStream" uid="uid://cmxhw4erdw53v" path="res://Exhilarate (128kbps)_01.mp3" id="3_g3t6j"]
+[ext_resource type="Texture2D" uid="uid://njbmfumje8ks" path="res://deadAzzu.png" id="4_l4glg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p4lce"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -19,8 +21,97 @@ sky = SubResource("Sky_ce7my")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="End" type="Node3D"]
+[sub_resource type="Animation" id="Animation_046hh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1064, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1064, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_do4mw"]
+resource_name = "bro died"
+length = 30.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 6, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2000, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1064, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 6, 8, 12, 14),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2000, 0), Vector2(1064, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1064, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 12, 14, 18, 20),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2000, 0), Vector2(1064, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1064, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wyato"]
+_data = {
+"RESET": SubResource("Animation_046hh"),
+"bro died": SubResource("Animation_do4mw")
+}
+
+[node name="End" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
 script = ExtResource("1_5d8na")
+died_text = NodePath("CanvasLayer/Control/Label2")
+collected_text = NodePath("CanvasLayer/Control/Label3")
+achievement_name = "bad_ending"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -30,6 +121,31 @@ shadow_enabled = true
 environment = SubResource("Environment_5jswd")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -145.5
+offset_right = 250.0
+offset_bottom = 145.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_l4glg")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_sha3l")
+autoplay = true
+expand = true
+bus = &"Dialogs"
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -43,32 +159,88 @@ offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control"]
+libraries = {
+"": SubResource("AnimationLibrary_wyato")
+}
+autoplay = "bro died"
+
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -10.0
-offset_bottom = 10.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 274.0
+offset_bottom = 135.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_3ibbu")
-theme_override_font_sizes/font_size = 64
-text = "Leahy has not been appeased."
+theme_override_font_sizes/font_size = 56
+text = "Bad ending
+L bozo"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -440.0
+offset_top = -66.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 0.439216)
+theme_override_fonts/font = ExtResource("2_3ibbu")
+theme_override_font_sizes/font_size = 31
+text = "press ESC to skip"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 1064.0
+offset_right = 1598.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_3ibbu")
+theme_override_font_sizes/font_size = 56
+text = "you died bla bla times"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 1064.0
+offset_right = 1561.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_3ibbu")
+theme_override_font_sizes/font_size = 56
+text = "and coolected blalbk"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Camera3D" type="Camera3D" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_t060h")
-volume_db = -3.0
+stream = ExtResource("3_g3t6j")
+volume_db = -10.0
 autoplay = true
+bus = &"Music"
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 30.0
 one_shot = true
 autostart = true
 

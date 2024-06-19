@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://40h3xkvclt2r"]
+
+[ext_resource type="Texture2D" uid="uid://cyjrx1jiupvks" path="res://door1.png" id="1_u3j55"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7nq2n"]
+albedo_texture = ExtResource("1_u3j55")
+
+[sub_resource type="QuadMesh" id="QuadMesh_w5axy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccax6"]
+albedo_texture = ExtResource("1_u3j55")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ymgma"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_icgk0"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cs6jd"]
+
+[node name="Door" type="MeshInstance3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_7nq2n")
+mesh = SubResource("QuadMesh_w5axy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ccax6")
+mesh = SubResource("QuadMesh_ymgma")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.50254, 0, 0, 0, 1, 0, 0, 0, 0.0846202, 0, 7.51651, 0)
+material_override = SubResource("StandardMaterial3D_icgk0")
+mesh = SubResource("PlaneMesh_cs6jd")

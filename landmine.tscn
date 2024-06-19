@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfj2dgr8c3bpt"]
+
+[ext_resource type="Texture2D" uid="uid://dob2ip0gck8mc" path="res://landmine.png" id="1_8nycc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2g3b"]
+transparency = 1
+albedo_texture = ExtResource("1_8nycc")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_08p7a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_psole"]
+size = Vector3(2.87207, 2.48438, 2.52051)
+
+[node name="Landmine" type="Area3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0232404, 0)
+material_override = SubResource("StandardMaterial3D_a2g3b")
+mesh = SubResource("PlaneMesh_08p7a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_psole")

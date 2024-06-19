@@ -1,13 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://cuernp1ti1r4n"]
 
-[ext_resource type="Texture2D" uid="uid://dqgcuh0d8ivrj" path="res://models/walls.png" id="1_howwr"]
+[ext_resource type="Texture2D" uid="uid://dvgm7yqf1y040" path="res://models/walls2.png" id="1_cppt1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2eko5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cd18f"]
 albedo_color = Color(0.597177, 0.597176, 0.597176, 1)
-albedo_texture = ExtResource("1_howwr")
-uv1_scale = Vector3(62.77, 8.01, 62.77)
+albedo_texture = ExtResource("1_cppt1")
+uv1_scale = Vector3(0.52, 0.52, 0.52)
+uv1_triplanar = true
+uv1_world_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jce6g"]
 size = Vector3(4.7373, 2.96039, 0.255859)

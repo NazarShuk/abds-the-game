@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://djrcrwy28i8uv"]
+
+[ext_resource type="Texture2D" uid="uid://djifhsxpx582c" path="res://models/locker.png" id="1_txwvd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tav8r"]
+albedo_texture = ExtResource("1_txwvd")
+uv1_scale = Vector3(1, 0.5, 1)
+uv1_offset = Vector3(0.5, 0, 0)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[node name="Locker2" type="CSGBox3D"]
+material_override = SubResource("StandardMaterial3D_tav8r")
+use_collision = true
+size = Vector3(1, 2, 1)

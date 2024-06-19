@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://584brjd06a7"]
+
+[ext_resource type="Texture2D" uid="uid://djifhsxpx582c" path="res://models/locker.png" id="1_scxq1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcn4f"]
+albedo_texture = ExtResource("1_scxq1")
+
+[sub_resource type="QuadMesh" id="QuadMesh_i8q2r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1cmsi"]
+albedo_color = Color(0.0431373, 0.176471, 0.498039, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_quxs1"]
+
+[node name="Locker" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_fcn4f")
+mesh = SubResource("QuadMesh_i8q2r")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.496834, 0, 0, 0, 1, 0, 0, 0, 0.0290681, 0, 100, 0)
+material_override = SubResource("StandardMaterial3D_1cmsi")
+mesh = SubResource("PlaneMesh_quxs1")

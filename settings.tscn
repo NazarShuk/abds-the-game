@@ -1,0 +1,142 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5rnn1lgesysr"]
+
+[ext_resource type="AudioStream" uid="uid://bypabovlsrkor" path="res://The Builder (128kbps)_01.mp3" id="1_3ydfj"]
+[ext_resource type="Script" path="res://settings.gd" id="1_3yio5"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_rc34d"]
+[ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="4_u1oj5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ongwm"]
+texture = ExtResource("4_u1oj5")
+
+[node name="Settings" type="Node2D"]
+script = ExtResource("1_3yio5")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_3ydfj")
+autoplay = true
+bus = &"Music"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 98.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rc34d")
+theme_override_font_sizes/font_size = 64
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -53.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rc34d")
+theme_override_font_sizes/font_size = 24
+text = "Music Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.0
+offset_top = -18.5
+offset_right = 182.0
+offset_bottom = 18.5
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Label3" type="Label" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 10.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rc34d")
+theme_override_font_sizes/font_size = 24
+text = "SFX Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SfxSlider" type="HSlider" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.0
+offset_top = 44.5
+offset_right = 182.0
+offset_bottom = 81.5
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -186.0
+offset_top = 86.0
+offset_right = 186.0
+offset_bottom = 117.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back to the menu"
+
+[node name="Button2" type="Button" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 70.0
+offset_right = 176.0
+offset_bottom = 243.0
+grow_horizontal = 0
+rotation = -2.35619
+theme_override_styles/normal = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/focus = SubResource("StyleBoxTexture_ongwm")
+
+[node name="goofballTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="value_changed" from="CanvasLayer/MusicSlider" to="." method="_on_music_slider_changed"]
+[connection signal="value_changed" from="CanvasLayer/SfxSlider" to="." method="_on_sfx_slider_changed"]
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="timeout" from="goofballTimer" to="." method="_on_goofball_timer_timeout"]

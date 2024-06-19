@@ -1,0 +1,95 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvkj7j0buxl2p"]
+
+[ext_resource type="Script" path="res://end.gd" id="1_x7t01"]
+[ext_resource type="VideoStream" path="res://Fanmade_Ending.ogv" id="2_lh8ee"]
+[ext_resource type="AudioStream" uid="uid://dnellmaxk7kd4" path="res://Fanmade_Ending_01.mp3" id="3_by7vm"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="4_t1lvy"]
+
+[node name="huh_ending" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
+script = ExtResource("1_x7t01")
+died_text = NodePath("CanvasLayer/Label2")
+collected_text = NodePath("CanvasLayer/Label3")
+achievement_name = "freaky_ending"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_lh8ee")
+volume_db = -80.0
+autoplay = true
+expand = true
+bus = &"Dialogs"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer"]
+stream = ExtResource("3_by7vm")
+autoplay = true
+bus = &"Music"
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -308.0
+offset_top = 62.0
+offset_right = 308.0
+offset_bottom = 204.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = ExtResource("4_t1lvy")
+theme_override_font_sizes/font_size = 121
+text = "Impossible ending"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -308.0
+offset_top = 62.0
+offset_right = 308.0
+offset_bottom = 204.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_t1lvy")
+theme_override_font_sizes/font_size = 60
+text = "Perfect run"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -308.0
+offset_top = 165.0
+offset_right = 308.0
+offset_bottom = 307.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_t1lvy")
+theme_override_font_sizes/font_size = 60
+text = "Perfect run"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 46.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

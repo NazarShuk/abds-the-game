@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://pt6p4fe3xury"]
+
+[ext_resource type="Script" path="res://models/blackboard.gd" id="1_86xi5"]
+[ext_resource type="Texture2D" uid="uid://vvklw85x26dt" path="res://models/blackboard/blackboard-_0009_Layer-1.png" id="1_iejud"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2mi58"]
+transparency = 1
+albedo_texture = ExtResource("1_iejud")
+
+[sub_resource type="QuadMesh" id="QuadMesh_xgop2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vxig"]
+transparency = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cc7mg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vh8cn"]
+albedo_texture = ExtResource("1_iejud")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_75cyf"]
+
+[node name="Blackboard" type="StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_86xi5")
+
+[node name="Board" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_2mi58")
+mesh = SubResource("QuadMesh_xgop2")
+
+[node name="Text1" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.00766897)
+mesh = SubResource("QuadMesh_xgop2")
+surface_material_override/0 = SubResource("StandardMaterial3D_2vxig")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_cc7mg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 100, 0)
+material_override = SubResource("StandardMaterial3D_vh8cn")
+mesh = SubResource("PlaneMesh_75cyf")

@@ -40,7 +40,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Meshes:rotation")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 4, 8),
@@ -68,6 +68,7 @@ _data = {
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1kx2u"]
+transparency = 1
 albedo_texture = ExtResource("1_ppkux")
 
 [sub_resource type="QuadMesh" id="QuadMesh_drc1m"]
