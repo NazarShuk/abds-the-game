@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=47 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://clg1lq8iq3x2e" path="res://square pizza.png" id="11_hgbq5"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
 [ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
+[ext_resource type="Texture2D" uid="uid://bkmj8ey1h4mji" path="res://rubber-duck_0 (1).jpg" id="20_l0oek"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -113,6 +114,12 @@ albedo_texture = ExtResource("14_sfn8x")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nd3oy"]
 albedo_texture = ExtResource("14_sfn8x")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_of0xi"]
+albedo_texture = ExtResource("20_l0oek")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rfx4x"]
+albedo_texture = ExtResource("20_l0oek")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwpal"]
 albedo_texture = ExtResource("2_q3hoo")
@@ -490,6 +497,17 @@ mesh = SubResource("QuadMesh_qgndq")
 [node name="Pizza2" type="MeshInstance3D" parent="Hand/MtnDew"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_nd3oy")
+mesh = SubResource("QuadMesh_qgndq")
+skeleton = NodePath("../..")
+
+[node name="Duck" type="MeshInstance3D" parent="Hand"]
+visible = false
+material_override = SubResource("StandardMaterial3D_of0xi")
+mesh = SubResource("QuadMesh_qgndq")
+
+[node name="Pizza2" type="MeshInstance3D" parent="Hand/Duck"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_rfx4x")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 

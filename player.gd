@@ -55,7 +55,6 @@ func _enter_tree():
 		$CanvasLayer.show()
 		get_cur_item()
 		get_parent().hide_menu()
-		pick_item(2)
 		#$Local.stream_mix_rate = float(current_sample_rate)
 		
 
@@ -184,6 +183,11 @@ func _physics_process(delta):
 								if dist < 15:
 									pick_item(-1)
 									get_parent().mr_fox_collect.rpc()
+									
+						elif get_cur_item() == 4:
+							# TODO: rubber ducky pacer test
+							squeak.rpc()
+							pick_item(-1)
 
 		move_and_slide()
 
@@ -323,7 +327,7 @@ func get_cur_item():
 
 @rpc("any_peer", "call_local")
 func choose_item():
-	pick_item(randi_range(0, 3))
+	pick_item(randi_range(0, $Hand.get_children().size() - 1))
 
 
 func _on_fruit_snacks_timer_timeout():
@@ -522,3 +526,13 @@ var can_debug = true
 
 func _on_debug_timeout():
 	can_debug = true
+
+@rpc("any_peer","call_local")
+func squeak():
+	var sp = AudioStreamPlayer3D.new()
+
+	sp.stream = load("res://squeak.mp3")
+	sp.bus = "Dialogs"
+	get_parent().add_child(sp)
+	sp.global_position = global_position
+	sp.play()

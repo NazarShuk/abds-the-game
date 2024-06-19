@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=42 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -12,6 +12,7 @@
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
 [ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="10_5h2pt"]
 [ext_resource type="AudioStream" uid="uid://csfubc70y8sea" path="res://models/ggrrrrrrrr.mp3" id="10_o5q8n"]
+[ext_resource type="AudioStream" uid="uid://cenmtdok0uof6" path="res://pacer_test_full.mp3" id="11_latpc"]
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
 [ext_resource type="PackedScene" uid="uid://2ynl24tkkvdp" path="res://school.tscn" id="17_3oefh"]
@@ -716,6 +717,10 @@ bus = &"Dialogs"
 [node name="grrrrrr" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_o5q8n")
 bus = &"Dialogs"
+
+[node name="PacerTest" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_latpc")
+bus = &"Music"
 
 [node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.88883, 1.42582, -97.8742)
