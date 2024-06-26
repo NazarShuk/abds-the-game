@@ -21,7 +21,7 @@ func _physics_process(_delta):
 	
 	for clorox in cloroxes:
 		var distance = global_position.distance_to(clorox.global_position)
-		print("Azzu: distance to clorox " + str(distance))
+		#print("Azzu: distance to clorox " + str(distance))
 		
 		if distance < 5:
 			if multiplayer.is_server():

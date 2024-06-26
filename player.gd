@@ -31,12 +31,6 @@ var revive_poses = [Vector3(0, 1.2, -10), Vector3(-18, 1.2, -24), Vector3(-26, 1
 
 var is_suspended = false
 
-var current_sample_rate: int = 48000
-var loopback_enabled: bool = false
-var is_voice_toggled: bool = false
-var local_playback: AudioStreamGeneratorPlayback = null
-var local_voice_buffer: PackedByteArray = PackedByteArray()
-var use_optimal_sample_rate: bool = false
 
 var is_on_top = false
 var on_top_counter = 0
@@ -46,6 +40,7 @@ var on_top_counter = 0
 @onready var impossible = $visual_body/Impossible
 @onready var freaky = $visual_body/Freaky
 
+var can_get_item = true
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -84,16 +79,14 @@ func _physics_process(delta):
 			impossible.visible = false
 			freaky.visible = true
 			
-		
-		check_for_voice()
 
 		if global_position.z > 15:
 			get_parent().skibidi.rpc_id(name.to_int())
 
 		if Input.is_action_just_pressed("debug"):
 			# TODO: Remove before giving to anyone else!!!!
-			#report_map_bug()
-			get_parent().on_collect_book.rpc(name.to_int(), "book1")
+			report_map_bug()
+			#get_parent().on_collect_book.rpc(name.to_int(), "book1")
 
 		#global_rotation_degrees.x = 0
 		#global_rotation_degrees.z = 0
@@ -156,6 +149,8 @@ func _physics_process(delta):
 
 							if ray.get_collider().is_in_group("vending_machine"):
 								get_parent().use_vending_machine.rpc(name.to_int())
+							elif ray.get_collider().is_in_group("shop"):
+								print("shop")
 
 					if Input.is_action_just_pressed("use_item"):
 						if get_cur_item() == 0:
@@ -185,9 +180,10 @@ func _physics_process(delta):
 									get_parent().mr_fox_collect.rpc()
 									
 						elif get_cur_item() == 4:
-							# TODO: rubber ducky pacer test
+							
 							squeak.rpc()
 							pick_item(-1)
+							get_parent().start_da_pacer.rpc(name.to_int()) # i want to kms because of this
 
 		move_and_slide()
 
@@ -216,6 +212,17 @@ func _physics_process(delta):
 
 			look_at(target)
 			cam_fov = 10
+		
+		if get_parent().pacer_deadly:
+			var dst = global_position.distance_to(get_parent().get_node("FakeFox").global_position)
+			if dst > 5:
+				$CanvasLayer/Control/Control.show()
+			else:
+				$CanvasLayer/Control/Control.hide()
+			
+			if dst > 10:
+				die("fox")
+				$CanvasLayer/Control/Control.hide()
 
 
 func _input(event):
@@ -242,14 +249,11 @@ func _on_area_3d_area_entered(area):
 	elif area.get_parent().is_in_group("enemies") and get_parent().game_started == true:
 		if get_parent().absent == false:
 			die("leahy")
-			Achievements.deaths += 1
-			Achievements.save_all()
+			
 	elif area.name == "Landmine" and get_parent().game_started == true:
 		die("mine")
 
 		get_parent().on_collect_book.rpc(name.to_int(), area.name)
-		Achievements.deaths += 1
-		Achievements.save_all()
 
 
 func _on_timer_timeout():
@@ -327,7 +331,9 @@ func get_cur_item():
 
 @rpc("any_peer", "call_local")
 func choose_item():
-	pick_item(randi_range(0, $Hand.get_children().size() - 1))
+	if can_get_item:
+		can_get_item = false
+		pick_item(randi_range(0, $Hand.get_children().size() - 1))
 
 
 func _on_fruit_snacks_timer_timeout():
@@ -384,6 +390,8 @@ func die(cause):
 	AudioServer.set_bus_mute(2, true)
 	$"CanvasLayer/Control/Died thing/AudioStreamPlayer".play()
 	#TODO: make this work $CollisionShape3D.disabled = true
+	Achievements.deaths += 1
+	Achievements.save_all()
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
 
@@ -397,80 +405,9 @@ func die(cause):
 		$"CanvasLayer/Control/Died thing/jumpscare2".play()
 	elif cause == "wall":
 		$"CanvasLayer/Control/Died thing/jumpscare3".play()
+	elif cause == "fox":
+		$"CanvasLayer/Control/Died thing/jumpscare4".play()
 
-
-func check_for_voice() -> void:
-	var available_voice: Dictionary = Steam.getAvailableVoice()
-	if available_voice["result"] == Steam.VOICE_RESULT_OK and available_voice["buffer"] > 0:
-		print("Voice message found")
-		# Valve's getVoice uses 1024 but GodotSteam's is set at 8192?
-		# Our sizes might be way off; internal GodotSteam notes that Valve suggests 8kb
-		# However, this is not mentioned in the header nor the SpaceWar example but -is- in Valve's docs which are usually wrong
-		var voice_data: Dictionary = Steam.getVoice()
-		if voice_data["result"] == Steam.VOICE_RESULT_OK and voice_data["written"]:
-			Networking.send_message(voice_data["buffer"])
-			# If loopback is enable, play it back at this point
-			if loopback_enabled:
-				process_voice_data(voice_data, "local")
-
-
-func process_voice_data(voice_data: Dictionary, voice_source: String) -> void:
-	get_sample_rate()
-
-	var decompressed_voice: Dictionary = Steam.decompressVoice(voice_data["buffer"], voice_data["written"], current_sample_rate)
-
-	if not decompressed_voice["result"] == Steam.VOICE_RESULT_OK or decompressed_voice["size"] == 0 or not voice_source == "local":
-		return
-
-	if local_playback.get_frames_available() <= 0:
-		return
-
-	local_voice_buffer = decompressed_voice["uncompressed"]
-	local_voice_buffer.resize(decompressed_voice["size"])
-
-	for i: int in range(0, mini(local_playback.get_frames_available() * 2, local_voice_buffer.size()), 2):
-		# Combine the low and high bits to get full 16-bit value
-		var raw_value: int = local_voice_buffer[0] | (local_voice_buffer[1] << 8)
-		# Make it a 16-bit signed integer
-		raw_value = (raw_value + 32768) & 0xffff
-		# Convert the 16-bit integer to a float on from -1 to 1
-		var amplitude: float = float(raw_value - 32768) / 32768.0
-		local_playback.push_frame(Vector2(amplitude, amplitude))
-		local_voice_buffer.remove_at(0)
-		local_voice_buffer.remove_at(0)
-
-
-func get_sample_rate() -> void:
-	var optimal_sample_rate: int = Steam.getVoiceOptimalSampleRate()
-	# SpaceWar uses 11000 for sample rate?!
-	# If are using Steam's "optimal" rate, set it; otherwise we default to 48000
-	if use_optimal_sample_rate:
-		current_sample_rate = optimal_sample_rate
-	else:
-		current_sample_rate = 48000
-	print("Current sample rate: " + str(current_sample_rate))
-
-
-func _on_timer2_timeout():
-	$Local.play()
-	local_playback = $Local.get_stream_playback()
-	loopback_enabled = true
-
-	use_optimal_sample_rate = true
-	get_sample_rate()
-	$Local.stream.mix_rate = current_sample_rate
-
-
-func change_voice_status() -> void:
-	# Let Steam know that the user is currently using voice chat in game.
-	# This will suppress the microphone for all voice communication in the Steam UI.
-	# TODO: Change 480 to something else
-	Steam.setInGameVoiceSpeaking(480, is_voice_toggled)
-
-	if is_voice_toggled:
-		Steam.startVoiceRecording()
-	else:
-		Steam.stopVoiceRecording()
 
 
 func _on_silent_lunch_timeout():
@@ -529,10 +466,16 @@ func _on_debug_timeout():
 
 @rpc("any_peer","call_local")
 func squeak():
-	var sp = AudioStreamPlayer3D.new()
+	var sp = AudioStreamPlayer.new()
 
 	sp.stream = load("res://squeak.mp3")
 	sp.bus = "Dialogs"
 	get_parent().add_child(sp)
-	sp.global_position = global_position
 	sp.play()
+
+@rpc("any_peer","call_local")
+func server_pos(pos: Vector3):
+	global_position = pos
+
+func _on_item_delay_timeout():
+	can_get_item = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=52 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://csfubc70y8sea" path="res://models/ggrrrrrrrr.mp3" id="10_o5q8n"]
 [ext_resource type="AudioStream" uid="uid://cenmtdok0uof6" path="res://pacer_test_full.mp3" id="11_latpc"]
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
+[ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
 [ext_resource type="PackedScene" uid="uid://2ynl24tkkvdp" path="res://school.tscn" id="17_3oefh"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
@@ -22,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
+[ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="25_pddg1"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3nj22"]
@@ -64,6 +66,15 @@ properties/11/replication_mode = 1
 properties/12/path = NodePath(".:absent")
 properties/12/spawn = true
 properties/12/replication_mode = 1
+properties/13/path = NodePath(".:is_pacer")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath(".:pacer_deadly")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("FakeFox:position")
+properties/15/spawn = true
+properties/15/replication_mode = 1
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
@@ -187,6 +198,49 @@ _data = {
 "start": SubResource("Animation_iyet2")
 }
 
+[sub_resource type="SphereMesh" id="SphereMesh_2pqsq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_both1"]
+albedo_texture = ExtResource("13_iflne")
+
+[sub_resource type="Animation" id="Animation_d00yl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(51.7988, 1.45983, -190.962)]
+}
+
+[sub_resource type="Animation" id="Animation_50nnp"]
+resource_name = "new_animation"
+length = 12.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 6, 9, 12),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(51.7988, 1.45983, -190.962), Vector3(64.8877, 1.45983, -173.134), Vector3(53.1528, 1.45983, -157.788), Vector3(40.1768, 1.45983, -176.632), Vector3(51.9117, 1.45983, -191.187)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_exbfv"]
+_data = {
+"RESET": SubResource("Animation_d00yl"),
+"new_animation": SubResource("Animation_50nnp")
+}
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5h8sj"]
 albedo_texture = ExtResource("3_jr10u")
 
@@ -208,6 +262,14 @@ glow_intensity = 4.66
 fog_light_color = Color(1, 1, 1, 1)
 fog_light_energy = 0.28
 fog_density = 0.005
+
+[sub_resource type="QuadMesh" id="QuadMesh_6c27w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tmmj"]
+albedo_texture = ExtResource("25_pddg1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3nmsg"]
+size = Vector3(1.01855, 1.13477, 0.827148)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_y4eyb")
@@ -718,10 +780,6 @@ bus = &"Dialogs"
 stream = ExtResource("10_o5q8n")
 bus = &"Dialogs"
 
-[node name="PacerTest" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_latpc")
-bus = &"Music"
-
 [node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.88883, 1.42582, -97.8742)
 visible = false
@@ -735,6 +793,34 @@ projection = 1
 size = 15.0
 near = 0.001
 far = 1000.0
+
+[node name="FakeFox" type="MeshInstance3D" parent="." groups=["localface"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 51.7988, 1.45983, -190.962)
+visible = false
+mesh = SubResource("SphereMesh_2pqsq")
+skeleton = NodePath("PacerTest/PacerStartTimer")
+surface_material_override/0 = SubResource("StandardMaterial3D_both1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FakeFox"]
+libraries = {
+"": SubResource("AnimationLibrary_exbfv")
+}
+
+[node name="PacerTest" type="AudioStreamPlayer3D" parent="FakeFox"]
+stream = ExtResource("11_latpc")
+max_distance = 75.0
+panning_strength = 2.0
+bus = &"Music"
+
+[node name="PacerStartTimer" type="Timer" parent="FakeFox/PacerTest"]
+wait_time = 41.0
+one_shot = true
+
+[node name="PacerStartTimer2" type="Timer" parent="FakeFox/PacerTest"]
+wait_time = 5.0
+one_shot = true
+
+[node name="PacerSpeedIncrease" type="Timer" parent="FakeFox/PacerTest"]
 
 [node name="book1" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98391, 1.07787, -35.0866)
@@ -1121,6 +1207,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.14661, 0, -92.9061)
 [node name="Mr_Azzu" parent="." instance=ExtResource("22_xuer2")]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 23.5605, 1.20217, -66.461)
 
+[node name="PacerPos" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.2904, 1.13443, -166.413)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["shop"]]
+transform = Transform3D(-7.58123, 0, -8.74228e-08, 0, 1.84917, 0, 6.62773e-07, 0, -1, 52.2065, 1.48291, -122.183)
+mesh = SubResource("QuadMesh_6c27w")
+surface_material_override/0 = SubResource("StandardMaterial3D_1tmmj")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D" groups=["shop"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+transform = Transform3D(0.999997, 0, -7.99361e-15, 0, 0.999994, 0, -7.95808e-13, 0, 0.999995, 0, 0, 0)
+shape = SubResource("BoxShape3D_3nmsg")
+
 [connection signal="timeout" from="SecondsLeft" to="." method="_on_seconds_left_timeout"]
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
@@ -1133,3 +1233,6 @@ transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 23.5605, 1.20217, -6
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button4" to="." method="_on_button_4_pressed"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
+[connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]
+[connection signal="timeout" from="FakeFox/PacerTest/PacerSpeedIncrease" to="." method="_on_pacer_speed_increase_timeout"]

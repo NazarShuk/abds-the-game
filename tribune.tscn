@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://m30puby7qprg"]
+
+[ext_resource type="ArrayMesh" uid="uid://cywiqn1drgq1k" path="res://tribunes.res" id="1_cn4bf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uy8sv"]
+size = Vector3(15.1193, 6.76086, 11.2561)
+
+[node name="Tribune" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45909, 0, 17.4399)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.51603e-07, 0, -0.950429, 0, 0.565, 0, 5.756, 0, -4.15446e-08, 0, 0.532, 0)
+mesh = ExtResource("1_cn4bf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7151, 2.88043, 0)
+shape = SubResource("BoxShape3D_uy8sv")

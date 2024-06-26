@@ -32,6 +32,10 @@ const FOX_OG_POS = Vector3(-19.722,1.24,-39.309)
 @onready var mr_fox = $"Mr Fox"
 var fox_follow = false
 
+@export var is_pacer = false
+@export var pacer_deadly = false
+
+var debug_host = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -50,6 +54,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	
 	if is_multiplayer && multiplayer.is_server():
 		if game_started:
 			collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
@@ -90,7 +95,17 @@ func _process(_delta):
 		if closest:
 			get_tree().call_group("enemies","update_target_location",closest)
 
-	
+
+
+func _input(event):
+	if event.is_action_type():
+		if event.is_action_pressed("fullscreen"):
+			if Allsingleton.is_fullscreen == false:
+				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			else:
+				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+			
+			Allsingleton.is_fullscreen = !Allsingleton.is_fullscreen
 
 func _on_host_pressed():
 	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
@@ -116,13 +131,17 @@ func join_lobby(id):
 	$CanvasLayer/MultiPlayer/LoadingRect.show()
 
 func _on_peer_connected(id = 1):
+	$CanvasLayer/MultiPlayer/LoadingRect.show()
+	
 	
 	var packed_player = load("res://player.tscn")
 	var player = packed_player.instantiate()
 	
+	player.set_multiplayer_authority(id)
+	
 	call_deferred("add_child",player)
 	
-	player.global_position = Vector3(randf_range(-12,12),5,randf_range(0,10))
+	#player.global_position = Vector3(randf_range(-12,12),5,randf_range(0,10))
 	player.name = str(id)
 	
 	
@@ -214,7 +233,6 @@ func spawn_book(pos,old_book_name):
 func use_vending_machine(id):
 	if !multiplayer.is_server(): return
 	if !game_started: return
-	print("someone used a vending machine")
 	
 	for child in get_children():
 		if child.name == str(id):
@@ -235,7 +253,8 @@ func start_da_game():
 	$grrrrrr.play()
 	
 	if multiplayer.is_server():
-		Steam.setLobbyJoinable(lobby_id,false)
+		if !debug_host:
+			Steam.setLobbyJoinable(lobby_id,false)
 		leahy_look = true
 
 func _on_host_local_pressed():
@@ -244,6 +263,8 @@ func _on_host_local_pressed():
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
+	
+	debug_host = true
 	
 	_on_peer_connected()
 
@@ -259,6 +280,7 @@ func _on_timer_timeout():
 		canPlayersMove = true
 		game_started = true
 		leahy_look = false
+		$FakeFox/AnimationPlayer.play("new_animation")
 
 @rpc("authority","call_local")
 func update_approching_label(meters):
@@ -308,6 +330,8 @@ func set_played_dead(id,is_dead):
 		if is_dead:
 			players[id].deaths += 1
 			info_text(get_node(str(id)).steam_name + " dissapeared")
+			if is_pacer:
+				stop_pacer.rpc()
 
 
 
@@ -450,5 +474,55 @@ func set_absent(is_absent : bool):
 
 @rpc("authority","call_local")
 func azzu_steal():
-	if multiplayer.is_server():
+	# TODO
+	if multiplayer.is_server() && canPlayersMove:
 		info_text("grr you angered azzu")
+		canPlayersMove = false
+		$bum.play()
+		
+@rpc("any_peer","call_local")
+func start_da_pacer(id):
+	
+	# For everyone
+	$FakeFox/PacerTest.play()
+	$Music2.stop()
+	$FakeFox.show()
+	
+	# Server only
+	if multiplayer.is_server():
+		for pl in players_ids:
+			get_node(str(pl)).server_pos.rpc_id(pl,$PacerPos.global_position)
+		
+		var username = get_node(str(id)).steam_name
+		info_text(username + " angered Mr.Fox...")
+		leahy_appeased = true
+		$FakeFox/PacerTest/PacerStartTimer.start()
+		canPlayersMove = false
+
+
+func _on_pacer_start_timer_timeout():
+	leahy_appeased = false
+	canPlayersMove = true
+	is_pacer = true
+	info_text("FOLLOW MR.FOX OR ELSE...")
+	$FakeFox/PacerTest/PacerStartTimer2.start()
+	
+func _on_pacer_start_timer_2_timeout():
+	pacer_deadly = true
+	$FakeFox/PacerTest/PacerSpeedIncrease.start()
+
+@rpc("authority","call_local")
+func stop_pacer():
+	$FakeFox/PacerTest.stop()
+	$Music2.play()
+	$FakeFox.hide()
+	$FakeFox/PacerTest/PacerSpeedIncrease.stop()
+	$FakeFox/AnimationPlayer.speed_scale = 1
+	
+	if multiplayer.is_server():
+		is_pacer = false
+		pacer_deadly = false
+
+
+func _on_pacer_speed_increase_timeout():
+	$FakeFox/AnimationPlayer.speed_scale += 0.005
