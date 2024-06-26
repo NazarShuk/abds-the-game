@@ -14,9 +14,9 @@
 [ext_resource type="AudioStream" uid="uid://d2e0x50n80346" path="res://jumpscare-154489 (1)_01.mp3" id="8_4ilia"]
 [ext_resource type="Texture2D" uid="uid://cc30vv6mhisgy" path="res://fruit snacks.png" id="9_2sbry"]
 [ext_resource type="VideoStream" path="res://models/jumpscare.ogv" id="9_7mdnm"]
-[ext_resource type="VideoStream" path="res://boom.ogv" id="10_0x3sm"]
 [ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="10_s1ndh"]
 [ext_resource type="Texture2D" uid="uid://clg1lq8iq3x2e" path="res://square pizza.png" id="11_hgbq5"]
+[ext_resource type="VideoStream" path="res://dum.ogv" id="14_b58yc"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
 [ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
 [ext_resource type="VideoStream" path="res://fox_jump.ogv" id="16_a751i"]
@@ -427,7 +427,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stream = ExtResource("10_0x3sm")
+stream = ExtResource("14_b58yc")
+expand = true
 bus = &"Non Mute"
 
 [node name="jumpscare3" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]

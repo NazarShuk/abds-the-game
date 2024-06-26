@@ -5,7 +5,14 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var SPEED = 12
 
+@export var mute : bool
+
 func _physics_process(_delta):
+	if mute:
+		$AudioStreamPlayer3D.volume_db = -80
+	else:
+		$AudioStreamPlayer3D.volume_db = 8.602
+	
 	if nav_agent.target_position:
 		var current_location = global_transform.origin
 		var next_location = nav_agent.get_next_path_position()
@@ -17,6 +24,3 @@ func _physics_process(_delta):
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:
 		nav_agent.target_position = target_location
-		
-	else:
-		print("not type vector 3")

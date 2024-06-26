@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=53 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
+[ext_resource type="PackedScene" uid="uid://bd6avbb065m7b" path="res://leahy_respawn_pos.tscn" id="20_rxfji"]
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="25_pddg1"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
@@ -292,6 +293,9 @@ one_shot = true
 
 [node name="Absences" type="Timer" parent="."]
 wait_time = 15.0
+autostart = true
+
+[node name="LeahyPosDiff" type="Timer" parent="."]
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -1193,6 +1197,101 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.978, 0, -78.8634)
 [node name="PlayerSpawn12" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.7667, 0, -172.886)
 
+[node name="LeahyPenaltyPos" type="Node" parent="."]
+
+[node name="LeahyRespawnPos" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7587, 0.846554, -34.7027)
+
+[node name="LeahyRespawnPos2" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.946, 0.846554, -54.8791)
+
+[node name="LeahyRespawnPos3" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.7563, 0.846554, -34.5725)
+
+[node name="LeahyRespawnPos4" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75003, 0.846554, -64.5016)
+
+[node name="LeahyRespawnPos5" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.21874, 0.846554, -125.245)
+
+[node name="LeahyRespawnPos6" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.0975, 0.846554, -125.777)
+
+[node name="LeahyRespawnPos7" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.2663, 0.846554, -158.008)
+
+[node name="LeahyRespawnPos8" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5013, 0.846554, -155.599)
+
+[node name="LeahyRespawnPos9" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.19352, 0.846554, -176.801)
+
+[node name="LeahyRespawnPos10" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15727, 0.846554, -220.892)
+
+[node name="LeahyRespawnPos11" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1573, 0.846554, -219.892)
+
+[node name="LeahyRespawnPos12" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.4533, 0.846554, -222.783)
+
+[node name="LeahyRespawnPos13" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.7305, 0.846554, -187.607)
+
+[node name="LeahyRespawnPos14" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.4895, 0.846554, -141.588)
+
+[node name="LeahyRespawnPos15" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.0953, 0.846554, -92.9189)
+
+[node name="LeahyRespawnPos16" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.3556, 0.846554, -56.0807)
+
+[node name="LeahyRespawnPos17" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.439, 0.846554, -54.7142)
+
+[node name="LeahyRespawnPos18" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.967, 0.846554, -55.3215)
+
+[node name="LeahyRespawnPos19" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.69, 0.846554, -34.8244)
+
+[node name="LeahyRespawnPos20" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102.69, 0.846554, -33.8244)
+
+[node name="LeahyRespawnPos21" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.7691, 0.846554, -34.4317)
+
+[node name="LeahyRespawnPos22" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.30357, 0.846554, -38.5312)
+
+[node name="LeahyRespawnPos23" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6193, 0.846554, -96.5968)
+
+[node name="LeahyRespawnPos24" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.0007, 0.846554, -104.307)
+
+[node name="LeahyRespawnPos25" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5982, 0.846554, -108.403)
+
+[node name="LeahyRespawnPos26" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3843, 0.846554, -87.6822)
+
+[node name="LeahyRespawnPos27" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.0709, 0.846554, -68.6482)
+
+[node name="LeahyRespawnPos28" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.774, 0.846554, -90.0915)
+
+[node name="LeahyRespawnPos29" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.109, 0.846554, -107.921)
+
+[node name="LeahyRespawnPos30" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.275, 0.846554, -123.1)
+
+[node name="LeahyRespawnPos31" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.761, 0.846554, -178.274)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fo45a")
 
@@ -1200,6 +1299,7 @@ environment = SubResource("Environment_fo45a")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 24.5635, 0, -137.18)
 
 [node name="Mr Fox" parent="." instance=ExtResource("20_kw6s4")]
+transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 1.24168, -174.032)
 
 [node name="Landmine" parent="." instance=ExtResource("28_dmjcx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.14661, 0, -92.9061)
@@ -1224,6 +1324,7 @@ shape = SubResource("BoxShape3D_3nmsg")
 [connection signal="timeout" from="SecondsLeft" to="." method="_on_seconds_left_timeout"]
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
+[connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host_local" to="." method="_on_host_local_pressed"]

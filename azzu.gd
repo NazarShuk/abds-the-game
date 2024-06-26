@@ -21,7 +21,6 @@ func _physics_process(_delta):
 	
 	for clorox in cloroxes:
 		var distance = global_position.distance_to(clorox.global_position)
-		#print("Azzu: distance to clorox " + str(distance))
 		
 		if distance < 5:
 			if multiplayer.is_server():
@@ -30,9 +29,6 @@ func _physics_process(_delta):
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:
 		nav_agent.target_position = target_location
-		
-	else:
-		print("not type vector 3")
 
 
 func _on_timer_timeout():

@@ -28,8 +28,6 @@ func _ready():
 		achievements = game_save.get_var()
 		books_collected = game_save.get_var()
 		deaths = game_save.get_var()
-	else:
-		print("data not found!")
 
 func check(name):
 	return achievements[name]

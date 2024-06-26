@@ -145,11 +145,11 @@ func _physics_process(delta):
 
 					if Input.is_action_just_pressed("interact"):
 						if ray.get_collider() and get_cur_item() == -1:
-							print(ray.get_collider().name)
 
 							if ray.get_collider().is_in_group("vending_machine"):
 								get_parent().use_vending_machine.rpc(name.to_int())
-							elif ray.get_collider().is_in_group("shop"):
+						if ray.get_collider():
+							if ray.get_collider().is_in_group("shop"):
 								print("shop")
 
 					if Input.is_action_just_pressed("use_item"):
@@ -174,7 +174,6 @@ func _physics_process(delta):
 							else:
 								var fox = get_tree().get_first_node_in_group("fox")
 								var dist = global_position.distance_to(fox.global_position)
-								print("fox dist: " + str(dist))
 								if dist < 15:
 									pick_item(-1)
 									get_parent().mr_fox_collect.rpc()
@@ -233,6 +232,7 @@ func _input(event):
 		if can_move:
 			if can_cam_move:
 				rotate_y(deg_to_rad(event.relative.x * -0.3))
+				rotate_x(deg_to_rad(event.relative.y * -0.3))
 
 
 func _on_area_3d_area_entered(area):
@@ -240,8 +240,6 @@ func _on_area_3d_area_entered(area):
 		return
 	if is_dead:
 		return
-
-	print(area.name)
 	if area.get_parent().is_in_group("Book"):
 		get_parent().on_collect_book.rpc(name.to_int(), area.get_parent().name)
 		Achievements.books_collected += 1
@@ -286,8 +284,6 @@ func _on_timer_timeout():
 				cam_fov = 100
 		if stamina <= 75:
 			stamina += 1
-
-	#print(stamina)
 
 
 func _on_stamina_timeout_timeout():
@@ -417,7 +413,6 @@ func _on_silent_lunch_timeout():
 
 func _on_anti_wall_walk_timeout():
 	if is_on_top:
-		print("on top")
 		on_top_counter += 1
 
 		if on_top_counter == 10:

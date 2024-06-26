@@ -3,11 +3,9 @@ extends Node
 const APP_ID = 480
 
 func _init():
-	print(OS.get_name())
 	OS.set_environment("SteamGameID",str(APP_ID))
 	OS.set_environment("SteamAppID",str(APP_ID))
 	var response : Dictionary = Steam.steamInitEx()
-	print("Did Steam initialize?: %s " % response)
 	
 	if response.status != 0:
 		OS.alert(response.verbal,"Error while connecting to Steam.")

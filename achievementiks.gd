@@ -2,7 +2,6 @@ extends Node2D
 
 func _ready():
 	for achievement in Achievements.achievements:
-		print(achievement)
 		if Achievements.achievements[achievement] == true:
 			var label = Label.new()
 			label.text = achievement.replace("_"," ")

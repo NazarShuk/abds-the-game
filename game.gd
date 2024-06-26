@@ -28,7 +28,7 @@ var book_pos = Vector3()
 
 @export var leahy_look : bool
 
-const FOX_OG_POS = Vector3(-19.722,1.24,-39.309)
+@onready var FOX_OG_POS = $"Mr Fox".global_position
 @onready var mr_fox = $"Mr Fox"
 var fox_follow = false
 
@@ -36,6 +36,11 @@ var fox_follow = false
 @export var pacer_deadly = false
 
 var debug_host = false
+
+var leahy_diff = 9999
+var leahy_last_pos = Vector3(0,0,0)
+var leahy_diff_penalty = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -48,8 +53,6 @@ func _ready():
 	get_friends_lobbies()
 	peer.lobby_created.connect(_on_lobby_connected)
 	peer.lobby_joined.connect(_on_lobby_joined)
-	
-	print(Achievements.achievements )
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -120,7 +123,6 @@ func _on_lobby_connected(_connected,id):
 		lobby_id = id
 		Steam.setLobbyData(lobby_id,"name",str(Steam.getPersonaName()) + "'s lobby")
 		Steam.setLobbyJoinable(lobby_id,true)
-		print(lobby_id)
 
 func _on_lobby_joined():
 	pass
@@ -163,8 +165,6 @@ func _on_peer_disconnect(id):
 	
 	players_ids.erase(id)
 	
-	print("cleaned peer")
-	
 	books_to_collect -= 1
 
 
@@ -175,7 +175,6 @@ func _on_connect_pressed():
 
 @rpc("any_peer","call_local")
 func on_collect_book(id,book_name):
-	print("on collect book called! by " + str(id))
 	if multiplayer.is_server():
 		var player_name = get_node(str(id)).steam_name
 		if book_name != "Landmine":
@@ -184,8 +183,6 @@ func on_collect_book(id,book_name):
 		
 			for idd in players_ids:
 				total += players[idd].books_collected
-			
-			print("total: " + str(total))
 			
 			var spawnpoint = book_spawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
@@ -300,12 +297,10 @@ func get_friends_lobbies():
 		var friend_name = Steam.getFriendPersonaName(friend)
 		
 		var game_played = Steam.getFriendGamePlayed(friend)
-		#print(friend_name)
 		
 		if !game_played.is_empty():
 			if game_played.id == OS.get_environment("SteamAppID").to_int():
 				if game_played.lobby:
-					#print(friend_name + " is playing spacewar!")
 					var btn = Button.new()
 					btn.text = "Join " + friend_name
 					btn.connect("pressed",Callable(self,"join_lobby").bind(game_played.lobby))
@@ -451,7 +446,6 @@ func _on_absences_timeout():
 		absent = true
 		hide_approaching_label.rpc()
 	else:
-		print("ms leahy still here")
 		if absent == true:
 			absent = false
 			set_absent.rpc(false)
@@ -472,7 +466,7 @@ func set_absent(is_absent : bool):
 		environment.background_energy_multiplier = 1
 		$Music2.pitch_scale = 1
 
-@rpc("authority","call_local")
+@rpc("any_peer","call_local")
 func azzu_steal():
 	# TODO
 	if multiplayer.is_server() && canPlayersMove:
@@ -487,6 +481,8 @@ func start_da_pacer(id):
 	$FakeFox/PacerTest.play()
 	$Music2.stop()
 	$FakeFox.show()
+	$"Mr Fox".hide()
+	$"Mr Fox".mute = true
 	
 	# Server only
 	if multiplayer.is_server():
@@ -518,6 +514,8 @@ func stop_pacer():
 	$FakeFox.hide()
 	$FakeFox/PacerTest/PacerSpeedIncrease.stop()
 	$FakeFox/AnimationPlayer.speed_scale = 1
+	$"Mr Fox".show()
+	$"Mr Fox".mute = false
 	
 	if multiplayer.is_server():
 		is_pacer = false
@@ -526,3 +524,26 @@ func stop_pacer():
 
 func _on_pacer_speed_increase_timeout():
 	$FakeFox/AnimationPlayer.speed_scale += 0.005
+
+
+func _on_leahy_pos_diff_timeout():
+	if !multiplayer.is_server(): return
+	
+	leahy_diff = evil_leahy.global_position.distance_to(leahy_last_pos)
+	leahy_last_pos = evil_leahy.global_position
+	if leahy_diff < 1 and !leahy_appeased and !absent and game_started:
+		leahy_diff_penalty += 1
+	if leahy_diff > 1 and !leahy_appeased and !absent and game_started:
+		leahy_diff_penalty = 0
+	
+	if leahy_diff_penalty > 7:
+		var min_dst = 99999
+		var cls_pos = Vector3(0,0,0)
+		for respawn_pos : Node3D in $LeahyPenaltyPos.get_children():
+			var dst = evil_leahy.global_position.distance_to(respawn_pos.global_position)
+			if dst < min_dst:
+				cls_pos = respawn_pos.global_position
+				min_dst = dst
+		
+		evil_leahy.global_position = cls_pos
+		leahy_diff_penalty = 0

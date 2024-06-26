@@ -26,5 +26,3 @@ func load_values_and_apply():
 			AudioServer.set_bus_volume_db(2,sfx_vol)
 			AudioServer.set_bus_volume_db(3,sfx_vol)
 			AudioServer.set_bus_volume_db(4,sfx_vol)
-	else:
-		print("data not found!")

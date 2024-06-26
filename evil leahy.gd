@@ -37,4 +37,3 @@ func _on_timer_timeout():
 func play_audio():
 	$AudioStreamPlayer3D.play()
 
-
