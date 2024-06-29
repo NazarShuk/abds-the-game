@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpyou6w048r5m"]
+[gd_scene load_steps=8 format=3 uid="uid://dpyou6w048r5m"]
 
 [ext_resource type="Script" path="res://azzu.gd" id="1_s00pa"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="2_q42rl"]
@@ -12,6 +12,9 @@ albedo_texture = ExtResource("2_q42rl")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8gy6y"]
 size = Vector3(0.163818, 1, 0.0349121)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tveud"]
+size = Vector3(1, 1, 0.389648)
 
 [node name="Mr_Azzu" type="CharacterBody3D" groups=["fox"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
@@ -44,5 +47,10 @@ shape = SubResource("BoxShape3D_8gy6y")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
+
+[node name="azzu" type="Area3D" parent="."]
+
+[node name="azzu" type="CollisionShape3D" parent="azzu"]
+shape = SubResource("BoxShape3D_tveud")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

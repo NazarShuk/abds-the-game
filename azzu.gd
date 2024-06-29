@@ -5,6 +5,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var SPEED = 12
 
+@export var server_target = false
+
 func _physics_process(_delta):
 	if nav_agent.target_position:
 		var current_location = global_transform.origin
@@ -24,7 +26,7 @@ func _physics_process(_delta):
 		
 		if distance < 5:
 			if multiplayer.is_server():
-				get_parent().azzu_steal.rpc()
+				get_parent().azzu_steal.rpc(clorox.launcher)
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:
@@ -32,6 +34,8 @@ func update_target_location(target_location):
 
 
 func _on_timer_timeout():
+	if server_target: return
+	if !multiplayer.is_server(): return
 	var points = get_parent().get_node("BookSpawns").get_children()
 	
 	update_target_location(points.pick_random().global_position)

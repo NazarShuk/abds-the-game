@@ -42,6 +42,10 @@ var on_top_counter = 0
 
 var can_get_item = true
 
+@onready var camera_3d = $CanvasLayer2/SubViewportContainer/SubViewport/Camera3D
+
+var leahy_dst = 0
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	$nametag.text = Steam.getPersonaName()
@@ -61,7 +65,19 @@ func _ready():
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
-
+		
+		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
+		
+		if (10 - leahy_dst) > 0:
+			var strength = 1/leahy_dst+0.01
+			camera_3d.h_offset = randf_range(-strength,strength) / 5
+			camera_3d.v_offset = randf_range(-strength,strength) / 5
+		else:
+			camera_3d.h_offset = 0
+			camera_3d.v_offset = 0
+		
+		var clr:Color = $CanvasLayer/Control/SomeoneDid.get("theme_override_colors/font_color")
+		$CanvasLayer/Control/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.025))
 		
 		if Achievements.check("impossible_ending"):
 			perfect.visible = false
@@ -96,7 +112,8 @@ func _physics_process(delta):
 		else:
 			is_on_top = false
 
-		$Camera3D.current = true
+		
+		
 		# Add the gravity.
 		if not is_on_floor() and not is_dead:
 			velocity.y -= gravity * delta
@@ -187,7 +204,7 @@ func _physics_process(delta):
 		move_and_slide()
 
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
-		$Camera3D.fov = lerp($Camera3D.fov, float(cam_fov), 0.1)
+		camera_3d.fov = lerp(camera_3d.fov, float(cam_fov), 0.1)
 
 		if Input.is_action_just_pressed("escape"):
 			$CanvasLayer/Control/Menu.visible = !$CanvasLayer/Control/Menu.visible
@@ -222,6 +239,11 @@ func _physics_process(delta):
 			if dst > 10:
 				die("fox")
 				$CanvasLayer/Control/Control.hide()
+				
+		camera_3d.current = true
+		camera_3d.global_position = global_position + Vector3(0,0.5,0)
+		camera_3d.global_rotation = global_rotation
+		$CanvasLayer2.visible = true
 
 
 func _input(event):
@@ -232,7 +254,9 @@ func _input(event):
 		if can_move:
 			if can_cam_move:
 				rotate_y(deg_to_rad(event.relative.x * -0.3))
-				rotate_x(deg_to_rad(event.relative.y * -0.3))
+				if get_parent().do_vertical_camera:
+					# funni
+					camera_3d.rotate_x(deg_to_rad(event.relative.y * -0.3))
 
 
 func _on_area_3d_area_entered(area):
@@ -249,9 +273,14 @@ func _on_area_3d_area_entered(area):
 			die("leahy")
 			
 	elif area.name == "Landmine" and get_parent().game_started == true:
+		
 		die("mine")
 
 		get_parent().on_collect_book.rpc(name.to_int(), area.name)
+		
+	elif area.name == "azzu" and get_parent().azzu_angered == true:
+		die("azzu")
+		get_parent().azzu_dont_steal.rpc()
 
 
 func _on_timer_timeout():
@@ -346,6 +375,7 @@ func spawn_clorox():
 	clorox.initial_pos = $RayCast3D.global_position
 	clorox.global_position = $RayCast3D.global_position
 	clorox.global_rotation = $RayCast3D.global_rotation
+	clorox.launcher = name.to_int()
 	clorox.add_to_group("clorox_wipes")
 
 
@@ -376,11 +406,16 @@ func _on_disconnect_btn_pressed():
 
 
 func die(cause):
+	if is_dead: return
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
-	get_parent().set_played_dead.rpc(name.to_int(), true)
+	if cause != "mine":
+		get_parent().set_played_dead.rpc(name.to_int(), true)
+	else:
+		if get_parent().landmine_death:
+			get_parent().set_played_dead.rpc(name.to_int(), true)
 	$"CanvasLayer/Control/Died thing".show()
-	$ReviveTimer.start()
+	$ReviveTimer.start(get_parent().death_timeout)
 	is_dead = true
 	AudioServer.set_bus_mute(1, true)
 	AudioServer.set_bus_mute(2, true)
@@ -388,14 +423,17 @@ func die(cause):
 	#TODO: make this work $CollisionShape3D.disabled = true
 	Achievements.deaths += 1
 	Achievements.save_all()
+	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
-
-		var chance = randi_range(0, 3)
-		if chance == 2:
-			$CanvasLayer/Control/silentLunch.show()
-			is_suspended = true
-			$"Silent Lunch".start()
+		
+		if get_parent().do_silent_lunch:
+			var chance = randi_range(0, 3)
+			if chance == 2:
+				$CanvasLayer/Control/silentLunch.show()
+				$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in " + str(get_parent().silent_lunch_duration)
+				is_suspended = true
+				$"Silent Lunch".start(get_parent().silent_lunch_duration)
 
 	elif cause == "mine":
 		$"CanvasLayer/Control/Died thing/jumpscare2".play()
@@ -403,6 +441,8 @@ func die(cause):
 		$"CanvasLayer/Control/Died thing/jumpscare3".play()
 	elif cause == "fox":
 		$"CanvasLayer/Control/Died thing/jumpscare4".play()
+	elif cause == "azzu":
+		$"CanvasLayer/Control/Died thing/jumpscare5".play()
 
 
 
@@ -474,3 +514,8 @@ func server_pos(pos: Vector3):
 
 func _on_item_delay_timeout():
 	can_get_item = true
+
+@rpc("authority","call_local")
+func info_text(text):
+	$CanvasLayer/Control/SomeoneDid.text = text
+	$CanvasLayer/Control/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cye1siquj1g35"]
+[gd_scene load_steps=12 format=3 uid="uid://cye1siquj1g35"]
 
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_17gtv"]
 [ext_resource type="Script" path="res://end.gd" id="1_wq40t"]
+[ext_resource type="Material" uid="uid://b8ad2c866xmg3" path="res://retro.tres" id="2_cpyl8"]
 [ext_resource type="VideoStream" path="res://good_ending.ogv" id="3_ab7kg"]
 [ext_resource type="AudioStream" uid="uid://b5l0frlywp3py" path="res://wowowo.mp3" id="3_x7w60"]
 
@@ -144,6 +145,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control"]
+material = ExtResource("2_cpyl8")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

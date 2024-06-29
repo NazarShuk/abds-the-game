@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=51 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -15,11 +15,13 @@
 [ext_resource type="Texture2D" uid="uid://cc30vv6mhisgy" path="res://fruit snacks.png" id="9_2sbry"]
 [ext_resource type="VideoStream" path="res://models/jumpscare.ogv" id="9_7mdnm"]
 [ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="10_s1ndh"]
+[ext_resource type="Material" uid="uid://b8ad2c866xmg3" path="res://retro.tres" id="11_0qkbr"]
 [ext_resource type="Texture2D" uid="uid://clg1lq8iq3x2e" path="res://square pizza.png" id="11_hgbq5"]
 [ext_resource type="VideoStream" path="res://dum.ogv" id="14_b58yc"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
 [ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
 [ext_resource type="VideoStream" path="res://fox_jump.ogv" id="16_a751i"]
+[ext_resource type="VideoStream" path="res://models/azzu_jumpscare.ogv" id="17_co3v2"]
 [ext_resource type="Texture2D" uid="uid://bkmj8ey1h4mji" path="res://rubber-duck_0 (1).jpg" id="20_l0oek"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
@@ -243,10 +245,6 @@ visible = false
 mesh = SubResource("QuadMesh_orlgu")
 surface_material_override/0 = SubResource("StandardMaterial3D_ndfqc")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-far = 100.0
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8c5nr")
 
@@ -299,8 +297,33 @@ autostart = true
 wait_time = 2.0
 autostart = true
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 5
+visible = false
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer2"]
+material = ExtResource("11_0qkbr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer2/SubViewportContainer"]
+handle_input_locally = false
+use_occlusion_culling = true
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(1280, 720)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer2/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+far = 100.0
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 30
+layer = 10
 visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
@@ -372,7 +395,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Died thing"]
-visible = false
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -453,6 +475,55 @@ stream = ExtResource("16_a751i")
 expand = true
 bus = &"Non Mute"
 
+[node name="jumpscare5" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("17_co3v2")
+expand = true
+bus = &"Non Mute"
+
+[node name="silentLunch" type="Label" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -219.0
+offset_top = -61.5
+offset_right = 219.0
+offset_bottom = 61.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 51
+text = "You got silent lunch
+you can leave in 15"
+
+[node name="SomeoneDid" type="Label" parent="CanvasLayer/Control"]
+top_level = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -123.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -518,26 +589,6 @@ scale = Vector2(0.2, 0.2)
 pivot_offset = Vector2(47, 15)
 text = "Disconnect"
 
-[node name="silentLunch" type="Label" parent="CanvasLayer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -69.0
-offset_top = -21.5
-offset_right = 69.0
-offset_bottom = 21.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_l1x2u")
-theme_override_font_sizes/font_size = 51
-text = "You got silent lunch
-you can leave in 15"
-
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(0.262507, 0.127587, -0.40597, 0.124941, 0.432868, 0.21683, 0.406792, -0.215283, 0.19538, 0.513, 0.259, -0.78)
 
@@ -601,15 +652,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 material_override = SubResource("StandardMaterial3D_lwpal")
 mesh = SubResource("PlaneMesh_5fuhc")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.164054)
-spot_range = 0.0
-
 [node name="http" type="HTTPRequest" parent="."]
 
 [node name="debug" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]

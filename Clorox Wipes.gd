@@ -2,6 +2,7 @@ extends StaticBody3D
 
 const SPEED = 10
 @export var initial_pos : Vector3
+@export var launcher : int
 
 func _ready():
 	global_position = initial_pos

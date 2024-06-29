@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://don8cpjk8ev57"]
+[gd_scene load_steps=9 format=3 uid="uid://don8cpjk8ev57"]
 
 [ext_resource type="Script" path="res://end.gd" id="1_ie0e7"]
 [ext_resource type="VideoStream" path="res://perfect_run.ogv" id="1_p21f3"]
+[ext_resource type="Material" uid="uid://b8ad2c866xmg3" path="res://retro.tres" id="2_1bd1c"]
 [ext_resource type="AudioStream" uid="uid://bw0msc6kls5ph" path="res://AdhesiveWombat - Night Shade (128kbps)_01.mp3" id="3_d5bbh"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="3_tl41g"]
 
@@ -202,6 +203,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer"]
+material = ExtResource("2_1bd1c")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

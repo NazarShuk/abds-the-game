@@ -22,7 +22,7 @@ var leahy_appeased = false
 @export var min_left = 5
 @export var sec_left = 1
  
-@export var books_to_collect = 9
+@export var books_to_collect = 6
 @export var total_books = 0
 var book_pos = Vector3()
 
@@ -41,6 +41,29 @@ var leahy_diff = 9999
 var leahy_last_pos = Vector3(0,0,0)
 var leahy_diff_penalty = 0
 
+@onready var mr_azzu = $Mr_Azzu
+@export var azzu_angered = false
+
+# Customization
+@export var do_azzu_steal = true # DONE
+@export var do_fox_help = true # DONE
+@export var do_leahy_appease = true # DONE
+@export var do_absences = true # DONE
+@export var do_silent_lunch = true # DONE
+@export var landmine_death = false # DONE
+@export var do_vertical_camera = false # DONE
+
+@export var notebooks_per_player = 1 # DONE
+@export var max_deaths = 10 # DONE
+@export var leahy_start_speed = 6.0 # DONE
+@export var leahy_speed_per_notebook = 0.5 # DONE
+@export var absence_chance = 15 # DONE
+@export var absence_interval = 15 # DONE
+@export var death_timeout = 5 # DONE
+@export var silent_lunch_duration = 15 # DONE
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -53,6 +76,7 @@ func _ready():
 	get_friends_lobbies()
 	peer.lobby_created.connect(_on_lobby_connected)
 	peer.lobby_joined.connect(_on_lobby_joined)
+	multiplayer.connected_to_server.connect(_on_connected_to_server)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -68,10 +92,10 @@ func _process(_delta):
 		$EvilLeahy/SubViewport/skibidiCamera.global_rotation_degrees.x = -90
 		$EvilLeahy/SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
 		
-		var clr:Color = $CanvasLayer/Main/SomeoneDid.get("theme_override_colors/font_color")
-		$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.05))
+		#var clr:Color = $CanvasLayer/Main/SomeoneDid.get("theme_override_colors/font_color")
+		#$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.05))
 		
-		if fox_follow:
+		if fox_follow && do_fox_help:
 			mr_fox.update_target_location(book_pos)
 		else:
 			mr_fox.update_target_location(FOX_OG_POS)
@@ -132,19 +156,25 @@ func join_lobby(id):
 	multiplayer.multiplayer_peer = peer
 	$CanvasLayer/MultiPlayer/LoadingRect.show()
 
+func _on_connected_to_server():
+	pass
+
 func _on_peer_connected(id = 1):
-	$CanvasLayer/MultiPlayer/LoadingRect.show()
+	print("_on_peer_connected")
+	#$CanvasLayer/MultiPlayer/LoadingRect.show()
 	
 	
-	var packed_player = load("res://player.tscn")
+	var packed_player = preload("res://player.tscn")
 	var player = packed_player.instantiate()
 	
 	player.set_multiplayer_authority(id)
-	
-	call_deferred("add_child",player)
-	
-	#player.global_position = Vector3(randf_range(-12,12),5,randf_range(0,10))
 	player.name = str(id)
+	
+	
+	#call_deferred("add_child",player)
+	#add_player.rpc(id)
+	#for pl_id in players_ids:
+	#	add_player.rpc_id(id,pl_id)
 	
 	
 	players[id] = {
@@ -155,8 +185,10 @@ func _on_peer_connected(id = 1):
 		"deaths":0
 	}
 	players_ids.append(id)
-	books_to_collect += 1
-	
+	books_to_collect += notebooks_per_player
+
+
+
 
 	
 func _on_peer_disconnect(id):
@@ -209,13 +241,15 @@ func on_collect_book(id,book_name):
 			
 			total_books = total
 			
-			evil_leahy.SPEED += 0.5
+			evil_leahy.SPEED += leahy_speed_per_notebook
 			
 			info_text(player_name + " collected a book!")
 			sec_left += 10
 			fox_follow = false
 		else:
-			info_text(player_name + " exploded")
+			
+			
+			info_text(player_name + " slipped")
 			var spawnpoint = $LandMineSpawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
 			spawnpoint.y = 0.143
@@ -278,6 +312,8 @@ func _on_timer_timeout():
 		game_started = true
 		leahy_look = false
 		$FakeFox/AnimationPlayer.play("new_animation")
+		evil_leahy.SPEED = leahy_start_speed
+		$Absences.start(absence_interval)
 
 @rpc("authority","call_local")
 func update_approching_label(meters):
@@ -324,9 +360,17 @@ func set_played_dead(id,is_dead):
 		players[id].is_dead = is_dead
 		if is_dead:
 			players[id].deaths += 1
-			info_text(get_node(str(id)).steam_name + " dissapeared")
+			var total_deaths = 0
+			for pl_id in players_ids:
+				total_deaths += players[pl_id].deaths
+			
+			info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/10")
 			if is_pacer:
 				stop_pacer.rpc()
+			
+			
+			if total_deaths >= max_deaths:
+				end_game.rpc("worst")
 
 
 
@@ -395,8 +439,9 @@ func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
 
 func info_text(info):
-	$CanvasLayer/Main/SomeoneDid.text = info
-	$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
+	#$CanvasLayer/Main/SomeoneDid.text = info
+	#$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
+	get_node("1").info_text.rpc(info)
 
 func hide_menu():
 	$CanvasLayer/MultiPlayer.hide()
@@ -411,6 +456,8 @@ func _on_button_4_pressed():
 @rpc("any_peer","call_local")
 func appease_leahy(username):
 	if multiplayer.is_server():
+		if !do_leahy_appease: return
+		
 		$Appeasment.start()
 		leahy_appeased = true
 		info_text(username + " appeased Leahy for 5 seconds.")
@@ -422,8 +469,9 @@ func _on_appeasment_timeout():
 @rpc("any_peer","call_local")
 func mr_fox_collect():
 	if multiplayer.is_server():
-		fox_follow = true
-		info_text("Follow Mr.Fox to find the notebook!")
+		if do_fox_help:
+			fox_follow = true
+			info_text("Follow Mr.Fox to find the notebook!")
 
 
 func _on_button_5_pressed():
@@ -439,9 +487,9 @@ func skibidi():
 func _on_absences_timeout():
 	if !multiplayer.is_server() : return
 	if !game_started : return
+	if !do_absences: return
 	
-	# TODO: make sure its (0,15)
-	if randi_range(0,15) == 1: 
+	if randi_range(0,absence_chance) == 1: 
 		set_absent.rpc(true)
 		absent = true
 		hide_approaching_label.rpc()
@@ -449,6 +497,8 @@ func _on_absences_timeout():
 		if absent == true:
 			absent = false
 			set_absent.rpc(false)
+	
+	$Absences.start(absence_interval)
 
 @rpc("authority","call_local")
 func set_absent(is_absent : bool):
@@ -467,13 +517,33 @@ func set_absent(is_absent : bool):
 		$Music2.pitch_scale = 1
 
 @rpc("any_peer","call_local")
-func azzu_steal():
-	# TODO
+func azzu_steal(launcher):
+	
 	if multiplayer.is_server() && canPlayersMove:
+		if !do_azzu_steal: return
+		
 		info_text("grr you angered azzu")
 		canPlayersMove = false
-		$bum.play()
+		mr_azzu.server_target = true
+		mr_azzu.update_target_location(get_node(str(launcher)).global_position)
 		
+		azzu_angered = true
+	
+	if canPlayersMove: return
+	
+	$Music2.stop()
+
+@rpc("any_peer","call_local")
+func azzu_dont_steal():
+	if multiplayer.is_server():
+		canPlayersMove = true
+		azzu_angered = false
+		mr_azzu.server_target = false
+		mr_azzu._on_timer_timeout()
+		
+	
+	$Music2.play()
+	
 @rpc("any_peer","call_local")
 func start_da_pacer(id):
 	
@@ -547,3 +617,18 @@ func _on_leahy_pos_diff_timeout():
 		
 		evil_leahy.global_position = cls_pos
 		leahy_diff_penalty = 0
+
+
+func _on_open_config_pressed():
+	$CanvasLayer/MultiPlayer/ConfigPanel.visible = !$CanvasLayer/MultiPlayer/ConfigPanel.visible
+
+
+func _on_reset_to_default_pressed():
+	var checkboxes = get_tree().get_nodes_in_group("checkbox")
+	
+	for checkbox in checkboxes:
+		checkbox.go_to_inital()
+
+
+func _on_button_6_pressed():
+	get_tree().quit()

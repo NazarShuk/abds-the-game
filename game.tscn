@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=57 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -7,8 +7,10 @@
 [ext_resource type="Script" path="res://LeahyApproaching.gd" id="4_ba12c"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
 [ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="5_grswa"]
+[ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="5_jibb3"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
+[ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="6_roq42"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
 [ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="10_5h2pt"]
 [ext_resource type="AudioStream" uid="uid://csfubc70y8sea" path="res://models/ggrrrrrrrr.mp3" id="10_o5q8n"]
@@ -76,6 +78,30 @@ properties/14/replication_mode = 1
 properties/15/path = NodePath("FakeFox:position")
 properties/15/spawn = true
 properties/15/replication_mode = 1
+properties/16/path = NodePath(".:azzu_angered")
+properties/16/spawn = true
+properties/16/replication_mode = 1
+properties/17/path = NodePath(".:do_silent_lunch")
+properties/17/spawn = true
+properties/17/replication_mode = 1
+properties/18/path = NodePath(".:do_vertical_camera")
+properties/18/spawn = true
+properties/18/replication_mode = 1
+properties/19/path = NodePath(".:death_timeout")
+properties/19/spawn = true
+properties/19/replication_mode = 1
+properties/20/path = NodePath(".:silent_lunch_duration")
+properties/20/spawn = true
+properties/20/replication_mode = 1
+properties/21/path = NodePath(".:landmine_death")
+properties/21/spawn = true
+properties/21/replication_mode = 1
+properties/22/path = NodePath("Mr_Azzu:position")
+properties/22/spawn = true
+properties/22/replication_mode = 1
+properties/23/path = NodePath("Mr_Azzu:rotation")
+properties/23/spawn = true
+properties/23/replication_mode = 1
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
@@ -86,19 +112,13 @@ viewport_path = NodePath("EvilLeahy/SubViewport")
 [sub_resource type="Theme" id="Theme_ciuim"]
 Label/constants/outline_size = 7
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_uxjch"]
-properties/0/path = NodePath("LeahyAngeredLabel:visible")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rb4lo"]
+properties/0/path = NodePath("CollectedBooksLabel:text")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("SomeoneDid:text")
+properties/1/path = NodePath("LeahyAngeredLabel:visible")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("SomeoneDid:theme_override_colors/font_color")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("CollectedBooksLabel:text")
-properties/3/spawn = true
-properties/3/replication_mode = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evicu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -113,6 +133,10 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_in5gf"]
 texture = ExtResource("5_wpkks")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks86s"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_jn2c6"]
 length = 0.001
@@ -272,6 +296,8 @@ albedo_texture = ExtResource("25_pddg1")
 [sub_resource type="BoxShape3D" id="BoxShape3D_3nmsg"]
 size = Vector3(1.01855, 1.13477, 0.827148)
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_y2xjx"]
+
 [node name="Game" type="Node3D"]
 script = ExtResource("1_y4eyb")
 
@@ -279,7 +305,7 @@ script = ExtResource("1_y4eyb")
 script = ExtResource("2_0aku0")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn", "res://book.tscn")
+_spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -293,12 +319,12 @@ one_shot = true
 
 [node name="Absences" type="Timer" parent="."]
 wait_time = 15.0
-autostart = true
 
 [node name="LeahyPosDiff" type="Timer" parent="."]
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 6
 
 [node name="Main" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -375,9 +401,6 @@ text = "Ms.Leahy has been angered..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Main"]
-replication_config = SubResource("SceneReplicationConfig_uxjch")
-
 [node name="TimerLabel" type="Label" parent="CanvasLayer/Main"]
 visible = false
 layout_mode = 1
@@ -393,23 +416,8 @@ theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 40
 text = "05:00"
 
-[node name="SomeoneDid" type="Label" parent="CanvasLayer/Main"]
-z_index = 265
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -92.0
-offset_bottom = -43.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Main"]
+replication_config = SubResource("SceneReplicationConfig_rb4lo")
 
 [node name="MultiPlayer" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -442,10 +450,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -57.0
-offset_top = -100.0
-offset_right = 57.0
-offset_bottom = -36.0
+offset_left = -400.0
+offset_top = -117.0
+offset_right = -5.0
+offset_bottom = -69.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -462,13 +470,82 @@ theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 54
+theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
-text = "Play"
+text = "play"
+
+[node name="reset_to_default" type="Button" parent="CanvasLayer/MultiPlayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -65.0
+offset_right = -5.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
+theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
+text = "click to reset"
+
+[node name="button" type="Button" parent="CanvasLayer/MultiPlayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -65.0
+offset_right = 400.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
+theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
+text = "click to refresh"
 
 [node name="connect" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
@@ -498,50 +575,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -8.0
-offset_right = 200.0
-offset_bottom = 83.0
+offset_top = -34.0
+offset_right = 400.0
+offset_bottom = 104.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1vjcu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MultiPlayer/ScrollContainer"]
 layout_mode = 2
-
-[node name="Button" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = 83.0
-offset_right = 200.0
-offset_bottom = 114.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
-text = "Refresh"
 
 [node name="Button3" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
@@ -613,21 +655,40 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
 text = "Achievements"
 
-[node name="Label" type="Label" parent="CanvasLayer/MultiPlayer"]
-visible = false
+[node name="Button6" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -488.0
-offset_top = -66.0
-grow_horizontal = 0
-grow_vertical = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = 208.0
+offset_right = 142.0
+offset_bottom = 245.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
+theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
-text = "*note this is a early build just for testing. the whole game  could change by release."
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
+text = "Quit"
 
 [node name="Label3" type="Label" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
@@ -636,16 +697,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -30.0
-offset_right = 200.0
-offset_bottom = -8.0
+offset_left = -5.0
+offset_top = -117.0
+offset_right = 400.0
+offset_bottom = -69.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 18
-text = "or join a friend"
+theme_override_font_sizes/font_size = 40
+text = "join a friend"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -675,6 +736,26 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_6hhxc")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6hhxc")
 text = "Multiplayer tutorial"
 
+[node name="Button4" type="Button" parent="CanvasLayer/MultiPlayer"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = -18.9999
+offset_right = 54.0
+offset_bottom = 104.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = -0.523598
+theme_override_styles/normal = SubResource("StyleBoxTexture_in5gf")
+theme_override_styles/hover = SubResource("StyleBoxTexture_in5gf")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_in5gf")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_in5gf")
+theme_override_styles/focus = SubResource("StyleBoxTexture_in5gf")
+
 [node name="LoadingRect" type="ColorRect" parent="CanvasLayer/MultiPlayer"]
 visible = false
 layout_mode = 1
@@ -702,25 +783,149 @@ text = "Connecting..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button4" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="ConfigPanel" type="ColorRect" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -34.0
+offset_right = -2.0
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Config" type="ScrollContainer" parent="CanvasLayer/MultiPlayer/ConfigPanel"]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -76.0
-offset_top = -18.9999
-offset_right = 54.0
-offset_bottom = 104.0
-grow_horizontal = 0
-grow_vertical = 0
-rotation = -0.523598
-theme_override_styles/normal = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/hover = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/focus = SubResource("StyleBoxTexture_in5gf")
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ks86s")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="NumBox9" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "books_to_collect"
+label_text = "Starting Notebooks"
+max = 9999.0
+min = 1.0
+
+[node name="NumBox" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "notebooks_per_player"
+label_text = "Notebooks per player"
+max = 9999.0
+
+[node name="NumBox2" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "max_deaths"
+label_text = "Max Deaths"
+max = 9999.0
+min = 1.0
+
+[node name="NumBox3" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "leahy_start_speed"
+label_text = "Leahy starting speed"
+max = 9999.0
+
+[node name="NumBox4" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "leahy_speed_per_notebook"
+label_text = "Leahy speed per notebook"
+max = 9999.0
+
+[node name="NumBox5" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "absence_chance"
+label_text = "Absence Chance"
+max = 9999.0
+min = 1.0
+
+[node name="NumBox6" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "absence_interval"
+label_text = "Absence Interval (sec)"
+max = 9999.0
+min = 1.0
+
+[node name="NumBox7" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "death_timeout"
+label_text = "Death Timeout"
+max = 100.0
+
+[node name="NumBox8" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "silent_lunch_duration"
+label_text = "Silent lunch duration"
+max = 99.0
+
+[node name="CheckBox" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_azzu_steal"
+label_text = "Mr.Azzu Anger"
+
+[node name="CheckBox2" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+visible = false
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_fox_help"
+label_text = "Mr.Fox Help"
+
+[node name="CheckBox3" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_leahy_appease"
+label_text = "Ms.Leahy appeasement"
+
+[node name="CheckBox4" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_absences"
+label_text = "Absences"
+
+[node name="CheckBox5" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_silent_lunch"
+label_text = "Silent Lunches"
+
+[node name="CheckBox6" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "landmine_death"
+label_text = "Bananas add to death count"
+
+[node name="CheckBox7" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_vertical_camera"
+label_text = "Enable *super* advenced camera"
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer"]
+layout_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
 libraries = {
@@ -1321,16 +1526,24 @@ surface_material_override/0 = SubResource("StandardMaterial3D_1tmmj")
 transform = Transform3D(0.999997, 0, -7.99361e-15, 0, 0.999994, 0, -7.95808e-13, 0, 0.999995, 0, 0, 0)
 shape = SubResource("BoxShape3D_3nmsg")
 
+[node name="Border" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Border"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 11.8845, 0)
+shape = SubResource("WorldBoundaryShape3D_y2xjx")
+
 [connection signal="timeout" from="SecondsLeft" to="." method="_on_seconds_left_timeout"]
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/reset_to_default" to="." method="_on_reset_to_default_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host_local" to="." method="_on_host_local_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button3" to="." method="_on_button_3_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button5" to="." method="_on_button_5_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/Button6" to="." method="_on_button_6_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button4" to="." method="_on_button_4_pressed"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
