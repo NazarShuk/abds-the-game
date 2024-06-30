@@ -29,11 +29,11 @@ func _ready():
 		books_collected = game_save.get_var()
 		deaths = game_save.get_var()
 
-func check(name):
-	return achievements[name]
+func check_achievement(achievement_name):
+	return achievements[achievement_name]
 
-func set_val(name,val):
-	achievements[name] = val
+func set_val(val_name,val):
+	achievements[val_name] = val
 	
 	var game_save = FileAccess.open(FILE_PATH,FileAccess.WRITE)
 	

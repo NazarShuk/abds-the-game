@@ -62,7 +62,8 @@ var leahy_diff_penalty = 0
 @export var death_timeout = 5 # DONE
 @export var silent_lunch_duration = 15 # DONE
 
-
+@onready var player_list_text = $CanvasLayer/Lobby/playerListText
+var players_spawned = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -77,6 +78,8 @@ func _ready():
 	peer.lobby_created.connect(_on_lobby_connected)
 	peer.lobby_joined.connect(_on_lobby_joined)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
+	multiplayer.server_disconnected.connect(_on_disconnect_from_server)
+	peer.lobby_kicked.connect(_on_disconnect_from_server)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -157,24 +160,49 @@ func join_lobby(id):
 	$CanvasLayer/MultiPlayer/LoadingRect.show()
 
 func _on_connected_to_server():
-	pass
+	$CanvasLayer/Lobby.show()
+	$CanvasLayer/MultiPlayer.hide()
+	
+	if !multiplayer.is_server():
+		$CanvasLayer/Lobby/ConfigPanel.hide()
+	
+	if !debug_host:
+		receive_steam_usr.rpc_id(1,peer.get_unique_id(),Steam.getPersonaName())
+	
+
+@rpc("any_peer","call_remote")
+func receive_steam_usr(id,name):
+	players[id].username = name
+
+
+func disconenct_btn():
+	
+	multiplayer.multiplayer_peer.close()
+	get_tree().reload_current_scene()
+
+func _on_disconnect_from_server():
+	print("grey jumpscare")
+	is_multiplayer = false
+	var t = Timer.new()
+	t.set_wait_time(1)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	t.connect("timeout",go_back)
+	# TODO
+	
+func go_back():
+	get_tree().change_scene_to_file("res://game.tscn")
 
 func _on_peer_connected(id = 1):
 	print("_on_peer_connected")
 	#$CanvasLayer/MultiPlayer/LoadingRect.show()
-	
-	
-	var packed_player = preload("res://player.tscn")
-	var player = packed_player.instantiate()
-	
-	player.set_multiplayer_authority(id)
-	player.name = str(id)
-	
-	
-	#call_deferred("add_child",player)
-	#add_player.rpc(id)
-	#for pl_id in players_ids:
-	#	add_player.rpc_id(id,pl_id)
+	if !players_spawned:
+		$CanvasLayer/Lobby.show()
+		$CanvasLayer/MultiPlayer.hide()
+		$CanvasLayer/Lobby/Button7.show()
+	else:
+		peer.disconnect_peer(id)
 	
 	
 	players[id] = {
@@ -186,18 +214,43 @@ func _on_peer_connected(id = 1):
 	}
 	players_ids.append(id)
 	books_to_collect += notebooks_per_player
+	
+	player_list_text.text = ""
+	for pl_id in players_ids:
+		player_list_text.text += players[pl_id].username + "\n"
 
+func pre_start_game_btn():
+	spawn_players()
+	pre_start_game.rpc()
 
+func spawn_players():
+	for pl_id in players_ids:
+		var packed_player = preload("res://player.tscn")
+		var player = packed_player.instantiate()
 
+		player.set_multiplayer_authority(pl_id)
+		player.name = str(pl_id)
+
+		call_deferred("add_child",player,false)
+	players_spawned = true
+
+@rpc("authority","call_local")
+func pre_start_game():
+	$CanvasLayer/Lobby.hide()
 
 	
 func _on_peer_disconnect(id):
-	get_node(str(id)).queue_free()
-	players.erase(players[id])
+	if get_node_or_null(str(id)):
+		get_node(str(id)).queue_free()
 	
+	players.erase(id)
 	players_ids.erase(id)
 	
-	books_to_collect -= 1
+	books_to_collect -= notebooks_per_player
+	
+	player_list_text.text = ""
+	for pl_id in players_ids:
+		player_list_text.text += players[pl_id].username + "\n"
 
 
 func _on_connect_pressed():
@@ -597,6 +650,7 @@ func _on_pacer_speed_increase_timeout():
 
 
 func _on_leahy_pos_diff_timeout():
+	if !is_multiplayer: return
 	if !multiplayer.is_server(): return
 	
 	leahy_diff = evil_leahy.global_position.distance_to(leahy_last_pos)

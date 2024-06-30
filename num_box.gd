@@ -5,8 +5,8 @@ extends ColorRect
 @export var label_text : String
 @export var is_disabled : bool
 
-@export var max : float
-@export var min : float
+@export var max_val : float
+@export var min_val : float
 
 var initial_state
 
@@ -28,7 +28,7 @@ func go_to_inital():
 func _on_line_edit_text_changed(new_text):
 	game.set(param_name, new_text.to_float())
 	var val = new_text.to_float()
-	if val > max:
-		$LineEdit.text = str(max)
-	if val < min:
-		$LineEdit.text = str(min)
+	if val > max_val:
+		$LineEdit.text = str(max_val)
+	if val < min_val:
+		$LineEdit.text = str(min_val)

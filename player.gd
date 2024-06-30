@@ -79,17 +79,17 @@ func _physics_process(delta):
 		var clr:Color = $CanvasLayer/Control/SomeoneDid.get("theme_override_colors/font_color")
 		$CanvasLayer/Control/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.025))
 		
-		if Achievements.check("impossible_ending"):
+		if Achievements.check_achievement("impossible_ending"):
 			perfect.visible = false
 			default.visible = false
 			impossible.visible = true
 			freaky.visible = false
-		elif Achievements.check("perfect_ending"):
+		elif Achievements.check_achievement("perfect_ending"):
 			perfect.visible = true
 			default.visible = false
 			impossible.visible = false
 			freaky.visible = false
-		elif Achievements.check("freaky_ending"):
+		elif Achievements.check_achievement("freaky_ending"):
 			perfect.visible = false
 			default.visible = false
 			impossible.visible = false

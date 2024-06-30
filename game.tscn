@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=58 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -137,6 +137,11 @@ texture = ExtResource("5_wpkks")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks86s"]
 bg_color = Color(1, 1, 1, 1)
 border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_u6ine"]
+properties/0/path = NodePath("playerListText:text")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_jn2c6"]
 length = 0.001
@@ -783,21 +788,170 @@ text = "Connecting..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ConfigPanel" type="ColorRect" parent="CanvasLayer/MultiPlayer"]
+[node name="Lobby" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 64
+text = "Lobby"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -190.0
+offset_right = 198.0
+offset_bottom = -119.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 60
+text = "Players"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -221.0
+offset_top = -190.0
+offset_right = -1.0
+offset_bottom = -142.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 40
+text = "Game config"
+horizontal_alignment = 1
+
+[node name="playerListText" type="Label" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -117.0
+offset_right = 176.0
+offset_bottom = 8.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 52
+text = "player
+player"
+
+[node name="Button7" type="Button" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.5
+offset_top = -210.0
+offset_right = 200.5
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
+theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
+text = "start da gaem"
+
+[node name="Button8" type="Button" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -132.0
+offset_right = 201.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
+theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
+text = "Disconnect"
+
+[node name="ConfigPanel" type="ColorRect" parent="CanvasLayer/Lobby"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -34.0
-offset_right = -2.0
-offset_bottom = 103.0
+offset_left = 240.0
+offset_top = -125.0
+offset_right = 638.0
+offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Config" type="ScrollContainer" parent="CanvasLayer/MultiPlayer/ConfigPanel"]
+[node name="Config" type="ScrollContainer" parent="CanvasLayer/Lobby/ConfigPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -807,131 +961,115 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ks86s")
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Lobby/ConfigPanel/Config"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="NumBox9" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox9" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "books_to_collect"
 label_text = "Starting Notebooks"
-max = 9999.0
-min = 1.0
 
-[node name="NumBox" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "notebooks_per_player"
 label_text = "Notebooks per player"
-max = 9999.0
 
-[node name="NumBox2" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "max_deaths"
 label_text = "Max Deaths"
-max = 9999.0
-min = 1.0
 
-[node name="NumBox3" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox3" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "leahy_start_speed"
 label_text = "Leahy starting speed"
-max = 9999.0
 
-[node name="NumBox4" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "leahy_speed_per_notebook"
 label_text = "Leahy speed per notebook"
-max = 9999.0
 
-[node name="NumBox5" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox5" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "absence_chance"
 label_text = "Absence Chance"
-max = 9999.0
-min = 1.0
 
-[node name="NumBox6" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox6" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "absence_interval"
 label_text = "Absence Interval (sec)"
-max = 9999.0
-min = 1.0
 
-[node name="NumBox7" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox7" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "death_timeout"
 label_text = "Death Timeout"
-max = 100.0
 
-[node name="NumBox8" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox8" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "silent_lunch_duration"
 label_text = "Silent lunch duration"
-max = 99.0
 
-[node name="CheckBox" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+[node name="CheckBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_azzu_steal"
 label_text = "Mr.Azzu Anger"
 
-[node name="CheckBox2" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+[node name="CheckBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 visible = false
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_fox_help"
 label_text = "Mr.Fox Help"
 
-[node name="CheckBox3" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+[node name="CheckBox3" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_leahy_appease"
 label_text = "Ms.Leahy appeasement"
 
-[node name="CheckBox4" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+[node name="CheckBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_absences"
 label_text = "Absences"
 
-[node name="CheckBox5" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+[node name="CheckBox5" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_silent_lunch"
 label_text = "Silent Lunches"
 
-[node name="CheckBox6" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+[node name="CheckBox6" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "landmine_death"
 label_text = "Bananas add to death count"
 
-[node name="CheckBox7" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+[node name="CheckBox7" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_vertical_camera"
 label_text = "Enable *super* advenced camera"
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer"]
 layout_mode = 2
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/MultiPlayer/ConfigPanel/Config/VBoxContainer"]
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer"]
 layout_mode = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
-libraries = {
-"": SubResource("AnimationLibrary_rx4qs")
-}
-autoplay = "start"
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Lobby"]
+replication_config = SubResource("SceneReplicationConfig_u6ine")
 
 [node name="Disclaimer" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -961,6 +1099,12 @@ This game was NOT made to offend or harrass anyone.
 Do not take this game seriously :)"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_rx4qs")
+}
+autoplay = "start"
 
 [node name="Music0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_grswa")
@@ -1546,6 +1690,8 @@ shape = SubResource("WorldBoundaryShape3D_y2xjx")
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button6" to="." method="_on_button_6_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
+[connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]
