@@ -48,6 +48,7 @@ theme_override_font_sizes/font_size = 31
 text = "Thanks to our sponsors:"
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.001
 autostart = true
 
 [node name="Timer2" type="Timer" parent="."]

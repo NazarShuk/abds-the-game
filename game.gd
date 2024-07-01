@@ -65,6 +65,9 @@ var leahy_diff_penalty = 0
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
 var players_spawned = false
 
+func _init():
+	is_multiplayer = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -86,6 +89,8 @@ func _ready():
 func _process(_delta):
 	
 	if is_multiplayer && multiplayer.is_server():
+		update_player_text()
+		
 		if game_started:
 			collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
 		else:
@@ -95,8 +100,8 @@ func _process(_delta):
 		$EvilLeahy/SubViewport/skibidiCamera.global_rotation_degrees.x = -90
 		$EvilLeahy/SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
 		
-		#var clr:Color = $CanvasLayer/Main/SomeoneDid.get("theme_override_colors/font_color")
-		#$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.05))
+		var clr:Color = $CanvasLayer/Main/SomeoneDid.get("theme_override_colors/font_color")
+		$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.025))
 		
 		if fox_follow && do_fox_help:
 			mr_fox.update_target_location(book_pos)
@@ -124,6 +129,8 @@ func _process(_delta):
 		
 		if closest:
 			get_tree().call_group("enemies","update_target_location",closest)
+			
+	
 
 
 
@@ -165,9 +172,9 @@ func _on_connected_to_server():
 	
 	if !multiplayer.is_server():
 		$CanvasLayer/Lobby/ConfigPanel.hide()
-	
-	if !debug_host:
-		receive_steam_usr.rpc_id(1,peer.get_unique_id(),Steam.getPersonaName())
+
+	receive_steam_usr.rpc_id(1,peer.get_unique_id(),Steam.getPersonaName())
+	print("connected to server")
 	
 
 @rpc("any_peer","call_remote")
@@ -196,6 +203,7 @@ func go_back():
 
 func _on_peer_connected(id = 1):
 	print("_on_peer_connected")
+	
 	#$CanvasLayer/MultiPlayer/LoadingRect.show()
 	if !players_spawned:
 		$CanvasLayer/Lobby.show()
@@ -215,9 +223,8 @@ func _on_peer_connected(id = 1):
 	players_ids.append(id)
 	books_to_collect += notebooks_per_player
 	
-	player_list_text.text = ""
-	for pl_id in players_ids:
-		player_list_text.text += players[pl_id].username + "\n"
+	update_player_text()
+	
 
 func pre_start_game_btn():
 	spawn_players()
@@ -248,9 +255,8 @@ func _on_peer_disconnect(id):
 	
 	books_to_collect -= notebooks_per_player
 	
-	player_list_text.text = ""
-	for pl_id in players_ids:
-		player_list_text.text += players[pl_id].username + "\n"
+	update_player_text()
+	
 
 
 func _on_connect_pressed():
@@ -492,9 +498,9 @@ func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
 
 func info_text(info):
-	#$CanvasLayer/Main/SomeoneDid.text = info
-	#$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
-	get_node("1").info_text.rpc(info)
+	$CanvasLayer/Main/SomeoneDid.text = info
+	$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
+	#get_node("1").info_text.rpc(info)
 
 func hide_menu():
 	$CanvasLayer/MultiPlayer.hide()
@@ -686,3 +692,10 @@ func _on_reset_to_default_pressed():
 
 func _on_button_6_pressed():
 	get_tree().quit()
+
+func update_player_text():
+	var final_text = ""
+	for pl_id in players_ids:
+		final_text += players[pl_id].username + "\n"
+	player_list_text.text = final_text
+

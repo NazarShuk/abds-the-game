@@ -22,6 +22,10 @@ config/icon="res://azzuNotFound.png"
 config/windows_native_icon="res://favicon.ico"
 boot_splash/minimum_display_time=1000
 
+[audio]
+
+driver/enable_input=true
+
 [autoload]
 
 EndGameSingleton="*res://end_game_singleton.gd"

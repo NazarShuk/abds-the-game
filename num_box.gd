@@ -17,9 +17,6 @@ func _ready():
 	
 func _process(_delta):
 	$LineEdit.editable = !is_disabled
-	
-	
-
 
 func go_to_inital():
 	$LineEdit.text = initial_state
@@ -30,5 +27,5 @@ func _on_line_edit_text_changed(new_text):
 	var val = new_text.to_float()
 	if val > max_val:
 		$LineEdit.text = str(max_val)
-	if val < min_val:
+	if val < min_val && len(new_text) > 0:
 		$LineEdit.text = str(min_val)

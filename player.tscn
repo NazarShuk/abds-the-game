@@ -260,6 +260,7 @@ bus = &"Dialogs"
 
 [node name="nametag" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.93642, 0)
+billboard = 1
 text = "name"
 font = ExtResource("6_l1x2u")
 font_size = 41
@@ -298,6 +299,7 @@ wait_time = 2.0
 autostart = true
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
+process_mode = 4
 layer = 5
 visible = false
 
@@ -313,8 +315,6 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer2/SubViewportContainer"]
 handle_input_locally = false
 use_occlusion_culling = true
-audio_listener_enable_2d = true
-audio_listener_enable_3d = true
 size = Vector2i(1280, 720)
 render_target_update_mode = 0
 
@@ -505,24 +505,6 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 51
 text = "You got silent lunch
 you can leave in 15"
-
-[node name="SomeoneDid" type="Label" parent="CanvasLayer/Control"]
-top_level = true
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -123.0
-offset_bottom = -75.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_l1x2u")
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
 
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false

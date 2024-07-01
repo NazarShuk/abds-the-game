@@ -119,6 +119,12 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("LeahyAngeredLabel:visible")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("SomeoneDid:text")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("SomeoneDid:theme_override_colors/font_color")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evicu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -179,7 +185,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_iyet2"]
@@ -423,6 +429,24 @@ text = "05:00"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Main"]
 replication_config = SubResource("SceneReplicationConfig_rb4lo")
+
+[node name="SomeoneDid" type="Label" parent="CanvasLayer/Main"]
+top_level = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -123.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="MultiPlayer" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -970,54 +994,69 @@ layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "books_to_collect"
 label_text = "Starting Notebooks"
+max_val = 999.0
 
 [node name="NumBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "notebooks_per_player"
 label_text = "Notebooks per player"
+max_val = 999.0
 
 [node name="NumBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "max_deaths"
 label_text = "Max Deaths"
+max_val = 999.0
+min_val = 1.0
 
 [node name="NumBox3" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "leahy_start_speed"
 label_text = "Leahy starting speed"
+max_val = 999.0
+min_val = 1.0
 
 [node name="NumBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "leahy_speed_per_notebook"
 label_text = "Leahy speed per notebook"
+max_val = 999.0
 
 [node name="NumBox5" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "absence_chance"
 label_text = "Absence Chance"
+max_val = 999.0
+min_val = 2.0
 
 [node name="NumBox6" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "absence_interval"
 label_text = "Absence Interval (sec)"
+max_val = 999.0
+min_val = 1.0
 
 [node name="NumBox7" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "death_timeout"
 label_text = "Death Timeout"
+max_val = 999.0
+min_val = 1.0
 
 [node name="NumBox8" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "silent_lunch_duration"
 label_text = "Silent lunch duration"
+max_val = 999.0
+min_val = 1.0
 
 [node name="CheckBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
@@ -1072,6 +1111,7 @@ layout_mode = 2
 replication_config = SubResource("SceneReplicationConfig_u6ine")
 
 [node name="Disclaimer" type="ColorRect" parent="CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1104,7 +1144,6 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_rx4qs")
 }
-autoplay = "start"
 
 [node name="Music0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_grswa")

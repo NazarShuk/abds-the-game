@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const OG_SPEED = 6.0
+const OG_SPEED = 5.0
 var SPEED = OG_SPEED
 var is_boosted = false
 
@@ -54,6 +54,9 @@ func _enter_tree():
 		$CanvasLayer.show()
 		get_cur_item()
 		get_parent().hide_menu()
+		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_2d = true
+		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_3d = true
+		$CanvasLayer2.process_mode = Node.PROCESS_MODE_INHERIT
 		#$Local.stream_mix_rate = float(current_sample_rate)
 		
 
@@ -76,8 +79,6 @@ func _physics_process(delta):
 			camera_3d.h_offset = 0
 			camera_3d.v_offset = 0
 		
-		var clr:Color = $CanvasLayer/Control/SomeoneDid.get("theme_override_colors/font_color")
-		$CanvasLayer/Control/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.025))
 		
 		if Achievements.check_achievement("impossible_ending"):
 			perfect.visible = false
@@ -483,8 +484,7 @@ func report_map_bug():
 		],
 		"components": [],
 		"actions": {},
-		"username": "Debug"
-	}
+		"username": "Debug"	}
 
 	http.request(
 		"https://discord.com/api/webhooks/1249927945716367371/zPJNBJ9EyCH-nP7musr59IcOZ2TJCqWnGURASuKvLVL3Ge5qyFdHH_LkyoUSqBhjpxgq",
@@ -515,7 +515,3 @@ func server_pos(pos: Vector3):
 func _on_item_delay_timeout():
 	can_get_item = true
 
-@rpc("authority","call_local")
-func info_text(text):
-	$CanvasLayer/Control/SomeoneDid.text = text
-	$CanvasLayer/Control/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
