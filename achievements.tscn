@@ -1,11 +1,123 @@
-[gd_scene load_steps=4 format=3 uid="uid://ci0ihc8o740fp"]
+[gd_scene load_steps=25 format=3 uid="uid://ci0ihc8o740fp"]
 
 [ext_resource type="Script" path="res://achievementiks.gd" id="1_stpc6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_un4ex"]
 [ext_resource type="AudioStream" uid="uid://oep1yjhjspd5" path="res://Meatball Parade_01.mp3" id="2_pdwv6"]
+[ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="4_akldp"]
+[ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="5_4kpgw"]
+[ext_resource type="Texture2D" uid="uid://cbdunl7jdeyq" path="res://freaky.png" id="6_bjwco"]
+[ext_resource type="Texture2D" uid="uid://e481qnldgi3y" path="res://player_cool.png" id="7_fp6pf"]
+[ext_resource type="Texture2D" uid="uid://dai6qepdbfr8d" path="res://player_cool_back.png" id="8_jo4di"]
+[ext_resource type="Texture2D" uid="uid://hdblcb4bt73n" path="res://impossibleend.png" id="9_5oead"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_botq8"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(1, 1, 1, 1)
+ground_bottom_color = Color(1, 1, 1, 1)
+ground_horizon_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Sky" id="Sky_4sfde"]
+sky_material = SubResource("ProceduralSkyMaterial_botq8")
+
+[sub_resource type="Environment" id="Environment_7xht7"]
+background_mode = 2
+sky = SubResource("Sky_4sfde")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_kejq5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3bgu"]
+albedo_texture = ExtResource("4_akldp")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_00cuo"]
+albedo_texture = ExtResource("5_4kpgw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgwl0"]
+albedo_texture = ExtResource("6_bjwco")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_py45y"]
+albedo_texture = ExtResource("6_bjwco")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gqdcl"]
+albedo_texture = ExtResource("7_fp6pf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgt2i"]
+albedo_texture = ExtResource("8_jo4di")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e6cmo"]
+albedo_texture = ExtResource("9_5oead")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ry0jn"]
+albedo_texture = ExtResource("9_5oead")
+
+[sub_resource type="Animation" id="Animation_4oxbx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -1.90343)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_aib1r"]
+resource_name = "spinging"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vf8lg"]
+_data = {
+"RESET": SubResource("Animation_4oxbx"),
+"spinging": SubResource("Animation_aib1r")
+}
 
 [node name="Achievements" type="Node2D"]
 script = ExtResource("1_stpc6")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7xht7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -62,9 +174,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -186.0
+offset_left = -388.0
 offset_top = 208.0
-offset_right = 186.0
+offset_right = -16.0
 offset_bottom = 239.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -76,9 +188,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -177.5
+offset_left = -379.5
 offset_top = -110.0
-offset_right = 177.5
+offset_right = -24.5
 offset_bottom = 110.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -86,10 +198,118 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScrollContainer"]
 layout_mode = 2
 
+[node name="ItemList" type="ItemList" parent="CanvasLayer"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -226.0
+offset_top = -110.0
+offset_right = -47.0
+offset_bottom = 239.0
+grow_horizontal = 0
+grow_vertical = 2
+item_count = 4
+item_0/text = "Default"
+item_1/text = "𝓯𝓻𝓮𝓪𝓴𝔂"
+item_2/text = "Perfect"
+item_3/text = "Impossible"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = -110.0
+offset_right = 414.0
+offset_bottom = 239.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(350, 349)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_pdwv6")
 volume_db = -3.0
 autoplay = true
 bus = &"Music"
 
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.90343)
+
+[node name="Default" type="Node3D" parent="Player"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Default"]
+transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_i3bgu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Default"]
+transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_00cuo")
+
+[node name="Freaky" type="Node3D" parent="Player"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Freaky"]
+transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mgwl0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Freaky"]
+transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_py45y")
+
+[node name="Perfect" type="Node3D" parent="Player"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Perfect"]
+transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_gqdcl")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Perfect"]
+transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hgt2i")
+
+[node name="Impossible" type="Node3D" parent="Player"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Impossible"]
+transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_e6cmo")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Impossible"]
+transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_kejq5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ry0jn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_vf8lg")
+}
+autoplay = "spinging"
+
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[connection signal="item_selected" from="CanvasLayer/ItemList" to="." method="_on_item_list_item_selected"]

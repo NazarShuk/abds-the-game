@@ -4,13 +4,16 @@ const FILE_PATH = "user://audio.save"
 
 var music_vol
 var sfx_vol
+var mic_threshold
 
 func save_values():
 	var game_save = FileAccess.open(FILE_PATH,FileAccess.WRITE)
 	
 	game_save.store_var(music_vol)
 	game_save.store_var(sfx_vol)
+	game_save.store_var(mic_threshold)
 	game_save.close()
+	
 
 func load_values_and_apply():
 	if FileAccess.file_exists(FILE_PATH):
@@ -18,6 +21,7 @@ func load_values_and_apply():
 		
 		music_vol = game_save.get_var()
 		sfx_vol = game_save.get_var()
+		mic_threshold = game_save.get_var()
 		
 		if music_vol:
 			AudioServer.set_bus_volume_db(1,music_vol)
@@ -26,3 +30,6 @@ func load_values_and_apply():
 			AudioServer.set_bus_volume_db(2,sfx_vol)
 			AudioServer.set_bus_volume_db(3,sfx_vol)
 			AudioServer.set_bus_volume_db(4,sfx_vol)
+		
+		
+		game_save.close()

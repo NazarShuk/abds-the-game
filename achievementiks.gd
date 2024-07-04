@@ -1,5 +1,11 @@
 extends Node2D
 
+@onready var default = $Player/Default
+@onready var freaky = $Player/Freaky
+@onready var perfect = $Player/Perfect
+@onready var impossible = $Player/Impossible
+
+
 func _ready():
 	for achievement in Achievements.achievements:
 		if Achievements.achievements[achievement] == true:
@@ -15,8 +21,33 @@ func _ready():
 			
 			
 	$CanvasLayer/Label2.text = str(Achievements.books_collected) + " books collected"
-	$CanvasLayer/Label3.text = str(Achievements.deaths) + " times died"
-
+	$CanvasLayer/Label3.text = str(Achievements.deaths) + " times died" 
+	
+	var skins = $Player.get_children()
+	for skin in skins:
+		if skin is Node3D:
+			skin.hide()
+	if Achievements.picked_skin == 3:
+		impossible.show()
+	if Achievements.picked_skin == 2:
+		perfect.show()
+	if Achievements.picked_skin == 1:
+		freaky.show()
+	else:
+		default.show()
 
 func _on_button_pressed():
 	get_tree().change_scene_to_file("res://game.tscn")
+
+
+func _on_item_list_item_selected(index):
+	var children = $Player.get_children()
+	
+	Achievements.picked_skin = index
+	Achievements.save_all()
+	
+	for child in children:
+		if child is Node3D:
+			child.hide()
+	
+	children[index].show()

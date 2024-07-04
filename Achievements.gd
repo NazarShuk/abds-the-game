@@ -18,6 +18,8 @@ var achievements = {
 	"100_books":false
 }
 
+var picked_skin = 0
+
 var books_collected = 0
 var deaths = 0
 
@@ -25,9 +27,17 @@ func _ready():
 	if FileAccess.file_exists(FILE_PATH):
 		var game_save = FileAccess.open(FILE_PATH,FileAccess.READ)
 		
+		var ach = achievements
+		
 		achievements = game_save.get_var()
+		if !typeof(achievements) == TYPE_DICTIONARY:
+			achievements = ach
+		
 		books_collected = game_save.get_var()
 		deaths = game_save.get_var()
+		picked_skin = game_save.get_var()
+		if !picked_skin:
+			picked_skin = 0
 
 func check_achievement(achievement_name):
 	return achievements[achievement_name]
@@ -48,4 +58,5 @@ func save_all():
 	game_save.store_var(achievements)
 	game_save.store_var(deaths)
 	game_save.store_var(books_collected)
+	game_save.store_var(picked_skin)
 	game_save.close()

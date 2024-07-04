@@ -48,6 +48,7 @@ var leahy_diff_penalty = 0
 @export var do_azzu_steal = true # DONE
 @export var do_fox_help = true # DONE
 @export var do_leahy_appease = true # DONE
+@export var do_gainy_spawn = true # DONE
 @export var do_absences = true # DONE
 @export var do_silent_lunch = true # DONE
 @export var landmine_death = false # DONE
@@ -59,8 +60,16 @@ var leahy_diff_penalty = 0
 @export var leahy_speed_per_notebook = 0.5 # DONE
 @export var absence_chance = 15 # DONE
 @export var absence_interval = 15 # DONE
+@export var gainy_attack_chance = 20 # DONE
+@export var gainy_attack_interval = 30
 @export var death_timeout = 5 # DONE
 @export var silent_lunch_duration = 15 # DONE
+
+@export var do_achievements = true
+
+
+@export var shop : StaticBody3D
+
 
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
 var players_spawned = false
@@ -70,7 +79,7 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	AudioServer.set_bus_mute(1,false)
 	AudioServer.set_bus_mute(2,false)
@@ -100,13 +109,19 @@ func _process(_delta):
 		$EvilLeahy/SubViewport/skibidiCamera.global_rotation_degrees.x = -90
 		$EvilLeahy/SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
 		
-		var clr:Color = $CanvasLayer/Main/SomeoneDid.get("theme_override_colors/font_color")
-		$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.025))
+		var clr:Color = $CanvasLayer2/SomeoneDid.get("theme_override_colors/font_color")
+		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.025))
 		
 		if fox_follow && do_fox_help:
 			mr_fox.update_target_location(book_pos)
 		else:
 			mr_fox.update_target_location(FOX_OG_POS)
+			
+		if gainy_attack:
+			if gainy_target:
+				ms_gainy.update_target_location(gainy_target.global_position)
+		else:
+			ms_gainy.go_back()
 		
 	if game_started and !leahy_appeased and multiplayer.is_server() and !absent:
 		var closest
@@ -129,7 +144,28 @@ func _process(_delta):
 		
 		if closest:
 			get_tree().call_group("enemies","update_target_location",closest)
-			
+		else:
+			print("leahy didnt find a player")
+	if !game_started:
+		
+		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
+		
+		var initial_nodes = 0
+		
+		for setting in setting_nodes:
+			if typeof(setting.initial_state) == TYPE_STRING:
+				if setting.initial_state.to_float() == setting.get_da_val():
+					initial_nodes += 1
+			else:
+				if setting.initial_state == setting.get_da_val():
+					initial_nodes += 1
+		
+		if initial_nodes == setting_nodes.size():
+			do_achievements = true
+		else:
+			do_achievements = false
+		
+		$CanvasLayer/Lobby/achievement.visible = !do_achievements
 	
 
 
@@ -173,13 +209,14 @@ func _on_connected_to_server():
 	if !multiplayer.is_server():
 		$CanvasLayer/Lobby/ConfigPanel.hide()
 
-	receive_steam_usr.rpc_id(1,peer.get_unique_id(),Steam.getPersonaName())
 	print("connected to server")
 	
 
-@rpc("any_peer","call_remote")
-func receive_steam_usr(id,name):
-	players[id].username = name
+@rpc("any_peer","call_local")
+func receive_steam_usr(id,username):
+	if !multiplayer.is_server(): return
+	print(id,username)
+	players[id].username = username
 
 
 func disconenct_btn():
@@ -208,14 +245,16 @@ func _on_peer_connected(id = 1):
 	if !players_spawned:
 		$CanvasLayer/Lobby.show()
 		$CanvasLayer/MultiPlayer.hide()
-		$CanvasLayer/Lobby/Button7.show()
+		if multiplayer.is_server():
+			$CanvasLayer/Lobby/Button7.show()
+			$CanvasLayer/Lobby/Label4/reset_to_default.show()
 	else:
 		peer.disconnect_peer(id)
 	
 	
 	players[id] = {
 		"id":id,
-		"username":str(id),
+		#"username":str(id),
 		"books_collected":0,
 		"is_dead":false,
 		"deaths":0
@@ -224,7 +263,12 @@ func _on_peer_connected(id = 1):
 	books_to_collect += notebooks_per_player
 	
 	update_player_text()
-	
+	await get_tree().create_timer(2).timeout
+	request_steam_usr.rpc_id(id)
+
+@rpc("any_peer","call_local")
+func request_steam_usr():
+	receive_steam_usr.rpc(peer.get_unique_id(),Steam.getPersonaName())
 
 func pre_start_game_btn():
 	spawn_players()
@@ -244,7 +288,7 @@ func spawn_players():
 @rpc("authority","call_local")
 func pre_start_game():
 	$CanvasLayer/Lobby.hide()
-
+	$CanvasLayer/MultiPlayer.hide()
 	
 func _on_peer_disconnect(id):
 	if get_node_or_null(str(id)):
@@ -278,25 +322,29 @@ func on_collect_book(id,book_name):
 			var spawnpoint = book_spawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
 			book_pos = spawnpoint
-			spawn_book.rpc(spawnpoint,book_name)
+			get_node(NodePath(book_name)).global_position = book_pos
 			
 			if total == 1:
 				start_da_game.rpc()
 				canPlayersMove = false
-			elif total == books_to_collect:
+			elif total >= books_to_collect:
 				
 				var total_deaths = 0
 				for idd in players_ids:
 					total_deaths += players[idd].deaths
 				
-				if total_deaths > 3:
+				if do_achievements:
+					if total_deaths == 0:
+						# impossible ending
+						end_game.rpc("imp")
+					elif total_deaths <= 3:
+						# perfect run
+						end_game.rpc("perfect")
+					elif total_deaths > 3:
+						end_game.rpc("normal")
+				else:
 					end_game.rpc("normal")
-				elif total_deaths == 0:
-					# impossible ending
-					end_game.rpc("imp")
-				elif total_deaths <= 3:
-					# perfect run
-					end_game.rpc("perfect")
+				
 			
 			total_books = total
 			
@@ -305,6 +353,9 @@ func on_collect_book(id,book_name):
 			info_text(player_name + " collected a book!")
 			sec_left += 10
 			fox_follow = false
+			
+			gainy_attack = false
+			gainy_target = null
 		else:
 			
 			
@@ -312,11 +363,7 @@ func on_collect_book(id,book_name):
 			var spawnpoint = $LandMineSpawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
 			spawnpoint.y = 0.143
-			spawn_book.rpc(spawnpoint,book_name)
-		
-@rpc("authority","call_local")
-func spawn_book(pos,old_book_name):
-	get_node(str(old_book_name)).global_position = pos
+			$Landmine.position = spawnpoint
 	
 	
 @rpc("any_peer","call_local")
@@ -346,6 +393,7 @@ func start_da_game():
 		if !debug_host:
 			Steam.setLobbyJoinable(lobby_id,false)
 		leahy_look = true
+		$GainyTimer.start(gainy_attack_interval)
 
 func _on_host_local_pressed():
 	peer = ENetMultiplayerPeer.new()
@@ -378,15 +426,20 @@ func _on_timer_timeout():
 func update_approching_label(meters):
 	$CanvasLayer/Main/TextureRect/Label.text = str(round(meters))
 
+var friends_lobbies = {}
+
 func get_friends_lobbies():
+	friends_lobbies = {}
+	var item_list : ItemList = $"CanvasLayer/MultiPlayer/ItemList"
 	
-	for child in $CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.get_children():
-		child.queue_free()
+	#for child in $CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.get_children():
+	#	child.queue_free()
+	item_list.clear()
 	
 	var friend_count = Steam.getFriendCount()
 	
 	var total_playing = 0
-	
+
 	for i in range(0,friend_count):
 		var friend = Steam.getFriendByIndex(i,Steam.FRIEND_FLAG_ALL)
 		var friend_name = Steam.getFriendPersonaName(friend)
@@ -396,28 +449,30 @@ func get_friends_lobbies():
 		if !game_played.is_empty():
 			if game_played.id == OS.get_environment("SteamAppID").to_int():
 				if game_played.lobby:
-					var btn = Button.new()
-					btn.text = "Join " + friend_name
-					btn.connect("pressed",Callable(self,"join_lobby").bind(game_played.lobby))
-				
-					$CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.add_child(btn)
+					#var btn = Button.new()
+					#btn.text = "Join " + friend_name
+					#btn.connect("pressed",Callable(self,"join_lobby").bind(game_played.lobby))
+					
+					var idx = item_list.add_item("Join " + friend_name)
+					friends_lobbies[idx] = game_played.lobby
+					
+					#$CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.add_child(btn)
 					total_playing += 1
 				
 	if total_playing == 0:
-		var label : Label = Label.new()
-		label.text = "no friends are playing :("
+		item_list.add_item("No friends are playing :(")
 		
-		$CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.add_child(label)
+		#$CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.add_child(label)
 
 
 func _on_button_pressed():
 	get_friends_lobbies()
 
 @rpc("any_peer","call_local")
-func set_played_dead(id,is_dead):
+func set_player_dead(id,is_dead,do_deaths):
 	if multiplayer.is_server():
 		players[id].is_dead = is_dead
-		if is_dead:
+		if is_dead and do_deaths:
 			players[id].deaths += 1
 			var total_deaths = 0
 			for pl_id in players_ids:
@@ -430,7 +485,6 @@ func set_played_dead(id,is_dead):
 			
 			if total_deaths >= max_deaths:
 				end_game.rpc("worst")
-
 
 
 func _on_seconds_left_timeout():
@@ -498,8 +552,8 @@ func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
 
 func info_text(info):
-	$CanvasLayer/Main/SomeoneDid.text = info
-	$CanvasLayer/Main/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
+	$CanvasLayer2/SomeoneDid.text = info
+	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
 	#get_node("1").info_text.rpc(info)
 
 func hide_menu():
@@ -562,17 +616,19 @@ func _on_absences_timeout():
 @rpc("authority","call_local")
 func set_absent(is_absent : bool):
 	
-	var environment : Environment = $WorldEnvironment.environment
+	var environment : Environment = $"Lighting and stuff/WorldEnvironment".environment
 	
 	if is_absent:
 		evil_leahy.visible = false
 		evil_leahy.is_playing = false
 		environment.background_energy_multiplier = 0.1
+		$"Lighting and stuff/DirectionalLight3D".hide()
 		$Music2.pitch_scale = 0.5
 	else:
 		evil_leahy.visible = true
 		evil_leahy.is_playing = true
 		environment.background_energy_multiplier = 1
+		$"Lighting and stuff/DirectionalLight3D".show()
 		$Music2.pitch_scale = 1
 
 @rpc("any_peer","call_local")
@@ -696,6 +752,54 @@ func _on_button_6_pressed():
 func update_player_text():
 	var final_text = ""
 	for pl_id in players_ids:
-		final_text += players[pl_id].username + "\n"
+		if players[pl_id].has("username"):
+			final_text += players[pl_id].username + "\n"
+		else:
+			final_text += str(pl_id) + "\n"
 	player_list_text.text = final_text
 
+var gainy_attack = false
+@onready var ms_gainy = $Ms_Gainy
+var gainy_target
+
+
+func _on_gainy_timer_timeout():
+	if multiplayer.is_server():
+		$GainyTimer.start(gainy_attack_interval)
+		if (!do_gainy_spawn): return
+		
+		if randi_range(0,gainy_attack_chance) == 1:
+			print("wuh oh gainy")
+			gainy_attack = true
+			var pls = get_tree().get_nodes_in_group("player")
+			
+			var just_some_random_guy = pls.pick_random()
+			
+			ms_gainy.update_target_location(just_some_random_guy.global_position)
+			
+			gainy_target = just_some_random_guy
+			
+			info_text("Ms.Gainy is angry at " + just_some_random_guy.steam_name)
+		else:
+			print("no gainy!")
+
+@rpc("any_peer","call_local")
+func stop_gainy(id):
+	if multiplayer.is_server():
+		if gainy_target:
+			if gainy_target.name.to_int() == id:
+				gainy_target.die.rpc_id(gainy_target.name.to_int(),"gainy")
+				
+				gainy_attack = false
+				gainy_target = null
+
+
+func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
+	if friends_lobbies.has(index):
+		join_lobby(friends_lobbies[index])
+	else:
+		print("lobby doesnt exist")
+
+
+func _on_auto_refresh_timeout():
+	get_friends_lobbies()

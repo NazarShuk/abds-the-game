@@ -25,6 +25,7 @@ boot_splash/minimum_display_time=1000
 [audio]
 
 driver/enable_input=true
+driver/mix_rate=8000
 
 [autoload]
 
@@ -140,4 +141,5 @@ environment/ssao/quality=0
 environment/ssil/quality=0
 environment/glow/upscale_mode=0
 environment/volumetric_fog/use_filter=0
+environment/defaults/default_clear_color=Color(1, 1, 1, 1)
 occlusion_culling/use_occlusion_culling=true

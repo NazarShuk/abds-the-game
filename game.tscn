@@ -1,7 +1,8 @@
-[gd_scene load_steps=58 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=66 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
+[ext_resource type="Script" path="res://Lighting and stuff.gd" id="2_uakk8"]
 [ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
 [ext_resource type="Script" path="res://LeahyApproaching.gd" id="4_ba12c"]
@@ -10,8 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="5_jibb3"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
+[ext_resource type="Material" uid="uid://b8ad2c866xmg3" path="res://retro.tres" id="6_euent"]
 [ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="6_roq42"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
+[ext_resource type="Texture2D" uid="uid://bwphd4ejjmfhr" path="res://Vignette_(SuperTux).png" id="7_r4qkf"]
 [ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="10_5h2pt"]
 [ext_resource type="AudioStream" uid="uid://csfubc70y8sea" path="res://models/ggrrrrrrrr.mp3" id="10_o5q8n"]
 [ext_resource type="AudioStream" uid="uid://cenmtdok0uof6" path="res://pacer_test_full.mp3" id="11_latpc"]
@@ -20,7 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
 [ext_resource type="PackedScene" uid="uid://2ynl24tkkvdp" path="res://school.tscn" id="17_3oefh"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
-[ext_resource type="Texture2D" uid="uid://dwerfxeqng74r" path="res://alps_field.jpg" id="18_4xsav"]
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
@@ -28,6 +30,22 @@
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="25_pddg1"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
+[ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(1, 1, 1, 1)
+ground_bottom_color = Color(1, 1, 1, 1)
+ground_horizon_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Sky" id="Sky_bde40"]
+sky_material = SubResource("ProceduralSkyMaterial_kvbmb")
+
+[sub_resource type="Environment" id="Environment_5hwxw"]
+background_mode = 2
+sky = SubResource("Sky_bde40")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3nj22"]
 properties/0/path = NodePath(".:canPlayersMove")
@@ -102,6 +120,20 @@ properties/22/replication_mode = 1
 properties/23/path = NodePath("Mr_Azzu:rotation")
 properties/23/spawn = true
 properties/23/replication_mode = 1
+properties/24/path = NodePath("Ms_Gainy:position")
+properties/24/spawn = true
+properties/24/replication_mode = 1
+properties/25/path = NodePath("Ms_Gainy:rotation")
+properties/25/spawn = true
+properties/25/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dw4kk"]
+properties/0/path = NodePath("SomeoneDid:text")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("SomeoneDid:theme_override_colors/font_color")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
@@ -119,18 +151,50 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("LeahyAngeredLabel:visible")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("SomeoneDid:text")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("SomeoneDid:theme_override_colors/font_color")
-properties/3/spawn = true
-properties/3/replication_mode = 1
+
+[sub_resource type="Environment" id="Environment_qell4"]
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_x2ukx"]
+resource_name = "caca"
+length = 30.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport/Camera3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3.895, 0.91, -33.6), Vector3(3.895, 0.57, -33.6)]
+}
+
+[sub_resource type="Animation" id="Animation_0u22r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.895, 0.91, -33.6)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oe4e8"]
+_data = {
+"RESET": SubResource("Animation_0u22r"),
+"caca": SubResource("Animation_x2ukx")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evicu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vjcu"]
-bg_color = Color(0.830335, 0.830335, 0.830335, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s00na"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -140,6 +204,14 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_in5gf"]
 texture = ExtResource("5_wpkks")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivyce"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks86s"]
 bg_color = Color(1, 1, 1, 1)
 border_color = Color(0, 0, 0, 1)
@@ -148,6 +220,9 @@ border_color = Color(0, 0, 0, 1)
 properties/0/path = NodePath("playerListText:text")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath("achievement:visible")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_jn2c6"]
 length = 0.001
@@ -282,35 +357,25 @@ albedo_texture = ExtResource("3_jr10u")
 
 [sub_resource type="QuadMesh" id="QuadMesh_pjpdc"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mjkoc"]
-panorama = ExtResource("18_4xsav")
-filter = false
-
-[sub_resource type="Sky" id="Sky_shh8o"]
-sky_material = SubResource("PanoramaSkyMaterial_mjkoc")
-
-[sub_resource type="Environment" id="Environment_fo45a"]
-background_mode = 1
-background_color = Color(1, 1, 1, 1)
-sky = SubResource("Sky_shh8o")
-tonemap_exposure = 1.5
-glow_intensity = 4.66
-fog_light_color = Color(1, 1, 1, 1)
-fog_light_energy = 0.28
-fog_density = 0.005
+[sub_resource type="BoxShape3D" id="BoxShape3D_3nmsg"]
+size = Vector3(1.01855, 1.13477, 0.827148)
 
 [sub_resource type="QuadMesh" id="QuadMesh_6c27w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tmmj"]
 albedo_texture = ExtResource("25_pddg1")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_3nmsg"]
-size = Vector3(1.01855, 1.13477, 0.827148)
-
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_y2xjx"]
 
-[node name="Game" type="Node3D"]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("shop")]
 script = ExtResource("1_y4eyb")
+shop = NodePath("shop")
+
+[node name="Lighting and stuff" type="Node" parent="."]
+script = ExtResource("2_uakk8")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting and stuff"]
+environment = SubResource("Environment_5hwxw")
 
 [node name="Steam" type="Node" parent="."]
 script = ExtResource("2_0aku0")
@@ -333,6 +398,33 @@ wait_time = 15.0
 
 [node name="LeahyPosDiff" type="Timer" parent="."]
 autostart = true
+
+[node name="GainyTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 11
+
+[node name="SomeoneDid" type="Label" parent="CanvasLayer2"]
+top_level = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -123.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer2"]
+replication_config = SubResource("SceneReplicationConfig_dw4kk")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 6
@@ -430,24 +522,6 @@ text = "05:00"
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Main"]
 replication_config = SubResource("SceneReplicationConfig_rb4lo")
 
-[node name="SomeoneDid" type="Label" parent="CanvasLayer/Main"]
-top_level = true
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -123.0
-offset_bottom = -75.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
 [node name="MultiPlayer" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
@@ -472,53 +546,70 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="host" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/MultiPlayer/ColorRect"]
+material = ExtResource("6_euent")
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -117.0
-offset_right = -5.0
-offset_bottom = -69.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer"]
+handle_input_locally = false
+use_occlusion_culling = true
+gui_disable_input = true
+size = Vector2i(1329, 767)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.64679, -0.0797206, -0.75849, 0, 0.994522, -0.104528, 0.762668, 0.0676079, 0.643247, 3.895, 0.91, -33.6)
+cull_mask = 1048573
+environment = SubResource("Environment_qell4")
+far = 141.72
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport"]
+root_node = NodePath("../../../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_oe4e8")
+}
+autoplay = "caca"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MultiPlayer/ColorRect"]
+modulate = Color(1, 1, 1, 0.466667)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_r4qkf")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/MultiPlayer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 99.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
-theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
-text = "play"
+text = "Alsotn Bridge Diddle School
+The Game"
+horizontal_alignment = 1
 
-[node name="reset_to_default" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="host" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -65.0
-offset_right = -5.0
-offset_bottom = -34.0
-grow_horizontal = 2
+offset_top = -148.0
+offset_right = 265.0
+offset_bottom = -91.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
@@ -526,57 +617,25 @@ theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
-text = "click to reset"
+text = "Host a game"
+alignment = 0
 
-[node name="button" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = -65.0
-offset_right = 400.0
-offset_bottom = -34.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
-theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 26
-theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
-text = "click to refresh"
-
-[node name="connect" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="connect local" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -597,35 +656,14 @@ offset_right = 155.0
 grow_vertical = 0
 text = "host local"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/MultiPlayer"]
+[node name="settings" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -34.0
+offset_top = 20.0
 offset_right = 400.0
-offset_bottom = 104.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_1vjcu")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MultiPlayer/ScrollContainer"]
-layout_mode = 2
-
-[node name="Button3" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = 137.0
-offset_right = 200.0
-offset_bottom = 168.0
-grow_horizontal = 2
+offset_bottom = 57.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
@@ -633,13 +671,14 @@ theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 31
 theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
@@ -648,19 +687,16 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
 text = "Settings"
+alignment = 0
 
-[node name="Button5" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="achievements" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = 171.0
-offset_right = 200.0
-offset_bottom = 208.0
-grow_horizontal = 2
+offset_top = 57.0
+offset_right = 400.0
+offset_bottom = 94.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
@@ -668,13 +704,14 @@ theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 31
 theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
@@ -683,19 +720,16 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
 text = "Achievements"
+alignment = 0
 
-[node name="Button6" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="quit" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -140.0
-offset_top = 208.0
-offset_right = 142.0
-offset_bottom = 245.0
-grow_horizontal = 2
+offset_top = 94.0
+offset_right = 282.0
+offset_bottom = 131.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
@@ -703,13 +737,14 @@ theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 31
 theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
@@ -718,41 +753,10 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
 text = "Quit"
+alignment = 0
 
-[node name="Label3" type="Label" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -5.0
-offset_top = -117.0
-offset_right = 400.0
-offset_bottom = -69.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-text = "join a friend"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 23.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-text = "Alsotn Bridge Diddle School
-The Game"
-horizontal_alignment = 1
-
-[node name="Button2" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="multiplayer tutorial" type="Button" parent="CanvasLayer/MultiPlayer"]
+visible = false
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
@@ -765,7 +769,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_6hhxc")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6hhxc")
 text = "Multiplayer tutorial"
 
-[node name="Button4" type="Button" parent="CanvasLayer/MultiPlayer"]
+[node name="azzu" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -784,6 +788,80 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_in5gf")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_in5gf")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_in5gf")
 theme_override_styles/focus = SubResource("StyleBoxTexture_in5gf")
+
+[node name="Label3" type="Label" parent="CanvasLayer/MultiPlayer"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -49.0
+offset_right = 200.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 26
+text = "or join a friend"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="refresh btn" type="Button" parent="CanvasLayer/MultiPlayer"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -6.0
+offset_right = 400.0
+offset_bottom = 16.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
+theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
+text = "click to refresh"
+alignment = 0
+
+[node name="ItemList" type="ItemList" parent="CanvasLayer/MultiPlayer"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -90.0
+offset_right = 400.0
+offset_bottom = -6.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0.165656, 0.165656, 0.165656, 1)
+theme_override_colors/font_selected_color = Color(0.164706, 0.164706, 0.164706, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/panel = SubResource("StyleBoxFlat_ivyce")
+
+[node name="Auto Refresh" type="Timer" parent="CanvasLayer/MultiPlayer/ItemList"]
+wait_time = 10.0
+autostart = true
 
 [node name="LoadingRect" type="ColorRect" parent="CanvasLayer/MultiPlayer"]
 visible = false
@@ -834,12 +912,26 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_bottom = 76.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 64
 text = "Lobby"
+horizontal_alignment = 1
+
+[node name="achievement" type="Label" parent="CanvasLayer/Lobby"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 81.0
+offset_bottom = 157.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 32
+text = "Achievements will be disabled during this game"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="CanvasLayer/Lobby"]
@@ -857,25 +949,6 @@ theme_override_font_sizes/font_size = 60
 text = "Players"
 horizontal_alignment = 1
 
-[node name="Label4" type="Label" parent="CanvasLayer/Lobby"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -221.0
-offset_top = -190.0
-offset_right = -1.0
-offset_bottom = -142.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-text = "Game config"
-horizontal_alignment = 1
-
 [node name="playerListText" type="Label" parent="CanvasLayer/Lobby"]
 layout_mode = 1
 anchors_preset = 4
@@ -891,7 +964,64 @@ theme_override_font_sizes/font_size = 52
 text = "player
 player"
 
+[node name="Label4" type="Label" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -223.0
+offset_top = -190.0
+offset_right = -3.0
+offset_bottom = -142.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 40
+text = "Game config"
+horizontal_alignment = 1
+
+[node name="reset_to_default" type="Button" parent="CanvasLayer/Lobby/Label4"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = 22.0
+offset_right = 1.0
+offset_bottom = 53.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
+theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
+text = "click to reset"
+alignment = 2
+
 [node name="Button7" type="Button" parent="CanvasLayer/Lobby"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -899,9 +1029,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -200.5
-offset_top = -210.0
+offset_top = -222.0
 offset_right = 200.5
-offset_bottom = -132.0
+offset_bottom = -144.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -933,10 +1063,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -132.0
-offset_right = 201.0
-offset_bottom = -54.0
+offset_left = -200.5
+offset_top = -140.0
+offset_right = 200.5
+offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -963,16 +1093,15 @@ text = "Disconnect"
 
 [node name="ConfigPanel" type="ColorRect" parent="CanvasLayer/Lobby"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 6
+anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 240.0
-offset_top = -125.0
-offset_right = 638.0
-offset_bottom = 33.0
-grow_horizontal = 2
+offset_left = -398.001
+offset_top = -110.0
+offset_bottom = 48.0
+grow_horizontal = 0
 grow_vertical = 2
 
 [node name="Config" type="ScrollContainer" parent="CanvasLayer/Lobby/ConfigPanel"]
@@ -1032,13 +1161,29 @@ game = NodePath("../../../../../..")
 param_name = "absence_chance"
 label_text = "Absence Chance"
 max_val = 999.0
-min_val = 2.0
+min_val = 1.0
 
 [node name="NumBox6" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "absence_interval"
 label_text = "Absence Interval (sec)"
+max_val = 999.0
+min_val = 1.0
+
+[node name="NumBox10" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "gainy_attack_chance"
+label_text = "Gainy attack chance"
+max_val = 999.0
+min_val = 1.0
+
+[node name="NumBox11" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "gainy_attack_interval"
+label_text = "Gainy attack interval"
 max_val = 999.0
 min_val = 1.0
 
@@ -1076,6 +1221,12 @@ layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_leahy_appease"
 label_text = "Ms.Leahy appeasement"
+
+[node name="CheckBox8" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_gainy_spawn"
+label_text = "Ms.Gainy attack"
 
 [node name="CheckBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
@@ -1144,6 +1295,7 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_rx4qs")
 }
+autoplay = "start"
 
 [node name="Music0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_grswa")
@@ -1217,6 +1369,9 @@ one_shot = true
 [node name="book1" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98391, 1.07787, -35.0866)
 
+[node name="book2" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.258, 1.07787, -161.746)
+
 [node name="WelcomeLeahy" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.53895, 0, -1.74614, 0, 3.08144, 0, 1.74614, 0, 2.53895, 3.26805, 1.44916, -11.6121)
 material_override = SubResource("StandardMaterial3D_5h8sj")
@@ -1232,219 +1387,130 @@ bus = &"Dialogs"
 [node name="BookSpawns" type="Node" parent="."]
 
 [node name="Book Spawn" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.606, 1.27832, -34.7769)
 
 [node name="Book Spawn2" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9908, 1.27832, -35.0168)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.7622, 1.27832, -34.6517)
 
 [node name="Book Spawn3" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9864, 1.27832, -34.5513)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.1722, 1.27832, -34.4013)
 
 [node name="Book Spawn4" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.00395, 1.27832, -67.0198)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.3369, 1.27832, -34.7769)
 
 [node name="Book Spawn5" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.9472, 1.27832, -67.0198)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.503, 1.27832, -44.4184)
 
 [node name="Book Spawn6" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.4467, 1.27832, -66.6706)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.2065, 1.27832, -44.0428)
 
 [node name="Book Spawn7" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.1139, 1.27832, -66.4379)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.6919, 1.27832, -55.1869)
 
 [node name="Book Spawn8" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.2941, 1.27832, -69.8128)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.0178, 1.27832, -55.3121)
 
 [node name="Book Spawn9" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.5865, 1.27832, -71.0929)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.45852, 1.27832, -56.5643)
 
 [node name="Book Spawn10" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.482, 1.27832, -68.7654)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.68386, 1.27832, -72.8422)
 
 [node name="Book Spawn11" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85.9315, 1.27832, -44.2104)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93257, 1.27832, -93.8783)
 
 [node name="Book Spawn12" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.807, 1.27832, -21.7501)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93257, 1.27832, -118.42)
 
 [node name="Book Spawn13" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.7029, 1.27832, -21.2846)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1069, 1.27832, -126.184)
 
 [node name="Book Spawn14" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.09, 1.27832, -21.0519)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.6559, 1.27832, -126.935)
 
 [node name="Book Spawn15" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5753, 1.27832, -20.47)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.4501, 1.27832, -126.184)
 
 [node name="Book Spawn16" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.8391, 1.27832, -19.3062)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.0865, 1.27832, -145.842)
 
 [node name="Book Spawn17" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.702244, 1.27832, -17.5416)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4604, 1.27832, -166.628)
 
 [node name="Book Spawn18" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0906, 1.27832, -19.442)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.6131, 1.27832, -168.757)
 
 [node name="Book Spawn19" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.0219, 1.27832, -23.1069)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.2358, 1.27832, -141.71)
 
 [node name="Book Spawn20" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.4841, 1.27832, -46.3183)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10502, 1.27832, -143.564)
 
 [node name="Book Spawn21" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.369, 1.27832, -45.2324)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.03207, 1.27832, -183.891)
 
 [node name="Book Spawn22" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1851, 1.27832, -70.3442)
-
-[node name="Book Spawn72" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.32393, 1.27832, -71.1336)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.95913, 1.27832, -227.231)
 
 [node name="Book Spawn23" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.0615, 1.27832, -101.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.7625, 1.27832, -223.059)
 
 [node name="Book Spawn24" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.058, 1.27832, -94.2343)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92.7847, 1.27832, -225.609)
 
 [node name="Book Spawn25" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.2324, 1.27832, -56.5612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.9564, 1.27832, -197.334)
 
 [node name="Book Spawn26" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.3709, 1.27832, -54.2665)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.4199, 1.27832, -157.47)
 
 [node name="Book Spawn27" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.8334, 1.27832, -24.6341)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.0035, 1.27832, -126.414)
 
 [node name="Book Spawn28" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.3003, 1.27832, -20.8427)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.346, 1.27832, -124.096)
 
 [node name="Book Spawn29" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.2685, 1.27832, -20.9425)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.4836, 1.27832, -160.251)
 
 [node name="Book Spawn30" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.2321, 1.27832, -19.3461)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.7754, 1.27832, -195.016)
 
 [node name="Book Spawn31" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118.674, 1.27832, -19.2464)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.8113, 1.27832, -83.3955)
 
 [node name="Book Spawn32" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.932, 1.27832, -18.8473)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5609, 1.27832, -41.4485)
 
 [node name="Book Spawn33" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 154.891, 1.27832, -19.1466)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.5901, 1.27832, -55.2222)
 
 [node name="Book Spawn34" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122.178, 1.27832, -48.3305)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124.913, 1.27832, -54.9717)
 
 [node name="Book Spawn35" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.689, 1.27832, -41.2721)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.944, 1.27832, -44.078)
 
 [node name="Book Spawn36" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 135.073, 1.27832, -70.1846)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.9436, 1.27832, -34.078)
 
 [node name="Book Spawn37" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118.242, 1.27832, -70.456)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.6226, 1.27832, -98.4017)
 
 [node name="Book Spawn38" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150.141, 1.27832, -68.5557)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.979, 1.27832, -106.6)
 
 [node name="Book Spawn39" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.139, 1.27832, -65.8409)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.511, 1.27832, -169.662)
 
 [node name="Book Spawn40" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.1626, 1.27832, -71.4062)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.3802, 1.27832, -17.7691)
 
 [node name="Book Spawn41" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.8311, 1.27832, -79.6863)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.3802, 1.27832, -17.7691)
 
 [node name="Book Spawn42" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.4341, 1.27832, -91.6314)
-
-[node name="Book Spawn43" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.9633, 1.27832, -105.205)
-
-[node name="Book Spawn44" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5767, 1.27832, -153.852)
-
-[node name="Book Spawn45" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.0328, 1.27832, -153.852)
-
-[node name="Book Spawn46" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.8088, 1.27832, -193.117)
-
-[node name="Book Spawn47" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5842, 1.27832, -177.037)
-
-[node name="Book Spawn48" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.6439, 1.27832, -159.45)
-
-[node name="Book Spawn49" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.1795, 1.27832, -182.864)
-
-[node name="Book Spawn52" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.9641, 1.27832, -149.692)
-
-[node name="Book Spawn53" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.3615, 1.27832, -126.859)
-
-[node name="Book Spawn54" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1169, 1.27832, -126.859)
-
-[node name="Book Spawn55" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.8387, 1.27832, -126.859)
-
-[node name="Book Spawn56" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.4037, 1.27832, -126.859)
-
-[node name="Book Spawn57" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.373, 1.27832, -148.244)
-
-[node name="Book Spawn58" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.373, 1.27832, -195.109)
-
-[node name="Book Spawn59" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.7323, 1.27832, -237.698)
-
-[node name="Book Spawn60" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.3746, 1.27832, -238.015)
-
-[node name="Book Spawn61" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.9587, 1.27832, -236.907)
-
-[node name="Book Spawn62" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3345, 1.27832, -239.598)
-
-[node name="Book Spawn63" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.8332, 1.27832, -222.182)
-
-[node name="Book Spawn64" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.977, 1.27832, -247.113)
-
-[node name="Book Spawn65" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.371, 1.27832, -247.667)
-
-[node name="Book Spawn66" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 145.277, 1.27832, -207.224)
-
-[node name="Book Spawn67" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.427, 1.27832, -180.631)
-
-[node name="Book Spawn68" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.43, 1.27832, -157.547)
-
-[node name="Book Spawn69" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.50243, 1.27832, -228.398)
-
-[node name="Book Spawn70" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.50243, 1.27832, -165.085)
-
-[node name="Book Spawn71" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.51736, 1.27832, -255.03)
-
-[node name="Book Spawn50" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.8218, 1.27832, -198.538)
-
-[node name="Book Spawn51" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.8218, 1.27832, -198.538)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.305, 1.27832, -19.5574)
 
 [node name="LandMineSpawns" type="Node" parent="."]
 
@@ -1680,9 +1746,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.275, 0.846554, -123.1)
 [node name="LeahyRespawnPos31" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.761, 0.846554, -178.274)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_fo45a")
-
 [node name="School" parent="." instance=ExtResource("17_3oefh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 24.5635, 0, -137.18)
 
@@ -1698,16 +1761,17 @@ transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 23.5605, 1.20217, -6
 [node name="PacerPos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.2904, 1.13443, -166.413)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["shop"]]
-transform = Transform3D(-7.58123, 0, -8.74228e-08, 0, 1.84917, 0, 6.62773e-07, 0, -1, 52.2065, 1.48291, -122.183)
-mesh = SubResource("QuadMesh_6c27w")
-surface_material_override/0 = SubResource("StandardMaterial3D_1tmmj")
+[node name="shop" type="StaticBody3D" parent="." groups=["shop"]]
+transform = Transform3D(-7.58123, 0, -8.74228e-08, 0, 1.84917, 0, 6.62773e-07, 0, -1, 52.2065, 1.48291, -122.379)
 
-[node name="Area3D" type="Area3D" parent="MeshInstance3D" groups=["shop"]]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
-transform = Transform3D(0.999997, 0, -7.99361e-15, 0, 0.999994, 0, -7.95808e-13, 0, 0.999995, 0, 0, 0)
+[node name="shop_collider" type="CollisionShape3D" parent="shop" groups=["shop"]]
+transform = Transform3D(0.999997, 0, -8.88178e-15, 0, 0.999994, 0, -7.95808e-13, 0, 0.999995, 0, 0, 0)
 shape = SubResource("BoxShape3D_3nmsg")
+
+[node name="shop" type="MeshInstance3D" parent="shop" groups=["shop"]]
+mesh = SubResource("QuadMesh_6c27w")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_1tmmj")
 
 [node name="Border" type="StaticBody3D" parent="."]
 
@@ -1715,20 +1779,26 @@ shape = SubResource("BoxShape3D_3nmsg")
 transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 11.8845, 0)
 shape = SubResource("WorldBoundaryShape3D_y2xjx")
 
+[node name="Ms_Gainy" parent="." instance=ExtResource("29_u1jmm")]
+transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 48.4402, 1.40347, -25.6176)
+
 [connection signal="timeout" from="SecondsLeft" to="." method="_on_seconds_left_timeout"]
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
+[connection signal="timeout" from="GainyTimer" to="." method="_on_gainy_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/reset_to_default" to="." method="_on_reset_to_default_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/connect" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/connect local" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host_local" to="." method="_on_host_local_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/Button3" to="." method="_on_button_3_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/Button5" to="." method="_on_button_5_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/Button6" to="." method="_on_button_6_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/settings" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/achievements" to="." method="_on_button_5_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/quit" to="." method="_on_button_6_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/multiplayer tutorial" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/azzu" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/refresh btn" to="." method="_on_button_pressed"]
+[connection signal="item_clicked" from="CanvasLayer/MultiPlayer/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="timeout" from="CanvasLayer/MultiPlayer/ItemList/Auto Refresh" to="." method="_on_auto_refresh_timeout"]
+[connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="." method="_on_reset_to_default_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]

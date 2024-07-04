@@ -20,3 +20,6 @@ func _on_check_button_toggled(toggled_on):
 
 func go_to_inital():
 	$CheckButton.button_pressed = initial_state
+
+func get_da_val():
+	return $CheckButton.button_pressed

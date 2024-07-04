@@ -23,9 +23,17 @@ func go_to_inital():
 
 
 func _on_line_edit_text_changed(new_text):
-	game.set(param_name, new_text.to_float())
 	var val = new_text.to_float()
+	var caret_column =  $LineEdit.caret_column
 	if val > max_val:
 		$LineEdit.text = str(max_val)
+		val = max_val
 	if val < min_val && len(new_text) > 0:
 		$LineEdit.text = str(min_val)
+		val = min_val
+	$LineEdit.caret_column = caret_column
+	print(param_name,": ",str(val))
+	game.set(param_name, val)
+
+func get_da_val():
+	return $LineEdit.text.to_float()

@@ -2,12 +2,49 @@ extends Node2D
 
 @onready var music_slider = $CanvasLayer/MusicSlider
 @onready var sfx_slider = $CanvasLayer/SfxSlider
+@onready var mic_vol = $CanvasLayer/mic_vol
+
 var cangoof = false
+
+@onready var effect : AudioEffectCapture = AudioServer.get_bus_effect(5,4)
+@onready var threshold_slider = $CanvasLayer/mic_vol/threshold_slider
+var hear_urself = false
+
 
 func _ready():
 	music_slider.value = db_to_linear(AudioServer.get_bus_volume_db(1))
 	sfx_slider.value = db_to_linear(AudioServer.get_bus_volume_db(2))
+	
+	if AudioVolume.mic_threshold:
+		threshold_slider.value = AudioVolume.mic_threshold
+	else:
+		AudioVolume.mic_threshold = threshold_slider.value
+		AudioVolume.save_values()
 
+func _process(delta):
+	var stereoData : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
+	
+	if stereoData.size() > 0:
+		var data = PackedFloat32Array()
+		data.resize(stereoData.size())
+		var maxAmplitude := 0.0
+		
+		for i in range(stereoData.size()):
+			var value = (stereoData[i].x + stereoData[i].y) / 2
+			maxAmplitude = max(value,maxAmplitude)
+			data[i] = value
+		#print(maxAmplitude)
+		mic_vol.value = lerp(mic_vol.value,maxAmplitude,0.25)
+		
+		var bg : StyleBoxFlat = StyleBoxFlat.new()
+		if maxAmplitude > threshold_slider.value:
+			bg.bg_color = Color.GREEN
+			if hear_urself:
+				AudioServer.set_bus_mute(4,false)
+		else:
+			bg.bg_color = Color.GRAY
+			AudioServer.set_bus_mute(4,true)
+		$CanvasLayer/mic_vol.set("theme_override_styles/background",bg)
 
 
 func _on_music_slider_changed(value):
@@ -42,3 +79,14 @@ func _on_goofball_timer_timeout():
 
 func _on_button_2_pressed():
 		get_tree().change_scene_to_file("res://noescape.tscn")
+
+
+
+
+func _on_threshold_slider_value_changed(value):
+	AudioVolume.mic_threshold = value
+	AudioVolume.save_values()
+
+
+func _on_check_button_toggled(toggled_on):
+	hear_urself = toggled_on

@@ -46,6 +46,64 @@ var can_get_item = true
 
 var leahy_dst = 0
 
+
+# Voice chat (maybe)
+@onready var input = $Voice/input
+var effect : AudioEffectCapture
+var playback : AudioStreamGeneratorPlayback
+@export var outputPath : NodePath
+var inputThreshold = 0.08
+
+var receive_buffer := PackedFloat32Array()
+
+var credits = 0
+var can_use_shop = true
+
+func setup_voice(_id):
+	if is_multiplayer_authority():
+		$Voice/input.stream = AudioStreamMicrophone.new()
+		$Voice/input.play()
+		effect = AudioServer.get_bus_effect(5,4)
+		
+	get_node(outputPath).play()
+	playback = $Voice/AudioStreamPlayer.get_stream_playback()
+
+func processMic():
+	var stereoData : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
+	
+	if stereoData.size() > 0:
+		var data = PackedFloat32Array()
+		data.resize(stereoData.size())
+		var maxAmplitude := 0.0
+		
+		for i in range(stereoData.size()):
+			var value = (stereoData[i].x + stereoData[i].y) / 2
+			maxAmplitude = max(value,maxAmplitude)
+			data[i] = value
+		#print(maxAmplitude)
+		if maxAmplitude < inputThreshold:
+			return
+		
+		send_voice_data.rpc(data)
+		#send_voice_data(data) #local test
+
+@rpc("any_peer","call_remote","unreliable_ordered")
+func send_voice_data(data:PackedFloat32Array):
+	receive_buffer.append_array(data)
+
+func process_voice():
+	playback = $Voice/AudioStreamPlayer.get_stream_playback()
+	
+	if receive_buffer.size() <= 0:
+		return
+	elif receive_buffer.size() >= 1025:
+		receive_buffer = receive_buffer.slice(0,1024)
+		#playback.clear_buffer()
+
+	for i in range(min(playback.get_frames_available(),receive_buffer.size())):
+		playback.push_frame(Vector2(receive_buffer[0],receive_buffer[0]))
+		receive_buffer.remove_at(0)
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	$nametag.text = Steam.getPersonaName()
@@ -59,15 +117,43 @@ func _enter_tree():
 		$CanvasLayer2.process_mode = Node.PROCESS_MODE_INHERIT
 		#$Local.stream_mix_rate = float(current_sample_rate)
 		
+		
 
 
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if is_multiplayer_authority():
+		setup_voice(name.to_int())
+		var skins = $visual_body.get_children()
+		for skin in skins:
+			skin.hide()
+		var picked_skin = false
+		
+		if Achievements.check_achievement("impossible_ending"):
+			if Achievements.picked_skin == 3:
+				impossible.show()
+				picked_skin = true
+		if Achievements.check_achievement("perfect_ending"):
+			if Achievements.picked_skin == 2:
+				perfect.show()
+				picked_skin = true
+		if Achievements.check_achievement("freaky_ending"):
+			if Achievements.picked_skin == 1:
+				freaky.show()
+				picked_skin = true
+		
+		if picked_skin == false:
+			default.show()
 
 
 func _physics_process(delta):
+	process_voice()
 	if is_multiplayer_authority():
+		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
+		# Voice chat
+		processMic()
+		inputThreshold = AudioVolume.mic_threshold
 		
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
@@ -79,31 +165,12 @@ func _physics_process(delta):
 			camera_3d.h_offset = 0
 			camera_3d.v_offset = 0
 		
-		
-		if Achievements.check_achievement("impossible_ending"):
-			perfect.visible = false
-			default.visible = false
-			impossible.visible = true
-			freaky.visible = false
-		elif Achievements.check_achievement("perfect_ending"):
-			perfect.visible = true
-			default.visible = false
-			impossible.visible = false
-			freaky.visible = false
-		elif Achievements.check_achievement("freaky_ending"):
-			perfect.visible = false
-			default.visible = false
-			impossible.visible = false
-			freaky.visible = true
+
 			
 
 		if global_position.z > 15:
 			get_parent().skibidi.rpc_id(name.to_int())
 
-		if Input.is_action_just_pressed("debug"):
-			# TODO: Remove before giving to anyone else!!!!
-			report_map_bug()
-			#get_parent().on_collect_book.rpc(name.to_int(), "book1")
 
 		#global_rotation_degrees.x = 0
 		#global_rotation_degrees.z = 0
@@ -169,6 +236,8 @@ func _physics_process(delta):
 						if ray.get_collider():
 							if ray.get_collider().is_in_group("shop"):
 								print("shop")
+								open_shop()
+								
 
 					if Input.is_action_just_pressed("use_item"):
 						if get_cur_item() == 0:
@@ -243,7 +312,8 @@ func _physics_process(delta):
 				
 		camera_3d.current = true
 		camera_3d.global_position = global_position + Vector3(0,0.5,0)
-		camera_3d.global_rotation = global_rotation
+		camera_3d.global_rotation.y = global_rotation.y
+		#camera_3d.global_rotation.x = global_rotation.x
 		$CanvasLayer2.visible = true
 
 
@@ -251,7 +321,7 @@ func _input(event):
 	if !is_multiplayer_authority():
 		return
 
-	if event is InputEventMouseMotion and get_parent().canPlayersMove:
+	if event is InputEventMouseMotion:
 		if can_move:
 			if can_cam_move:
 				rotate_y(deg_to_rad(event.relative.x * -0.3))
@@ -282,6 +352,9 @@ func _on_area_3d_area_entered(area):
 	elif area.name == "azzu" and get_parent().azzu_angered == true:
 		die("azzu")
 		get_parent().azzu_dont_steal.rpc()
+	elif area.name == "gainy":
+		#die("gainy")
+		get_parent().stop_gainy.rpc(name.to_int())
 
 
 func _on_timer_timeout():
@@ -323,7 +396,7 @@ func _on_stamina_timeout_timeout():
 
 
 func _on_revive_timer_timeout():
-	get_parent().set_played_dead.rpc(name.to_int(), false)
+	get_parent().set_player_dead.rpc(name.to_int(), false,false)
 	if not is_suspended:
 		global_position = get_parent().get_node("PlayerSpawns").get_children().pick_random().global_position
 	else:
@@ -405,16 +478,16 @@ func _on_disconnect_btn_pressed():
 	multiplayer.multiplayer_peer.close()
 	get_tree().reload_current_scene()
 
-
+@rpc("authority","call_local")
 func die(cause):
 	if is_dead: return
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
 	if cause != "mine":
-		get_parent().set_played_dead.rpc(name.to_int(), true)
+		get_parent().set_player_dead.rpc(name.to_int(), true,true)
 	else:
 		if get_parent().landmine_death:
-			get_parent().set_played_dead.rpc(name.to_int(), true)
+			get_parent().set_player_dead.rpc(name.to_int(), true,true)
 	$"CanvasLayer/Control/Died thing".show()
 	$ReviveTimer.start(get_parent().death_timeout)
 	is_dead = true
@@ -444,6 +517,8 @@ func die(cause):
 		$"CanvasLayer/Control/Died thing/jumpscare4".play()
 	elif cause == "azzu":
 		$"CanvasLayer/Control/Died thing/jumpscare5".play()
+	elif cause == "gainy":
+		$"CanvasLayer/Control/Died thing/jumpscare6".play()
 
 
 
@@ -515,3 +590,27 @@ func server_pos(pos: Vector3):
 func _on_item_delay_timeout():
 	can_get_item = true
 
+func open_shop():
+	if can_use_shop:
+		$CanvasLayer/Control/Shop.show()
+		$CanvasLayer/Control/Shop/AudioStreamPlayer.play()
+		can_cam_move = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		AudioServer.set_bus_solo(6,true)
+		get_parent().set_player_dead.rpc(name.to_int(), true,false)
+		can_use_shop = false
+		$ShopTimeout.start()
+		get_parent().shop.hide()
+
+func close_shop():
+	$CanvasLayer/Control/Shop.hide()
+	$CanvasLayer/Control/Shop/AudioStreamPlayer.stop()
+	can_cam_move = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	AudioServer.set_bus_solo(6,false)
+	get_parent().set_player_dead.rpc(name.to_int(), false,false)
+	
+
+func _on_shop_timeout_timeout():
+	can_use_shop = true
+	get_parent().shop.show()

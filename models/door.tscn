@@ -28,6 +28,6 @@ material_override = SubResource("StandardMaterial3D_ccax6")
 mesh = SubResource("QuadMesh_ymgma")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.50254, 0, 0, 0, 1, 0, 0, 0, 0.0846202, 0, 7.51651, 0)
+transform = Transform3D(0.50254, 0, 0, 0, 1, 0, 0, 0, 0.0846202, 0, 100, 0)
 material_override = SubResource("StandardMaterial3D_icgk0")
 mesh = SubResource("PlaneMesh_cs6jd")
