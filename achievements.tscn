@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ci0ihc8o740fp"]
+[gd_scene load_steps=37 format=3 uid="uid://ci0ihc8o740fp"]
 
 [ext_resource type="Script" path="res://achievementiks.gd" id="1_stpc6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_un4ex"]
@@ -6,9 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="4_akldp"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="5_4kpgw"]
 [ext_resource type="Texture2D" uid="uid://cbdunl7jdeyq" path="res://freaky.png" id="6_bjwco"]
+[ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="6_d2nmc"]
 [ext_resource type="Texture2D" uid="uid://e481qnldgi3y" path="res://player_cool.png" id="7_fp6pf"]
+[ext_resource type="Texture2D" uid="uid://bwdkvin85x0lj" path="res://Mouth/mouth_1.png" id="7_hheet"]
 [ext_resource type="Texture2D" uid="uid://dai6qepdbfr8d" path="res://player_cool_back.png" id="8_jo4di"]
+[ext_resource type="Texture2D" uid="uid://dhj8rt54whhxj" path="res://Mouth/mouth_2.png" id="8_qdlme"]
 [ext_resource type="Texture2D" uid="uid://hdblcb4bt73n" path="res://impossibleend.png" id="9_5oead"]
+[ext_resource type="Texture2D" uid="uid://du7llvn5hs8h6" path="res://Mouth/mouth_3.png" id="9_pyye5"]
+[ext_resource type="Texture2D" uid="uid://cl8p5wgm14xp7" path="res://Mouth/mouth_5.png" id="10_sthrk"]
+[ext_resource type="Texture2D" uid="uid://dta0u30sd2fbk" path="res://freaky_back.png" id="12_0agdt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_botq8"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -25,31 +31,48 @@ sky = SubResource("Sky_4sfde")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="QuadMesh" id="QuadMesh_kejq5"]
+[sub_resource type="QuadMesh" id="QuadMesh_wk33d"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3bgu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mllkr"]
 albedo_texture = ExtResource("4_akldp")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_00cuo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ald2"]
 albedo_texture = ExtResource("5_4kpgw")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgwl0"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e2wfh"]
+albedo_texture = ExtResource("6_d2nmc")
+
+[sub_resource type="QuadMesh" id="QuadMesh_rk21y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wl3w"]
+albedo_texture = ExtResource("7_hheet")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbscy"]
+albedo_texture = ExtResource("8_qdlme")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yuqab"]
+albedo_texture = ExtResource("9_pyye5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_omrqb"]
+albedo_texture = ExtResource("10_sthrk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6abd"]
 albedo_texture = ExtResource("6_bjwco")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_py45y"]
-albedo_texture = ExtResource("6_bjwco")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yljqx"]
+albedo_texture = ExtResource("12_0agdt")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gqdcl"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lljqd"]
 albedo_texture = ExtResource("7_fp6pf")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgt2i"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3robw"]
 albedo_texture = ExtResource("8_jo4di")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e6cmo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e33w6"]
 albedo_texture = ExtResource("9_5oead")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ry0jn"]
-albedo_texture = ExtResource("9_5oead")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0f0jd"]
+albedo_texture = ExtResource("12_0agdt")
 
 [sub_resource type="Animation" id="Animation_4oxbx"]
 length = 0.001
@@ -250,60 +273,188 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.90343)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Default"]
 transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_i3bgu")
+surface_material_override/0 = SubResource("StandardMaterial3D_mllkr")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Default"]
 transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_00cuo")
+surface_material_override/0 = SubResource("StandardMaterial3D_8ald2")
+
+[node name="Mouth" type="Node3D" parent="Player/Default"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.132746)
+
+[node name="0" type="MeshInstance3D" parent="Player/Default/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+material_override = SubResource("StandardMaterial3D_e2wfh")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="1" type="MeshInstance3D" parent="Player/Default/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_2wl3w")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="2" type="MeshInstance3D" parent="Player/Default/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbscy")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="3" type="MeshInstance3D" parent="Player/Default/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_yuqab")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="4" type="MeshInstance3D" parent="Player/Default/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_omrqb")
+mesh = SubResource("QuadMesh_rk21y")
 
 [node name="Freaky" type="Node3D" parent="Player"]
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Freaky"]
 transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_mgwl0")
+surface_material_override/0 = SubResource("StandardMaterial3D_r6abd")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Freaky"]
 transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_py45y")
+surface_material_override/0 = SubResource("StandardMaterial3D_yljqx")
+
+[node name="Mouth" type="Node3D" parent="Player/Freaky"]
+transform = Transform3D(1.41953, 0, 0, 0, 1.41481, 0, 0, 0, 1, 0.0146903, -0.172228, -0.132746)
+
+[node name="0" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+material_override = SubResource("StandardMaterial3D_e2wfh")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="1" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_2wl3w")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="2" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbscy")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="3" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_yuqab")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="4" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_omrqb")
+mesh = SubResource("QuadMesh_rk21y")
 
 [node name="Perfect" type="Node3D" parent="Player"]
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Perfect"]
 transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_gqdcl")
+surface_material_override/0 = SubResource("StandardMaterial3D_lljqd")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Perfect"]
 transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_hgt2i")
+surface_material_override/0 = SubResource("StandardMaterial3D_3robw")
+
+[node name="Mouth" type="Node3D" parent="Player/Perfect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00918858, -0.0322273, -0.132746)
+
+[node name="0" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+material_override = SubResource("StandardMaterial3D_e2wfh")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="1" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_2wl3w")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="2" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbscy")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="3" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_yuqab")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="4" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_omrqb")
+mesh = SubResource("QuadMesh_rk21y")
 
 [node name="Impossible" type="Node3D" parent="Player"]
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Impossible"]
 transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_e6cmo")
+surface_material_override/0 = SubResource("StandardMaterial3D_e33w6")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Impossible"]
 transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_kejq5")
+mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_ry0jn")
+surface_material_override/0 = SubResource("StandardMaterial3D_0f0jd")
+
+[node name="Mouth" type="Node3D" parent="Player/Impossible"]
+transform = Transform3D(0.623881, 0, 0, 0, 0.637448, 0, 0, 0, 1, 0.0345617, 0.06379, -0.132746)
+
+[node name="0" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+material_override = SubResource("StandardMaterial3D_e2wfh")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="1" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_2wl3w")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="2" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbscy")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="3" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_yuqab")
+mesh = SubResource("QuadMesh_rk21y")
+
+[node name="4" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_omrqb")
+mesh = SubResource("QuadMesh_rk21y")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 libraries = {

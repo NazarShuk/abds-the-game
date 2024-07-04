@@ -22,7 +22,7 @@ var leahy_appeased = false
 @export var min_left = 5
 @export var sec_left = 1
  
-@export var books_to_collect = 6
+@export var books_to_collect = 9
 @export var total_books = 0
 var book_pos = Vector3()
 
@@ -34,6 +34,7 @@ var fox_follow = false
 
 @export var is_pacer = false
 @export var pacer_deadly = false
+var is_pacer_intro = false
 
 var debug_host = false
 
@@ -57,7 +58,7 @@ var leahy_diff_penalty = 0
 @export var notebooks_per_player = 1 # DONE
 @export var max_deaths = 10 # DONE
 @export var leahy_start_speed = 6.0 # DONE
-@export var leahy_speed_per_notebook = 0.5 # DONE
+@export var leahy_speed_per_notebook = 1 # DONE
 @export var absence_chance = 15 # DONE
 @export var absence_interval = 15 # DONE
 @export var gainy_attack_chance = 20 # DONE
@@ -146,8 +147,7 @@ func _process(_delta):
 			get_tree().call_group("enemies","update_target_location",closest)
 		else:
 			print("leahy didnt find a player")
-	if !game_started:
-		
+	if !game_started and multiplayer.is_server():
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
 		
 		var initial_nodes = 0
@@ -622,13 +622,11 @@ func set_absent(is_absent : bool):
 		evil_leahy.visible = false
 		evil_leahy.is_playing = false
 		environment.background_energy_multiplier = 0.1
-		$"Lighting and stuff/DirectionalLight3D".hide()
 		$Music2.pitch_scale = 0.5
 	else:
 		evil_leahy.visible = true
 		evil_leahy.is_playing = true
 		environment.background_energy_multiplier = 1
-		$"Lighting and stuff/DirectionalLight3D".show()
 		$Music2.pitch_scale = 1
 
 @rpc("any_peer","call_local")
@@ -679,6 +677,7 @@ func start_da_pacer(id):
 		leahy_appeased = true
 		$FakeFox/PacerTest/PacerStartTimer.start()
 		canPlayersMove = false
+		is_pacer_intro = true
 
 
 func _on_pacer_start_timer_timeout():
@@ -687,6 +686,7 @@ func _on_pacer_start_timer_timeout():
 	is_pacer = true
 	info_text("FOLLOW MR.FOX OR ELSE...")
 	$FakeFox/PacerTest/PacerStartTimer2.start()
+	is_pacer_intro = false
 	
 func _on_pacer_start_timer_2_timeout():
 	pacer_deadly = true
@@ -704,6 +704,7 @@ func stop_pacer():
 	
 	if multiplayer.is_server():
 		is_pacer = false
+		is_pacer_intro = false
 		pacer_deadly = false
 
 
@@ -767,6 +768,8 @@ func _on_gainy_timer_timeout():
 	if multiplayer.is_server():
 		$GainyTimer.start(gainy_attack_interval)
 		if (!do_gainy_spawn): return
+		if (is_pacer_intro): return
+		
 		
 		if randi_range(0,gainy_attack_chance) == 1:
 			print("wuh oh gainy")

@@ -80,9 +80,24 @@ func processMic():
 			var value = (stereoData[i].x + stereoData[i].y) / 2
 			maxAmplitude = max(value,maxAmplitude)
 			data[i] = value
-		#print(maxAmplitude)
+		
+		if maxAmplitude < 0.15:
+			set_mouth(0)
+		elif maxAmplitude < 0.3:
+			set_mouth(1)
+		elif maxAmplitude < 0.45:
+			set_mouth(2)
+		elif maxAmplitude < 0.60:
+			set_mouth(3)
+		elif maxAmplitude > 0.6:
+			set_mouth(4)
+		else:
+			set_mouth(0)
+		
 		if maxAmplitude < inputThreshold:
 			return
+		
+
 		
 		send_voice_data.rpc(data)
 		#send_voice_data(data) #local test
@@ -127,7 +142,9 @@ func _ready():
 		setup_voice(name.to_int())
 		var skins = $visual_body.get_children()
 		for skin in skins:
-			skin.hide()
+			if skin.name != "Mouth":
+				skin.hide()
+			
 		var picked_skin = false
 		
 		if Achievements.check_achievement("impossible_ending"):
@@ -145,6 +162,7 @@ func _ready():
 		
 		if picked_skin == false:
 			default.show()
+		
 
 
 func _physics_process(delta):
@@ -179,7 +197,7 @@ func _physics_process(delta):
 			is_on_top = true
 		else:
 			is_on_top = false
-
+		
 		
 		
 		# Add the gravity.
@@ -478,7 +496,7 @@ func _on_disconnect_btn_pressed():
 	multiplayer.multiplayer_peer.close()
 	get_tree().reload_current_scene()
 
-@rpc("authority","call_local")
+@rpc("any_peer","call_local")
 func die(cause):
 	if is_dead: return
 	$visual_body.global_rotation_degrees.x = 0
@@ -497,10 +515,10 @@ func die(cause):
 	#TODO: make this work $CollisionShape3D.disabled = true
 	Achievements.deaths += 1
 	Achievements.save_all()
+	$CanvasLayer/Control/Control.hide()
 	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
-		
 		if get_parent().do_silent_lunch:
 			var chance = randi_range(0, 3)
 			if chance == 2:
@@ -614,3 +632,17 @@ func close_shop():
 func _on_shop_timeout_timeout():
 	can_use_shop = true
 	get_parent().shop.show()
+
+func set_mouth(mouth_id):
+	
+	var mouth : Node3D
+	
+	for sk : Node3D in $visual_body.get_children():
+		if sk.visible:
+			mouth = sk.get_node("Mouth")
+			break 
+	
+	for m in mouth.get_children():
+		if m is Node3D:
+			m.hide()
+	mouth.get_node(NodePath(str(mouth_id))).show()

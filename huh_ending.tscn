@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvkj7j0buxl2p"]
+[gd_scene load_steps=5 format=3 uid="uid://bvkj7j0buxl2p"]
 
 [ext_resource type="Script" path="res://end.gd" id="1_x7t01"]
-[ext_resource type="Material" uid="uid://b8ad2c866xmg3" path="res://retro.tres" id="2_2ldns"]
-[ext_resource type="VideoStream" path="res://Fanmade_Ending.ogv" id="2_lh8ee"]
-[ext_resource type="AudioStream" uid="uid://dnellmaxk7kd4" path="res://Fanmade_Ending_01.mp3" id="3_by7vm"]
+[ext_resource type="VideoStream" path="res://freaky_ending.ogv" id="3_we8h2"]
+[ext_resource type="AudioStream" uid="uid://b2mnanqgnou1g" path="res://freaky_ending.mp3" id="4_jg1lo"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="4_t1lvy"]
 
 [node name="huh_ending" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
@@ -22,20 +21,19 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer"]
-material = ExtResource("2_2ldns")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stream = ExtResource("2_lh8ee")
+stream = ExtResource("3_we8h2")
 volume_db = -80.0
 autoplay = true
 expand = true
 bus = &"Dialogs"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer"]
-stream = ExtResource("3_by7vm")
+stream = ExtResource("4_jg1lo")
 autoplay = true
 bus = &"Music"
 
@@ -91,7 +89,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 46.0
+wait_time = 54.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
