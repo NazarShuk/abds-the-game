@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://ci0ihc8o740fp"]
+[gd_scene load_steps=38 format=3 uid="uid://ci0ihc8o740fp"]
 
 [ext_resource type="Script" path="res://achievementiks.gd" id="1_stpc6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_un4ex"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://du7llvn5hs8h6" path="res://Mouth/mouth_3.png" id="9_pyye5"]
 [ext_resource type="Texture2D" uid="uid://cl8p5wgm14xp7" path="res://Mouth/mouth_5.png" id="10_sthrk"]
 [ext_resource type="Texture2D" uid="uid://dta0u30sd2fbk" path="res://freaky_back.png" id="12_0agdt"]
+[ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://impossibleend_back.png" id="16_vdrfj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_botq8"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -71,8 +72,8 @@ albedo_texture = ExtResource("8_jo4di")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e33w6"]
 albedo_texture = ExtResource("9_5oead")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0f0jd"]
-albedo_texture = ExtResource("12_0agdt")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5hsj4"]
+albedo_texture = ExtResource("16_vdrfj")
 
 [sub_resource type="Animation" id="Animation_4oxbx"]
 length = 0.001
@@ -422,7 +423,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_e33w6")
 transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
 mesh = SubResource("QuadMesh_wk33d")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_0f0jd")
+surface_material_override/0 = SubResource("StandardMaterial3D_5hsj4")
 
 [node name="Mouth" type="Node3D" parent="Player/Impossible"]
 transform = Transform3D(0.623881, 0, 0, 0, 0.637448, 0, 0, 0, 1, 0.0345617, 0.06379, -0.132746)

@@ -1,7 +1,6 @@
 extends Node3D
 
 var peer = SteamMultiplayerPeer.new()
-var is_multiplayer = false
 
 @onready var book_spawns = $BookSpawns
 @onready var collected_books_label = $CanvasLayer/Main/CollectedBooksLabel
@@ -65,6 +64,7 @@ var leahy_diff_penalty = 0
 @export var gainy_attack_interval = 30
 @export var death_timeout = 5 # DONE
 @export var silent_lunch_duration = 15 # DONE
+@export var shop_timeout = 60
 
 @export var do_achievements = true
 
@@ -74,9 +74,6 @@ var leahy_diff_penalty = 0
 
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
 var players_spawned = false
-
-func _init():
-	is_multiplayer = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -98,7 +95,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
-	if is_multiplayer && multiplayer.is_server():
+	
+	
+	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
 		update_player_text()
 		
 		if game_started:
@@ -111,7 +110,7 @@ func _process(_delta):
 		$EvilLeahy/SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
 		
 		var clr:Color = $CanvasLayer2/SomeoneDid.get("theme_override_colors/font_color")
-		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.025))
+		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.01))
 		
 		if fox_follow && do_fox_help:
 			mr_fox.update_target_location(book_pos)
@@ -124,30 +123,33 @@ func _process(_delta):
 		else:
 			ms_gainy.go_back()
 		
-	if game_started and !leahy_appeased and multiplayer.is_server() and !absent:
-		var closest
-		var closest_distance = 999999999
-		
-		for p in players_ids:
-			if !players[p].is_dead:
-				var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
-				
-				update_approching_label.rpc_id(p,distance)
+	if game_started and multiplayer.is_server() and !absent:
+		if !leahy_appeased:
+			var closest
+			var closest_distance = 999999999
 			
-				if distance < closest_distance:
-					closest = get_node(str(p)).global_position
-					closest_distance = distance
-					show_approaching_label.rpc_id(p)
+			for p in players_ids:
+				if !players[p].is_dead:
+					var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
+					
+					update_approching_label.rpc_id(p,distance)
+				
+					if distance < closest_distance:
+						closest = get_node(str(p)).global_position
+						closest_distance = distance
+						show_approaching_label.rpc_id(p)
+					else:
+						hide_approaching_label.rpc_id(p)
 				else:
 					hide_approaching_label.rpc_id(p)
+			
+			if closest:
+				evil_leahy.update_target_location(closest)
 			else:
-				hide_approaching_label.rpc_id(p)
-		
-		if closest:
-			get_tree().call_group("enemies","update_target_location",closest)
+				print("leahy didnt find a player")
 		else:
-			print("leahy didnt find a player")
-	if !game_started and multiplayer.is_server():
+			evil_leahy.update_target_location(evil_leahy.global_position)
+	if multiplayer.has_multiplayer_peer() and !game_started and multiplayer.is_server():
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
 		
 		var initial_nodes = 0
@@ -186,8 +188,8 @@ func _on_host_pressed():
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
 	_on_peer_connected()
-	
-	
+
+
 func _on_lobby_connected(_connected,id):
 	if connect:
 		lobby_id = id
@@ -216,8 +218,8 @@ func _on_connected_to_server():
 func receive_steam_usr(id,username):
 	if !multiplayer.is_server(): return
 	print(id,username)
-	players[id].username = username
-
+	if players.has(id):
+		players[id].username = username
 
 func disconenct_btn():
 	
@@ -226,14 +228,6 @@ func disconenct_btn():
 
 func _on_disconnect_from_server():
 	print("grey jumpscare")
-	is_multiplayer = false
-	var t = Timer.new()
-	t.set_wait_time(1)
-	t.set_one_shot(true)
-	self.add_child(t)
-	t.start()
-	t.connect("timeout",go_back)
-	# TODO
 	
 func go_back():
 	get_tree().change_scene_to_file("res://game.tscn")
@@ -263,7 +257,7 @@ func _on_peer_connected(id = 1):
 	books_to_collect += notebooks_per_player
 	
 	update_player_text()
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(1).timeout
 	request_steam_usr.rpc_id(id)
 
 @rpc("any_peer","call_local")
@@ -273,6 +267,9 @@ func request_steam_usr():
 func pre_start_game_btn():
 	spawn_players()
 	pre_start_game.rpc()
+	if multiplayer.is_server():
+		if !debug_host:
+			Steam.setLobbyJoinable(lobby_id,false)
 
 func spawn_players():
 	for pl_id in players_ids:
@@ -510,20 +507,29 @@ func _on_seconds_left_timeout():
 		sec_str = "0" + str(sec_left)
 	
 	$CanvasLayer/Main/TimerLabel.text = min_str + ":" + sec_str
-	
-	
+
+@rpc("any_peer","call_local")
+func skibidi():
+	if multiplayer.is_server():
+		end_game.rpc("freaky")
 
 @rpc("authority","call_local")
 func end_game(ending : String):
-	if  multiplayer.is_server():
+	if multiplayer.is_server():
 		players_ids.reverse()
 		for id in players_ids:
-			set_singleton.rpc_id(id,players[id].deaths,players[id].books_collected,ending)
-
+			if id != 1:
+				print(" callin set singfleton on", id)
+				set_singleton.rpc_id(id,players[id].deaths,players[id].books_collected,ending)
+		
+		await get_tree().create_timer(1).timeout
+		set_singleton(players[1].deaths,players[1].books_collected,ending)
 @rpc("authority","call_local")
 func set_singleton(deaths,books,ending):
 	EndGameSingleton.deaths = deaths
 	EndGameSingleton.books_collected = books
+	
+	print("set singletnon ",multiplayer.get_unique_id()," : ","")
 	
 	peer.close()
 	if ending == "normal":
@@ -534,6 +540,10 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_file("res://perfect_end.tscn")
 	elif ending == "imp":
 		get_tree().change_scene_to_file("res://impossible_end.tscn")
+	elif ending == "freaky":
+		get_tree().change_scene_to_file("res://huh_ending.tscn")
+	elif ending == "none":
+		get_tree().change_scene_to_file("res://logos.tscn")
 
 @rpc("authority","call_local")
 func show_approaching_label():
@@ -560,24 +570,24 @@ func hide_menu():
 	$CanvasLayer/MultiPlayer.hide()
 	$Music1.play()
 	$Music0.stop()
-	is_multiplayer = true
 
 
 func _on_button_4_pressed():
 	get_tree().change_scene_to_file("res://angy_azzu.tscn")
 
 @rpc("any_peer","call_local")
-func appease_leahy(username):
+func appease_leahy(username,sec):
 	if multiplayer.is_server():
 		if !do_leahy_appease: return
 		
-		$Appeasment.start()
+		$Appeasment.start(sec)
 		leahy_appeased = true
-		info_text(username + " appeased Leahy for 5 seconds.")
+		info_text(username + " appeased Leahy for "+str(sec)+" seconds.")
 
 
 func _on_appeasment_timeout():
-	leahy_appeased = false
+	if !is_pacer_intro:
+		leahy_appeased = false
 
 @rpc("any_peer","call_local")
 func mr_fox_collect():
@@ -589,11 +599,6 @@ func mr_fox_collect():
 
 func _on_button_5_pressed():
 	get_tree().change_scene_to_file("res://achievements.tscn")
-
-@rpc("any_peer","call_local")
-func skibidi():
-	peer.close()
-	get_tree().change_scene_to_file("res://huh_ending.tscn")
 
 @export var absent = false
 
@@ -635,14 +640,11 @@ func azzu_steal(launcher):
 	if multiplayer.is_server() && canPlayersMove:
 		if !do_azzu_steal: return
 		
-		info_text("grr you angered azzu")
-		canPlayersMove = false
+		info_text(get_node(str(launcher)).steam_name + " angered Mr.Azzu")
 		mr_azzu.server_target = true
 		mr_azzu.update_target_location(get_node(str(launcher)).global_position)
 		
 		azzu_angered = true
-	
-	if canPlayersMove: return
 	
 	$Music2.stop()
 
@@ -713,7 +715,7 @@ func _on_pacer_speed_increase_timeout():
 
 
 func _on_leahy_pos_diff_timeout():
-	if !is_multiplayer: return
+	if !multiplayer.has_multiplayer_peer(): return
 	if !multiplayer.is_server(): return
 	
 	leahy_diff = evil_leahy.global_position.distance_to(leahy_last_pos)

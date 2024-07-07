@@ -81,15 +81,15 @@ func processMic():
 			maxAmplitude = max(value,maxAmplitude)
 			data[i] = value
 		
-		if maxAmplitude < 0.15:
+		if maxAmplitude < 0.1:
 			set_mouth(0)
-		elif maxAmplitude < 0.3:
+		elif maxAmplitude < 0.2:
 			set_mouth(1)
-		elif maxAmplitude < 0.45:
+		elif maxAmplitude < 0.3:
 			set_mouth(2)
-		elif maxAmplitude < 0.60:
+		elif maxAmplitude < 0.4:
 			set_mouth(3)
-		elif maxAmplitude > 0.6:
+		elif maxAmplitude > 0.5:
 			set_mouth(4)
 		else:
 			set_mouth(0)
@@ -111,8 +111,8 @@ func process_voice():
 	
 	if receive_buffer.size() <= 0:
 		return
-	elif receive_buffer.size() >= 1025:
-		receive_buffer = receive_buffer.slice(0,1024)
+	elif receive_buffer.size() >= 2048:
+		receive_buffer = receive_buffer.slice(0,2048)
 		#playback.clear_buffer()
 
 	for i in range(min(playback.get_frames_available(),receive_buffer.size())):
@@ -139,6 +139,7 @@ func _enter_tree():
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if is_multiplayer_authority():
+		
 		setup_voice(name.to_int())
 		var skins = $visual_body.get_children()
 		for skin in skins:
@@ -163,17 +164,22 @@ func _ready():
 		if picked_skin == false:
 			default.show()
 		
-
+		
 
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
+		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor($"CanvasLayer/Control/Shop/shop timer".time_left)) + "s left"
+		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
 		# Voice chat
 		processMic()
 		inputThreshold = AudioVolume.mic_threshold
 		
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
+		
+		if Input.is_action_just_pressed("debug"):
+			pick_item(4)
 		
 		if (10 - leahy_dst) > 0:
 			var strength = 1/leahy_dst+0.01
@@ -187,11 +193,9 @@ func _physics_process(delta):
 			
 
 		if global_position.z > 15:
-			get_parent().skibidi.rpc_id(name.to_int())
-
-
-		#global_rotation_degrees.x = 0
-		#global_rotation_degrees.z = 0
+			multiplayer.peer.close()
+			get_tree().change_scene_to_file("res://game.tscn")
+			# freaky ending
 
 		if global_position.y >= 3.727:
 			is_on_top = true
@@ -256,7 +260,29 @@ func _physics_process(delta):
 								print("shop")
 								open_shop()
 								
+					
+					if Input.is_action_just_pressed("give"):
+						if get_cur_item() == 3:
+							var evil_leahy = get_tree().get_first_node_in_group("enemies")
+							var distance = global_position.distance_to(evil_leahy.global_position)
 
+							if distance < 15:
+								pick_item(-1)
+								get_parent().appease_leahy.rpc(steam_name,5)
+							else:
+								var fox = get_tree().get_first_node_in_group("fox")
+								var dist = global_position.distance_to(fox.global_position)
+								if dist < 15:
+									pick_item(-1)
+									get_parent().mr_fox_collect.rpc()
+						elif get_cur_item() == 5:
+							var evil_leahy = get_tree().get_first_node_in_group("enemies")
+							var distance = global_position.distance_to(evil_leahy.global_position)
+
+							if distance < 25:
+								pick_item(-1)
+								get_parent().appease_leahy.rpc(steam_name,15)
+					
 					if Input.is_action_just_pressed("use_item"):
 						if get_cur_item() == 0:
 							pick_item(-1)
@@ -269,25 +295,13 @@ func _physics_process(delta):
 							pick_item(-1)
 							velocity.y += 10
 							shart.rpc()
-						elif get_cur_item() == 3:
-							var evil_leahy = get_tree().get_first_node_in_group("enemies")
-							var distance = global_position.distance_to(evil_leahy.global_position)
-
-							if distance < 15:
-								pick_item(-1)
-								get_parent().appease_leahy.rpc(steam_name)
-							else:
-								var fox = get_tree().get_first_node_in_group("fox")
-								var dist = global_position.distance_to(fox.global_position)
-								if dist < 15:
-									pick_item(-1)
-									get_parent().mr_fox_collect.rpc()
-									
+						
 						elif get_cur_item() == 4:
 							
 							squeak.rpc()
 							pick_item(-1)
 							get_parent().start_da_pacer.rpc(name.to_int()) # i want to kms because of this
+						
 
 		move_and_slide()
 
@@ -333,7 +347,6 @@ func _physics_process(delta):
 		camera_3d.global_rotation.y = global_rotation.y
 		#camera_3d.global_rotation.x = global_rotation.x
 		$CanvasLayer2.visible = true
-
 
 func _input(event):
 	if !is_multiplayer_authority():
@@ -450,8 +463,24 @@ func get_cur_item():
 func choose_item():
 	if can_get_item:
 		can_get_item = false
-		pick_item(randi_range(0, $Hand.get_children().size() - 1))
+		
+		var items =   [0, 1, 2, 3, 4, 5]
+		var chances = [12.5, 50, 12.5, 15, 2.5, 7.5]
+		
+		pick_item(pick_random_weighted(items,chances))
 
+func pick_random_weighted(items: Array, chances: Array) -> Variant:
+	var total_weight = chances.reduce(func(acc, weight): return acc + weight, 0.0)
+	var random_value = randf() * total_weight
+	var cumulative_weight = 0.0
+	
+	for i in range(items.size()):
+		cumulative_weight += chances[i]
+		if random_value <= cumulative_weight:
+			return items[i]
+	
+	# Fallback in case of rounding errors
+	return items[-1]
 
 func _on_fruit_snacks_timer_timeout():
 	is_boosted = false
@@ -491,10 +520,14 @@ func _on_continue_btn_pressed():
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-
 func _on_disconnect_btn_pressed():
-	multiplayer.multiplayer_peer.close()
-	get_tree().reload_current_scene()
+	$CanvasLayer/Control/Menu/Main/DisconnectBtn.disabled = true
+	if !multiplayer.is_server():
+		print(name,"not server")
+		multiplayer.multiplayer_peer.close()
+		get_tree().reload_current_scene()
+	else:
+		get_parent().end_game.rpc("none")
 
 @rpc("any_peer","call_local")
 func die(cause):
@@ -516,7 +549,7 @@ func die(cause):
 	Achievements.deaths += 1
 	Achievements.save_all()
 	$CanvasLayer/Control/Control.hide()
-	
+	close_shop()
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
 		if get_parent().do_silent_lunch:
@@ -617,8 +650,12 @@ func open_shop():
 		AudioServer.set_bus_solo(6,true)
 		get_parent().set_player_dead.rpc(name.to_int(), true,false)
 		can_use_shop = false
-		$ShopTimeout.start()
+		$ShopTimeout.start(get_parent().shop_timeout)
 		get_parent().shop.hide()
+		$"CanvasLayer/Control/Shop/shop timer".start()
+		$CanvasLayer/Control/Shop/ColorRect/MainPanel.show()
+		$"CanvasLayer/Control/Shop/ColorRect/question panel".hide()
+		$"CanvasLayer/Control/Shop/ColorRect/rewards panel".hide()
 
 func close_shop():
 	$CanvasLayer/Control/Shop.hide()
@@ -627,14 +664,59 @@ func close_shop():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	AudioServer.set_bus_solo(6,false)
 	get_parent().set_player_dead.rpc(name.to_int(), false,false)
+	$"CanvasLayer/Control/Shop/shop timer".stop()
 	
 
 func _on_shop_timeout_timeout():
 	can_use_shop = true
 	get_parent().shop.show()
 
-func set_mouth(mouth_id):
+func _on_credits_btn_pressed():
+	$"CanvasLayer/Control/Shop/ColorRect/question panel".show()
+	$CanvasLayer/Control/Shop/ColorRect/MainPanel.hide()
+	generate_show_question()
 	
+
+func _on_shop_timer_timeout():
+	close_shop()
+
+func _on_rewards_btn_pressed():
+	$CanvasLayer/Control/Shop/ColorRect/MainPanel.hide()
+	$"CanvasLayer/Control/Shop/ColorRect/rewards panel".show()
+
+@onready var item_list : ItemList = $"CanvasLayer/Control/Shop/ColorRect/question panel/ItemList"
+var right_ans_index 
+
+func generate_show_question():
+	var num1 = randi_range(33,99)
+	var num2 = randi_range(33,99)
+	var ans = num1 + num2
+	
+	var right_choice = randi_range(0,4)
+	
+	$"CanvasLayer/Control/Shop/ColorRect/question panel/Label2".text = str(num1) + " + " + str(num2)
+	item_list.clear()
+	print("right choice: ",right_choice)
+	for i in range(0,4):
+		if i != right_choice:
+			item_list.add_item(str(ans + randi_range(-5,5)))
+		else:
+			
+			right_ans_index = item_list.add_item(str(ans))
+
+func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
+	print(index,right_ans_index)
+
+	if index == right_ans_index:
+		credits += 5
+		generate_show_question()
+		$CanvasLayer/Control/Shop/correct.play()
+	else:
+		$CanvasLayer/Control/Shop/incorrect.play()
+		close_shop()
+
+func set_mouth(mouth_id):
+		
 	var mouth : Node3D
 	
 	for sk : Node3D in $visual_body.get_children():
@@ -646,3 +728,33 @@ func set_mouth(mouth_id):
 		if m is Node3D:
 			m.hide()
 	mouth.get_node(NodePath(str(mouth_id))).show()
+
+
+
+
+func _on_buy_book_pressed():
+	if credits >= 20:
+		credits -= 20
+		close_shop()
+		get_parent().on_collect_book.rpc(name.to_int(), "book1")
+		Achievements.books_collected += 1
+		Achievements.save_all()
+		
+		var a = AudioStreamPlayer.new()
+		a.stream = load("res://money.mp3")
+		a.bus = "Dialogs"
+		a.play()
+
+
+
+
+func _on_buy_duck_pressed():
+	if credits >= 10:
+		credits -= 10
+		close_shop()
+		pick_item(4)
+		
+		var a = AudioStreamPlayer.new()
+		a.stream = load("res://money.mp3")
+		a.bus = "Dialogs"
+		a.play()

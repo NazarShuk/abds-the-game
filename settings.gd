@@ -15,11 +15,16 @@ func _ready():
 	music_slider.value = db_to_linear(AudioServer.get_bus_volume_db(1))
 	sfx_slider.value = db_to_linear(AudioServer.get_bus_volume_db(2))
 	
+	
 	if AudioVolume.mic_threshold:
 		threshold_slider.value = AudioVolume.mic_threshold
 	else:
 		AudioVolume.mic_threshold = threshold_slider.value
 		AudioVolume.save_values()
+
+func _exit_tree():
+	AudioServer.set_bus_mute(4,true)
+	pass
 
 func _process(delta):
 	var stereoData : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
@@ -56,7 +61,6 @@ func _on_music_slider_changed(value):
 
 func _on_sfx_slider_changed(value):
 	AudioServer.set_bus_volume_db(2,linear_to_db(value))
-	AudioServer.set_bus_volume_db(3,linear_to_db(value))
 	
 	AudioVolume.sfx_vol = linear_to_db(value)
 	AudioVolume.save_values()
@@ -72,16 +76,12 @@ func _on_sfx_slider_changed(value):
 func _on_button_pressed():
 	get_tree().change_scene_to_file("res://game.tscn")
 
-
 func _on_goofball_timer_timeout():
 	cangoof = true
 
 
 func _on_button_2_pressed():
 		get_tree().change_scene_to_file("res://noescape.tscn")
-
-
-
 
 func _on_threshold_slider_value_changed(value):
 	AudioVolume.mic_threshold = value
@@ -90,3 +90,9 @@ func _on_threshold_slider_value_changed(value):
 
 func _on_check_button_toggled(toggled_on):
 	hear_urself = toggled_on
+
+
+func _on_v_cslider_value_changed(value):
+	AudioVolume.voice_chat_vol = value
+	AudioVolume.save_values()
+	AudioServer.set_bus_volume_db(7,linear_to_db(value))

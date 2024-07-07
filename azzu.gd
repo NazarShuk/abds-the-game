@@ -3,7 +3,7 @@ extends CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-var SPEED = 12
+var SPEED = 15
 
 @export var server_target = false
 
@@ -34,7 +34,7 @@ func update_target_location(target_location):
 
 
 func _on_timer_timeout():
-	if server_target: return
+	#if server_target: return
 	if !multiplayer.is_server(): return
 	var points = get_parent().get_node("BookSpawns").get_children()
 	

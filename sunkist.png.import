@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1myp1gcenl1q"
-path.s3tc="res://.godot/imported/impossibleend_back.png-62566f66d9730f0a6dd03c1cb8b6a817.s3tc.ctex"
+uid="uid://fk2k3kv323ey"
+path.s3tc="res://.godot/imported/sunkist.png-421dd78d221b9ed66e75e367ddf61486.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://impossibleend_back.png"
-dest_files=["res://.godot/imported/impossibleend_back.png-62566f66d9730f0a6dd03c1cb8b6a817.s3tc.ctex"]
+source_file="res://sunkist.png"
+dest_files=["res://.godot/imported/sunkist.png-421dd78d221b9ed66e75e367ddf61486.s3tc.ctex"]
 
 [params]
 

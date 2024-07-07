@@ -37,6 +37,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Button2" type="Button" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 53.9999
+offset_right = 176.0
+offset_bottom = 227.0
+grow_horizontal = 0
+rotation = -2.35619
+theme_override_styles/normal = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ongwm")
+theme_override_styles/focus = SubResource("StyleBoxTexture_ongwm")
+
 [node name="Label" type="Label" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
@@ -54,8 +70,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -53.0
-offset_bottom = -14.0
+offset_top = -138.847
+offset_bottom = -99.8472
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -72,9 +88,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -182.0
-offset_top = -18.5
+offset_top = -104.347
 offset_right = 182.0
-offset_bottom = 18.5
+offset_bottom = -67.3472
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
@@ -86,8 +102,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 10.0
-offset_bottom = 49.0
+offset_top = -75.8472
+offset_bottom = -36.8472
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -104,9 +120,41 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -182.0
-offset_top = 44.5
+offset_top = -41.3472
 offset_right = 182.0
-offset_bottom = 81.5
+offset_bottom = -4.34723
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Label6" type="Label" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.8472
+offset_bottom = 27.1528
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rc34d")
+theme_override_font_sizes/font_size = 24
+text = "Voice Chat Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VCslider" type="HSlider" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.0
+offset_top = 22.6528
+offset_right = 182.0
+offset_bottom = 59.6528
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
@@ -120,36 +168,20 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -186.0
-offset_top = 219.0
+offset_top = 152.153
 offset_right = 186.0
-offset_bottom = 250.0
+offset_bottom = 183.153
 grow_horizontal = 2
 grow_vertical = 2
 text = "Back to the menu"
-
-[node name="Button2" type="Button" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 32.0
-offset_top = 70.0
-offset_right = 176.0
-offset_bottom = 243.0
-grow_horizontal = 0
-rotation = -2.35619
-theme_override_styles/normal = SubResource("StyleBoxTexture_ongwm")
-theme_override_styles/hover = SubResource("StyleBoxTexture_ongwm")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_ongwm")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_ongwm")
-theme_override_styles/focus = SubResource("StyleBoxTexture_ongwm")
 
 [node name="Label4" type="Label" parent="CanvasLayer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 75.0
-offset_bottom = 114.0
+offset_top = 59.1528
+offset_bottom = 98.1528
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -164,8 +196,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 141.0
-offset_bottom = 156.0
+offset_top = 125.153
+offset_bottom = 140.153
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -182,9 +214,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -166.0
-offset_top = 110.0
+offset_top = 94.1528
 offset_right = 166.0
-offset_bottom = 137.0
+offset_bottom = 121.153
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_1kfeh")
@@ -214,9 +246,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 165.0
-offset_top = 102.0
+offset_top = 86.1528
 offset_right = 241.0
-offset_bottom = 142.0
+offset_bottom = 126.153
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_icons/checked = ExtResource("5_5i7pj")
@@ -237,10 +269,11 @@ stream = SubResource("AudioStreamMicrophone_stdf6")
 autoplay = true
 bus = &"Voice Chat"
 
+[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="value_changed" from="CanvasLayer/MusicSlider" to="." method="_on_music_slider_changed"]
 [connection signal="value_changed" from="CanvasLayer/SfxSlider" to="." method="_on_sfx_slider_changed"]
+[connection signal="value_changed" from="CanvasLayer/VCslider" to="." method="_on_v_cslider_value_changed"]
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="value_changed" from="CanvasLayer/mic_vol/threshold_slider" to="." method="_on_threshold_slider_value_changed"]
 [connection signal="toggled" from="CanvasLayer/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="timeout" from="goofballTimer" to="." method="_on_goofball_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=86 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -25,6 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://shop.mp3" id="12_u07an"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="12_xfb3j"]
 [ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="12_xl65f"]
+[ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://impossibleend_back.png" id="14_b3bg4"]
 [ext_resource type="VideoStream" path="res://dum.ogv" id="14_b58yc"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
 [ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
@@ -32,6 +33,9 @@
 [ext_resource type="VideoStream" path="res://models/azzu_jumpscare.ogv" id="17_co3v2"]
 [ext_resource type="VideoStream" path="res://gainy.ogv" id="19_vcsq8"]
 [ext_resource type="Texture2D" uid="uid://bkmj8ey1h4mji" path="res://rubber-duck_0 (1).jpg" id="20_l0oek"]
+[ext_resource type="AudioStream" uid="uid://c1ghfb0atu0rn" path="res://correct.mp3" id="23_vsfyq"]
+[ext_resource type="AudioStream" uid="uid://ctyuoy5tau7hv" path="res://incorrct.mp3" id="24_yj6h8"]
+[ext_resource type="Texture2D" uid="uid://fk2k3kv323ey" path="res://sunkist.png" id="32_er28m"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -90,8 +94,8 @@ albedo_texture = ExtResource("5_00s6l")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l3sff"]
 albedo_texture = ExtResource("6_rnntf")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5kkc"]
-albedo_texture = ExtResource("5_il1py")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftxcc"]
+albedo_texture = ExtResource("14_b3bg4")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tu1hv"]
 
@@ -183,13 +187,13 @@ _data = {
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oicg1"]
 bg_color = Color(0.2484, 0.2484, 0.2484, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mp62"]
-bg_color = Color(1, 1, 1, 1)
-
 [sub_resource type="Environment" id="Environment_i6cs0"]
 
 [sub_resource type="World3D" id="World3D_jha5s"]
 environment = SubResource("Environment_i6cs0")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6dj7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8tbe"]
 albedo_texture = ExtResource("14_sfn8x")
@@ -237,6 +241,21 @@ _data = {
 "spin": SubResource("Animation_ir16p")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgtva"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bb0q4"]
+albedo_texture = ExtResource("20_l0oek")
+uv1_scale = Vector3(1.015, 1.015, 1.015)
+uv1_offset = Vector3(0.5, -0.5, 0)
+uv1_triplanar = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_51m3v"]
+radius = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mp62"]
+bg_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rimgt"]
 albedo_texture = ExtResource("9_2sbry")
 
@@ -259,6 +278,12 @@ albedo_texture = ExtResource("20_l0oek")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rfx4x"]
 albedo_texture = ExtResource("20_l0oek")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hao88"]
+albedo_texture = ExtResource("32_er28m")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5jp4"]
+albedo_texture = ExtResource("32_er28m")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwpal"]
 albedo_texture = ExtResource("2_q3hoo")
@@ -440,7 +465,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_l3sff")
 transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
 mesh = SubResource("QuadMesh_orlgu")
 skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_i5kkc")
+surface_material_override/0 = SubResource("StandardMaterial3D_ftxcc")
 
 [node name="Mouth" type="Node3D" parent="visual_body/Impossible"]
 transform = Transform3D(0.623881, 0, 0, 0, 0.637448, 0, 0, 0, 1, 0.0345617, 0.06379, -0.132746)
@@ -700,48 +725,36 @@ color = Color(1, 1, 1, 0.835294)
 
 [node name="Label2" type="Label" parent="CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 14.0
-offset_top = 13.0
-offset_right = 163.0
-offset_bottom = 76.0
-grow_horizontal = 2
+offset_left = 15.0
+offset_top = 16.0
+offset_right = 204.0
+offset_bottom = 79.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 48
 text = "0 credits"
+
+[node name="timer" type="Label" parent="CanvasLayer/Control/Shop/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -184.0
+offset_top = 16.0
+offset_right = 184.0
+offset_bottom = 79.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 48
+text = "30s left"
+horizontal_alignment = 1
 
 [node name="MainPanel" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 color = Color(1, 1, 1, 0)
-
-[node name="Button" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 800.0
-offset_right = 866.0
-offset_bottom = 67.0
-grow_horizontal = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.194349, 0.194349, 0.194349, 1)
-theme_override_colors/font_hover_color = Color(0.396889, 0.396889, 0.396889, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_l1x2u")
-theme_override_font_sizes/font_size = 46
-theme_override_styles/normal = SubResource("StyleBoxFlat_3mp62")
-theme_override_styles/hover = SubResource("StyleBoxFlat_3mp62")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_3mp62")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_3mp62")
-theme_override_styles/focus = SubResource("StyleBoxFlat_3mp62")
-text = "X"
 
 [node name="BookPreview" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 1
@@ -791,6 +804,18 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 48
 text = "rewards"
 horizontal_alignment = 1
+
+[node name="rewards btn" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 142.0
+offset_right = 342.0
+offset_bottom = 326.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k6dj7")
 
 [node name="MtnDew" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 1
@@ -849,8 +874,251 @@ theme_override_font_sizes/font_size = 48
 text = "credits"
 horizontal_alignment = 1
 
+[node name="credits btn" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+layout_mode = 0
+offset_left = 564.0
+offset_top = 142.0
+offset_right = 743.0
+offset_bottom = 326.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_vgtva")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vgtva")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vgtva")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vgtva")
+theme_override_styles/focus = SubResource("StyleBoxFlat_vgtva")
+
+[node name="question panel" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -218.0
+offset_top = -106.0
+offset_right = 218.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 48
+text = "2x(30y) = 30"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="CanvasLayer/Control/Shop/ColorRect/question panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -312.0
+offset_top = -15.0
+offset_right = 312.0
+offset_bottom = 177.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hovered_color = Color(0.581033, 0.581033, 0.581033, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 71
+max_columns = 4
+same_column_width = true
+fixed_column_width = 299
+
+[node name="rewards panel" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="BookPreview" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -305.0
+offset_top = -92.0
+offset_right = -127.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview"]
+own_world_3d = true
+world_3d = SubResource("World3D_jha5s")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(178, 184)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
+
+[node name="Book" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport" instance=ExtResource("12_xl65f")]
+transform = Transform3D(0.62388, 0, 0.78152, 0, 1, 0, -0.78152, 0, 0.62388, 0, 0, -0.87)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -307.0
+offset_top = 77.0
+offset_right = -118.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 48
+text = "20 credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DuckPreview" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 147.0
+offset_top = -92.0
+offset_right = 325.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview"]
+own_world_3d = true
+world_3d = SubResource("World3D_jha5s")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(178, 184)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.98)
+material_override = SubResource("StandardMaterial3D_bb0q4")
+mesh = SubResource("CapsuleMesh_51m3v")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport/MeshInstance3D"]
+libraries = {
+"": SubResource("AnimationLibrary_wuc1l")
+}
+autoplay = "spin"
+
+[node name="Label4" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 139.0
+offset_top = 77.0
+offset_right = 340.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 48
+text = "10 credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="buy book" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 142.0
+offset_right = 310.0
+offset_bottom = 326.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k6dj7")
+
+[node name="buy duck" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+layout_mode = 0
+offset_left = 598.0
+offset_top = 142.0
+offset_right = 777.0
+offset_bottom = 326.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k6dj7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k6dj7")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Shop/ColorRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -66.0
+offset_bottom = 67.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.194349, 0.194349, 0.194349, 1)
+theme_override_colors/font_hover_color = Color(0.396889, 0.396889, 0.396889, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_3mp62")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3mp62")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3mp62")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_3mp62")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3mp62")
+text = "X"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Shop"]
 stream = ExtResource("12_u07an")
+bus = &"shop"
+
+[node name="shop timer" type="Timer" parent="CanvasLayer/Control/Shop"]
+wait_time = 30.0
+one_shot = true
+
+[node name="shop question timer" type="Timer" parent="CanvasLayer/Control/Shop"]
+
+[node name="correct" type="AudioStreamPlayer" parent="CanvasLayer/Control/Shop"]
+stream = ExtResource("23_vsfyq")
+bus = &"shop"
+
+[node name="incorrect" type="AudioStreamPlayer" parent="CanvasLayer/Control/Shop"]
+stream = ExtResource("24_yj6h8")
 bus = &"shop"
 
 [node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
@@ -968,35 +1236,41 @@ bus = &"Non Mute"
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 20)
+color = Color(0, 0, 0, 0.556863)
+
+[node name="Main" type="ColorRect" parent="CanvasLayer/Control/Menu"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -157.0
-offset_top = -20.0
-offset_right = -69.0
-offset_bottom = 20.0
+offset_left = -230.0
+offset_top = -115.0
+offset_right = 230.0
+offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(5.71, 5.71)
-pivot_offset = Vector2(20, 20)
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Menu"]
+[node name="Label" type="Label" parent="CanvasLayer/Control/Menu/Main"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 2111.0
-offset_bottom = 208.0
+offset_bottom = 20.0
 grow_horizontal = 2
-scale = Vector2(0.04, 0.04)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("6_l1x2u")
-theme_override_font_sizes/font_size = 178
+theme_override_font_sizes/font_size = 56
 text = "Menu"
 horizontal_alignment = 1
 
-[node name="ContinueBtn" type="Button" parent="CanvasLayer/Control/Menu"]
+[node name="ContinueBtn" type="Button" parent="CanvasLayer/Control/Menu/Main"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1004,30 +1278,26 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -39.5
-offset_top = -15.5
+offset_top = -29.0
 offset_right = 39.5
-offset_bottom = 15.5
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.2, 0.2)
-pivot_offset = Vector2(39, 15)
 text = "Continue"
 
-[node name="DisconnectBtn" type="Button" parent="CanvasLayer/Control/Menu"]
+[node name="DisconnectBtn" type="Button" parent="CanvasLayer/Control/Menu/Main"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -39.5
-offset_top = -8.05605
-offset_right = 39.5
-offset_bottom = 22.944
+offset_left = -47.0
+offset_top = 8.0
+offset_right = 47.0
+offset_bottom = 39.0001
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.2, 0.2)
-pivot_offset = Vector2(47, 15)
 text = "Disconnect"
 
 [node name="Hand" type="Node3D" parent="."]
@@ -1088,6 +1358,17 @@ material_override = SubResource("StandardMaterial3D_rfx4x")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
+[node name="Sunkist" type="MeshInstance3D" parent="Hand"]
+visible = false
+material_override = SubResource("StandardMaterial3D_hao88")
+mesh = SubResource("QuadMesh_qgndq")
+
+[node name="Pizza2" type="MeshInstance3D" parent="Hand/Sunkist"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_y5jp4")
+mesh = SubResource("QuadMesh_qgndq")
+skeleton = NodePath("../..")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 material_override = SubResource("StandardMaterial3D_lwpal")
@@ -1111,7 +1392,7 @@ bus = &"Voice Chat"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer3D" parent="Voice"]
 stream = SubResource("AudioStreamGenerator_n68p1")
 autoplay = true
-bus = &"Dialogs"
+bus = &"General Voice"
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
@@ -1123,7 +1404,13 @@ bus = &"Dialogs"
 [connection signal="timeout" from="AntiWallWalk" to="." method="_on_anti_wall_walk_timeout"]
 [connection signal="timeout" from="ItemDelay" to="." method="_on_item_delay_timeout"]
 [connection signal="timeout" from="ShopTimeout" to="." method="_on_shop_timeout_timeout"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/Button" to="." method="close_shop"]
-[connection signal="pressed" from="CanvasLayer/Control/Menu/ContinueBtn" to="." method="_on_continue_btn_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Menu/DisconnectBtn" to="." method="_on_disconnect_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/rewards btn" to="." method="_on_rewards_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/credits btn" to="." method="_on_credits_btn_pressed"]
+[connection signal="item_clicked" from="CanvasLayer/Control/Shop/ColorRect/question panel/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy book" to="." method="_on_buy_book_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy duck" to="." method="_on_buy_duck_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/Button" to="." method="close_shop"]
+[connection signal="timeout" from="CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="." method="_on_continue_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="." method="_on_disconnect_btn_pressed"]
 [connection signal="timeout" from="debug" to="." method="_on_debug_timeout"]

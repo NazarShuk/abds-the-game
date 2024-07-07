@@ -16,7 +16,8 @@ func _physics_process(_delta):
 	
 	velocity = new_velocity
 	if global_transform.origin != next_location:
-		look_at(next_location)
+		if global_position.distance_to(next_location) > 1.5:
+			look_at(next_location)
 		rotation_degrees.x = 0
 		rotation_degrees.z = 0
 	move_and_slide()

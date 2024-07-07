@@ -3,7 +3,7 @@ extends CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-var SPEED = 12
+var SPEED = 5
 
 @export var mute : bool
 

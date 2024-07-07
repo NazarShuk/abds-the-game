@@ -18,6 +18,7 @@ var logos = [
 ]
 
 func _ready():
+
 	logos.shuffle()
 	AudioVolume.load_values_and_apply()
 
@@ -28,4 +29,8 @@ func _on_timer_2_timeout():
 
 
 func _on_timer_timeout():
+	if multiplayer.has_multiplayer_peer():
+		multiplayer.multiplayer_peer.close()
+		get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())
+	
 	get_tree().change_scene_to_file("res://game.tscn")
