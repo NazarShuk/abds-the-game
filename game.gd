@@ -198,11 +198,14 @@ func _input(event):
 			Allsingleton.is_fullscreen = !Allsingleton.is_fullscreen
 
 func _on_host_pressed():
-	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
-	multiplayer.multiplayer_peer = peer
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
-	_on_peer_connected()
+	if !Allsingleton.non_steam:
+		peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
+		multiplayer.multiplayer_peer = peer
+		multiplayer.peer_connected.connect(_on_peer_connected)
+		multiplayer.peer_disconnected.connect(_on_peer_disconnect)
+		_on_peer_connected()
+	else:
+		_on_host_local_pressed()
 
 
 func _on_lobby_connected(_connected,id):
@@ -278,13 +281,16 @@ func _on_peer_connected(id = 1):
 
 @rpc("any_peer","call_local")
 func request_steam_usr():
-	receive_steam_usr.rpc(peer.get_unique_id(),Steam.getPersonaName())
+	if !Allsingleton.non_steam:
+		receive_steam_usr.rpc(peer.get_unique_id(),Steam.getPersonaName())
+	else:
+		receive_steam_usr.rpc(peer.get_unique_id(),"Offline player")
 
 func pre_start_game_btn():
 	spawn_players()
 	pre_start_game.rpc()
 	if multiplayer.is_server():
-		if !debug_host:
+		if !debug_host or !Allsingleton.non_steam:
 			Steam.setLobbyJoinable(lobby_id,false)
 
 func spawn_players():
@@ -403,7 +409,7 @@ func start_da_game():
 	$EvilLeahy/AudioStreamPlayer3D.play()
 	
 	if multiplayer.is_server():
-		if !debug_host:
+		if !debug_host or !Allsingleton.non_steam:
 			Steam.setLobbyJoinable(lobby_id,false)
 		leahy_look = true
 		$GainyTimer.start(gainy_attack_interval)
@@ -442,8 +448,12 @@ func update_approching_label(meters):
 var friends_lobbies = {}
 
 func get_friends_lobbies():
-	friends_lobbies = {}
 	var item_list : ItemList = $"CanvasLayer/MultiPlayer/ItemList"
+	if Allsingleton.non_steam:
+		item_list.clear()
+		item_list.add_item("Steam was not found.")
+		return
+	friends_lobbies = {}
 	
 	#for child in $CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.get_children():
 	#	child.queue_free()
@@ -810,7 +820,8 @@ func stop_gainy(id):
 				gainy_target = null
 
 
-func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
+func _on_item_list_item_clicked(index, _at_position, mouse_button_index):
+	if mouse_button_index != 1: return
 	if friends_lobbies.has(index):
 		join_lobby(friends_lobbies[index])
 	else:

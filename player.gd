@@ -25,7 +25,7 @@ var is_dead = false
 
 var cam_fov = 75
 var can_cam_move = true
-@export var steam_name = Steam.getPersonaName()
+@export var steam_name : String = "Loading..."
 
 var revive_poses = [Vector3(0, 1.2, -10), Vector3(-18, 1.2, -24), Vector3(-26, 1.2, -57), Vector3(34, 1.2, -47), Vector3(8, 1.2, -28)]
 
@@ -121,7 +121,12 @@ func process_voice():
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
-	$nametag.text = Steam.getPersonaName()
+	if !Allsingleton.non_steam:
+		$nametag.text = Steam.getPersonaName()
+		steam_name = Steam.getPersonaName()
+	else:
+		$nametag.text = "Offline player"
+		steam_name = "Offline player"
 
 	if is_multiplayer_authority():
 		$CanvasLayer.show()

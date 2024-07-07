@@ -386,6 +386,21 @@ size = Vector3(5.19806, 1.8877, 628.311)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5sqpk"]
 albedo_texture = ExtResource("33_o0kd1")
 
+[sub_resource type="Animation" id="Animation_n7unv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_rwlcq"]
 resource_name = "spin"
 length = 2.0
@@ -401,21 +416,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_n7unv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5fh0o"]
@@ -1016,7 +1016,7 @@ anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -117.0
 offset_right = 176.0
-offset_bottom = 8.0
+offset_bottom = 848.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
