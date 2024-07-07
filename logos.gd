@@ -17,8 +17,11 @@ var logos = [
 "res://lgoos/valve.png"
 ]
 
-func _ready():
 
+func _ready():
+	
+	
+	
 	logos.shuffle()
 	AudioVolume.load_values_and_apply()
 
@@ -34,3 +37,4 @@ func _on_timer_timeout():
 		get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())
 	
 	get_tree().change_scene_to_file("res://game.tscn")
+

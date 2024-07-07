@@ -153,24 +153,39 @@ func _process(_delta):
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
 		
 		var initial_nodes = 0
+		var game_config_client = $CanvasLayer/Lobby/Label4/gameConfigClient
+		game_config_client.text = ""
 		
 		for setting in setting_nodes:
 			if typeof(setting.initial_state) == TYPE_STRING:
-				if setting.initial_state.to_float() == setting.get_da_val():
-					initial_nodes += 1
+				if setting.higher_value_harder:
+					if setting.initial_state.to_float() <= setting.get_da_val():
+						initial_nodes += 1
+				else:
+					if setting.initial_state.to_float() >= setting.get_da_val():
+						initial_nodes += 1
+				if setting.initial_state.to_float() != setting.get_da_val():
+					game_config_client.text += setting.label_text + ": " + str(setting.get_da_val()) + "\n"
 			else:
 				if setting.initial_state == setting.get_da_val():
 					initial_nodes += 1
+				else:
+					if setting.if_enabled_harder:
+						if setting.get_da_val() == true:
+							initial_nodes += 1
+					if setting.initial_state != setting.get_da_val():
+						game_config_client.text += setting.label_text + ": " + str(setting.get_da_val()) + "\n"
+		
 		
 		if initial_nodes == setting_nodes.size():
 			do_achievements = true
 		else:
 			do_achievements = false
 		
+		if game_config_client.text == "":
+			game_config_client.text = "Config wasn't changed"
+		
 		$CanvasLayer/Lobby/achievement.visible = !do_achievements
-	
-
-
 
 func _input(event):
 	if event.is_action_type():
@@ -242,6 +257,7 @@ func _on_peer_connected(id = 1):
 		if multiplayer.is_server():
 			$CanvasLayer/Lobby/Button7.show()
 			$CanvasLayer/Lobby/Label4/reset_to_default.show()
+			$CanvasLayer/Lobby/Label4/gameConfigClient.hide()
 	else:
 		peer.disconnect_peer(id)
 	
@@ -382,9 +398,9 @@ func start_da_game():
 	$WelcomeLeahy/AudioStreamPlayer3D.stop()
 	$CanvasLayer/Main/LeahyAngeredLabel.show()
 	evil_leahy.show()
-	evil_leahy.is_playing = true
 
 	$grrrrrr.play()
+	$EvilLeahy/AudioStreamPlayer3D.play()
 	
 	if multiplayer.is_server():
 		if !debug_host:
@@ -407,9 +423,9 @@ func _on_host_local_pressed():
 func _on_timer_timeout():
 	$Music2.play()
 
-	$CanvasLayer/Main/LeahyAngeredLabel.hide()	
+	$CanvasLayer/Main/LeahyAngeredLabel.hide()
 	$SecondsLeft.start()
-	evil_leahy.play_audio()
+	
 	
 	if multiplayer.is_server():
 		canPlayersMove = true
@@ -625,12 +641,12 @@ func set_absent(is_absent : bool):
 	
 	if is_absent:
 		evil_leahy.visible = false
-		evil_leahy.is_playing = false
+		$EvilLeahy/AudioStreamPlayer3D.stop()
 		environment.background_energy_multiplier = 0.1
 		$Music2.pitch_scale = 0.5
 	else:
 		evil_leahy.visible = true
-		evil_leahy.is_playing = true
+		$EvilLeahy/AudioStreamPlayer3D.play()
 		environment.background_energy_multiplier = 1
 		$Music2.pitch_scale = 1
 
@@ -645,8 +661,6 @@ func azzu_steal(launcher):
 		mr_azzu.update_target_location(get_node(str(launcher)).global_position)
 		
 		azzu_angered = true
-	
-	$Music2.stop()
 
 @rpc("any_peer","call_local")
 func azzu_dont_steal():
@@ -655,9 +669,6 @@ func azzu_dont_steal():
 		azzu_angered = false
 		mr_azzu.server_target = false
 		mr_azzu._on_timer_timeout()
-		
-	
-	$Music2.play()
 	
 @rpc("any_peer","call_local")
 func start_da_pacer(id):
@@ -808,3 +819,7 @@ func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
 
 func _on_auto_refresh_timeout():
 	get_friends_lobbies()
+
+
+func _on_leahy_cool_timer_timeout():
+	$EvilLeahy/AudioStreamPlayer3D.pitch_scale = randf_range(0.75,1.75)

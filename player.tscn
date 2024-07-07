@@ -1377,10 +1377,6 @@ mesh = SubResource("PlaneMesh_5fuhc")
 
 [node name="http" type="HTTPRequest" parent="."]
 
-[node name="debug" type="Timer" parent="."]
-wait_time = 10.0
-autostart = true
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_energy = 0.5
 
@@ -1413,4 +1409,3 @@ bus = &"General Voice"
 [connection signal="timeout" from="CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="." method="_on_continue_btn_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="." method="_on_disconnect_btn_pressed"]
-[connection signal="timeout" from="debug" to="." method="_on_debug_timeout"]

@@ -8,6 +8,8 @@ extends ColorRect
 @export var max_val : float
 @export var min_val : float
 
+@export var higher_value_harder : bool
+
 var initial_state
 
 func _ready():

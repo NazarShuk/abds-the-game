@@ -28,11 +28,12 @@ func load_values_and_apply():
 		
 		if music_vol:
 			AudioServer.set_bus_volume_db(1,music_vol)
+			AudioServer.set_bus_volume_db(3,music_vol)
 		
 		if sfx_vol:
 			AudioServer.set_bus_volume_db(2,sfx_vol)
 		
 		if voice_chat_vol:
 			AudioServer.set_bus_volume_db(7,voice_chat_vol)
-		
+			
 		game_save.close()

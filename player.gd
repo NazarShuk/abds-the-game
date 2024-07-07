@@ -431,7 +431,7 @@ func _on_revive_timer_timeout():
 	if not is_suspended:
 		global_position = get_parent().get_node("PlayerSpawns").get_children().pick_random().global_position
 	else:
-		global_position = Vector3(-50, 1.2, -18)
+		global_position = Vector3(45, 1.2, -43)
 	$"CanvasLayer/Control/Died thing".hide()
 	AudioServer.set_bus_mute(1, false)
 	AudioServer.set_bus_mute(2, false)
@@ -553,8 +553,8 @@ func die(cause):
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
 		if get_parent().do_silent_lunch:
-			var chance = randi_range(0, 3)
-			if chance == 2:
+			var chance = randi_range(0, 2)
+			if chance == 0:
 				$CanvasLayer/Control/silentLunch.show()
 				$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in " + str(get_parent().silent_lunch_duration)
 				is_suspended = true
@@ -588,42 +588,6 @@ func _on_anti_wall_walk_timeout():
 			global_position.y = 1
 	else:
 		on_top_counter = 0
-
-
-@onready var http = $http
-
-
-func report_map_bug():
-	if !can_debug: return
-	var body = {
-		"content": "",
-		"tts": false,
-		"embeds":
-		[
-			{
-				"id": 764355288,
-				"fields": [{"id": 80383102, "name": "Position", "value": str(global_position)}],
-				"title": "Map bug",
-				"color": 16711680,
-				"footer": {"text": "Reported by " + steam_name}
-			}
-		],
-		"components": [],
-		"actions": {},
-		"username": "Debug"	}
-
-	http.request(
-		"https://discord.com/api/webhooks/1249927945716367371/zPJNBJ9EyCH-nP7musr59IcOZ2TJCqWnGURASuKvLVL3Ge5qyFdHH_LkyoUSqBhjpxgq",
-		["Content-Type: application/json"],
-		HTTPClient.METHOD_POST,
-		JSON.stringify(body)
-	)
-	can_debug = false
-
-var can_debug = true
-
-func _on_debug_timeout():
-	can_debug = true
 
 @rpc("any_peer","call_local")
 func squeak():
