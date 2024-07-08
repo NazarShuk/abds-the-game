@@ -28,9 +28,9 @@ func _process(_delta):
 func telemetry():
 	# some telemetry so i know who is pplyiong
 	
-	var username
+	var username = ""
 	if !Allsingleton.non_steam:
-		Steam.getPersonaName()
+		username = Steam.getPersonaName()
 	else:
 		username = "Offline player"
 	

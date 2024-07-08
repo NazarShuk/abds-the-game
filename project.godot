@@ -142,6 +142,7 @@ give={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
 environment/ssao/quality=0
 environment/ssil/quality=0
 environment/glow/upscale_mode=0
