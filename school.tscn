@@ -2104,10 +2104,6 @@ skeleton = NodePath("../Doors")
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -62.5611, 1.51009, -78.9556)
 skeleton = NodePath("../Doors")
 
-[node name="Door37" parent="." instance=ExtResource("5_j3ox0")]
-transform = Transform3D(3.78189, -1.39439e-07, -8.74228e-08, 1.65312e-07, 3.19, 8.74228e-08, 1.65312e-07, -1.39439e-07, 2, -34.7364, 1.51009, -99.111)
-skeleton = NodePath("../Doors")
-
 [node name="Door38" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.79576, -1.39439e-07, -8.74228e-08, 1.22207e-07, 3.19, 8.74228e-08, 1.22207e-07, -1.39439e-07, 2, -2.27874, 1.51009, -99.0015)
 skeleton = NodePath("../Doors")
@@ -5196,3 +5192,7 @@ skeleton = NodePath("../../..")
 
 [node name="Chair820" parent="." instance=ExtResource("10_xcaec")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 62.218, 0.581087, -118.631)
+
+[node name="Door37" parent="." instance=ExtResource("5_j3ox0")]
+transform = Transform3D(3.78189, -1.39439e-07, -8.74228e-08, 1.65312e-07, 3.19, 8.74228e-08, 1.65312e-07, -1.39439e-07, 2, -34.7364, 1.51009, -99.111)
+skeleton = NodePath("../Doors")

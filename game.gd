@@ -75,6 +75,7 @@ var leahy_diff_penalty = 0
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
 var players_spawned = false
 
+var pacer_times = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioServer.set_bus_solo(6,false)
@@ -90,6 +91,7 @@ func _ready():
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.server_disconnected.connect(_on_disconnect_from_server)
 	peer.lobby_kicked.connect(_on_disconnect_from_server)
+	reset_pacer_times()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -123,6 +125,15 @@ func _process(_delta):
 		else:
 			ms_gainy.go_back()
 		
+		if is_pacer:
+			var time = 1363 - $FakeFox/PacerTest/PacerLevelTimer.time_left
+			
+			for ptime in pacer_times:
+				if time >= ptime:
+					pacer_times.remove_at(pacer_times.find(ptime))
+					on_collect_book(-1,"",false)
+
+		
 	if game_started and multiplayer.is_server() and !absent:
 		if !leahy_appeased:
 			var closest
@@ -146,6 +157,7 @@ func _process(_delta):
 			if closest:
 				evil_leahy.update_target_location(closest)
 			else:
+				evil_leahy.update_target_location(evil_leahy.global_position)
 				print("leahy didnt find a player")
 		else:
 			evil_leahy.update_target_location(evil_leahy.global_position)
@@ -291,7 +303,8 @@ func pre_start_game_btn():
 	pre_start_game.rpc()
 	if multiplayer.is_server():
 		if !debug_host or !Allsingleton.non_steam:
-			Steam.setLobbyJoinable(lobby_id,false)
+			if lobby_id:
+				Steam.setLobbyJoinable(lobby_id,false)
 
 func spawn_players():
 	for pl_id in players_ids:
@@ -328,20 +341,27 @@ func _on_connect_pressed():
 	multiplayer.multiplayer_peer = peer
 
 @rpc("any_peer","call_local")
-func on_collect_book(id,book_name):
+func on_collect_book(id,book_name,personal):
 	if multiplayer.is_server():
-		var player_name = get_node(str(id)).steam_name
+		var player_name
+		if personal:
+			player_name = get_node(str(id)).steam_name
 		if book_name != "Landmine":
-			players[id].books_collected += 1
+			if personal:
+				players[id].books_collected += 1
+			else:
+				players[players.keys().pick_random()].books_collected += 1
 			var total = 0
-		
+			
 			for idd in players_ids:
 				total += players[idd].books_collected
 			
-			var spawnpoint = book_spawns.get_children().pick_random()
-			spawnpoint = spawnpoint.global_position
-			book_pos = spawnpoint
-			get_node(NodePath(book_name)).global_position = book_pos
+			if personal:
+				var spawnpoint = book_spawns.get_children().pick_random()
+				spawnpoint = spawnpoint.global_position
+				book_pos = spawnpoint
+				get_node(NodePath(book_name)).global_position = book_pos
+			
 			
 			if total == 1:
 				start_da_game.rpc()
@@ -369,15 +389,15 @@ func on_collect_book(id,book_name):
 			
 			evil_leahy.SPEED += leahy_speed_per_notebook
 			
-			info_text(player_name + " collected a book!")
-			sec_left += 10
+			if personal:
+				info_text(player_name + " collected a book!")
+			else:
+				info_text("A book was collected!")
 			fox_follow = false
 			
 			gainy_attack = false
 			gainy_target = null
 		else:
-			
-			
 			info_text(player_name + " slipped")
 			var spawnpoint = $LandMineSpawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
@@ -701,6 +721,8 @@ func start_da_pacer(id):
 		$FakeFox/PacerTest/PacerStartTimer.start()
 		canPlayersMove = false
 		is_pacer_intro = true
+		$FakeFox/PacerTest/PacerLevelTimer.start()
+		reset_pacer_times()
 
 
 func _on_pacer_start_timer_timeout():
@@ -729,6 +751,7 @@ func stop_pacer():
 		is_pacer = false
 		is_pacer_intro = false
 		pacer_deadly = false
+		$FakeFox/PacerTest/PacerLevelTimer.stop()
 
 
 func _on_pacer_speed_increase_timeout():
@@ -834,3 +857,29 @@ func _on_auto_refresh_timeout():
 
 func _on_leahy_cool_timer_timeout():
 	$EvilLeahy/AudioStreamPlayer3D.pitch_scale = randf_range(0.75,1.75)
+
+func reset_pacer_times():
+	pacer_times = [
+		127,
+		167,
+		205,
+		278,
+		348,
+		413,
+		476,
+		537,
+		595,
+		705,
+		809,
+		907,
+		1000,
+		1089,
+		1175,
+		1296,
+		1363
+	]
+
+
+func _on_pacer_level_timer_timeout():
+	if multiplayer.is_server():
+		stop_pacer.rpc()

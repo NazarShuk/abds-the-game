@@ -9,6 +9,7 @@ var cangoof = false
 @onready var effect : AudioEffectCapture = AudioServer.get_bus_effect(5,4)
 @onready var threshold_slider = $CanvasLayer/mic_vol/threshold_slider
 var hear_urself = false
+@onready var mic_list = $CanvasLayer/MicList
 
 
 func _ready():
@@ -21,6 +22,18 @@ func _ready():
 	else:
 		AudioVolume.mic_threshold = threshold_slider.value
 		AudioVolume.save_values()
+	
+	var mics = AudioServer.get_input_device_list()
+	
+	
+	for mic in mics:
+		mic_list.add_item(mic)
+	
+	if AudioVolume.input_device:
+		print("selected")
+		mic_list.select(mics.find(AudioVolume.input_device),true)
+	
+	
 
 func _exit_tree():
 	AudioServer.set_bus_mute(4,true)
@@ -28,7 +41,6 @@ func _exit_tree():
 
 func _process(delta):
 	var stereoData : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
-	
 	if stereoData.size() > 0:
 		var data = PackedFloat32Array()
 		data.resize(stereoData.size())
@@ -96,3 +108,10 @@ func _on_v_cslider_value_changed(value):
 	AudioVolume.voice_chat_vol = value
 	AudioVolume.save_values()
 	AudioServer.set_bus_volume_db(7,linear_to_db(value))
+
+
+func _on_mic_list_item_selected(index):
+	var dev = mic_list.get_item_text(index)
+	AudioServer.input_device = dev
+	AudioVolume.input_device = dev
+	AudioVolume.save_values()

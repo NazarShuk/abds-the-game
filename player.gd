@@ -171,6 +171,8 @@ func _ready():
 		
 		
 
+var is_freaky = false
+
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
@@ -184,7 +186,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			pick_item(4)
+			pick_item(2)
 		
 		if (10 - leahy_dst) > 0:
 			var strength = 1/leahy_dst+0.01
@@ -195,11 +197,11 @@ func _physics_process(delta):
 			camera_3d.v_offset = 0
 		
 
-			
 
-		if global_position.z > 15:
-			multiplayer.peer.close()
-			get_tree().change_scene_to_file("res://game.tscn")
+
+		if global_position.z > 15 && !is_freaky:
+			is_freaky = true
+			get_parent().skibidi.rpc()
 			# freaky ending
 
 		if global_position.y >= 3.727:
@@ -372,7 +374,7 @@ func _on_area_3d_area_entered(area):
 	if is_dead:
 		return
 	if area.get_parent().is_in_group("Book"):
-		get_parent().on_collect_book.rpc(name.to_int(), area.get_parent().name)
+		get_parent().on_collect_book.rpc(name.to_int(), area.get_parent().name,true)
 		Achievements.books_collected += 1
 		Achievements.save_all()
 	elif area.get_parent().is_in_group("enemies") and get_parent().game_started == true:
@@ -383,7 +385,7 @@ func _on_area_3d_area_entered(area):
 		
 		die("mine")
 
-		get_parent().on_collect_book.rpc(name.to_int(), area.name)
+		get_parent().on_collect_book.rpc(name.to_int(), area.name,true)
 		
 	elif area.name == "azzu" and get_parent().azzu_angered == true:
 		die("azzu")
@@ -432,11 +434,13 @@ func _on_stamina_timeout_timeout():
 
 
 func _on_revive_timer_timeout():
-	get_parent().set_player_dead.rpc(name.to_int(), false,false)
+
 	if not is_suspended:
 		global_position = get_parent().get_node("PlayerSpawns").get_children().pick_random().global_position
+		get_parent().set_player_dead.rpc(name.to_int(), false,false)
 	else:
 		global_position = Vector3(45, 1.2, -43)
+		get_parent().set_player_dead.rpc(name.to_int(), true,false)
 	$"CanvasLayer/Control/Died thing".hide()
 	AudioServer.set_bus_mute(1, false)
 	AudioServer.set_bus_mute(2, false)
@@ -470,7 +474,7 @@ func choose_item():
 		can_get_item = false
 		
 		var items =   [0, 1, 2, 3, 4, 5]
-		var chances = [12.5, 50, 12.5, 15, 2.5, 7.5]
+		var chances = [37.5, 25, 12.5, 15, 2.5, 7.5]
 		
 		pick_item(pick_random_weighted(items,chances))
 
@@ -544,6 +548,8 @@ func die(cause):
 	else:
 		if get_parent().landmine_death:
 			get_parent().set_player_dead.rpc(name.to_int(), true,true)
+		else:
+			get_parent().set_player_dead.rpc(name.to_int(), true,false)
 	$"CanvasLayer/Control/Died thing".show()
 	$ReviveTimer.start(get_parent().death_timeout)
 	is_dead = true
@@ -580,6 +586,7 @@ func die(cause):
 
 func _on_silent_lunch_timeout():
 	is_suspended = false
+	get_parent().set_player_dead.rpc(name.to_int(), false,false)
 	$CanvasLayer/Control/silentLunch.hide()
 
 
@@ -698,14 +705,11 @@ func set_mouth(mouth_id):
 			m.hide()
 	mouth.get_node(NodePath(str(mouth_id))).show()
 
-
-
-
 func _on_buy_book_pressed():
 	if credits >= 20:
 		credits -= 20
 		close_shop()
-		get_parent().on_collect_book.rpc(name.to_int(), "book1")
+		get_parent().on_collect_book.rpc(name.to_int(), "book1",true)
 		Achievements.books_collected += 1
 		Achievements.save_all()
 		

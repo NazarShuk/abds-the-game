@@ -70,8 +70,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -138.847
-offset_bottom = -99.8472
+offset_top = -262.0
+offset_bottom = -223.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -88,9 +88,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -182.0
-offset_top = -104.347
+offset_top = -227.5
 offset_right = 182.0
-offset_bottom = -67.3472
+offset_bottom = -190.5
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
@@ -102,8 +102,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -75.8472
-offset_bottom = -36.8472
+offset_top = -199.0
+offset_bottom = -160.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -120,9 +120,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -182.0
-offset_top = -41.3472
+offset_top = -164.5
 offset_right = 182.0
-offset_bottom = -4.34723
+offset_bottom = -127.5
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
@@ -134,8 +134,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -11.8472
-offset_bottom = 27.1528
+offset_top = -135.0
+offset_bottom = -96.0002
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -152,36 +152,22 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -182.0
-offset_top = 22.6528
+offset_top = -100.5
 offset_right = 182.0
-offset_bottom = 59.6528
+offset_bottom = -63.5002
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="Button" type="Button" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -186.0
-offset_top = 152.153
-offset_right = 186.0
-offset_bottom = 183.153
-grow_horizontal = 2
-grow_vertical = 2
-text = "Back to the menu"
-
 [node name="Label4" type="Label" parent="CanvasLayer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 59.1528
-offset_bottom = 98.1528
+offset_top = -32.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -196,8 +182,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 125.153
-offset_bottom = 140.153
+offset_top = 34.0002
+offset_bottom = 49.0002
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -214,9 +200,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -166.0
-offset_top = 94.1528
+offset_top = 3.0
 offset_right = 166.0
-offset_bottom = 121.153
+offset_bottom = 30.0002
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_1kfeh")
@@ -246,9 +232,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 165.0
-offset_top = 86.1528
+offset_top = -5.0
 offset_right = 241.0
-offset_bottom = 126.153
+offset_bottom = 35.0002
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_icons/checked = ExtResource("5_5i7pj")
@@ -259,6 +245,35 @@ theme_override_icons/checked_mirrored = ExtResource("5_5i7pj")
 theme_override_icons/checked_disabled_mirrored = ExtResource("5_5i7pj")
 theme_override_icons/unchecked_mirrored = ExtResource("6_7sk2p")
 theme_override_icons/unchecked_disabled_mirrored = ExtResource("6_7sk2p")
+
+[node name="MicList" type="ItemList" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -176.0
+offset_top = 71.0
+offset_right = 176.0
+offset_bottom = 153.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_rc34d")
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -186.0
+offset_top = 240.0
+offset_right = 186.0
+offset_bottom = 271.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back to the menu"
 
 [node name="goofballTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -273,7 +288,8 @@ bus = &"Voice Chat"
 [connection signal="value_changed" from="CanvasLayer/MusicSlider" to="." method="_on_music_slider_changed"]
 [connection signal="value_changed" from="CanvasLayer/SfxSlider" to="." method="_on_sfx_slider_changed"]
 [connection signal="value_changed" from="CanvasLayer/VCslider" to="." method="_on_v_cslider_value_changed"]
-[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="value_changed" from="CanvasLayer/mic_vol/threshold_slider" to="." method="_on_threshold_slider_value_changed"]
 [connection signal="toggled" from="CanvasLayer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="item_selected" from="CanvasLayer/MicList" to="." method="_on_mic_list_item_selected"]
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="goofballTimer" to="." method="_on_goofball_timer_timeout"]
