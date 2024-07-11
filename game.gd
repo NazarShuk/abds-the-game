@@ -7,6 +7,7 @@ var peer = SteamMultiplayerPeer.new()
 
 var players = {}
 var players_ids = []
+@export var players_in_lobby = 0
 
 var lobby_id
 
@@ -53,9 +54,13 @@ var leahy_diff_penalty = 0
 @export var do_silent_lunch = true # DONE
 @export var landmine_death = false # DONE
 @export var do_vertical_camera = false # DONE
+@export var enable_breaker = true  # DONE
+@export var enable_shop = true # DONE
+@export var enable_coffee = true # DONE
 
 @export var notebooks_per_player = 1 # DONE
-@export var max_deaths = 10 # DONE
+@export var max_deaths = 9 # DONE
+@export var deaths_per_player = 1 # DONE
 @export var leahy_start_speed = 6.0 # DONE
 @export var leahy_speed_per_notebook = 1 # DONE
 @export var absence_chance = 15 # DONE
@@ -64,7 +69,9 @@ var leahy_diff_penalty = 0
 @export var gainy_attack_interval = 30
 @export var death_timeout = 5 # DONE
 @export var silent_lunch_duration = 15 # DONE
-@export var shop_timeout = 60
+@export var shop_timeout = 60 # DONE
+@export var breaker_timeout = 60 # DONE
+@export var coffee_timeout = 20  # DONE
 
 @export var do_achievements = true
 
@@ -76,6 +83,12 @@ var leahy_diff_penalty = 0
 var players_spawned = false
 
 var pacer_times = []
+
+@export var pre_started_game = false
+@export var is_in_lobby = false
+
+@export var school : Node3D
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioServer.set_bus_solo(6,false)
@@ -94,6 +107,7 @@ func _ready():
 	reset_pacer_times()
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
@@ -101,6 +115,8 @@ func _process(_delta):
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
 		update_player_text()
+		
+		players_in_lobby = players_ids.size()
 		
 		if game_started:
 			collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
@@ -114,6 +130,9 @@ func _process(_delta):
 		var clr:Color = $CanvasLayer2/SomeoneDid.get("theme_override_colors/font_color")
 		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.01))
 		
+		var outline_color = $CanvasLayer2/SomeoneDid.get("theme_override_colors/font_outline_color")
+		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_outline_color",outline_color.lerp(Color(0,0,0,0),0.01))
+		
 		if fox_follow && do_fox_help:
 			mr_fox.update_target_location(book_pos)
 		else:
@@ -121,6 +140,10 @@ func _process(_delta):
 			
 		if gainy_attack:
 			if gainy_target:
+				if players[gainy_target.name.to_int()].is_dead:
+					gainy_attack = false
+					gainy_target = null
+					
 				ms_gainy.update_target_location(gainy_target.global_position)
 		else:
 			ms_gainy.go_back()
@@ -136,29 +159,37 @@ func _process(_delta):
 		
 	if game_started and multiplayer.is_server() and !absent:
 		if !leahy_appeased:
-			var closest
-			var closest_distance = 999999999
-			
-			for p in players_ids:
-				if !players[p].is_dead:
-					var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
-					
-					update_approching_label.rpc_id(p,distance)
+			if !is_powered_off:
+				var closest
+				var closest_distance = 999999999
 				
-					if distance < closest_distance:
-						closest = get_node(str(p)).global_position
-						closest_distance = distance
-						show_approaching_label.rpc_id(p)
+				for p in players_ids:
+					if !players[p].is_dead:
+						var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
+						
+						update_approching_label.rpc_id(p,distance)
+					
+						if distance < closest_distance:
+							closest = get_node(str(p)).global_position
+							closest_distance = distance
+							show_approaching_label.rpc_id(p)
+						else:
+							hide_approaching_label.rpc_id(p)
 					else:
 						hide_approaching_label.rpc_id(p)
+				
+				if closest:
+					evil_leahy.update_target_location(closest)
 				else:
-					hide_approaching_label.rpc_id(p)
-			
-			if closest:
-				evil_leahy.update_target_location(closest)
+					evil_leahy.update_target_location(evil_leahy.global_position)
+					print("leahy didnt find a player")
 			else:
-				evil_leahy.update_target_location(evil_leahy.global_position)
-				print("leahy didnt find a player")
+				evil_leahy.update_target_location($Breaker.global_position)
+				hide_approaching_label.rpc()
+				
+				var breaker_dst = evil_leahy.global_position.distance_to($Breaker.global_position)
+				if breaker_dst < 2:
+					toggle_power.rpc(true,false)
 		else:
 			evil_leahy.update_target_location(evil_leahy.global_position)
 	if multiplayer.has_multiplayer_peer() and !game_started and multiplayer.is_server():
@@ -170,23 +201,22 @@ func _process(_delta):
 		
 		for setting in setting_nodes:
 			if typeof(setting.initial_state) == TYPE_STRING:
-				if setting.higher_value_harder:
-					if setting.initial_state.to_float() <= setting.get_da_val():
+				if !setting.is_neutral:
+					if setting.initial_state.to_float() == setting.get_da_val():
 						initial_nodes += 1
 				else:
-					if setting.initial_state.to_float() >= setting.get_da_val():
-						initial_nodes += 1
+					initial_nodes += 1
 				if setting.initial_state.to_float() != setting.get_da_val():
 					game_config_client.text += setting.label_text + ": " + str(setting.get_da_val()) + "\n"
 			else:
-				if setting.initial_state == setting.get_da_val():
-					initial_nodes += 1
+				if !setting.is_neutral:
+					if setting.initial_state == setting.get_da_val():
+						initial_nodes += 1
 				else:
-					if setting.if_enabled_harder:
-						if setting.get_da_val() == true:
-							initial_nodes += 1
-					if setting.initial_state != setting.get_da_val():
-						game_config_client.text += setting.label_text + ": " + str(setting.get_da_val()) + "\n"
+					initial_nodes += 1
+				
+				if setting.initial_state != setting.get_da_val():
+					game_config_client.text += setting.label_text + ": " + str(setting.get_da_val()) + "\n"
 		
 		
 		if initial_nodes == setting_nodes.size():
@@ -273,6 +303,7 @@ func _on_peer_connected(id = 1):
 			$CanvasLayer/Lobby/Button7.show()
 			$CanvasLayer/Lobby/Label4/reset_to_default.show()
 			$CanvasLayer/Lobby/Label4/gameConfigClient.hide()
+			is_in_lobby = true
 	else:
 		peer.disconnect_peer(id)
 	
@@ -305,6 +336,7 @@ func pre_start_game_btn():
 		if !debug_host or !Allsingleton.non_steam:
 			if lobby_id:
 				Steam.setLobbyJoinable(lobby_id,false)
+		pre_started_game = true
 
 func spawn_players():
 	for pl_id in players_ids:
@@ -393,7 +425,11 @@ func on_collect_book(id,book_name,personal):
 				info_text(player_name + " collected a book!")
 			else:
 				info_text("A book was collected!")
-			fox_follow = false
+			fox_notebooks_left -= 1
+			if fox_notebooks_left <= 0:
+				fox_follow = false
+				fox_notebooks_left = 0
+				
 			
 			gainy_attack = false
 			gainy_target = null
@@ -521,12 +557,12 @@ func set_player_dead(id,is_dead,do_deaths):
 			for pl_id in players_ids:
 				total_deaths += players[pl_id].deaths
 			
-			info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/10")
+			info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(max_deaths + (deaths_per_player * players_in_lobby)))
 			if is_pacer:
 				stop_pacer.rpc()
 			
 			
-			if total_deaths >= max_deaths:
+			if total_deaths >= (max_deaths + (deaths_per_player * players_in_lobby)):
 				end_game.rpc("worst")
 
 
@@ -610,6 +646,7 @@ func _on_button_3_pressed():
 func info_text(info):
 	$CanvasLayer2/SomeoneDid.text = info
 	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
+	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_outline_color",Color.WHITE)
 	#get_node("1").info_text.rpc(info)
 
 func hide_menu():
@@ -635,11 +672,17 @@ func _on_appeasment_timeout():
 	if !is_pacer_intro:
 		leahy_appeased = false
 
+var fox_notebooks_left = 0
+
 @rpc("any_peer","call_local")
-func mr_fox_collect():
+func mr_fox_collect(is_sunkist):
 	if multiplayer.is_server():
 		if do_fox_help:
 			fox_follow = true
+			if is_sunkist:
+				fox_notebooks_left = 2
+			else:
+				fox_notebooks_left = 1
 			info_text("Follow Mr.Fox to find the notebook!")
 
 
@@ -652,6 +695,7 @@ func _on_absences_timeout():
 	if !multiplayer.is_server() : return
 	if !game_started : return
 	if !do_absences: return
+	if is_powered_off: return
 	
 	if randi_range(0,absence_chance) == 1: 
 		set_absent.rpc(true)
@@ -883,3 +927,42 @@ func reset_pacer_times():
 func _on_pacer_level_timer_timeout():
 	if multiplayer.is_server():
 		stop_pacer.rpc()
+
+
+@rpc("any_peer","call_local")
+func play_coffee():
+	$CoffeMachine/coffee.play()
+
+@export var is_powered_off = false
+
+@rpc("any_peer","call_local")
+func toggle_power(do_ov = false, ov = false):
+	var world_environment : WorldEnvironment = $"Lighting and stuff/WorldEnvironment"
+	var environment = world_environment.environment
+	
+	if !do_ov:
+		is_powered_off = !is_powered_off
+	else:
+		is_powered_off = ov
+	
+	if !is_powered_off:
+		environment.background_energy_multiplier = 1
+		$Music2.play()
+		
+		info_text("Power was fixed")
+		$Breaker.audio(true)
+		$Breaker/AudioStreamPlayer.stop()
+		$BreakerRoomClosedDoor.set_collision_layer_value(2,false)
+		
+		is_powered_off = false
+	else:
+		environment.background_energy_multiplier = 0
+		$Music2.stop()
+		
+		info_text("Power got broken")
+		$Breaker.audio(false)
+		$Breaker/AudioStreamPlayer.play()
+		$BreakerRoomClosedDoor.set_collision_layer_value(2,true)
+		
+		is_powered_off = true
+	

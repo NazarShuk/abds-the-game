@@ -136,10 +136,6 @@ func _enter_tree():
 		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_3d = true
 		$CanvasLayer2.process_mode = Node.PROCESS_MODE_INHERIT
 		#$Local.stream_mix_rate = float(current_sample_rate)
-		
-		
-
-
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -172,10 +168,14 @@ func _ready():
 		
 
 var is_freaky = false
+var can_use_breaker = true
+var can_use_coffee = true
+
 
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
+		
 		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor($"CanvasLayer/Control/Shop/shop timer".time_left)) + "s left"
 		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
@@ -188,13 +188,14 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("debug"):
 			pick_item(2)
 		
-		if (10 - leahy_dst) > 0:
-			var strength = 1/leahy_dst+0.01
-			camera_3d.h_offset = randf_range(-strength,strength) / 5
-			camera_3d.v_offset = randf_range(-strength,strength) / 5
-		else:
-			camera_3d.h_offset = 0
-			camera_3d.v_offset = 0
+		if get_parent().game_started:
+			if (10 - leahy_dst) > 0:
+				var strength = 1/leahy_dst+0.01
+				camera_3d.h_offset = randf_range(-strength,strength) / 5
+				camera_3d.v_offset = randf_range(-strength,strength) / 5
+			else:
+				camera_3d.h_offset = 0
+				camera_3d.v_offset = 0
 		
 
 
@@ -262,31 +263,51 @@ func _physics_process(delta):
 
 							if ray.get_collider().is_in_group("vending_machine"):
 								get_parent().use_vending_machine.rpc(name.to_int())
-						if ray.get_collider():
+						if ray.get_collider() and get_parent().game_started:
 							if ray.get_collider().is_in_group("shop"):
-								print("shop")
+								if !get_parent().enable_shop: return
 								open_shop()
+							if ray.get_collider().name == "CoffeMachine":
+								if !get_parent().enable_coffee: return
+								is_boosted = true
+								get_parent().play_coffee.rpc()
+								$CoffeeBoost.start()
+								can_use_coffee = false
+								$"Coffee timeout".start(get_parent().coffee_timeout)
+							if ray.get_collider().name == "Breaker":
+								if !can_use_breaker: return
+								if !get_parent().enable_breaker: return
+								get_parent().toggle_power.rpc()
+								can_use_breaker = false
+								$BreakerTimeout.start(get_parent().breaker_timeout)
+							
+							print(ray.get_collider().name)
 								
 					
 					if Input.is_action_just_pressed("give"):
 						if get_cur_item() == 3:
 							var evil_leahy = get_tree().get_first_node_in_group("enemies")
 							var distance = global_position.distance_to(evil_leahy.global_position)
-
-							if distance < 15:
+							
+							var fox = get_tree().get_first_node_in_group("fox")
+							var dist = global_position.distance_to(fox.global_position)
+							if dist < 20:
+								pick_item(-1)
+								get_parent().mr_fox_collect.rpc(false)
+							elif distance < 15:
 								pick_item(-1)
 								get_parent().appease_leahy.rpc(steam_name,5)
-							else:
-								var fox = get_tree().get_first_node_in_group("fox")
-								var dist = global_position.distance_to(fox.global_position)
-								if dist < 15:
-									pick_item(-1)
-									get_parent().mr_fox_collect.rpc()
+								
 						elif get_cur_item() == 5:
 							var evil_leahy = get_tree().get_first_node_in_group("enemies")
 							var distance = global_position.distance_to(evil_leahy.global_position)
-
-							if distance < 25:
+							
+							var fox = get_tree().get_first_node_in_group("fox")
+							var dist = global_position.distance_to(fox.global_position)
+							if dist < 30:
+								pick_item(-1)
+								get_parent().mr_fox_collect.rpc(true)
+							elif distance < 30:
 								pick_item(-1)
 								get_parent().appease_leahy.rpc(steam_name,15)
 					
@@ -315,14 +336,7 @@ func _physics_process(delta):
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
 		camera_3d.fov = lerp(camera_3d.fov, float(cam_fov), 0.1)
 
-		if Input.is_action_just_pressed("escape"):
-			$CanvasLayer/Control/Menu.visible = !$CanvasLayer/Control/Menu.visible
-			can_cam_move = !$CanvasLayer/Control/Menu.visible
 
-			if $CanvasLayer/Control/Menu.visible == true:
-				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			else:
-				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		if get_tree():
 			for obj: Node3D in get_tree().get_nodes_in_group("localface"):
 				obj.look_at(global_position)
@@ -457,7 +471,6 @@ func pick_item(item: int):
 	if item != -1:
 		$Hand.get_child(item).show()
 
-
 func get_cur_item():
 	var id = -1
 	for i in range(0, $Hand.get_children().size()):
@@ -473,23 +486,35 @@ func choose_item():
 	if can_get_item:
 		can_get_item = false
 		
-		var items =   [0, 1, 2, 3, 4, 5]
-		var chances = [37.5, 25, 12.5, 15, 2.5, 7.5]
+		var item_weights = {
+			"0":40,
+			"1":25,
+			"2":20,
+			"3":15,
+			"4":3,
+			"5":2
+		}
 		
-		pick_item(pick_random_weighted(items,chances))
+		pick_item(pick_random_weighted(item_weights).to_int())
 
-func pick_random_weighted(items: Array, chances: Array) -> Variant:
-	var total_weight = chances.reduce(func(acc, weight): return acc + weight, 0.0)
+func pick_random_weighted(items_chances: Dictionary) -> Variant:
+	# Calculate the total weight
+	var total_weight = 0.0
+	for weight in items_chances.values():
+		total_weight += weight
+	
+	# Pick a random value within the range of total_weight
 	var random_value = randf() * total_weight
 	var cumulative_weight = 0.0
 	
-	for i in range(items.size()):
-		cumulative_weight += chances[i]
+	# Iterate through the dictionary to find the item
+	for item in items_chances.keys():
+		cumulative_weight += items_chances[item]
 		if random_value <= cumulative_weight:
-			return items[i]
+			return item
 	
 	# Fallback in case of rounding errors
-	return items[-1]
+	return items_chances.keys()[-1]
 
 func _on_fruit_snacks_timer_timeout():
 	is_boosted = false
@@ -731,3 +756,11 @@ func _on_buy_duck_pressed():
 		a.stream = load("res://money.mp3")
 		a.bus = "Dialogs"
 		a.play()
+
+
+func _on_breaker_timeout_timeout():
+	can_use_breaker = true
+
+
+func _on_coffee_timeout_timeout():
+	can_use_coffee = true

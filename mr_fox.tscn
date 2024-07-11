@@ -70,7 +70,7 @@ skeleton = NodePath("../..")
 stream = ExtResource("3_gj3ac")
 volume_db = 8.602
 autoplay = true
-max_distance = 15.0
+max_distance = 30.0
 bus = &"Dialogs"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

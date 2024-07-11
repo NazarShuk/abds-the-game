@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccge33gvh1ojc"]
+
+[ext_resource type="Texture2D" uid="uid://upqaoiqvget0" path="res://cofee machine.png" id="1_fhi1o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h4jo2"]
+albedo_texture = ExtResource("1_fhi1o")
+
+[sub_resource type="QuadMesh" id="QuadMesh_xcc4e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ywau5"]
+size = Vector3(1.38867, 1.37988, 0.727539)
+
+[node name="CoffeMachine" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_h4jo2")
+mesh = SubResource("QuadMesh_xcc4e")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.25, 0, -1.09278e-07, 0, 1.25, 0, 1.09278e-07, 0, -1.25, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_h4jo2")
+mesh = SubResource("QuadMesh_xcc4e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ywau5")

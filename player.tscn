@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=87 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -36,6 +36,7 @@
 [ext_resource type="AudioStream" uid="uid://c1ghfb0atu0rn" path="res://correct.mp3" id="23_vsfyq"]
 [ext_resource type="AudioStream" uid="uid://ctyuoy5tau7hv" path="res://incorrct.mp3" id="24_yj6h8"]
 [ext_resource type="Texture2D" uid="uid://fk2k3kv323ey" path="res://sunkist.png" id="32_er28m"]
+[ext_resource type="Script" path="res://Menu.gd" id="33_bayr0"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -117,16 +118,16 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 properties/4/path = NodePath(".:visible")
 properties/4/spawn = true
-properties/4/replication_mode = 2
+properties/4/replication_mode = 1
 properties/5/path = NodePath("Hand/FruitSnacks:visible")
 properties/5/spawn = true
-properties/5/replication_mode = 2
+properties/5/replication_mode = 1
 properties/6/path = NodePath("Hand/CloroxWipes:visible")
 properties/6/spawn = true
-properties/6/replication_mode = 2
+properties/6/replication_mode = 1
 properties/7/path = NodePath("Hand/Pizza:visible")
 properties/7/spawn = true
-properties/7/replication_mode = 2
+properties/7/replication_mode = 1
 properties/8/path = NodePath(".:steam_name")
 properties/8/spawn = true
 properties/8/replication_mode = 1
@@ -142,6 +143,15 @@ properties/11/replication_mode = 1
 properties/12/path = NodePath("visual_body/Freaky:visible")
 properties/12/spawn = true
 properties/12/replication_mode = 1
+properties/13/path = NodePath("Hand/MtnDew:visible")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath("Hand/Duck:visible")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("Hand/Sunkist:visible")
+properties/15/spawn = true
+properties/15/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_2f5dv"]
 length = 0.001
@@ -294,6 +304,8 @@ albedo_texture = ExtResource("2_q3hoo")
 mix_rate = 48000.0
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_lrwcd")
 outputPath = NodePath("Voice/AudioStreamPlayer")
 
@@ -566,6 +578,18 @@ autostart = true
 
 [node name="ShopTimeout" type="Timer" parent="."]
 wait_time = 60.0
+one_shot = true
+
+[node name="CoffeeBoost" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="BreakerTimeout" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+
+[node name="Coffee timeout" type="Timer" parent="."]
+wait_time = 20.0
 one_shot = true
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
@@ -1234,6 +1258,7 @@ expand = true
 bus = &"Non Mute"
 
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
+process_mode = 3
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -1243,6 +1268,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(20, 20)
 color = Color(0, 0, 0, 0.556863)
+script = ExtResource("33_bayr0")
 
 [node name="Main" type="ColorRect" parent="CanvasLayer/Control/Menu"]
 layout_mode = 1
@@ -1400,6 +1426,9 @@ bus = &"General Voice"
 [connection signal="timeout" from="AntiWallWalk" to="." method="_on_anti_wall_walk_timeout"]
 [connection signal="timeout" from="ItemDelay" to="." method="_on_item_delay_timeout"]
 [connection signal="timeout" from="ShopTimeout" to="." method="_on_shop_timeout_timeout"]
+[connection signal="timeout" from="CoffeeBoost" to="." method="_on_fruit_snacks_timer_timeout"]
+[connection signal="timeout" from="BreakerTimeout" to="." method="_on_breaker_timeout_timeout"]
+[connection signal="timeout" from="Coffee timeout" to="." method="_on_coffee_timeout_timeout"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/rewards btn" to="." method="_on_rewards_btn_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/credits btn" to="." method="_on_credits_btn_pressed"]
 [connection signal="item_clicked" from="CanvasLayer/Control/Shop/ColorRect/question panel/ItemList" to="." method="_on_item_list_item_clicked"]
@@ -1407,5 +1436,5 @@ bus = &"General Voice"
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy duck" to="." method="_on_buy_duck_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/Button" to="." method="close_shop"]
 [connection signal="timeout" from="CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
-[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="." method="_on_continue_btn_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="." method="_on_disconnect_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
+[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]

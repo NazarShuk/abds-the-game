@@ -107,3 +107,6 @@ skeleton = NodePath("../..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_jdh3v")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.0431373, 0.635294, 0.188235, 1)

@@ -10,6 +10,6 @@ func _ready():
 	if not Engine.is_editor_hint():
 
 		$Navigation/StaticBody3D/MeshInstance3D2.visible = true
-		
 		for child in $"FloorSpecial/not floor".get_children():
 			child.visible = true
+

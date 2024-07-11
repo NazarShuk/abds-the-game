@@ -4,7 +4,7 @@ extends ColorRect
 @export var param_name : String
 @export var label_text : String
 @export var is_disabled : bool
-@export var if_enabled_harder : bool
+@export var is_neutral : bool
 @export var invert : bool
 
 
@@ -24,9 +24,9 @@ func _process(_delta):
 
 func _on_check_button_toggled(toggled_on):
 	if !invert:
-		game.set(param_name,str(toggled_on))
+		game.set(param_name,toggled_on)
 	else:
-		game.set(param_name,str(!toggled_on))
+		game.set(param_name,!toggled_on)
 
 func go_to_inital():
 	$CheckButton.button_pressed = initial_state

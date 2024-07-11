@@ -8,7 +8,7 @@ extends ColorRect
 @export var max_val : float
 @export var min_val : float
 
-@export var higher_value_harder : bool
+@export var is_neutral : bool
 
 var initial_state
 

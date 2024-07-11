@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=79 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -6,7 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
 [ext_resource type="Script" path="res://LeahyApproaching.gd" id="4_ba12c"]
+[ext_resource type="Script" path="res://DiscordActivity.gd" id="4_d8oju"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
+[ext_resource type="Script" path="res://GameRecorder.gd" id="4_vn0nr"]
 [ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="5_grswa"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="5_jibb3"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
@@ -33,6 +35,10 @@
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
 [ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
 [ext_resource type="Texture2D" uid="uid://ce1wqx8rpkmv0" path="res://McCollum_crop.jpg" id="33_o0kd1"]
+[ext_resource type="PackedScene" uid="uid://ccge33gvh1ojc" path="res://Coffe Machine.tscn" id="34_m1kl1"]
+[ext_resource type="AudioStream" uid="uid://gorr13qobjv7" path="res://cofee.mp3" id="35_ir6cm"]
+[ext_resource type="PackedScene" uid="uid://cx7itjqsyc1xu" path="res://breaker.tscn" id="36_j44h3"]
+[ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="38_ahlvj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -131,6 +137,36 @@ properties/25/replication_mode = 1
 properties/26/path = NodePath(".:shop_timeout")
 properties/26/spawn = true
 properties/26/replication_mode = 1
+properties/27/path = NodePath(".:players_in_lobby")
+properties/27/spawn = true
+properties/27/replication_mode = 1
+properties/28/path = NodePath(".:pre_started_game")
+properties/28/spawn = true
+properties/28/replication_mode = 1
+properties/29/path = NodePath(".:is_in_lobby")
+properties/29/spawn = true
+properties/29/replication_mode = 1
+properties/30/path = NodePath(".:deaths_per_player")
+properties/30/spawn = true
+properties/30/replication_mode = 1
+properties/31/path = NodePath(".:is_powered_off")
+properties/31/spawn = true
+properties/31/replication_mode = 1
+properties/32/path = NodePath(".:breaker_timeout")
+properties/32/spawn = true
+properties/32/replication_mode = 1
+properties/33/path = NodePath(".:enable_breaker")
+properties/33/spawn = true
+properties/33/replication_mode = 1
+properties/34/path = NodePath(".:enable_shop")
+properties/34/spawn = true
+properties/34/replication_mode = 1
+properties/35/path = NodePath(".:enable_coffee")
+properties/35/spawn = true
+properties/35/replication_mode = 1
+properties/36/path = NodePath(".:coffee_timeout")
+properties/36/spawn = true
+properties/36/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dw4kk"]
 properties/0/path = NodePath("SomeoneDid:text")
@@ -139,6 +175,9 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("SomeoneDid:theme_override_colors/font_color")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("SomeoneDid:theme_override_colors/font_outline_color")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
@@ -160,44 +199,6 @@ properties/1/replication_mode = 1
 [sub_resource type="Environment" id="Environment_qell4"]
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 1.5
-
-[sub_resource type="Animation" id="Animation_0u22r"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport/Camera3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(3.895, 0.91, -33.6)]
-}
-
-[sub_resource type="Animation" id="Animation_x2ukx"]
-resource_name = "caca"
-length = 30.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport/Camera3D:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(3.895, 0.91, -33.6), Vector3(3.895, 0.57, -33.6)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_oe4e8"]
-_data = {
-"RESET": SubResource("Animation_0u22r"),
-"caca": SubResource("Animation_x2ukx")
-}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evicu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -424,9 +425,13 @@ _data = {
 "spin": SubResource("Animation_rwlcq")
 }
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("shop")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ekwb2"]
+size = Vector3(2.38672, 3.2959, 1)
+
+[node name="Game" type="Node3D" node_paths=PackedStringArray("shop", "school")]
 script = ExtResource("1_y4eyb")
 shop = NodePath("shop")
+school = NodePath("School")
 
 [node name="Lighting and stuff" type="Node" parent="."]
 script = ExtResource("2_uakk8")
@@ -438,6 +443,18 @@ environment = SubResource("Environment_5hwxw")
 script = ExtResource("2_0aku0")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Steam"]
+
+[node name="GameRecorder" type="Node" parent="."]
+process_mode = 4
+script = ExtResource("4_vn0nr")
+
+[node name="Timer" type="Timer" parent="GameRecorder"]
+wait_time = 0.1
+autostart = true
+
+[node name="DiscordActivity" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("4_d8oju")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")
@@ -462,6 +479,10 @@ autostart = true
 wait_time = 30.0
 one_shot = true
 
+[node name="Discord" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = 11
 
@@ -476,6 +497,8 @@ offset_bottom = -75.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
@@ -510,6 +533,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 32
 text = "find a ela book!"
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main"]
 layout_mode = 1
@@ -623,17 +647,10 @@ size = Vector2i(1329, 767)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport"]
-transform = Transform3D(0.64679, -0.0797206, -0.75849, 0, 0.994522, -0.104528, 0.762668, 0.0676079, 0.643247, 3.895, 0.91, -33.6)
+transform = Transform3D(0.824966, 0.0432346, 0.563526, -0.0523359, 0.99863, 0, -0.562754, -0.0294927, 0.826098, 8.56, 2.09, -27.235)
 cull_mask = 1048573
 environment = SubResource("Environment_qell4")
 far = 141.72
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport"]
-root_node = NodePath("../../../../../..")
-libraries = {
-"": SubResource("AnimationLibrary_oe4e8")
-}
-autoplay = "caca"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/MultiPlayer/ColorRect"]
 modulate = Color(1, 1, 1, 0.466667)
@@ -990,8 +1007,7 @@ grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 32
-text = "Achievements will be disabled during this game
-Game config is easier than the default"
+text = "Achievements will be disabled during this game"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="CanvasLayer/Lobby"]
@@ -1203,7 +1219,6 @@ game = NodePath("../../../../../..")
 param_name = "books_to_collect"
 label_text = "Starting Notebooks"
 max_val = 999.0
-higher_value_harder = true
 
 [node name="NumBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
@@ -1211,13 +1226,20 @@ game = NodePath("../../../../../..")
 param_name = "notebooks_per_player"
 label_text = "Notebooks per player"
 max_val = 999.0
-higher_value_harder = true
 
 [node name="NumBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "max_deaths"
 label_text = "Max Deaths"
+max_val = 999.0
+min_val = 1.0
+
+[node name="NumBox13" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "deaths_per_player"
+label_text = "Deaths Per Player"
 max_val = 999.0
 min_val = 1.0
 
@@ -1228,7 +1250,6 @@ param_name = "leahy_start_speed"
 label_text = "Leahy starting speed"
 max_val = 999.0
 min_val = 1.0
-higher_value_harder = true
 
 [node name="NumBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
@@ -1236,7 +1257,6 @@ game = NodePath("../../../../../..")
 param_name = "leahy_speed_per_notebook"
 label_text = "Leahy speed per notebook"
 max_val = 999.0
-higher_value_harder = true
 
 [node name="NumBox5" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
@@ -1277,7 +1297,6 @@ param_name = "death_timeout"
 label_text = "Death Timeout"
 max_val = 999.0
 min_val = 1.0
-higher_value_harder = true
 
 [node name="NumBox8" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
@@ -1286,7 +1305,6 @@ param_name = "silent_lunch_duration"
 label_text = "Silent lunch duration"
 max_val = 999.0
 min_val = 1.0
-higher_value_harder = true
 
 [node name="NumBox12" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
@@ -1295,14 +1313,28 @@ param_name = "shop_timeout"
 label_text = "Shop Timeout"
 max_val = 999.0
 min_val = 1.0
-higher_value_harder = true
+
+[node name="NumBox14" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "breaker_timeout"
+label_text = "Breaker timeout"
+max_val = 999.0
+min_val = 1.0
+
+[node name="NumBox15" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "coffee_timeout"
+label_text = "Coffee timeout"
+max_val = 999.0
+min_val = 1.0
 
 [node name="CheckBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_azzu_steal"
 label_text = "Mr.Azzu Anger"
-if_enabled_harder = true
 
 [node name="CheckBox3" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
@@ -1315,7 +1347,12 @@ layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_gainy_spawn"
 label_text = "Ms.Gainy attack"
-if_enabled_harder = true
+
+[node name="CheckBox12" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "do_fox_help"
+label_text = "Mr.Fox help"
 
 [node name="CheckBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
@@ -1328,21 +1365,37 @@ layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_silent_lunch"
 label_text = "Silent Lunches"
-if_enabled_harder = true
+
+[node name="CheckBox9" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "enable_breaker"
+label_text = "Enable breaker"
+
+[node name="CheckBox10" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "enable_shop"
+label_text = "Enable shop"
+
+[node name="CheckBox11" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
+layout_mode = 2
+game = NodePath("../../../../../..")
+param_name = "enable_coffee"
+label_text = "Enable coffee machine"
 
 [node name="CheckBox6" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "landmine_death"
 label_text = "Bananas add to death count"
-if_enabled_harder = true
 
 [node name="CheckBox7" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("5_jibb3")]
 layout_mode = 2
 game = NodePath("../../../../../..")
 param_name = "do_vertical_camera"
 label_text = "Enable *super* advenced camera"
-if_enabled_harder = true
+is_neutral = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer"]
 layout_mode = 2
@@ -1417,10 +1470,11 @@ stream = ExtResource("10_o5q8n")
 bus = &"Dialogs"
 
 [node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.88883, 1.42582, -97.8742)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.451504, 1.42582, -28.4865)
 visible = false
 
 [node name="SubViewport" type="SubViewport" parent="EvilLeahy"]
+use_occlusion_culling = true
 gui_disable_input = true
 
 [node name="skibidiCamera" type="Camera3D" parent="EvilLeahy/SubViewport"]
@@ -1433,7 +1487,7 @@ far = 1000.0
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="EvilLeahy"]
 stream = ExtResource("17_thbsf")
 pitch_scale = 0.78
-max_distance = 150.0
+max_distance = 50.0
 bus = &"Dialogs"
 
 [node name="LeahyCoolTimer" type="Timer" parent="EvilLeahy"]
@@ -1473,7 +1527,7 @@ wait_time = 1363.0
 one_shot = true
 
 [node name="book1" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98391, 1.07787, -35.0866)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, 1.078, -69.722)
 
 [node name="book2" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.258, 143.884, -161.746)
@@ -1923,11 +1977,39 @@ libraries = {
 }
 autoplay = "spin"
 
+[node name="CoffeMachine" parent="." instance=ExtResource("34_m1kl1")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 24.4491, 1.31584, -55.4625)
+
+[node name="coffee" type="AudioStreamPlayer3D" parent="CoffeMachine"]
+stream = ExtResource("35_ir6cm")
+bus = &"Dialogs"
+
+[node name="Breaker" parent="." node_paths=PackedStringArray("game") instance=ExtResource("36_j44h3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 50.7154, 1.71703, -1.16068)
+game = NodePath("..")
+yellow_light = Color(1, 1, 0.447059, 1)
+red_light = Color(0.999748, 0.245733, 0.188282, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Breaker"]
+stream = ExtResource("38_ahlvj")
+bus = &"Dialogs"
+
+[node name="BreakerRoomClosedDoor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.9667, 1.76222, -9.7487)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BreakerRoomClosedDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.188477, 0)
+shape = SubResource("BoxShape3D_ekwb2")
+
+[connection signal="timeout" from="GameRecorder/Timer" to="GameRecorder" method="_on_timer_timeout"]
 [connection signal="timeout" from="SecondsLeft" to="." method="_on_seconds_left_timeout"]
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
 [connection signal="timeout" from="GainyTimer" to="." method="_on_gainy_timer_timeout"]
+[connection signal="timeout" from="Discord" to="DiscordActivity" method="_on_discord_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/connect local" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host_local" to="." method="_on_host_local_pressed"]

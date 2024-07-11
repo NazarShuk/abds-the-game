@@ -34,6 +34,7 @@ Allsingleton="*res://allsingleton.gd"
 AudioVolume="*res://AudioVolume.gd"
 Networking="*res://networking.gd"
 Achievements="*res://Achievements.gd"
+DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 
 [debug]
 
@@ -50,7 +51,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdscript_formatter/plugin.cfg")
+enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg", "res://addons/gdscript_formatter/plugin.cfg")
 
 [input]
 
