@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=78 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -6,7 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
 [ext_resource type="Script" path="res://LeahyApproaching.gd" id="4_ba12c"]
-[ext_resource type="Script" path="res://DiscordActivity.gd" id="4_d8oju"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
 [ext_resource type="Script" path="res://GameRecorder.gd" id="4_vn0nr"]
 [ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="5_grswa"]
@@ -451,10 +450,6 @@ script = ExtResource("4_vn0nr")
 [node name="Timer" type="Timer" parent="GameRecorder"]
 wait_time = 0.1
 autostart = true
-
-[node name="DiscordActivity" type="Node" parent="."]
-process_mode = 3
-script = ExtResource("4_d8oju")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")
@@ -2009,7 +2004,6 @@ shape = SubResource("BoxShape3D_ekwb2")
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
 [connection signal="timeout" from="GainyTimer" to="." method="_on_gainy_timer_timeout"]
-[connection signal="timeout" from="Discord" to="DiscordActivity" method="_on_discord_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/connect local" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host_local" to="." method="_on_host_local_pressed"]
