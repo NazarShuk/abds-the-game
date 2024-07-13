@@ -172,8 +172,6 @@ var can_use_breaker = true
 var can_use_coffee = true
 
 var hand_target_y = -0.5
-var walking_pitch = 1
-
 
 func _physics_process(delta):
 	process_voice()
@@ -188,10 +186,6 @@ func _physics_process(delta):
 				cam_fov = 75 + final_multiplier * 15
 			else:
 				cam_fov = 75
-		
-		$AudioStreamPlayer3D.pitch_scale = lerp($AudioStreamPlayer3D.pitch_scale, float(walking_pitch),0.1)
-		
-		walking_pitch = clamp(SPEED / 6,1,10)
 		$Hand.position.y = lerp($Hand.position.y,hand_target_y,0.25)
 		
 		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor($"CanvasLayer/Control/Shop/shop timer".time_left)) + "s left"
@@ -204,7 +198,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			pick_item(0)
+			pick_item(6)
 			pass
 
 		if get_parent().game_started:
@@ -336,6 +330,13 @@ func _physics_process(delta):
 							elif distance < 30:
 								pick_item(-1)
 								get_parent().appease_leahy.rpc(steam_name,15)
+						elif get_cur_item() == 6:
+							var evil_leahy = get_tree().get_first_node_in_group("enemies")
+							var distance = global_position.distance_to(evil_leahy.global_position)
+							
+							if distance < 10:
+								pick_item(-1)
+								get_parent().boost_leahy.rpc(steam_name)
 					
 					if Input.is_action_just_pressed("use_item"):
 						if get_cur_item() == 0:
@@ -358,12 +359,20 @@ func _physics_process(delta):
 							squeak.rpc()
 							pick_item(-1)
 							get_parent().start_da_pacer.rpc(name.to_int()) # i want to kms because of this
+						elif get_cur_item() == 6:
+							pick_item(-1)
+							if boosts.has("redbull"):
+								boosts["redbull"] += 2
+							else:
+								boosts["redbull"] = 2
+							redbull_timeout()
+							play_sound.rpc("res://redbull.mp3")
 						
 
 		move_and_slide()
 
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
-		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,150)
+		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
 
 
 		if get_tree():
@@ -416,6 +425,11 @@ func _input(event):
 func coffee_timeout():
 	await get_tree().create_timer(6).timeout
 	boosts["coffee"] -= 1
+
+func redbull_timeout():
+	await get_tree().create_timer(3).timeout
+	boosts["redbull"] -= 2
+
 
 func _on_area_3d_area_entered(area):
 	if !is_multiplayer_authority():
@@ -525,7 +539,8 @@ func choose_item(item_ov):
 				"2":20,
 				"3":15,
 				"4":3,
-				"5":2
+				"5":2,
+				"6":2
 			}
 			
 			pick_item(pick_random_weighted(item_weights).to_int())
@@ -801,3 +816,13 @@ func _on_breaker_timeout_timeout():
 
 func _on_coffee_timeout_timeout():
 	can_use_coffee = true
+
+@rpc("any_peer","call_local")
+func play_sound(stream_path : String,bus : String = "Dialogs", max_distance : float = 20):
+	var a = AudioStreamPlayer3D.new()
+	a.stream = load(stream_path)
+	a.bus = bus
+	a.max_distance = max_distance
+	add_child(a)
+	a.global_position = global_position
+	a.play()

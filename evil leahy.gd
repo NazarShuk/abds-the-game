@@ -6,7 +6,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var SPEED = 6.0
 
 func _physics_process(_delta):
-
+	
 	var current_location = global_transform.origin
 	var next_location = nav_agent.get_next_path_position()
 	

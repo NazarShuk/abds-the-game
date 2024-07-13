@@ -25,6 +25,7 @@ var leahy_appeased = false
 @export var books_to_collect = 9
 @export var total_books = 0
 var book_pos = Vector3()
+var book_boost = 0
 
 @export var leahy_look : bool
 
@@ -89,6 +90,8 @@ var pacer_times = []
 
 @export var school : Node3D
 
+var enable_live_split = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioServer.set_bus_solo(6,false)
@@ -109,12 +112,13 @@ func _ready():
 
 var leahy_power_fix_num = 0
 var music_pitch_target = 1
+var music_pitch_boost = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
-		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target),0.05)
+		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target * music_pitch_boost),0.05)
 		
 		if total_books == books_to_collect - 1:
 			if !absent:
@@ -391,9 +395,9 @@ func on_collect_book(id,book_name,personal):
 			player_name = get_node(str(id)).steam_name
 		if book_name != "Landmine":
 			if personal:
-				players[id].books_collected += 1
+				players[id].books_collected += 1 + book_boost
 			else:
-				players[players.keys().pick_random()].books_collected += 1
+				players[players.keys().pick_random()].books_collected += 1 + book_boost
 			var total = 0
 			
 			for idd in players_ids:
@@ -444,14 +448,22 @@ func on_collect_book(id,book_name,personal):
 			
 			gainy_attack = false
 			gainy_target = null
+			if enable_live_split:
+				LiveSplit.start_or_split()
+
+			play_pop()
 		else:
 			info_text(player_name + " slipped")
 			var spawnpoint = $LandMineSpawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
 			spawnpoint.y = 0.143
 			$Landmine.position = spawnpoint
-	
-	
+
+@rpc("any_peer","call_local")
+func play_pop():
+	$pop.play()
+
+
 @rpc("any_peer","call_local")
 func use_vending_machine(id):
 	if !multiplayer.is_server(): return
@@ -738,9 +750,6 @@ func _on_absences_timeout():
 
 @rpc("authority","call_local")
 func set_absent(is_absent : bool):
-	
-	var environment : Environment = $"Lighting and stuff/WorldEnvironment".environment
-	
 	if is_absent:
 		evil_leahy.visible = false
 		$EvilLeahy/AudioStreamPlayer3D.stop()
@@ -990,4 +999,10 @@ func toggle_power(do_ov = false, ov = false):
 		$BreakerRoomClosedDoor.set_collision_layer_value(2,true)
 		
 		is_powered_off = true
-	
+@rpc("any_peer","call_local")
+func boost_leahy(pl):
+	if multiplayer.is_server():
+		evil_leahy.SPEED *= 1.5
+		book_boost += 0.5
+		music_pitch_boost += 0.25
+		info_text(pl + " gave Ms.Leahy Redbull...")

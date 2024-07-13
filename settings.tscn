@@ -37,7 +37,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button2" type="Button" parent="CanvasLayer"]
+[node name="SecretButton" type="Button" parent="CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -53,7 +53,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_ongwm")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_ongwm")
 theme_override_styles/focus = SubResource("StyleBoxTexture_ongwm")
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="SettingsLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 98.0
@@ -65,12 +65,14 @@ text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer"]
+[node name="MusicVolumeLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_left = 567.0
 offset_top = -262.0
+offset_right = -566.0
 offset_bottom = -223.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -97,12 +99,14 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="Label3" type="Label" parent="CanvasLayer"]
+[node name="SfxVolumeLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_left = 575.0
 offset_top = -199.0
+offset_right = -574.0
 offset_bottom = -160.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -129,13 +133,15 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="Label6" type="Label" parent="CanvasLayer"]
+[node name="VoiceChatVolumeLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_left = 541.0
 offset_top = -135.0
-offset_bottom = -96.0002
+offset_right = -540.0
+offset_bottom = -96.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -161,12 +167,14 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="Label4" type="Label" parent="CanvasLayer"]
+[node name="MicSetupLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_left = 544.0
 offset_top = -32.0
+offset_right = -544.0
 offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -177,13 +185,15 @@ text = "Microphone setup"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label5" type="Label" parent="CanvasLayer"]
+[node name="MicSetupInfoLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 34.0002
-offset_bottom = 49.0002
+offset_left = 461.0
+offset_top = 34.0
+offset_right = -461.0
+offset_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -284,7 +294,7 @@ stream = SubResource("AudioStreamMicrophone_stdf6")
 autoplay = true
 bus = &"Voice Chat"
 
-[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/SecretButton" to="." method="_on_button_2_pressed"]
 [connection signal="value_changed" from="CanvasLayer/MusicSlider" to="." method="_on_music_slider_changed"]
 [connection signal="value_changed" from="CanvasLayer/SfxSlider" to="." method="_on_sfx_slider_changed"]
 [connection signal="value_changed" from="CanvasLayer/VCslider" to="." method="_on_v_cslider_value_changed"]
