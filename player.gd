@@ -1,13 +1,12 @@
 extends CharacterBody3D
 
-const OG_SPEED = 5.0
+const OG_SPEED = 6.0
 var SPEED = OG_SPEED
 var boosts = {}
 var is_boosted = false
 
 const JUMP_VELOCITY = 4.5
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var books_collected = 0
@@ -225,12 +224,9 @@ func _physics_process(delta):
 		else:
 			is_on_top = false
 		
-		
-		
-		# Add the gravity.
 		if not is_on_floor() and not is_dead:
 			velocity.y -= gravity * delta
-
+		
 		$AudioStreamPlayer3D.volume_db = -80
 
 		if Input.is_action_just_pressed("sprint"):
@@ -238,41 +234,36 @@ func _physics_process(delta):
 		elif Input.is_action_just_released("sprint"):
 			is_running = false
 
-		velocity.x = 0
-		velocity.z = 0
-
 		if get_parent().canPlayersMove:
 			if can_move and not is_suspended:
 				if can_cam_move:
-					var turning = Input.get_axis("turn_right", "turn_left")
-					rotate_y(deg_to_rad(turning) * 1.5)
-					if Input.is_action_pressed("forward"):
-						translate(Vector3(0, 0, SPEED * -delta))
+					var input_dir = Vector3.ZERO
+					input_dir.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
+					input_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+					
+					# Get the forward and right vectors of the character
+					var forward = global_transform.basis.z
+					var right = global_transform.basis.x
+					
+					# Calculate the movement direction in global space
+					var movement = (forward * input_dir.z + right * input_dir.x).normalized()
+					
+					if movement != Vector3.ZERO:
+						velocity.x = (movement * SPEED).x
+						velocity.z = (movement * SPEED).z
 						$AudioStreamPlayer3D.volume_db = 0
 						is_moving = true
-					elif Input.is_action_pressed("back"):
-						translate(Vector3(0, 0, SPEED * delta))
-						$AudioStreamPlayer3D.volume_db = 0
-						is_moving = true
-
-					if Input.is_action_pressed("left"):
-						translate(Vector3(SPEED * -delta, 0, 0))
-						$AudioStreamPlayer3D.volume_db = 0
-						is_moving = true
-
-					elif Input.is_action_pressed("right"):
-						translate(Vector3(SPEED * delta, 0, 0))
-						$AudioStreamPlayer3D.volume_db = 0
-						is_moving = true
-
-					if (
-						Input.is_action_just_released("back")
-						or Input.is_action_just_released("forward")
-						or Input.is_action_just_released("left")
-						or Input.is_action_just_released("right")
-					):
+					else:
+						velocity.x = velocity.move_toward(Vector3.ZERO, SPEED).x
+						velocity.z = velocity.move_toward(Vector3.ZERO, SPEED).z
 						is_moving = false
-
+					
+					move_and_slide()
+					
+					# Update is_moving based on actual movement
+					if velocity.length() < 0.1:
+						is_moving = false
+					
 					if Input.is_action_just_pressed("interact"):
 						if ray.get_collider() and get_cur_item() == -1:
 
@@ -369,7 +360,7 @@ func _physics_process(delta):
 							play_sound.rpc("res://redbull.mp3")
 						
 
-		move_and_slide()
+
 
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
 		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)

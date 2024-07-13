@@ -1478,9 +1478,11 @@ visible = false
 [node name="SubViewport" type="SubViewport" parent="EvilLeahy"]
 use_occlusion_culling = true
 gui_disable_input = true
+canvas_cull_mask = 4294967289
 
 [node name="skibidiCamera" type="Camera3D" parent="EvilLeahy/SubViewport"]
 transform = Transform3D(-1, 1.56557e-08, -1.45851e-07, -2.26267e-08, 0.965926, 0.258819, 1.44933e-07, 0.258819, -0.965926, -0.385, 2.304, 1.865)
+cull_mask = 1048569
 projection = 1
 size = 15.0
 near = 0.001
@@ -1657,7 +1659,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.944, 1.27832, -44.078)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.9436, 1.27832, -34.078)
 
 [node name="Book Spawn37" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.6226, 1.27832, -98.4017)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.2241, 1.27832, -87.9513)
+
+[node name="Book Spawn43" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5619, 1.27832, -148.795)
+
+[node name="Book Spawn44" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.9608, 1.27832, -197.071)
+
+[node name="Book Spawn45" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0713, 1.27832, -75.3781)
 
 [node name="Book Spawn38" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.979, 1.27832, -106.6)
