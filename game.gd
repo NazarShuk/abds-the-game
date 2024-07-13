@@ -153,11 +153,11 @@ func _process(delta):
 			
 		if gainy_attack:
 			if gainy_target:
+				ms_gainy.update_target_location(gainy_target.global_position)
 				if players[gainy_target.name.to_int()].is_dead:
 					gainy_attack = false
 					gainy_target = null
 					
-				ms_gainy.update_target_location(gainy_target.global_position)
 		else:
 			ms_gainy.go_back()
 		

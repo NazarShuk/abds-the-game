@@ -24,9 +24,3 @@ func resume():
 func send_msg(message : String):
 	var output = []
 	var exit_code = OS.execute("cmd.exe", ["/C", "echo " + message + " > " + pipe_path], output, true)
-	
-	if exit_code == 0:
-		print("Message sent successfully")
-	else:
-		print("Failed to send message")
-		print("Error output: ", output)
