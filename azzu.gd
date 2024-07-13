@@ -27,6 +27,8 @@ func _physics_process(_delta):
 		if distance < 5:
 			if multiplayer.is_server():
 				get_parent().azzu_steal.rpc(clorox.launcher)
+	
+	
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:

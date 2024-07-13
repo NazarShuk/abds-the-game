@@ -28,9 +28,6 @@ func _on_timer_timeout():
 		for fake_pl in existing_pl:
 			fake_pl.queue_free()
 		
-		print(recorded.size())
-		print("memory: ",OS.get_static_memory_usage() / 1048576)
-		
 		if get_tree().get_first_node_in_group("player"): return
 		for playback in playbacks:
 			if do_playback:

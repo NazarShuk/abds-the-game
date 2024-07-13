@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 const OG_SPEED = 5.0
 var SPEED = OG_SPEED
+var boosts = {}
 var is_boosted = false
 
 const JUMP_VELOCITY = 4.5
@@ -130,7 +131,6 @@ func _enter_tree():
 
 	if is_multiplayer_authority():
 		$CanvasLayer.show()
-		get_cur_item()
 		get_parent().hide_menu()
 		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_2d = true
 		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_3d = true
@@ -171,10 +171,28 @@ var is_freaky = false
 var can_use_breaker = true
 var can_use_coffee = true
 
+var hand_target_y = -0.5
+var walking_pitch = 1
+
 
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
+		var final_multiplier = 1
+		for b in boosts:
+			final_multiplier += boosts[b]
+		
+		SPEED = OG_SPEED * final_multiplier
+		if !get_parent().leahy_look:
+			if final_multiplier != 1:
+				cam_fov = 75 + final_multiplier * 15
+			else:
+				cam_fov = 75
+		
+		$AudioStreamPlayer3D.pitch_scale = lerp($AudioStreamPlayer3D.pitch_scale, float(walking_pitch),0.1)
+		
+		walking_pitch = clamp(SPEED / 6,1,10)
+		$Hand.position.y = lerp($Hand.position.y,hand_target_y,0.25)
 		
 		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor($"CanvasLayer/Control/Shop/shop timer".time_left)) + "s left"
 		
@@ -186,9 +204,9 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			#pick_item(2)
+			pick_item(0)
 			pass
-		
+
 		if get_parent().game_started:
 			if (10 - leahy_dst) > 0:
 				var strength = 1/leahy_dst+0.01
@@ -198,13 +216,15 @@ func _physics_process(delta):
 				camera_3d.h_offset = 0
 				camera_3d.v_offset = 0
 		
-
-
-
+		
+		
+		
 		if global_position.z > 15 && !is_freaky:
-			is_freaky = true
-			get_parent().skibidi.rpc()
-			# freaky ending
+			if !get_parent().game_started:
+				is_freaky = true
+				get_parent().skibidi.rpc()
+			else:
+				global_position.z = 0
 
 		if global_position.y >= 3.727:
 			is_on_top = true
@@ -264,15 +284,20 @@ func _physics_process(delta):
 
 							if ray.get_collider().is_in_group("vending_machine"):
 								get_parent().use_vending_machine.rpc(name.to_int())
+							
 						if ray.get_collider() and get_parent().game_started:
 							if ray.get_collider().is_in_group("shop"):
 								if !get_parent().enable_shop: return
 								open_shop()
 							if ray.get_collider().name == "CoffeMachine":
 								if !get_parent().enable_coffee: return
-								is_boosted = true
+								if !can_use_coffee: return
+								if boosts.has("coffee"):
+									boosts["coffee"] += 1
+								else:
+									boosts["coffee"] = 1
 								get_parent().play_coffee.rpc()
-								$CoffeeBoost.start()
+								coffee_timeout()
 								can_use_coffee = false
 								$"Coffee timeout".start(get_parent().coffee_timeout)
 							if ray.get_collider().name == "Breaker":
@@ -315,8 +340,11 @@ func _physics_process(delta):
 					if Input.is_action_just_pressed("use_item"):
 						if get_cur_item() == 0:
 							pick_item(-1)
-							is_boosted = true
-							$FruitSnacksTimer.start()
+							if boosts.has("fruit snacks"):
+								boosts["fruit snacks"] += 1
+							else:
+								boosts["fruit snacks"] = 1
+							fruit_snacks_timeout()
 						elif get_cur_item() == 1:
 							pick_item(-1)
 							spawn_clorox.rpc()
@@ -335,7 +363,7 @@ func _physics_process(delta):
 		move_and_slide()
 
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
-		camera_3d.fov = lerp(camera_3d.fov, float(cam_fov), 0.1)
+		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,150)
 
 
 		if get_tree():
@@ -351,6 +379,9 @@ func _physics_process(delta):
 			var target = get_tree().get_nodes_in_group("enemies")[0].global_position
 
 			look_at(target)
+			global_rotation_degrees.x = 0
+			global_rotation_degrees.z = 0
+			
 			cam_fov = 10
 		
 		if get_parent().pacer_deadly:
@@ -382,6 +413,9 @@ func _input(event):
 					# funni
 					camera_3d.rotate_x(deg_to_rad(event.relative.y * -0.3))
 
+func coffee_timeout():
+	await get_tree().create_timer(6).timeout
+	boosts["coffee"] -= 1
 
 func _on_area_3d_area_entered(area):
 	if !is_multiplayer_authority():
@@ -394,7 +428,8 @@ func _on_area_3d_area_entered(area):
 		Achievements.save_all()
 	elif area.get_parent().is_in_group("enemies") and get_parent().game_started == true:
 		if get_parent().absent == false:
-			die("leahy")
+			if get_parent().is_powered_off == false:
+				die("leahy")
 			
 	elif area.name == "Landmine" and get_parent().game_started == true:
 		
@@ -413,33 +448,22 @@ func _on_area_3d_area_entered(area):
 func _on_timer_timeout():
 	if !is_multiplayer_authority():
 		return
+	
 	if is_running and is_moving:
 		if stamina > 0:
 			if can_run:
 				stamina -= 1
-				if !is_boosted:
-					SPEED = OG_SPEED * 2
-					if !get_parent().leahy_look:
-						cam_fov = 100
-				else:
-					SPEED = OG_SPEED * 4
-					if !get_parent().leahy_look:
-						cam_fov = 120
+				boosts["run"] = 1
 		else:
 			is_running = false
 			can_run = false
 			$Stamina_timeout.start()
 	else:
-		if !is_boosted:
-			SPEED = OG_SPEED
-			if !get_parent().leahy_look:
-				cam_fov = 75
-		else:
-			SPEED = OG_SPEED * 2
-			if !get_parent().leahy_look:
-				cam_fov = 100
-		if stamina <= 75:
+		boosts["run"] = 0
+		if stamina <= 100:
 			stamina += 1
+	
+	
 
 
 func _on_stamina_timeout_timeout():
@@ -464,13 +488,20 @@ func _on_revive_timer_timeout():
 	can_move = true
 	$CollisionShape3D.disabled = false
 
-
 func pick_item(item: int):
-	for i in $Hand.get_children():
-		i.hide()
-
+	for i in $Hand.get_children().size():
+		set_item_vis.rpc(i,false)
+	
 	if item != -1:
-		$Hand.get_child(item).show()
+		set_item_vis.rpc(item,true)
+		hand_target_y = 0.3
+	else:
+		hand_target_y = -0.5
+		pass
+
+@rpc("any_peer","call_local")
+func set_item_vis(item : int,vis : bool):
+	$Hand.get_child(item).visible = vis
 
 func get_cur_item():
 	var id = -1
@@ -483,20 +514,23 @@ func get_cur_item():
 
 
 @rpc("any_peer", "call_local")
-func choose_item():
-	if can_get_item:
-		can_get_item = false
-		
-		var item_weights = {
-			"0":40,
-			"1":25,
-			"2":20,
-			"3":15,
-			"4":3,
-			"5":2
-		}
-		
-		pick_item(pick_random_weighted(item_weights).to_int())
+func choose_item(item_ov):
+	if item_ov == -1:
+		if can_get_item:
+			can_get_item = false
+			
+			var item_weights = {
+				"0":40,
+				"1":25,
+				"2":20,
+				"3":15,
+				"4":3,
+				"5":2
+			}
+			
+			pick_item(pick_random_weighted(item_weights).to_int())
+	else:
+		pick_item(item_ov)
 
 func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	# Calculate the total weight
@@ -517,9 +551,9 @@ func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	# Fallback in case of rounding errors
 	return items_chances.keys()[-1]
 
-func _on_fruit_snacks_timer_timeout():
-	is_boosted = false
-
+func fruit_snacks_timeout():
+	await get_tree().create_timer(3).timeout
+	boosts["fruit snacks"] -= 1
 
 @rpc("any_peer", "call_local")
 func spawn_clorox():
@@ -569,13 +603,13 @@ func die(cause):
 	if is_dead: return
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
-	if cause != "mine":
-		get_parent().set_player_dead.rpc(name.to_int(), true,true)
-	else:
+	if cause == "mine":
 		if get_parent().landmine_death:
 			get_parent().set_player_dead.rpc(name.to_int(), true,true)
 		else:
 			get_parent().set_player_dead.rpc(name.to_int(), true,false)
+	else:
+		get_parent().set_player_dead.rpc(name.to_int(), true,true)
 	$"CanvasLayer/Control/Died thing".show()
 	$ReviveTimer.start(get_parent().death_timeout)
 	is_dead = true
@@ -586,7 +620,7 @@ func die(cause):
 	Achievements.deaths += 1
 	Achievements.save_all()
 	$CanvasLayer/Control/Control.hide()
-	close_shop()
+	close_shop(false)
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
 		if get_parent().do_silent_lunch:
@@ -617,6 +651,7 @@ func _on_silent_lunch_timeout():
 
 
 func _on_anti_wall_walk_timeout():
+	if !get_parent().game_started: return
 	if is_on_top:
 		on_top_counter += 1
 
@@ -659,13 +694,14 @@ func open_shop():
 		$"CanvasLayer/Control/Shop/ColorRect/question panel".hide()
 		$"CanvasLayer/Control/Shop/ColorRect/rewards panel".hide()
 
-func close_shop():
+func close_shop(set_death = true):
 	$CanvasLayer/Control/Shop.hide()
 	$CanvasLayer/Control/Shop/AudioStreamPlayer.stop()
 	can_cam_move = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	AudioServer.set_bus_solo(6,false)
-	get_parent().set_player_dead.rpc(name.to_int(), false,false)
+	if set_death:
+		get_parent().set_player_dead.rpc(name.to_int(), false,false)
 	$"CanvasLayer/Control/Shop/shop timer".stop()
 	
 

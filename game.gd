@@ -107,15 +107,24 @@ func _ready():
 	reset_pacer_times()
 
 
+var leahy_power_fix_num = 0
+var music_pitch_target = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	
-	
+func _process(delta):
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
-		update_player_text()
+		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target),0.05)
 		
+		if total_books == books_to_collect - 1:
+			if !absent:
+				music_pitch_target = 1.5
+		else:
+			if !absent:
+				music_pitch_target = 1
+		
+		update_player_text()
+	
 		players_in_lobby = players_ids.size()
 		
 		if game_started:
@@ -160,8 +169,8 @@ func _process(_delta):
 	if game_started and multiplayer.is_server() and !absent:
 		if !leahy_appeased:
 			if !is_powered_off:
-				var closest
-				var closest_distance = 999999999
+				var closest = null
+				var closest_distance = INF
 				
 				for p in players_ids:
 					if !players[p].is_dead:
@@ -182,14 +191,16 @@ func _process(_delta):
 					evil_leahy.update_target_location(closest)
 				else:
 					evil_leahy.update_target_location(evil_leahy.global_position)
-					print("leahy didnt find a player")
 			else:
 				evil_leahy.update_target_location($Breaker.global_position)
 				hide_approaching_label.rpc()
-				
 				var breaker_dst = evil_leahy.global_position.distance_to($Breaker.global_position)
 				if breaker_dst < 2:
-					toggle_power.rpc(true,false)
+					leahy_power_fix_num += delta
+					if leahy_power_fix_num >= 3:
+						toggle_power.rpc(true,false)
+						leahy_power_fix_num = 0
+					
 		else:
 			evil_leahy.update_target_location(evil_leahy.global_position)
 	if multiplayer.has_multiplayer_peer() and !game_started and multiplayer.is_server():
@@ -444,12 +455,16 @@ func on_collect_book(id,book_name,personal):
 @rpc("any_peer","call_local")
 func use_vending_machine(id):
 	if !multiplayer.is_server(): return
-	if !game_started: return
-	
-	for child in get_children():
-		if child.name == str(id):
-			child.choose_item.rpc_id(id)
-			break
+	if game_started:
+		for child in get_children():
+			if child.name == str(id):
+				child.choose_item.rpc_id(id,-1)
+				break
+	else:
+		for child in get_children():
+			if child.name == str(id):
+				child.choose_item.rpc_id(id,2)
+				break
 
 @rpc("authority","call_local")
 func start_da_game():
@@ -563,7 +578,11 @@ func set_player_dead(id,is_dead,do_deaths):
 			
 			
 			if total_deaths >= (max_deaths + (deaths_per_player * players_in_lobby)):
-				end_game.rpc("worst")
+				
+				if total_books == 1:
+					end_game.rpc("you suck")
+				else:
+					end_game.rpc("worst")
 
 
 func _on_seconds_left_timeout():
@@ -624,6 +643,8 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_file("res://impossible_end.tscn")
 	elif ending == "freaky":
 		get_tree().change_scene_to_file("res://huh_ending.tscn")
+	elif ending == "you suck":
+		get_tree().change_scene_to_file("res://worst_end.tscn")
 	elif ending == "none":
 		get_tree().change_scene_to_file("res://logos.tscn")
 
@@ -678,12 +699,15 @@ var fox_notebooks_left = 0
 func mr_fox_collect(is_sunkist):
 	if multiplayer.is_server():
 		if do_fox_help:
-			fox_follow = true
-			if is_sunkist:
-				fox_notebooks_left = 2
+			if !fox_follow:
+				fox_follow = true
+				if is_sunkist:
+					fox_notebooks_left = 2
+				else:
+					fox_notebooks_left = 1
 			else:
-				fox_notebooks_left = 1
-			info_text("Follow Mr.Fox to find the notebook!")
+				fox_notebooks_left += 1
+			info_text("Follow Mr.Fox to find " + str(fox_notebooks_left) + " notebooks!")
 
 
 func _on_button_5_pressed():
@@ -701,10 +725,14 @@ func _on_absences_timeout():
 		set_absent.rpc(true)
 		absent = true
 		hide_approaching_label.rpc()
+		info_text("Ms.Leahy is gone???")
+		music_pitch_target = 0.5
 	else:
 		if absent == true:
 			absent = false
 			set_absent.rpc(false)
+			info_text("Ms.Leahy is here nvm")
+			music_pitch_target = 1
 	
 	$Absences.start(absence_interval)
 
@@ -716,13 +744,9 @@ func set_absent(is_absent : bool):
 	if is_absent:
 		evil_leahy.visible = false
 		$EvilLeahy/AudioStreamPlayer3D.stop()
-		environment.background_energy_multiplier = 0.1
-		$Music2.pitch_scale = 0.5
 	else:
 		evil_leahy.visible = true
 		$EvilLeahy/AudioStreamPlayer3D.play()
-		environment.background_energy_multiplier = 1
-		$Music2.pitch_scale = 1
 
 @rpc("any_peer","call_local")
 func azzu_steal(launcher):
@@ -947,6 +971,7 @@ func toggle_power(do_ov = false, ov = false):
 	
 	if !is_powered_off:
 		environment.background_energy_multiplier = 1
+		
 		$Music2.play()
 		
 		info_text("Power was fixed")

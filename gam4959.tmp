@@ -166,9 +166,6 @@ properties/35/replication_mode = 1
 properties/36/path = NodePath(".:coffee_timeout")
 properties/36/spawn = true
 properties/36/replication_mode = 1
-properties/37/path = NodePath("Music2:pitch_scale")
-properties/37/spawn = true
-properties/37/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dw4kk"]
 properties/0/path = NodePath("SomeoneDid:text")

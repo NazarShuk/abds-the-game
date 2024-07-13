@@ -119,24 +119,39 @@ properties/3/replication_mode = 1
 properties/4/path = NodePath(".:visible")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath(".:steam_name")
+properties/5/path = NodePath("Hand/FruitSnacks:visible")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath("visual_body/Default:visible")
+properties/6/path = NodePath("Hand/CloroxWipes:visible")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath("visual_body/Perfect:visible")
+properties/7/path = NodePath("Hand/Pizza:visible")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath("visual_body/Impossible:visible")
+properties/8/path = NodePath(".:steam_name")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath("visual_body/Freaky:visible")
+properties/9/path = NodePath("visual_body/Default:visible")
 properties/9/spawn = true
 properties/9/replication_mode = 1
-properties/10/path = NodePath("AudioStreamPlayer3D:pitch_scale")
+properties/10/path = NodePath("visual_body/Perfect:visible")
 properties/10/spawn = true
 properties/10/replication_mode = 1
+properties/11/path = NodePath("visual_body/Impossible:visible")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("visual_body/Freaky:visible")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("Hand/MtnDew:visible")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath("Hand/Duck:visible")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("Hand/Sunkist:visible")
+properties/15/spawn = true
+properties/15/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_2f5dv"]
 length = 0.001
@@ -541,6 +556,10 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
+[node name="FruitSnacksTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
@@ -559,6 +578,10 @@ autostart = true
 
 [node name="ShopTimeout" type="Timer" parent="."]
 wait_time = 60.0
+one_shot = true
+
+[node name="CoffeeBoost" type="Timer" parent="."]
+wait_time = 6.0
 one_shot = true
 
 [node name="BreakerTimeout" type="Timer" parent="."]
@@ -1401,11 +1424,13 @@ bus = &"General Voice"
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Stamina_timeout" to="." method="_on_stamina_timeout_timeout"]
 [connection signal="timeout" from="ReviveTimer" to="." method="_on_revive_timer_timeout"]
+[connection signal="timeout" from="FruitSnacksTimer" to="." method="_on_fruit_snacks_timer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer2_timeout"]
 [connection signal="timeout" from="Silent Lunch" to="." method="_on_silent_lunch_timeout"]
 [connection signal="timeout" from="AntiWallWalk" to="." method="_on_anti_wall_walk_timeout"]
 [connection signal="timeout" from="ItemDelay" to="." method="_on_item_delay_timeout"]
 [connection signal="timeout" from="ShopTimeout" to="." method="_on_shop_timeout_timeout"]
+[connection signal="timeout" from="CoffeeBoost" to="." method="_on_fruit_snacks_timer_timeout"]
 [connection signal="timeout" from="BreakerTimeout" to="." method="_on_breaker_timeout_timeout"]
 [connection signal="timeout" from="Coffee timeout" to="." method="_on_coffee_timeout_timeout"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/rewards btn" to="." method="_on_rewards_btn_pressed"]

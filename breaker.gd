@@ -6,7 +6,7 @@ extends StaticBody3D
 @export var red_light : Color
 
 
-func _process(delta):
+func _process(_delta):
 	light.light_energy = randf_range(0.8,1.2)
 	if game.is_powered_off:
 		light.light_color = red_light

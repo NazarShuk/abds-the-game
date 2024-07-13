@@ -34,7 +34,6 @@ Allsingleton="*res://allsingleton.gd"
 AudioVolume="*res://AudioVolume.gd"
 Networking="*res://networking.gd"
 Achievements="*res://Achievements.gd"
-DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 
 [debug]
 

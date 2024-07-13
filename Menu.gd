@@ -2,7 +2,7 @@ extends ColorRect
 
 @onready var player = $"../../.."
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("escape"):
 		toggle_menu()
 

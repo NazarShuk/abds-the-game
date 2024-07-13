@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://b2mnanqgnou1g" path="res://freaky_ending.mp3" id="4_jg1lo"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="4_t1lvy"]
 
-[node name="huh_ending" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
+[node name="huh ending" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
 script = ExtResource("1_x7t01")
 died_text = NodePath("CanvasLayer/Label2")
 collected_text = NodePath("CanvasLayer/Label3")
