@@ -21,7 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
-[ext_resource type="PackedScene" uid="uid://2ynl24tkkvdp" path="res://school.tscn" id="17_3oefh"]
+[ext_resource type="PackedScene" uid="uid://xxyguo1ps1gc" path="res://school.tscn" id="17_3oefh"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://3u3ef1rrt1c0" path="res://pop.mp3" id="17_fndpl"]
 [ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="17_thbsf"]
