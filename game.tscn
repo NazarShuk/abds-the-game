@@ -645,7 +645,6 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer"]
 handle_input_locally = false
 use_occlusion_culling = true
-scaling_3d_scale = 0.25
 gui_disable_input = true
 size = Vector2i(1329, 767)
 render_target_update_mode = 4
@@ -1482,7 +1481,6 @@ visible = false
 
 [node name="SubViewport" type="SubViewport" parent="EvilLeahy"]
 use_occlusion_culling = true
-scaling_3d_scale = 0.25
 gui_disable_input = true
 canvas_cull_mask = 4294967289
 
