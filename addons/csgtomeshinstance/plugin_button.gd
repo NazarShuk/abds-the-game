@@ -31,29 +31,13 @@ func convert_csg_to_meshinstance():
 		var csg_name = csg_shape.name
 		var csg_material = csg_shape.material_override
 		
-		var staticBody = Node3D.new()
-		staticBody.transform.origin = csg_transform.origin
-		staticBody.transform.basis = csg_transform.basis
-		csg_shape.get_parent().add_child(staticBody)
-		staticBody.name = csg_name
-		staticBody.owner = root
-		
 		
 		mesh_instance.mesh = csg_mesh
-		staticBody.add_child(mesh_instance)
+		csg_shape.get_parent().add_child(mesh_instance)
 		mesh_instance.owner = root
-		mesh_instance.name = "Mesh Instance"
+		mesh_instance.name = csg_name
 		mesh_instance.create_trimesh_collision()
 		mesh_instance.material_override = csg_material
-		
-		#var collisionShape = CollisionShape3D.new()
-		#var shape = BoxShape3D.new()
-		#
-		#collisionShape.shape = shape
-		#
-		#staticBody.add_child(collisionShape)
-		#collisionShape.owner = root
-		#collisionShape.name = "Collision Shape"
-		#collisionShape.scale = mesh_instance.scale
-		#
+		mesh_instance.transform = csg_transform
+	
 		csg_shape.get_parent().remove_child(csg_shape)
