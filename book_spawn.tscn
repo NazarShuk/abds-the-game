@@ -14,4 +14,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1069, 1.27832, -16.746)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 100, 0)
 material_override = SubResource("StandardMaterial3D_efm3w")
+cast_shadow = 0
 mesh = SubResource("PlaneMesh_hmfb7")

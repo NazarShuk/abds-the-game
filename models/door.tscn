@@ -20,6 +20,7 @@ albedo_color = Color(1, 1, 0, 1)
 [node name="Door" type="MeshInstance3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_7nq2n")
+cast_shadow = 0
 mesh = SubResource("QuadMesh_w5axy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

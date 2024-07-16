@@ -7,7 +7,7 @@ albedo_texture = ExtResource("1_3o1x8")
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[node name="Wall2" type="CSGBox3D"]
+[node name="Wall2" type="CSGBox3D" groups=["wall"]]
 material_override = SubResource("StandardMaterial3D_gwxrl")
 use_collision = true
 size = Vector3(1, 1, 0.197266)

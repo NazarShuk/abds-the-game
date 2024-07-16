@@ -15,7 +15,7 @@ var lobby_id
 
 @export var canPlayersMove = true
 @onready var evil_leahy = $EvilLeahy
-var leahy_appeased = false
+@export var leahy_appeased = false
 
 @export var leahy_speed : float
 

@@ -43,6 +43,7 @@ var on_top_counter = 0
 var can_get_item = true
 
 @onready var camera_3d = $CanvasLayer2/SubViewportContainer/SubViewport/Camera3D
+@onready var minimap_cam = $Minimap/Camera3D
 
 var leahy_dst = 0
 
@@ -175,6 +176,27 @@ var hand_target_y = -0.5
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
+		
+		
+		$CanvasLayer/Control/Minimap.visible = is_minimap_open
+		if is_minimap_open:
+			if !is_shop_open:
+				if !$CanvasLayer/Control/Menu.visible:
+					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					can_cam_move = false
+		else:
+			if !is_shop_open:
+				if !$CanvasLayer/Control/Menu.visible:
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+					can_cam_move = true
+		
+		if Input.is_action_just_pressed("open_minimap"):
+			if !is_shop_open:
+				is_minimap_open = !is_minimap_open
+		
+		minimap_cam.size = lerp(minimap_cam.size,float(minimap_zoom),0.25)
+		minimap_zoom = clamp(minimap_zoom,5,95)
+		
 		var final_multiplier = 1
 		for b in boosts:
 			final_multiplier += boosts[b]
@@ -421,6 +443,7 @@ func redbull_timeout():
 	await get_tree().create_timer(3).timeout
 	boosts["redbull"] -= 2
 
+var is_in_leahy = false
 
 func _on_area_3d_area_entered(area):
 	if !is_multiplayer_authority():
@@ -434,19 +457,17 @@ func _on_area_3d_area_entered(area):
 	elif area.get_parent().is_in_group("enemies") and get_parent().game_started == true:
 		if get_parent().absent == false:
 			if get_parent().is_powered_off == false:
-				die("leahy")
-			
-	elif area.name == "Landmine" and get_parent().game_started == true:
-		
-		die("mine")
+				if get_parent().leahy_appeased == false:
+					die("leahy")
 
+	elif area.name == "Landmine" and get_parent().game_started == true:
+		die("mine")
 		get_parent().on_collect_book.rpc(name.to_int(), area.name,true)
 		
 	elif area.name == "azzu" and get_parent().azzu_angered == true:
 		die("azzu")
 		get_parent().azzu_dont_steal.rpc()
 	elif area.name == "gainy":
-		#die("gainy")
 		get_parent().stop_gainy.rpc(name.to_int())
 
 
@@ -585,25 +606,6 @@ func shart():
 	sp.global_position = global_position
 	sp.play()
 
-
-func _on_continue_btn_pressed():
-	$CanvasLayer/Control/Menu.visible = !$CanvasLayer/Control/Menu.visible
-	can_cam_move = !$CanvasLayer/Control/Menu.visible
-
-	if $CanvasLayer/Control/Menu.visible == true:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-func _on_disconnect_btn_pressed():
-	$CanvasLayer/Control/Menu/Main/DisconnectBtn.disabled = true
-	if !multiplayer.is_server():
-		print(name,"not server")
-		multiplayer.multiplayer_peer.close()
-		get_tree().reload_current_scene()
-	else:
-		get_parent().end_game.rpc("none")
-
 @rpc("any_peer","call_local")
 func die(cause):
 	if is_dead: return
@@ -657,7 +659,6 @@ func _on_silent_lunch_timeout():
 
 
 func _on_anti_wall_walk_timeout():
-	if !get_parent().game_started: return
 	if is_on_top:
 		on_top_counter += 1
 
@@ -684,8 +685,11 @@ func server_pos(pos: Vector3):
 func _on_item_delay_timeout():
 	can_get_item = true
 
+var is_shop_open = false
+
 func open_shop():
 	if can_use_shop:
+		is_minimap_open = false
 		$CanvasLayer/Control/Shop.show()
 		$CanvasLayer/Control/Shop/AudioStreamPlayer.play()
 		can_cam_move = false
@@ -699,6 +703,7 @@ func open_shop():
 		$CanvasLayer/Control/Shop/ColorRect/MainPanel.show()
 		$"CanvasLayer/Control/Shop/ColorRect/question panel".hide()
 		$"CanvasLayer/Control/Shop/ColorRect/rewards panel".hide()
+		is_shop_open = true
 
 func close_shop(set_death = true):
 	$CanvasLayer/Control/Shop.hide()
@@ -709,6 +714,7 @@ func close_shop(set_death = true):
 	if set_death:
 		get_parent().set_player_dead.rpc(name.to_int(), false,false)
 	$"CanvasLayer/Control/Shop/shop timer".stop()
+	is_shop_open = false
 	
 
 func _on_shop_timeout_timeout():
@@ -817,3 +823,48 @@ func play_sound(stream_path : String,bus : String = "Dialogs", max_distance : fl
 	add_child(a)
 	a.global_position = global_position
 	a.play()
+
+var is_minimap_open = false
+@onready var minimap_zoom = minimap_cam.size
+
+func _unhandled_input(event):
+	if is_minimap_open:
+		if event.is_action_pressed("zoom_in"):
+				minimap_zoom -= 3
+		if event.is_action_pressed("zoom_out"):
+				minimap_zoom += 3
+
+var dragging = false
+var last_mouse_position
+
+
+func _on_texture_rect_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == 1:
+			if event.pressed:
+				# Start dragging
+				dragging = true
+				last_mouse_position = event.position
+			else:
+				# Stop dragging
+				dragging = false
+	elif event is InputEventMouseMotion and dragging:
+		# Calculate the drag offset
+		var drag_offset = event.position - last_mouse_position
+		
+		# Define a minimum zoom factor to avoid division by zero or too small values
+		var min_zoom_factor = 0.1
+		
+		# Calculate the zoom factor such that it increases with zoom in
+		var zoom_factor = max(min_zoom_factor, minimap_zoom / 500.0)
+		
+		# Adjust the drag offset based on the zoom factor
+		var adjusted_drag_offset = drag_offset * zoom_factor
+		
+		# Update the position of the target object
+		$Minimap/Camera3D.global_position.x -= adjusted_drag_offset.x
+		$Minimap/Camera3D.global_position.z -= adjusted_drag_offset.y
+		#target_object.position += drag_offset
+		# Update the last mouse position
+		last_mouse_position = event.position
+

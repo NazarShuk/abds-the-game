@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=93 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -254,6 +254,9 @@ radius = 1.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mp62"]
 bg_color = Color(1, 1, 1, 1)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
+viewport_path = NodePath("Minimap")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rimgt"]
 albedo_texture = ExtResource("9_2sbry")
 
@@ -298,8 +301,8 @@ albedo_texture = ExtResource("2_q3hoo")
 mix_rate = 48000.0
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 script = ExtResource("1_lrwcd")
 outputPath = NodePath("Voice/AudioStreamPlayer")
 
@@ -1242,6 +1245,47 @@ stream = ExtResource("19_vcsq8")
 expand = true
 bus = &"Non Mute"
 
+[node name="Minimap" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -351.0
+offset_top = -202.0
+offset_right = 351.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Minimap"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = 33.0
+offset_right = -38.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_tk2de")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Minimap"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 33.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 21
+text = "the minimap"
+horizontal_alignment = 1
+
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
 process_mode = 3
 visible = false
@@ -1459,6 +1503,18 @@ stream = SubResource("AudioStreamGenerator_n68p1")
 autoplay = true
 bus = &"General Voice"
 
+[node name="Minimap" type="SubViewport" parent="."]
+use_occlusion_culling = true
+gui_disable_input = true
+size = Vector2i(800, 600)
+
+[node name="Camera3D" type="Camera3D" parent="Minimap"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+cull_mask = 1048569
+projection = 1
+size = 50.0
+far = 100.0
+
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Stamina_timeout" to="." method="_on_stamina_timeout_timeout"]
@@ -1477,6 +1533,7 @@ bus = &"General Voice"
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy duck" to="." method="_on_buy_duck_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/Button" to="." method="close_shop"]
 [connection signal="timeout" from="CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
+[connection signal="gui_input" from="CanvasLayer/Control/Minimap/TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control/Menu/Main/Enable live split" to="CanvasLayer/Control/Menu" method="_on_enable_live_split_toggled"]

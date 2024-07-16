@@ -31,4 +31,5 @@ mesh = SubResource("QuadMesh_5o3cc")
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.489977, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
 material_override = SubResource("StandardMaterial3D_drsn7")
+cast_shadow = 0
 mesh = SubResource("PlaneMesh_wp1n8")

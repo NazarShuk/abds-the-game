@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=80 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -39,6 +39,7 @@
 [ext_resource type="AudioStream" uid="uid://gorr13qobjv7" path="res://cofee.mp3" id="35_ir6cm"]
 [ext_resource type="PackedScene" uid="uid://cx7itjqsyc1xu" path="res://breaker.tscn" id="36_j44h3"]
 [ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="38_ahlvj"]
+[ext_resource type="ArrayOccluder3D" uid="uid://dj2vhfp47eps5" path="res://game.occ" id="40_ba0mq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -170,6 +171,9 @@ properties/36/replication_mode = 1
 properties/37/path = NodePath("Music2:pitch_scale")
 properties/37/spawn = true
 properties/37/replication_mode = 1
+properties/38/path = NodePath(".:leahy_appeased")
+properties/38/spawn = true
+properties/38/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dw4kk"]
 properties/0/path = NodePath("SomeoneDid:text")
@@ -641,6 +645,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer"]
 handle_input_locally = false
 use_occlusion_culling = true
+scaling_3d_scale = 0.25
 gui_disable_input = true
 size = Vector2i(1329, 767)
 render_target_update_mode = 4
@@ -1477,6 +1482,7 @@ visible = false
 
 [node name="SubViewport" type="SubViewport" parent="EvilLeahy"]
 use_occlusion_culling = true
+scaling_3d_scale = 0.25
 gui_disable_input = true
 canvas_cull_mask = 4294967289
 
@@ -2015,6 +2021,9 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BreakerRoomClosedDoor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.188477, 0)
 shape = SubResource("BoxShape3D_ekwb2")
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+occluder = ExtResource("40_ba0mq")
 
 [connection signal="timeout" from="GameRecorder/Timer" to="GameRecorder" method="_on_timer_timeout"]
 [connection signal="timeout" from="SecondsLeft" to="." method="_on_seconds_left_timeout"]

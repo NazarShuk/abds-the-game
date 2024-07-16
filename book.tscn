@@ -95,12 +95,14 @@ autoplay = "spin"
 [node name="Meshes" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Meshes"]
+layers = 4
 material_override = SubResource("StandardMaterial3D_1kx2u")
 mesh = SubResource("QuadMesh_drc1m")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Meshes"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+layers = 4
 material_override = SubResource("StandardMaterial3D_1kx2u")
 mesh = SubResource("QuadMesh_drc1m")
 skeleton = NodePath("../..")
@@ -109,4 +111,6 @@ skeleton = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_jdh3v")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
+layers = 4
 light_color = Color(0.0431373, 0.635294, 0.188235, 1)
+light_cull_mask = 4294967284

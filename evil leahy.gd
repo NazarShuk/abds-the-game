@@ -18,7 +18,15 @@ func _physics_process(_delta):
 			look_at(next_location)
 		rotation_degrees.x = 0
 		rotation_degrees.z = 0
+	
+	if multiplayer.is_server():
+		var cloroxes = get_tree().get_nodes_in_group("clorox_wipes")
+		for clorox in cloroxes:
+			if global_position.distance_to(clorox.global_position) < 1:
+				velocity = Vector3()
+		
 	move_and_slide()
+	
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:
