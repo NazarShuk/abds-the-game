@@ -8,10 +8,9 @@ var plugin_button :PluginButton
 
 func selection_changed() -> void:
 	var selection = get_editor_interface().get_selection().get_selected_nodes()
-	print(" i caca")
 	var can_convert = true #selection.size() == 1 and selection[0] is CSGShape3D and selection[0].is_root_shape()
 	for node in selection:
-		if node is CSGShape3D == false:
+		if node is CSGBox3D == false:
 			can_convert = false
 			break
 		if !node.is_root_shape():

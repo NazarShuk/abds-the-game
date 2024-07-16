@@ -22,17 +22,19 @@ func _on_PluginButton_pressed() -> void:
 	convert_csg_to_meshinstance()
 
 func convert_csg_to_meshinstance():
-	for csg_shape : CSGShape3D in csg:
+	for csg_shape : CSGBox3D in csg:
 		
 		
 		var mesh_instance = MeshInstance3D.new()
-		var csg_mesh : Mesh = csg_shape.get_meshes()[1]
+		var csg_mesh : ArrayMesh = csg_shape.get_meshes()[1]
+		csg_mesh.regen_normal_maps()
 		var csg_transform : Transform3D = csg_shape.global_transform
 		var csg_name = csg_shape.name
 		var csg_material = csg_shape.material_override
 		
-		
-		mesh_instance.mesh = csg_mesh
+		var m = BoxMesh.new()
+		m.size = csg_shape.size
+		mesh_instance.mesh = m
 		csg_shape.get_parent().add_child(mesh_instance)
 		mesh_instance.owner = root
 		mesh_instance.name = csg_name
