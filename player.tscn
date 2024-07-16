@@ -604,7 +604,7 @@ render_target_update_mode = 0
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer2/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 cull_mask = 1048573
-far = 100.0
+far = 1000.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
