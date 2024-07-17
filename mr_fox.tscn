@@ -56,12 +56,14 @@ script = ExtResource("1_7a5un")
 
 [node name="Mr Fox2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+layers = 524288
 material_override = SubResource("StandardMaterial3D_p5qd5")
 mesh = SubResource("QuadMesh_dmors")
 skeleton = NodePath("../..")
 
 [node name="Mr Fox3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, -1.82972e-14, 0, 1, 0, 1.82972e-14, 0, 1, 0, 0, 0)
+layers = 524288
 material_override = SubResource("StandardMaterial3D_p5qd5")
 mesh = SubResource("QuadMesh_dmors")
 skeleton = NodePath("../..")

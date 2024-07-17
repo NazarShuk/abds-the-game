@@ -19,7 +19,6 @@ func _physics_process(_delta):
 		
 		var new_velocity = (next_location - current_location).normalized() * SPEED
 		velocity = new_velocity
-		#print(global_position.distance_to(next_location))
 		if global_position.distance_to(next_location) > 1.5:
 			look_at(next_location)
 		rotation_degrees.x = 0

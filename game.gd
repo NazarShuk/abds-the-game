@@ -18,9 +18,6 @@ var lobby_id
 @export var leahy_appeased = false
 
 @export var leahy_speed : float
-
-@export var min_left = 5
-@export var sec_left = 1
  
 @export var books_to_collect = 9
 @export var total_books = 0
@@ -63,7 +60,7 @@ var leahy_diff_penalty = 0
 @export var max_deaths = 9 # DONE
 @export var deaths_per_player = 1 # DONE
 @export var leahy_start_speed = 6.0 # DONE
-@export var leahy_speed_per_notebook = 1 # DONE
+@export var leahy_speed_per_notebook = 0.5 # DONE
 @export var absence_chance = 15 # DONE
 @export var absence_interval = 15 # DONE
 @export var gainy_attack_chance = 20 # DONE
@@ -91,6 +88,9 @@ var pacer_times = []
 @export var school : Node3D
 
 var enable_live_split = true
+
+@export var controls_text : Label
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -285,14 +285,11 @@ func _on_connected_to_server():
 	
 	if !multiplayer.is_server():
 		$CanvasLayer/Lobby/ConfigPanel.hide()
-
-	print("connected to server")
 	
 
 @rpc("any_peer","call_local")
 func receive_steam_usr(id,username):
 	if !multiplayer.is_server(): return
-	print(id,username)
 	if players.has(id):
 		players[id].username = username
 
@@ -302,14 +299,12 @@ func disconenct_btn():
 	get_tree().reload_current_scene()
 
 func _on_disconnect_from_server():
-	print("grey jumpscare")
+	pass
 	
 func go_back():
 	get_tree().change_scene_to_file("res://game.tscn")
 
 func _on_peer_connected(id = 1):
-	print("_on_peer_connected")
-	
 	#$CanvasLayer/MultiPlayer/LoadingRect.show()
 	if !players_spawned:
 		$CanvasLayer/Lobby.show()
@@ -434,7 +429,7 @@ func on_collect_book(id,book_name,personal):
 			
 			total_books = total
 			
-			evil_leahy.SPEED += leahy_speed_per_notebook
+			evil_leahy.SPEED += (leahy_speed_per_notebook * players_in_lobby)
 			
 			if personal:
 				info_text(player_name + " collected a book!")
@@ -450,18 +445,12 @@ func on_collect_book(id,book_name,personal):
 			gainy_target = null
 			if enable_live_split:
 				LiveSplit.start_or_split()
-
-			play_pop()
 		else:
 			info_text(player_name + " slipped")
 			var spawnpoint = $LandMineSpawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
 			spawnpoint.y = 0.143
 			$Landmine.position = spawnpoint
-
-@rpc("any_peer","call_local")
-func play_pop():
-	$pop.play()
 
 
 @rpc("any_peer","call_local")
@@ -597,30 +586,6 @@ func set_player_dead(id,is_dead,do_deaths):
 					end_game.rpc("worst")
 
 
-func _on_seconds_left_timeout():
-	#sec_left -= 1
-	
-	if min_left == 0 and sec_left == 0:
-		$SecondsLeft.stop()
-		end_game.rpc("worst")
-	
-	if sec_left <= 0:
-		min_left -= 1
-		
-		sec_left = 59
-	
-	var min_str = str(min_left)
-	
-	if min_left < 10:
-		min_str = "0" + str(min_left)
-	
-	var sec_str = str(sec_left)
-	
-	if sec_left < 10:
-		sec_str = "0" + str(sec_left)
-	
-	$CanvasLayer/Main/TimerLabel.text = min_str + ":" + sec_str
-
 @rpc("any_peer","call_local")
 func skibidi():
 	if multiplayer.is_server():
@@ -632,7 +597,6 @@ func end_game(ending : String):
 		players_ids.reverse()
 		for id in players_ids:
 			if id != 1:
-				print(" callin set singfleton on", id)
 				set_singleton.rpc_id(id,players[id].deaths,players[id].books_collected,ending)
 		
 		await get_tree().create_timer(1).timeout
@@ -641,8 +605,6 @@ func end_game(ending : String):
 func set_singleton(deaths,books,ending):
 	EndGameSingleton.deaths = deaths
 	EndGameSingleton.books_collected = books
-	
-	print("set singletnon ",multiplayer.get_unique_id()," : ","")
 	
 	peer.close()
 	if ending == "normal":
@@ -895,7 +857,6 @@ func _on_gainy_timer_timeout():
 		
 		
 		if randi_range(0,gainy_attack_chance) == 1:
-			print("wuh oh gainy")
 			gainy_attack = true
 			var pls = get_tree().get_nodes_in_group("player")
 			
@@ -906,8 +867,6 @@ func _on_gainy_timer_timeout():
 			gainy_target = just_some_random_guy
 			
 			info_text("Ms.Gainy is angry at " + just_some_random_guy.steam_name)
-		else:
-			print("no gainy!")
 
 @rpc("any_peer","call_local")
 func stop_gainy(id):
@@ -924,8 +883,6 @@ func _on_item_list_item_clicked(index, _at_position, mouse_button_index):
 	if mouse_button_index != 1: return
 	if friends_lobbies.has(index):
 		join_lobby(friends_lobbies[index])
-	else:
-		print("lobby doesnt exist")
 
 
 func _on_auto_refresh_timeout():

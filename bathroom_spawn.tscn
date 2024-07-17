@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://ksynis5kuf5a"]
+
+[ext_resource type="Texture2D" uid="uid://yjgubaslde8e" path="res://Designer.png" id="1_eodnw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oiniv"]
+albedo_texture = ExtResource("1_eodnw")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uq0gl"]
+
+[node name="Bathroom spawn" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+material_override = SubResource("StandardMaterial3D_oiniv")
+mesh = SubResource("PlaneMesh_uq0gl")

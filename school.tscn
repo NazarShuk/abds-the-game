@@ -2592,63 +2592,75 @@ use_collision = true
 size = Vector3(1.87867, 3.34546, 1.91218)
 material = SubResource("StandardMaterial3D_qchu3")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Navigation"]
+[node name="Toilet" type="CSGBox3D" parent="Navigation" groups=["toilet"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.1029, 1.17439, 10.6367)
+use_collision = true
 size = Vector3(4.92993, 4.45483, 12.7611)
 material = SubResource("StandardMaterial3D_rxkrp")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Navigation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.1029, 1.17439, 1.21865)
+use_collision = true
 size = Vector3(3.46582, 4.45483, 5.39243)
 material = SubResource("StandardMaterial3D_rxkrp")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="Navigation"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.19, 1.17439, 106.451)
-size = Vector3(4.92993, 4.45483, 12.7611)
+[node name="Toilet2" type="CSGBox3D" parent="Navigation" groups=["toilet"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.19, 1.17439, 103.654)
+use_collision = true
+size = Vector3(4.92993, 4.45483, 7.16656)
 material = SubResource("StandardMaterial3D_rxkrp")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="Navigation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.19, 1.17439, 97.0334)
+use_collision = true
 size = Vector3(3.46582, 4.45483, 5.39243)
 material = SubResource("StandardMaterial3D_rxkrp")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="Navigation"]
+[node name="Toilet3" type="CSGBox3D" parent="Navigation" groups=["toilet"]]
 transform = Transform3D(-4.37114e-08, 4.37114e-08, 1, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -68.3742, 1.17439, -92.2708)
+use_collision = true
 size = Vector3(4.92993, 4.45483, 12.7611)
 material = SubResource("StandardMaterial3D_rxkrp")
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="Navigation"]
 transform = Transform3D(-4.37114e-08, 4.37114e-08, 1, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -77.7923, 1.17439, -92.2708)
+use_collision = true
 size = Vector3(3.46582, 4.45483, 5.39243)
 material = SubResource("StandardMaterial3D_rxkrp")
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="Navigation"]
+[node name="Toilet4" type="CSGBox3D" parent="Navigation" groups=["toilet"]]
 transform = Transform3D(1.31134e-07, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, 1.31134e-07, 73.9596, 1.17439, -92.2111)
+use_collision = true
 size = Vector3(4.92993, 4.45483, 12.7611)
 material = SubResource("StandardMaterial3D_rxkrp")
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="Navigation"]
 transform = Transform3D(1.31134e-07, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, 1.31134e-07, 83.3777, 1.17439, -92.2111)
+use_collision = true
 size = Vector3(3.46582, 4.45483, 5.39243)
 material = SubResource("StandardMaterial3D_rxkrp")
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="Navigation"]
+[node name="Toilet5" type="CSGBox3D" parent="Navigation" groups=["toilet"]]
 transform = Transform3D(-2.18557e-07, 4.37114e-08, 1, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -2.18557e-07, 3.66632, 1.17439, -1.58479)
+use_collision = true
 size = Vector3(1.83502, 4.45483, 12.7611)
 material = SubResource("StandardMaterial3D_rxkrp")
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="Navigation"]
 transform = Transform3D(-2.18557e-07, 4.37114e-08, 1, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -2.18557e-07, -5.75172, 1.17439, -1.99906)
+use_collision = true
 size = Vector3(1.5531, 4.45483, 5.39243)
 material = SubResource("StandardMaterial3D_rxkrp")
 
-[node name="CSGBox3D11" type="CSGBox3D" parent="Navigation"]
+[node name="Toilet6" type="CSGBox3D" parent="Navigation" groups=["toilet"]]
 transform = Transform3D(-2.18557e-07, 4.37114e-08, 1, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -2.18557e-07, -51.3694, 1.17439, -1.85094)
+use_collision = true
 size = Vector3(1.83502, 4.45483, 12.7611)
 material = SubResource("StandardMaterial3D_rxkrp")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="Navigation"]
 transform = Transform3D(-2.18557e-07, 4.37114e-08, 1, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -2.18557e-07, -60.7875, 1.17439, -2.26522)
+use_collision = true
 size = Vector3(1.5531, 4.45483, 5.39243)
 material = SubResource("StandardMaterial3D_rxkrp")
 
@@ -6692,630 +6704,787 @@ transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -24.35
 
 [node name="Door2" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.92626, 0, 0, 0, 3.19, 0, 0, 0, 2, 17.7608, 1.51009, -23.6187)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door5" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.92626, 0, 0, 0, 3.19, 0, 0, 0, 2, 18.067, 1.51009, -115.081)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door6" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.92626, 0, 0, 0, 3.19, 0, 0, 0, 2, 24.465, 1.51009, -115.081)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door7" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.92626, 0, 0, 0, 3.19, 0, 0, 0, 2, 30.8011, 1.51009, -115.081)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door8" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.92626, 0, 0, 0, 3.19, 0, 0, 0, 2, 30.8011, 1.51009, -124.115)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door9" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.92626, 0, 0, 0, 3.19, 0, 0, 0, 2, 24.4527, 1.51009, -124.115)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door10" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.02296, 0, 0, 0, 3.19, 0, 0, 0, 2, 18.0635, 1.51009, -124.115)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door11" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(1.87072, 0, 1.41421, 0, 3.19, 0, -1.87072, 0, 1.41421, 6.98755, 1.51009, -107.248)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door12" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(0, 0, 2, 0, 3.19, 0, -2.22806, 0, 0, 1.35885, 1.51009, -110.492)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door13" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(0, 0, 2, 0, 3.19, 0, -3.83443, 0, 0, 14.5521, 1.51009, -121.83)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door14" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, 6.97872, 1.51009, -127.397)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door15" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, 4.24857, 1.51009, -127.397)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door16" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -3.02162, 1.51009, -127.397)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door17" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -17.6253, 1.51009, -127.397)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door18" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -20.473, 1.51009, -127.397)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door19" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -0.141285, 1.51009, -123.622)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door20" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -15.2223, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door21" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -23.5688, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door24" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -46.2622, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door25" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -62.7566, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door26" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -84.0105, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door27" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.39124, -1.39439e-07, -8.74228e-08, 1.04524e-07, 3.19, 8.74228e-08, 1.04524e-07, -1.39439e-07, 2, -102.056, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door28" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.07632, -1.39439e-07, -8.74228e-08, 1.3447e-07, 3.19, 8.74228e-08, 1.3447e-07, -1.39439e-07, 2, -118.993, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door29" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -122.239, 1.51009, -105.598)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door30" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -120.624, 1.51009, -78.9556)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door151" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-1.90678e-07, 1.39439e-07, -2, 9.53389e-08, 3.19, 8.74228e-08, 2.1811, -1.39439e-07, -1.74846e-07, -124.739, 1.51009, -83.3755)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door152" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-1.90678e-07, 1.39439e-07, -2, 9.53389e-08, 3.19, 8.74228e-08, 2.1811, -1.39439e-07, -1.74846e-07, -124.739, 1.51009, -85.5123)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door153" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-1.90678e-07, 1.39439e-07, -2, 9.53389e-08, 3.19, 8.74228e-08, 2.1811, -1.39439e-07, -1.74846e-07, -85.5805, 1.51009, -116.508)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door154" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-1.90678e-07, 1.39439e-07, -2, 9.53389e-08, 3.19, 8.74228e-08, 2.1811, -1.39439e-07, -1.74846e-07, -79.8058, 1.51009, -116.508)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door149" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -126.066, 1.51009, -55.8782)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door150" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -123.886, 1.51009, -55.8782)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door31" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -116.867, 1.51009, -78.9556)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door32" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -88.5513, 1.51009, -78.9556)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door33" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.1811, -1.39439e-07, -8.74228e-08, 9.53389e-08, 3.19, 8.74228e-08, 9.53389e-08, -1.39439e-07, 2, -62.5611, 1.51009, -78.9556)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door38" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.79576, -1.39439e-07, -8.74228e-08, 1.22207e-07, 3.19, 8.74228e-08, 1.22207e-07, -1.39439e-07, 2, -2.27874, 1.51009, -99.0015)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door39" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.48265, -1.39439e-07, -8.74228e-08, 1.0852e-07, 3.19, 8.74228e-08, 1.0852e-07, -1.39439e-07, 2, 0.937103, 1.51009, -99.1208)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door40" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.1704e-07, 1.39439e-07, -2, 1.0852e-07, 3.19, 8.74228e-08, 2.48265, -1.39439e-07, -1.74846e-07, 14.2303, 1.51009, -82.4384)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door41" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 26.7785, 1.51009, -84.7856)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door42" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 43.4148, 1.51009, -84.7856)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door43" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 50.711, 1.51009, -84.7856)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door93" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 61.8035, 1.51009, -79.1483)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door94" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 38.6886, 1.51009, -79.1483)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door95" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 35.3241, 1.51009, -79.1483)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door96" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 66.1807, 1.51009, -79.1483)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door97" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 92.1754, 1.51009, -79.1483)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door98" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 120.37, 1.51009, -79.1483)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door99" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 124.415, 1.51009, -79.1483)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door102" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 127.346, 1.51009, -55.9253)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door103" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.48265, 1.39439e-07, 2.62268e-07, 1.0852e-07, 3.19, 8.74228e-08, -3.2556e-07, 1.39439e-07, -2, 129.821, 1.51009, -55.9253)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door104" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.70428, 1.39439e-07, 2.62268e-07, 1.18208e-07, 3.19, 8.74228e-08, -3.54623e-07, 1.39439e-07, -2, -10.3471, 1.51009, -75.7574)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door105" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.40772, 1.39439e-07, 2.62268e-07, 1.05245e-07, 3.19, 8.74228e-08, -3.15734e-07, 1.39439e-07, -2, -23.3857, 1.51009, -75.7574)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door106" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.60802e-07, -1.39439e-07, 2, 1.15201e-07, 3.19, 8.74228e-08, -2.63548, 1.39439e-07, 3.49691e-07, -44.6301, 1.51009, -24.8196)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door107" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.84251e-07, -1.39439e-07, 2, 9.60627e-08, 3.19, 8.74228e-08, -2.19766, 1.39439e-07, 3.49691e-07, -44.6301, 1.51009, -44.2228)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door108" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(5.01482e-07, -1.39439e-07, 2, 1.2537e-07, 3.19, 8.74228e-08, -2.86814, 1.39439e-07, 3.49691e-07, -44.6301, 1.51009, -53.2652)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door109" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.10076e-07, -1.39439e-07, 2, 7.7519e-08, 3.19, 8.74228e-08, -1.77343, 1.39439e-07, 3.49691e-07, -44.6301, 1.51009, -70.4291)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door110" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.10076e-07, -1.39439e-07, 2, 7.7519e-08, 3.19, 8.74228e-08, -1.77343, 1.39439e-07, 3.49691e-07, -60.3908, 1.51009, -59.045)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door111" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.74675e-07, -1.39439e-07, 2, 9.36687e-08, 3.19, 8.74228e-08, -2.14289, 1.39439e-07, 3.49691e-07, -68.4087, 1.51009, -34.3082)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door112" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.74675e-07, -1.39439e-07, 2, 9.36687e-08, 3.19, 8.74228e-08, -2.14289, 1.39439e-07, 3.49691e-07, -68.4087, 1.51009, -19.9463)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door113" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.74675e-07, -1.39439e-07, 2, 9.36687e-08, 3.19, 8.74228e-08, -2.14289, 1.39439e-07, 3.49691e-07, -68.4087, 1.51009, -17.8079)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door100" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.3408e-07, -1.39439e-07, 2, 1.0852e-07, 3.19, 8.74228e-08, -2.48265, 1.39439e-07, 3.49691e-07, 128.602, 1.51009, -83.3104)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door101" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.3408e-07, -1.39439e-07, 2, 1.0852e-07, 3.19, 8.74228e-08, -2.48265, 1.39439e-07, 3.49691e-07, 128.602, 1.51009, -85.5984)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door44" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.65364, 1.39439e-07, 2.62268e-07, 1.15994e-07, 3.19, 8.74228e-08, -3.47982e-07, 1.39439e-07, -2, 49.8772, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door45" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.65364, 1.39439e-07, 2.62268e-07, 1.15994e-07, 3.19, 8.74228e-08, -3.47982e-07, 1.39439e-07, -2, 46.3179, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door46" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.65364, 1.39439e-07, 2.62268e-07, 1.15994e-07, 3.19, 8.74228e-08, -3.47982e-07, 1.39439e-07, -2, 43.6197, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door47" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.65364, 1.39439e-07, 2.62268e-07, 1.15994e-07, 3.19, 8.74228e-08, -3.47982e-07, 1.39439e-07, -2, 66.44, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door48" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.65364, 1.39439e-07, 2.62268e-07, 1.15994e-07, 3.19, 8.74228e-08, -3.47982e-07, 1.39439e-07, -2, 87.9677, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door52" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.63976e-07, -1.39439e-07, 2, 1.15994e-07, 3.19, 8.74227e-08, -2.65364, 1.39439e-07, 3.49691e-07, 83.4061, 1.51009, -116.791)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door53" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.63976e-07, -1.39439e-07, 2, 1.15994e-07, 3.19, 8.74227e-08, -2.65364, 1.39439e-07, 3.49691e-07, 89.1446, 1.51009, -116.791)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door54" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.30638, 1.39439e-07, 2.62268e-07, 1.44526e-07, 3.19, 8.74227e-08, -4.33579e-07, 1.39439e-07, -2, 45.7269, 1.51009, -130.238)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door55" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.30638, 1.39439e-07, 2.62268e-07, 1.44526e-07, 3.19, 8.74227e-08, -4.33579e-07, 1.39439e-07, -2, 42.4599, 1.51009, -130.238)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door56" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.30638, 1.39439e-07, 2.62268e-07, 1.44526e-07, 3.19, 8.74227e-08, -4.33579e-07, 1.39439e-07, -2, 54.9708, 1.51009, -99.8281)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door57" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 21.3776, 1.51009, -52.7012)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door58" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 21.3776, 1.51009, -50.3498)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door59" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 21.3776, 1.51009, -27.6208)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door60" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 21.3776, 1.51009, -25.268)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door61" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 21.3776, 1.51009, -20.0441)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door62" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 21.3776, 1.51009, -17.4923)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door63" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 110.41, 1.51009, -13.5565)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door64" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 110.41, 1.51009, -11.2037)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door65" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 117.014, 1.51009, -13.5152)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door66" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 117.014, 1.51009, -11.3275)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door67" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 117.014, 1.51009, -6.86948)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door68" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 117.014, 1.51009, -9.24296)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door69" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 110.41, 1.51009, -9.24296)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door70" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, 110.41, 1.51009, -6.93139)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door85" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -93.1583, 1.51009, -13.9818)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door86" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -93.1583, 1.51009, -11.629)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door87" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -85.0931, 1.51009, -13.5152)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door88" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -85.0931, 1.51009, -11.3275)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door89" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -85.0931, 1.51009, -6.86948)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door90" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -85.0931, 1.51009, -9.24296)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door91" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -93.1583, 1.51009, -9.66826)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door92" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.19578e-07, -1.39439e-07, 2, 1.04894e-07, 3.19, 8.74227e-08, -2.3997, 1.39439e-07, 3.49691e-07, -93.1583, 1.51009, -7.3567)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door128" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -127.878, 1.51009, 84.9323)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door129" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -127.878, 1.51009, 87.4003)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door130" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -127.878, 1.51009, 90.2539)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door131" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -127.878, 1.51009, 92.7218)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door132" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -120.743, 1.51009, 90.2539)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door133" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -120.743, 1.51009, 92.7218)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door134" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -120.743, 1.51009, 84.9087)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door135" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(4.68675e-07, -1.39439e-07, 2, 1.17168e-07, 3.19, 8.74227e-08, -2.6805, 1.39439e-07, 3.49691e-07, -120.743, 1.51009, 87.3767)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door71" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 67.1337, 1.51009, -2.78987)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door72" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 69.5933, 1.51009, -2.78987)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door73" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 67.1337, 1.51009, 3.93409)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door114" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.86466, -1.39439e-07, -4.37114e-07, 1.25218e-07, 3.19, 8.74227e-08, 6.26092e-07, -1.39439e-07, 2, 64.2261, 1.51009, 4.09867)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door74" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 69.5933, 1.51009, 3.93409)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door75" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 34.3318, 1.51009, 3.93409)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door76" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 36.7913, 1.51009, 3.93409)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door77" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 34.3318, 1.51009, -2.83299)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door78" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, 36.7913, 1.51009, -2.83299)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door79" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, -13.0484, 1.51009, 0.050526)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door80" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, -10.5889, 1.51009, 0.050526)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door81" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, -42.843, 1.51009, 0.050526)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door82" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(2.3997, -1.39439e-07, -4.37114e-07, 1.04894e-07, 3.19, 8.74227e-08, 5.24472e-07, -1.39439e-07, 2, -40.3834, 1.51009, 0.050526)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door83" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.1496, -1.39439e-07, -4.37114e-07, 1.37673e-07, 3.19, 8.74227e-08, 6.88366e-07, -1.39439e-07, 2, -72.4787, 1.51009, -1.95075)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door116" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-5.59782e-07, 1.39439e-07, -2, 9.32968e-08, 3.19, 8.74227e-08, 2.13439, -1.39439e-07, -5.24537e-07, -94.2955, 1.51009, 39.7356)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door117" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-5.59782e-07, 1.39439e-07, -2, 9.32968e-08, 3.19, 8.74227e-08, 2.13439, -1.39439e-07, -5.24537e-07, -94.2955, 1.51009, 41.8991)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door118" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-5.59782e-07, 1.39439e-07, -2, 9.32968e-08, 3.19, 8.74227e-08, 2.13439, -1.39439e-07, -5.24537e-07, -134.654, 1.51009, 51.9399)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door119" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-5.59782e-07, 1.39439e-07, -2, 9.32968e-08, 3.19, 8.74227e-08, 2.13439, -1.39439e-07, -5.24537e-07, -134.654, 1.51009, 54.1034)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door120" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-5.59782e-07, 1.39439e-07, -2, 9.32968e-08, 3.19, 8.74227e-08, 2.13439, -1.39439e-07, -5.24537e-07, -134.654, 1.51009, 10.6437)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door121" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-5.59782e-07, 1.39439e-07, -2, 9.32968e-08, 3.19, 8.74227e-08, 2.13439, -1.39439e-07, -5.24537e-07, -134.654, 1.51009, 12.8072)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door122" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.13439, 1.39439e-07, 6.1196e-07, 9.32968e-08, 3.19, 8.74227e-08, -6.53079e-07, 1.39439e-07, -2, -95.9893, 1.51009, 3.14972)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door123" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.13439, 1.39439e-07, 6.1196e-07, 9.32968e-08, 3.19, 8.74227e-08, -6.53079e-07, 1.39439e-07, -2, -98.1528, 1.51009, 3.14972)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door124" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -105.325, 1.51009, 82.6155)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door125" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -107.582, 1.51009, 82.6155)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door126" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -116.788, 1.51009, 97.4175)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door136" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -107.148, 1.51009, 97.9407)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door155" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, -106.418, 1.51009, 124.313)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door156" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 11.3534, 1.51009, 104.266)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door157" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 14.4993, 1.51009, 104.266)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door158" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 19.4904, 1.51009, 104.266)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door159" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 16.3763, 1.51009, 104.266)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door160" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 11.3534, 1.51009, 110.9)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door161" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 14.4993, 1.51009, 110.9)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door162" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 19.4904, 1.51009, 110.9)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door163" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-3.14887, 1.39439e-07, 6.1196e-07, 1.37641e-07, 3.19, 8.74227e-08, -9.63489e-07, 1.39439e-07, -2, 16.3763, 1.51009, 110.9)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door137" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -102.103, 1.51009, 90.0565)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door138" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -93.6214, 1.51009, 90.0565)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door139" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -83.0843, 1.51009, 90.0565)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door140" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -82.0754, 1.51009, 82.9196)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door141" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.68848, 1.39439e-07, 6.1196e-07, 1.17517e-07, 3.19, 8.74227e-08, -8.22619e-07, 1.39439e-07, -2, -43.0414, 1.51009, 79.0152)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door142" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.68848, 1.39439e-07, 6.1196e-07, 1.17517e-07, 3.19, 8.74227e-08, -8.22619e-07, 1.39439e-07, -2, -40.3363, 1.51009, 79.0152)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door143" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.68848, 1.39439e-07, 6.1196e-07, 1.17517e-07, 3.19, 8.74227e-08, -8.22619e-07, 1.39439e-07, -2, -13.139, 1.51009, 78.9953)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door145" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.50198, 1.39439e-07, 6.1196e-07, 1.09365e-07, 3.19, 8.74227e-08, -7.65553e-07, 1.39439e-07, -2, -8.80461, 1.51009, 90.0556)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door146" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.50198, 1.39439e-07, 6.1196e-07, 1.09365e-07, 3.19, 8.74227e-08, -7.65553e-07, 1.39439e-07, -2, -5.42067, 1.51009, 90.0938)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door164" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(8.74918e-07, -1.39439e-07, 2, 1.09365e-07, 3.19, 8.74227e-08, -2.50198, 1.39439e-07, 6.99382e-07, 6.37424, 1.51009, 85.0832)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door165" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(8.74918e-07, -1.39439e-07, 2, 1.09365e-07, 3.19, 8.74227e-08, -2.50198, 1.39439e-07, 6.99382e-07, 6.37424, 1.51009, 87.6982)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door147" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.50198, 1.39439e-07, 6.1196e-07, 1.09365e-07, 3.19, 8.74227e-08, -7.65553e-07, 1.39439e-07, -2, -38.6164, 1.51009, 90.0938)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door148" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.81881, 1.39439e-07, 6.1196e-07, 1.23214e-07, 3.19, 8.74227e-08, -8.62499e-07, 1.39439e-07, -2, -55.0872, 1.51009, 90.0938)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door144" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.68848, 1.39439e-07, 6.1196e-07, 1.17517e-07, 3.19, 8.74227e-08, -8.22619e-07, 1.39439e-07, -2, -10.4339, 1.51009, 78.9953)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door127" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.22707, 1.39439e-07, 6.1196e-07, 9.73482e-08, 3.19, 8.74227e-08, -6.81438e-07, 1.39439e-07, -2, -119.046, 1.51009, 97.4175)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door84" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.1496, -1.39439e-07, -4.37114e-07, 1.37673e-07, 3.19, 8.74227e-08, 6.88366e-07, -1.39439e-07, 2, -69.2505, 1.51009, -1.95075)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door49" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.65364, 1.39439e-07, 2.62268e-07, 1.15994e-07, 3.19, 8.74228e-08, -3.47982e-07, 1.39439e-07, -2, 105.746, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door50" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.65364, 1.39439e-07, 2.62268e-07, 1.15994e-07, 3.19, 8.74228e-08, -3.47982e-07, 1.39439e-07, -2, 121.816, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door51" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.98014, 1.39439e-07, 2.62268e-07, 1.30266e-07, 3.19, 8.74228e-08, -3.90799e-07, 1.39439e-07, -2, 126.47, 1.51009, -105.62)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door3" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-2.30616e-07, 0, -2, 0, 3.19, 0, 5.27589, 0, -8.74228e-08, 14.2567, 1.51009, -58.4624)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Door4" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(-1.91832e-07, 0, -2, 0, 3.19, 0, 4.38861, 0, -8.74228e-08, -37.2237, 1.51009, -65.4897)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Chair" parent="." instance=ExtResource("10_xcaec")]
@@ -9917,6 +10086,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 62.218, 0.581087, -118.631)
 
 [node name="Door37" parent="." instance=ExtResource("5_j3ox0")]
 transform = Transform3D(3.78189, -1.39439e-07, -8.74228e-08, 1.65312e-07, 3.19, 8.74228e-08, 1.65312e-07, -1.39439e-07, 2, -34.7364, 1.51009, -99.111)
+layers = 524288
 skeleton = NodePath("")
 
 [node name="Shelf" type="Node3D" parent="."]

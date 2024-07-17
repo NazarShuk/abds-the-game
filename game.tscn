@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=81 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="25_pddg1"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
+[ext_resource type="PackedScene" uid="uid://ksynis5kuf5a" path="res://bathroom_spawn.tscn" id="29_kjme3"]
 [ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
 [ext_resource type="Texture2D" uid="uid://ce1wqx8rpkmv0" path="res://McCollum_crop.jpg" id="33_o0kd1"]
 [ext_resource type="PackedScene" uid="uid://ccge33gvh1ojc" path="res://Coffe Machine.tscn" id="34_m1kl1"]
@@ -87,93 +88,87 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath("Mr Fox:position")
 properties/9/spawn = true
 properties/9/replication_mode = 1
-properties/10/path = NodePath(".:min_left")
+properties/10/path = NodePath(".:absent")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath(".:sec_left")
+properties/11/path = NodePath(".:is_pacer")
 properties/11/spawn = true
 properties/11/replication_mode = 1
-properties/12/path = NodePath(".:absent")
+properties/12/path = NodePath(".:pacer_deadly")
 properties/12/spawn = true
 properties/12/replication_mode = 1
-properties/13/path = NodePath(".:is_pacer")
+properties/13/path = NodePath("FakeFox:position")
 properties/13/spawn = true
 properties/13/replication_mode = 1
-properties/14/path = NodePath(".:pacer_deadly")
+properties/14/path = NodePath(".:azzu_angered")
 properties/14/spawn = true
 properties/14/replication_mode = 1
-properties/15/path = NodePath("FakeFox:position")
+properties/15/path = NodePath(".:do_silent_lunch")
 properties/15/spawn = true
 properties/15/replication_mode = 1
-properties/16/path = NodePath(".:azzu_angered")
+properties/16/path = NodePath(".:do_vertical_camera")
 properties/16/spawn = true
 properties/16/replication_mode = 1
-properties/17/path = NodePath(".:do_silent_lunch")
+properties/17/path = NodePath(".:death_timeout")
 properties/17/spawn = true
 properties/17/replication_mode = 1
-properties/18/path = NodePath(".:do_vertical_camera")
+properties/18/path = NodePath(".:silent_lunch_duration")
 properties/18/spawn = true
 properties/18/replication_mode = 1
-properties/19/path = NodePath(".:death_timeout")
+properties/19/path = NodePath(".:landmine_death")
 properties/19/spawn = true
 properties/19/replication_mode = 1
-properties/20/path = NodePath(".:silent_lunch_duration")
+properties/20/path = NodePath("Mr_Azzu:position")
 properties/20/spawn = true
 properties/20/replication_mode = 1
-properties/21/path = NodePath(".:landmine_death")
+properties/21/path = NodePath("Mr_Azzu:rotation")
 properties/21/spawn = true
 properties/21/replication_mode = 1
-properties/22/path = NodePath("Mr_Azzu:position")
+properties/22/path = NodePath("Ms_Gainy:position")
 properties/22/spawn = true
 properties/22/replication_mode = 1
-properties/23/path = NodePath("Mr_Azzu:rotation")
+properties/23/path = NodePath("Ms_Gainy:rotation")
 properties/23/spawn = true
 properties/23/replication_mode = 1
-properties/24/path = NodePath("Ms_Gainy:position")
+properties/24/path = NodePath(".:shop_timeout")
 properties/24/spawn = true
 properties/24/replication_mode = 1
-properties/25/path = NodePath("Ms_Gainy:rotation")
+properties/25/path = NodePath(".:players_in_lobby")
 properties/25/spawn = true
 properties/25/replication_mode = 1
-properties/26/path = NodePath(".:shop_timeout")
+properties/26/path = NodePath(".:pre_started_game")
 properties/26/spawn = true
 properties/26/replication_mode = 1
-properties/27/path = NodePath(".:players_in_lobby")
+properties/27/path = NodePath(".:is_in_lobby")
 properties/27/spawn = true
 properties/27/replication_mode = 1
-properties/28/path = NodePath(".:pre_started_game")
+properties/28/path = NodePath(".:deaths_per_player")
 properties/28/spawn = true
 properties/28/replication_mode = 1
-properties/29/path = NodePath(".:is_in_lobby")
+properties/29/path = NodePath(".:is_powered_off")
 properties/29/spawn = true
 properties/29/replication_mode = 1
-properties/30/path = NodePath(".:deaths_per_player")
+properties/30/path = NodePath(".:breaker_timeout")
 properties/30/spawn = true
 properties/30/replication_mode = 1
-properties/31/path = NodePath(".:is_powered_off")
+properties/31/path = NodePath(".:enable_breaker")
 properties/31/spawn = true
 properties/31/replication_mode = 1
-properties/32/path = NodePath(".:breaker_timeout")
+properties/32/path = NodePath(".:enable_shop")
 properties/32/spawn = true
 properties/32/replication_mode = 1
-properties/33/path = NodePath(".:enable_breaker")
+properties/33/path = NodePath(".:enable_coffee")
 properties/33/spawn = true
 properties/33/replication_mode = 1
-properties/34/path = NodePath(".:enable_shop")
+properties/34/path = NodePath(".:coffee_timeout")
 properties/34/spawn = true
 properties/34/replication_mode = 1
-properties/35/path = NodePath(".:enable_coffee")
+properties/35/path = NodePath("Music2:pitch_scale")
 properties/35/spawn = true
 properties/35/replication_mode = 1
-properties/36/path = NodePath(".:coffee_timeout")
+properties/36/path = NodePath(".:leahy_appeased")
 properties/36/spawn = true
 properties/36/replication_mode = 1
-properties/37/path = NodePath("Music2:pitch_scale")
-properties/37/spawn = true
-properties/37/replication_mode = 1
-properties/38/path = NodePath(".:leahy_appeased")
-properties/38/spawn = true
-properties/38/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dw4kk"]
 properties/0/path = NodePath("SomeoneDid:text")
@@ -435,10 +430,11 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_ekwb2"]
 size = Vector3(2.38672, 3.2959, 1)
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("shop", "school")]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("shop", "school", "controls_text")]
 script = ExtResource("1_y4eyb")
 shop = NodePath("shop")
 school = NodePath("School")
+controls_text = NodePath("CanvasLayer/Main/ControlsText")
 
 [node name="Lighting and stuff" type="Node" parent="."]
 script = ExtResource("2_uakk8")
@@ -465,8 +461,6 @@ spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_3nj22")
-
-[node name="SecondsLeft" type="Timer" parent="."]
 
 [node name="Appeasment" type="Timer" parent="."]
 wait_time = 5.0
@@ -538,36 +532,46 @@ theme_override_font_sizes/font_size = 32
 text = "find a ela book!"
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main"]
+[node name="ControlsText" type="Label" parent="CanvasLayer/Main"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 440.0
-offset_right = 813.0
-offset_bottom = 183.0
+offset_left = -574.0
+offset_bottom = 640.0
 grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 32
+text = "find a ela book!"
+horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main"]
+layout_mode = 1
+offset_top = 60.0
+offset_right = 276.0
+offset_bottom = 201.0
 texture = SubResource("CompressedTexture2D_q58lb")
 script = ExtResource("4_ba12c")
 
 [node name="Label" type="Label" parent="CanvasLayer/Main/TextureRect"]
 layout_mode = 0
-offset_left = 231.0
-offset_top = 21.0
-offset_right = 281.0
-offset_bottom = 48.0
+offset_left = 172.0
+offset_top = 14.0
+offset_right = 207.0
+offset_bottom = 41.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 19
+theme_override_font_sizes/font_size = 14
 text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main/TextureRect"]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 19.0
-offset_right = 154.0
-offset_bottom = 169.0
+offset_left = 1.0
+offset_top = 15.0
+offset_right = 114.0
+offset_bottom = 127.0
 texture = SubResource("ViewportTexture_lpe5m")
 expand_mode = 1
 
@@ -586,24 +590,8 @@ theme = SubResource("Theme_ciuim")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 50
-text = "Ms.Leahy has been angered..."
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="TimerLabel" type="Label" parent="CanvasLayer/Main"]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -53.0
-offset_right = 53.0
-offset_bottom = 48.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-text = "05:00"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Main"]
 replication_config = SubResource("SceneReplicationConfig_rb4lo")
@@ -1505,6 +1493,8 @@ autostart = true
 [node name="FakeFox" type="MeshInstance3D" parent="." groups=["localface"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 51.7988, 1.45983, -190.962)
 visible = false
+layers = 524288
+ignore_occlusion_culling = true
 mesh = SubResource("SphereMesh_2pqsq")
 skeleton = NodePath("PacerTest/PacerStartTimer")
 surface_material_override/0 = SubResource("StandardMaterial3D_both1")
@@ -1923,6 +1913,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.275, 0.846554, -123.1)
 [node name="LeahyRespawnPos31" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.761, 0.846554, -178.274)
 
+[node name="Bathroom spawns" type="Node" parent="."]
+
+[node name="Bathroom spawn" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.2967, 0, -41.1336)
+
+[node name="Bathroom spawn5" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8249, 0, -138.525)
+
+[node name="Bathroom spawn6" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2333, 0, -138.691)
+
+[node name="Bathroom spawn7" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.0083, 0, -144.785)
+
+[node name="Bathroom spawn8" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.2159, 0, -145.322)
+
+[node name="Bathroom spawn9" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.2167, 0, -240.212)
+
+[node name="Bathroom spawn10" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 103.81, 0, -239.632)
+
+[node name="Bathroom spawn2" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.4932, 0, -48.7337)
+
+[node name="Bathroom spawn3" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -40.3144)
+
+[node name="Bathroom spawn4" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -49.0816)
+
 [node name="School" parent="." instance=ExtResource("17_3oefh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 24.5635, 0, -137.18)
 
@@ -2022,9 +2044,9 @@ shape = SubResource("BoxShape3D_ekwb2")
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
 occluder = ExtResource("40_ba0mq")
+bake_mask = 4294443007
 
 [connection signal="timeout" from="GameRecorder/Timer" to="GameRecorder" method="_on_timer_timeout"]
-[connection signal="timeout" from="SecondsLeft" to="." method="_on_seconds_left_timeout"]
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]

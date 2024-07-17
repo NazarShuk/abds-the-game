@@ -30,7 +30,6 @@ func _ready():
 		mic_list.add_item(mic)
 	
 	if AudioVolume.input_device:
-		print("selected")
 		mic_list.select(mics.find(AudioVolume.input_device),true)
 	
 	
@@ -50,7 +49,6 @@ func _process(delta):
 			var value = (stereoData[i].x + stereoData[i].y) / 2
 			maxAmplitude = max(value,maxAmplitude)
 			data[i] = value
-		#print(maxAmplitude)
 		mic_vol.value = lerp(mic_vol.value,maxAmplitude,0.25)
 		
 		var bg : StyleBoxFlat = StyleBoxFlat.new()

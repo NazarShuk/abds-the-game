@@ -23,4 +23,4 @@ func resume():
 
 func send_msg(message : String):
 	var output = []
-	var exit_code = OS.execute("cmd.exe", ["/C", "echo " + message + " > " + pipe_path], output, true)
+	OS.execute("cmd.exe", ["/C", "echo " + message + " > " + pipe_path], output, true)

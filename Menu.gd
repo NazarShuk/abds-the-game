@@ -31,7 +31,6 @@ func _on_disconnect_btn_pressed():
 	$Main/DisconnectBtn.disabled = true
 	get_tree().paused = false
 	if !multiplayer.is_server():
-		print(name,"not server")
 		multiplayer.multiplayer_peer.close()
 		get_tree().reload_current_scene()
 	else:

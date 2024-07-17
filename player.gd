@@ -17,7 +17,8 @@ var can_run = true
 var is_moving = false
 var can_move = true
 
-@onready var progress_bar: ProgressBar = $CanvasLayer/Control/ProgressBar
+@onready var progress_bar: ProgressBar = $"CanvasLayer/Control/Progress bar handler/ProgressBar"
+@onready var progress_bar_handler = $"CanvasLayer/Control/Progress bar handler"
 
 var is_dead = false
 
@@ -48,6 +49,8 @@ var can_get_item = true
 var leahy_dst = 0
 
 
+
+
 # Voice chat (maybe)
 @onready var input = $Voice/input
 var effect : AudioEffectCapture
@@ -59,6 +62,8 @@ var receive_buffer := PackedFloat32Array()
 
 var credits = 0
 var can_use_shop = true
+
+@onready var controls_text = get_parent().controls_text
 
 func setup_voice(_id):
 	if is_multiplayer_authority():
@@ -172,11 +177,12 @@ var can_use_breaker = true
 var can_use_coffee = true
 
 var hand_target_y = -0.5
+var can_toilet_tp = true
 
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
-		
+		control_text_setters()
 		
 		$CanvasLayer/Control/Minimap.visible = is_minimap_open
 		if is_minimap_open:
@@ -293,6 +299,7 @@ func _physics_process(delta):
 								get_parent().use_vending_machine.rpc(name.to_int())
 							
 						if ray.get_collider() and get_parent().game_started:
+							#print(ray.get_collider().name)
 							if ray.get_collider().is_in_group("shop"):
 								if !get_parent().enable_shop: return
 								open_shop()
@@ -313,9 +320,26 @@ func _physics_process(delta):
 								get_parent().toggle_power.rpc()
 								can_use_breaker = false
 								$BreakerTimeout.start(get_parent().breaker_timeout)
-							
-							print(ray.get_collider().name)
+							if ray.get_collider().is_in_group("toilet"):
+								if !can_toilet_tp : return
+								var spawns = get_parent().get_node("Bathroom spawns").get_children()
 								
+								var farthest_dst = -1
+								var farthest_obj
+								
+								for spawn in spawns:
+									if global_position.distance_to(spawn.global_position) > farthest_dst:
+										farthest_dst = global_position.distance_to(spawn.global_position)
+										farthest_obj = spawn
+								can_toilet_tp = false
+								$ToiletTimeout.start()
+								$"CanvasLayer/Control/cool transition".show()
+								$"CanvasLayer/Control/cool transition".play()
+								await get_tree().create_timer(0.7).timeout
+								global_position = farthest_obj.global_position
+								await  get_tree().create_timer(0.7).timeout
+								$"CanvasLayer/Control/cool transition".hide()
+								play_sound.rpc("res://flush.mp3",5)
 					
 					if Input.is_action_just_pressed("give"):
 						if get_cur_item() == 3:
@@ -330,7 +354,6 @@ func _physics_process(delta):
 							elif distance < 15:
 								pick_item(-1)
 								get_parent().appease_leahy.rpc(steam_name,5)
-								
 						elif get_cur_item() == 5:
 							var evil_leahy = get_tree().get_first_node_in_group("enemies")
 							var distance = global_position.distance_to(evil_leahy.global_position)
@@ -381,13 +404,18 @@ func _physics_process(delta):
 							redbull_timeout()
 							play_sound.rpc("res://redbull.mp3")
 						
-
-
-
+		
+		
+		
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
 		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
-
-
+		
+		if can_run:
+			progress_bar.modulate = Color.WHITE
+		else:
+			progress_bar.modulate = Color.RED
+		
+		
 		if get_tree():
 			for obj: Node3D in get_tree().get_nodes_in_group("localface"):
 				obj.look_at(global_position)
@@ -442,6 +470,10 @@ func coffee_timeout():
 func redbull_timeout():
 	await get_tree().create_timer(3).timeout
 	boosts["redbull"] -= 2
+
+func toilet_tp_timeout():
+	await get_tree().create_timer(60).timeout
+	can_toilet_tp = true
 
 var is_in_leahy = false
 
@@ -746,7 +778,6 @@ func generate_show_question():
 	
 	$"CanvasLayer/Control/Shop/ColorRect/question panel/Label2".text = str(num1) + " + " + str(num2)
 	item_list.clear()
-	print("right choice: ",right_choice)
 	for i in range(0,4):
 		if i != right_choice:
 			item_list.add_item(str(ans + randi_range(-5,5)))
@@ -755,7 +786,6 @@ func generate_show_question():
 			right_ans_index = item_list.add_item(str(ans))
 
 func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
-	print(index,right_ans_index)
 
 	if index == right_ans_index:
 		credits += 5
@@ -815,11 +845,12 @@ func _on_coffee_timeout_timeout():
 	can_use_coffee = true
 
 @rpc("any_peer","call_local")
-func play_sound(stream_path : String,bus : String = "Dialogs", max_distance : float = 20):
+func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20):
 	var a = AudioStreamPlayer3D.new()
 	a.stream = load(stream_path)
 	a.bus = bus
 	a.max_distance = max_distance
+	a.volume_db = volume_db
 	add_child(a)
 	a.global_position = global_position
 	a.play()
@@ -868,3 +899,56 @@ func _on_texture_rect_gui_input(event):
 		# Update the last mouse position
 		last_mouse_position = event.position
 
+
+
+func _on_stamina_flash_timeout():
+	if !can_run:
+		progress_bar_handler.visible = !progress_bar_handler.visible
+	else:
+		progress_bar_handler.visible = true
+
+func control_text_setters():
+	var looking_at = ray.get_collider()
+	
+	var final_text = ""
+	if looking_at:
+		if looking_at.is_in_group("vending_machine"):
+			final_text += "Vending Machine\nE - grab item"
+		if looking_at.name == "CoffeMachine":
+			final_text += "Coffee Machine\n" + format_time("Coffee timeout","E - drink")
+		if looking_at.is_in_group("shop"):
+			final_text += "The Shop\n" + format_time("ShopTimeout","E - open the shop")
+		if looking_at.name == "Breaker":
+			final_text += "The Breaker\n" + format_time("BreakerTimeout","E - turn off power")
+		if looking_at.is_in_group("toilet"):
+			final_text += "Toilet\n" + format_time("ToiletTimeout","E - flush down")
+	
+	var cur_item = get_cur_item()
+	if final_text != "":
+		final_text += "\n"
+	
+	if cur_item == 0:
+		final_text += "Fruit Snacks\nRight Click - Eat"
+	elif cur_item == 1:
+		final_text += "Clorox Wipes\nRight Click - Launch"
+	elif cur_item == 2:
+		final_text += "Square Pizza\nRight Click - Eat"
+	elif cur_item == 3 or cur_item == 5:
+		final_text += "Mtn Dew\nLeft Click - Give to a teacher"
+	elif cur_item == 4:
+		final_text += "Duck\nRight Click - Squeak"
+	elif cur_item == 6:
+		final_text += "Redbull\nLeft Click - Give to Ms.Leahy\nRight Click - Drink"
+	
+	controls_text.text = final_text
+
+func format_time(timer_path,succes_string):
+	var time_left = floor(get_node(timer_path).time_left)
+	if time_left > 0:
+		return str(time_left) + "s until available"
+	else:
+		return succes_string
+
+
+func _on_toilet_timeout_timeout():
+	can_toilet_tp = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=96 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -39,6 +39,8 @@
 [ext_resource type="Script" path="res://Menu.gd" id="33_bayr0"]
 [ext_resource type="Texture2D" uid="uid://bg7vk8gl360px" path="res://toggle_on.png" id="34_h7tin"]
 [ext_resource type="Texture2D" uid="uid://b731figcorc53" path="res://toggle_off.png" id="35_1030p"]
+[ext_resource type="Shader" uid="uid://cc4qj1rais5l1" path="res://player.tres" id="36_3gf6v"]
+[ext_resource type="VideoStream" path="res://cool transition.ogv" id="36_ngsvh"]
 [ext_resource type="Texture2D" uid="uid://d1o76twd8v5ej" path="res://red_bull.png" id="40_y5awl"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
@@ -184,6 +186,11 @@ _data = {
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oicg1"]
 bg_color = Color(0.2484, 0.2484, 0.2484, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jeua5"]
+shader = ExtResource("36_3gf6v")
+shader_parameter/ColorParameter = Color(0, 1, 0, 1)
+shader_parameter/fuzzines = 0.35
 
 [sub_resource type="Environment" id="Environment_i6cs0"]
 
@@ -581,6 +588,10 @@ one_shot = true
 wait_time = 20.0
 one_shot = true
 
+[node name="ToiletTimeout" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 process_mode = 4
 layer = 5
@@ -653,7 +664,15 @@ libraries = {
 }
 autoplay = "blink"
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control"]
+[node name="Progress bar handler" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control/Progress bar handler"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -687,6 +706,19 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 51
 text = "You got silent lunch
 you can leave in 15"
+
+[node name="cool transition" type="VideoStreamPlayer" parent="CanvasLayer/Control"]
+visible = false
+material = SubResource("ShaderMaterial_jeua5")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("36_ngsvh")
+expand = true
+bus = &"Dialogs"
 
 [node name="Shop" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
@@ -1397,10 +1429,9 @@ text = "Enable LiveSplit:"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="stamina flash" type="Timer" parent="CanvasLayer/Control"]
+wait_time = 0.25
+autostart = true
 
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(0.262507, 0.127587, -0.40597, 0.124941, 0.432868, 0.21683, 0.406792, -0.215283, 0.19538, 0.513, 0.3, -0.78)
@@ -1512,7 +1543,7 @@ size = Vector2i(800, 600)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
 cull_mask = 1048569
 projection = 1
-size = 50.0
+size = 100.0
 far = 100.0
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
@@ -1526,6 +1557,7 @@ far = 100.0
 [connection signal="timeout" from="ShopTimeout" to="." method="_on_shop_timeout_timeout"]
 [connection signal="timeout" from="BreakerTimeout" to="." method="_on_breaker_timeout_timeout"]
 [connection signal="timeout" from="Coffee timeout" to="." method="_on_coffee_timeout_timeout"]
+[connection signal="timeout" from="ToiletTimeout" to="." method="_on_toilet_timeout_timeout"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/rewards btn" to="." method="_on_rewards_btn_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/credits btn" to="." method="_on_credits_btn_pressed"]
 [connection signal="item_clicked" from="CanvasLayer/Control/Shop/ColorRect/question panel/ItemList" to="." method="_on_item_list_item_clicked"]
@@ -1537,3 +1569,4 @@ far = 100.0
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control/Menu/Main/Enable live split" to="CanvasLayer/Control/Menu" method="_on_enable_live_split_toggled"]
+[connection signal="timeout" from="CanvasLayer/Control/stamina flash" to="." method="_on_stamina_flash_timeout"]

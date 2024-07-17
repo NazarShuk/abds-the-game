@@ -34,7 +34,6 @@ func _on_line_edit_text_changed(new_text):
 		$LineEdit.text = str(min_val)
 		val = min_val
 	$LineEdit.caret_column = caret_column
-	print(param_name,": ",str(val))
 	game.set(param_name, val)
 
 func get_da_val():
