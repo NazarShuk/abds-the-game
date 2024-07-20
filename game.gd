@@ -114,10 +114,42 @@ var leahy_power_fix_num = 0
 var music_pitch_target = 1
 var music_pitch_boost = 1
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
+	if Input.is_anything_pressed():
+		$CanvasLayer/handelr.hide()
+	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
+		
+		var total = 0
+			
+		for idd in players_ids:
+			total += players[idd].books_collected
+		total_books = total
+		
+		var vending_machines = get_tree().get_nodes_in_group("vending_machine")
+		var broken_vending_machines = []
+		
+		for vm in vending_machines:
+			if vm is StaticBody3D:
+				if vm.uses_left <= 0:
+					if $Mr_Misuraca.global_position.distance_to(vm.global_position) < 2:
+						vm.uses_left = 20
+					else:
+						broken_vending_machines.append(vm)
+		
+		
+		
+		
+		if broken_vending_machines.size() > 0:
+			$Mr_Misuraca.update_target_location(broken_vending_machines[0].global_position)
+		else:
+			$Mr_Misuraca.go_back()
+		
+		
+		
 		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target * music_pitch_boost),0.05)
 		
 		if total_books == books_to_collect - 1:
@@ -133,6 +165,8 @@ func _process(delta):
 		
 		if game_started:
 			collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
+			if is_bet:
+				collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
 		else:
 			collected_books_label.text = "Find a ELA book!"
 		leahy_speed = evil_leahy.SPEED
@@ -207,6 +241,7 @@ func _process(delta):
 					
 		else:
 			evil_leahy.update_target_location(evil_leahy.global_position)
+	
 	if multiplayer.has_multiplayer_peer() and !game_started and multiplayer.is_server():
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
 		
@@ -443,8 +478,12 @@ func on_collect_book(id,book_name,personal):
 			
 			gainy_attack = false
 			gainy_target = null
-			if enable_live_split:
-				LiveSplit.start_or_split()
+			split_for_everyone.rpc()
+			
+			if is_bet:
+				bet_books_left -= 1
+				if bet_books_left <= 0:
+					_on_bet_timer_timeout(true,true)
 		else:
 			info_text(player_name + " slipped")
 			var spawnpoint = $LandMineSpawns.get_children().pick_random()
@@ -452,20 +491,30 @@ func on_collect_book(id,book_name,personal):
 			spawnpoint.y = 0.143
 			$Landmine.position = spawnpoint
 
+@rpc("any_peer","call_local")
+func split_for_everyone():
+	if enable_live_split:
+		LiveSplit.start_or_split()
+
 
 @rpc("any_peer","call_local")
-func use_vending_machine(id):
+func use_vending_machine(id,machine_name):
 	if !multiplayer.is_server(): return
+	var vending_machine = get_node("School/Navigation").get_node(NodePath(machine_name))
 	if game_started:
 		for child in get_children():
 			if child.name == str(id):
-				child.choose_item.rpc_id(id,-1)
-				break
+				if vending_machine.uses_left >= 0:
+					child.choose_item.rpc_id(id,-1)
+					vending_machine.uses_left -= 1
+					break
 	else:
 		for child in get_children():
 			if child.name == str(id):
-				child.choose_item.rpc_id(id,2)
-				break
+				if vending_machine.uses_left >= 0:
+					child.choose_item.rpc_id(id,2)
+					vending_machine.uses_left -= 1
+					break
 
 @rpc("authority","call_local")
 func start_da_game():
@@ -502,9 +551,6 @@ func _on_timer_timeout():
 	$Music2.play()
 
 	$CanvasLayer/Main/LeahyAngeredLabel.hide()
-	$SecondsLeft.start()
-	
-	
 	if multiplayer.is_server():
 		canPlayersMove = true
 		game_started = true
@@ -582,8 +628,10 @@ func set_player_dead(id,is_dead,do_deaths):
 				
 				if total_books == 1:
 					end_game.rpc("you suck")
-				else:
+				elif total_books > 1:
 					end_game.rpc("worst")
+				elif total_books == 0:
+					end_game("dumb")
 
 
 @rpc("any_peer","call_local")
@@ -619,7 +667,11 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_file("res://huh_ending.tscn")
 	elif ending == "you suck":
 		get_tree().change_scene_to_file("res://worst_end.tscn")
-	elif ending == "none":
+	elif ending == "dumb":
+		get_tree().change_scene_to_file("res://dumb_ahh_end.tscn")
+	elif ending == "br":
+		get_tree().change_scene_to_file("res://sadge.tscn")
+	else:
 		get_tree().change_scene_to_file("res://logos.tscn")
 
 @rpc("authority","call_local")
@@ -749,6 +801,8 @@ func start_da_pacer(id):
 	$"Mr Fox".hide()
 	$"Mr Fox".mute = true
 	
+	
+	
 	# Server only
 	if multiplayer.is_server():
 		for pl in players_ids:
@@ -762,6 +816,7 @@ func start_da_pacer(id):
 		is_pacer_intro = true
 		$FakeFox/PacerTest/PacerLevelTimer.start()
 		reset_pacer_times()
+		$"Bet timer".paused = true
 
 
 func _on_pacer_start_timer_timeout():
@@ -790,6 +845,12 @@ func stop_pacer():
 		is_pacer = false
 		is_pacer_intro = false
 		pacer_deadly = false
+		$FakeFox/PacerTest/PacerLevelTimer.stop()
+		
+		$"Bet timer".paused = false
+		$FakeFox/PacerTest/PacerStartTimer.stop()
+		$FakeFox/PacerTest/PacerStartTimer2.stop()
+		$FakeFox/PacerTest/PacerSpeedIncrease.stop()
 		$FakeFox/PacerTest/PacerLevelTimer.stop()
 
 
@@ -921,7 +982,7 @@ func _on_pacer_level_timer_timeout():
 
 @rpc("any_peer","call_local")
 func play_coffee():
-	$CoffeMachine/coffee.play()
+	$CoffeMachine/coffee.play()	
 
 @export var is_powered_off = false
 
@@ -963,3 +1024,60 @@ func boost_leahy(pl):
 		book_boost += 0.5
 		music_pitch_boost += 0.25
 		info_text(pl + " gave Ms.Leahy Redbull...")
+
+@rpc("any_peer","call_local")
+func spawn_puddle(pos):
+	var puddle = load("res://puddle.tscn").instantiate()
+	add_child(puddle,true)
+	puddle.global_position = pos
+
+@rpc("any_peer","call_local")
+func stop_misuraca():
+	if multiplayer.is_server():
+		$Mr_Misuraca.angerer = null
+
+var is_bet = false
+var bet_books_left = -1
+var bet_loss = -1
+var bet_reward = -1
+
+@rpc("any_peer","call_local")
+func do_bet(pl_name,books,time,loss,reward,item_name):
+	if !multiplayer.is_server(): return
+	
+	is_bet = true
+	bet_books_left = books
+	$"Bet timer".start(time)
+	bet_loss = loss
+	bet_reward = reward
+	
+	info_text(pl_name + " started a bet. Win to get a " + item_name)
+
+
+func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
+	if !multiplayer.is_server(): return
+	is_bet = false
+	if bet_books_left > 0 or (overwrite and won == false):
+		info_text("You lost the bet")
+		for p in players.keys():
+			print(players[p])
+			players[p].books_collected -= bet_loss / players_in_lobby
+		bet_books_left = -1
+		$"Bet timer".stop()
+		
+		var total = 0
+		for p in players.keys():
+			total += players[p].books_collected
+		
+		if total < 0:
+			end_game.rpc("br")
+		
+		
+	elif bet_books_left <= 0 or (overwrite and won == true):
+		info_text("You won the bet")
+		
+		for p in players.keys():
+			get_node(str(p)).choose_item.rpc_id(p,bet_reward)
+		
+		$"Bet timer".stop()
+	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bylupyln8p7m8"]
+[gd_scene load_steps=13 format=3 uid="uid://bylupyln8p7m8"]
 
 [ext_resource type="Script" path="res://evil leahy.gd" id="1_o0g30"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
@@ -27,6 +27,13 @@ properties/1/replication_mode = 1
 albedo_texture = ExtResource("1_xr5qm")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ijt1y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mye61"]
+albedo_color = Color(0, 0.572549, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xrylo"]
+radius = 0.125
+height = 0.25
 
 [node name="EvilLeahy" type="CharacterBody3D" groups=["enemies"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -60,5 +67,14 @@ shape = SubResource("BoxShape3D_rkeq3")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.5, 0)
 material_override = SubResource("StandardMaterial3D_7s3wy")
 mesh = SubResource("PlaneMesh_ijt1y")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+visible = false
+material_override = SubResource("StandardMaterial3D_mye61")
+amount = 13
+mesh = SubResource("CapsuleMesh_xrylo")
+emission_shape = 3
+emission_box_extents = Vector3(0.75, 0.75, 0.75)
+gravity = Vector3(0, -3.045, 0)
 
 [connection signal="area_entered" from="EvilLeahy" to="." method="_on_evil_leahy_area_entered"]

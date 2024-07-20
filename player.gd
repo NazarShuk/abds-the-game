@@ -48,9 +48,6 @@ var can_get_item = true
 
 var leahy_dst = 0
 
-
-
-
 # Voice chat (maybe)
 @onready var input = $Voice/input
 var effect : AudioEffectCapture
@@ -185,20 +182,18 @@ func _physics_process(delta):
 		control_text_setters()
 		
 		$CanvasLayer/Control/Minimap.visible = is_minimap_open
-		if is_minimap_open:
-			if !is_shop_open:
-				if !$CanvasLayer/Control/Menu.visible:
-					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-					can_cam_move = false
-		else:
-			if !is_shop_open:
-				if !$CanvasLayer/Control/Menu.visible:
-					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-					can_cam_move = true
 		
 		if Input.is_action_just_pressed("open_minimap"):
 			if !is_shop_open:
 				is_minimap_open = !is_minimap_open
+				if is_minimap_open:
+					$Minimap.process_mode = Node.PROCESS_MODE_INHERIT
+					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					can_cam_move = false
+				else:
+					$Minimap.process_mode = Node.PROCESS_MODE_DISABLED
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+					can_cam_move = true
 		
 		minimap_cam.size = lerp(minimap_cam.size,float(minimap_zoom),0.25)
 		minimap_zoom = clamp(minimap_zoom,5,95)
@@ -207,7 +202,7 @@ func _physics_process(delta):
 		for b in boosts:
 			final_multiplier += boosts[b]
 		
-		SPEED = OG_SPEED * final_multiplier
+		SPEED = clamp(OG_SPEED * final_multiplier,0,99999)
 		if !get_parent().leahy_look:
 			if final_multiplier != 1:
 				cam_fov = 75 + final_multiplier * 15
@@ -225,7 +220,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			#pick_item(6)
+			#get_parent().on_collect_book.rpc(name.to_int(), "book1",true)
 			pass
 
 		if get_parent().game_started:
@@ -236,9 +231,6 @@ func _physics_process(delta):
 			else:
 				camera_3d.h_offset = 0
 				camera_3d.v_offset = 0
-		
-		
-		
 		
 		if global_position.z > 15 && !is_freaky:
 			if !get_parent().game_started:
@@ -293,13 +285,12 @@ func _physics_process(delta):
 						is_moving = false
 					
 					if Input.is_action_just_pressed("interact"):
-						if ray.get_collider() and get_cur_item() == -1:
-
+						if ray.get_collider() != null and get_cur_item() == -1:
 							if ray.get_collider().is_in_group("vending_machine"):
-								get_parent().use_vending_machine.rpc(name.to_int())
+								get_parent().use_vending_machine.rpc(name.to_int(),ray.get_collider().name)
 							
-						if ray.get_collider() and get_parent().game_started:
-							#print(ray.get_collider().name)
+						if ray.get_collider() != null and get_parent().game_started:
+							print(ray.get_collider().name)
 							if ray.get_collider().is_in_group("shop"):
 								if !get_parent().enable_shop: return
 								open_shop()
@@ -320,6 +311,9 @@ func _physics_process(delta):
 								get_parent().toggle_power.rpc()
 								can_use_breaker = false
 								$BreakerTimeout.start(get_parent().breaker_timeout)
+							if ray.get_collider().name == "Mr_Misuraca":
+								open_gambling()
+							
 							if ray.get_collider().is_in_group("toilet"):
 								if !can_toilet_tp : return
 								var spawns = get_parent().get_node("Bathroom spawns").get_children()
@@ -340,6 +334,16 @@ func _physics_process(delta):
 								await  get_tree().create_timer(0.7).timeout
 								$"CanvasLayer/Control/cool transition".hide()
 								play_sound.rpc("res://flush.mp3",5)
+							
+							if ray.get_collider():
+								if ray.get_collider().is_in_group("water fountain"):
+									if get_cur_item() == 7:
+										$"Hand/Bucket 7/Bucket/water".show()
+							if ray.get_collider():
+								if ray.get_collider().is_in_group("bucket"):
+									if get_cur_item() == -1:
+										pick_item(7)
+							
 					
 					if Input.is_action_just_pressed("give"):
 						if get_cur_item() == 3:
@@ -403,6 +407,12 @@ func _physics_process(delta):
 								boosts["redbull"] = 2
 							redbull_timeout()
 							play_sound.rpc("res://redbull.mp3")
+						elif get_cur_item() == 7:
+							if $"Hand/Bucket 7/Bucket/water".visible:
+								$"Hand/Bucket 7/Bucket/water".visible = false
+								pick_item(-1)
+								play_sound.rpc("res://water.mp3")
+								get_parent().spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 						
 		
 		
@@ -446,9 +456,7 @@ func _physics_process(delta):
 				$CanvasLayer/Control/Control.hide()
 				
 		camera_3d.current = true
-		camera_3d.global_position = global_position + Vector3(0,0.5,0)
-		camera_3d.global_rotation.y = global_rotation.y
-		#camera_3d.global_rotation.x = global_rotation.x
+		camera_3d.global_transform = $"Camera target".global_transform
 		$CanvasLayer2.visible = true
 
 func _input(event):
@@ -461,7 +469,7 @@ func _input(event):
 				rotate_y(deg_to_rad(event.relative.x * -0.3))
 				if get_parent().do_vertical_camera:
 					# funni
-					camera_3d.rotate_x(deg_to_rad(event.relative.y * -0.3))
+					rotate_x(deg_to_rad(event.relative.y * -0.3))
 
 func coffee_timeout():
 	await get_tree().create_timer(6).timeout
@@ -482,6 +490,8 @@ func _on_area_3d_area_entered(area):
 		return
 	if is_dead:
 		return
+	if is_shop_open: return
+	print(area.name)
 	if area.get_parent().is_in_group("Book"):
 		get_parent().on_collect_book.rpc(name.to_int(), area.get_parent().name,true)
 		Achievements.books_collected += 1
@@ -501,6 +511,16 @@ func _on_area_3d_area_entered(area):
 		get_parent().azzu_dont_steal.rpc()
 	elif area.name == "gainy":
 		get_parent().stop_gainy.rpc(name.to_int())
+	elif area.name == "puddle":
+		if boosts.has("puddle"):
+			boosts["puddle"] -= 0.5
+		else:
+			boosts["puddle"] = 0.5
+		$Puddle.start()
+	elif area.name == "misuraca":
+		if area.get_parent().is_angry == true:
+			die("misuraca")
+			get_parent().stop_misuraca.rpc()
 
 
 func _on_timer_timeout():
@@ -577,14 +597,16 @@ func choose_item(item_ov):
 		if can_get_item:
 			can_get_item = false
 			
+			var book_multiplier = (get_parent().total_books / get_parent().books_to_collect) * 3
+			
 			var item_weights = {
 				"0":40,
 				"1":25,
 				"2":20,
-				"3":15,
-				"4":3,
-				"5":2,
-				"6":2
+				"3":15 + book_multiplier,
+				"4":3 ,
+				"5":2 + book_multiplier,
+				"6":2 + book_multiplier
 			}
 			
 			pick_item(pick_random_weighted(item_weights).to_int())
@@ -681,8 +703,8 @@ func die(cause):
 		$"CanvasLayer/Control/Died thing/jumpscare5".play()
 	elif cause == "gainy":
 		$"CanvasLayer/Control/Died thing/jumpscare6".play()
-
-
+	elif cause == "misuraca":
+		$"CanvasLayer/Control/Died thing/jumpscare7".play()
 
 func _on_silent_lunch_timeout():
 	is_suspended = false
@@ -851,7 +873,7 @@ func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dial
 	a.bus = bus
 	a.max_distance = max_distance
 	a.volume_db = volume_db
-	add_child(a)
+	get_parent().add_child(a)
 	a.global_position = global_position
 	a.play()
 
@@ -913,7 +935,10 @@ func control_text_setters():
 	var final_text = ""
 	if looking_at:
 		if looking_at.is_in_group("vending_machine"):
-			final_text += "Vending Machine\nE - grab item"
+			if get_cur_item() == -1:
+				final_text += "Vending Machine\nE - grab item"
+			else:
+				final_text += "Vending Machine\nYou already have an item"
 		if looking_at.name == "CoffeMachine":
 			final_text += "Coffee Machine\n" + format_time("Coffee timeout","E - drink")
 		if looking_at.is_in_group("shop"):
@@ -922,6 +947,16 @@ func control_text_setters():
 			final_text += "The Breaker\n" + format_time("BreakerTimeout","E - turn off power")
 		if looking_at.is_in_group("toilet"):
 			final_text += "Toilet\n" + format_time("ToiletTimeout","E - flush down")
+		if looking_at.name == "water fountain":
+			if get_cur_item() != 7:
+				final_text += "Water fountain\nGet a bucket to fill it"
+			else:
+				if !$"Hand/Bucket 7/Bucket/water".visible:
+					final_text += "Water fountain\nE - fill the bucket"
+				else:
+					final_text += "Water fountain\nBucket is full"
+		if looking_at.name == "Mr_Misuraca":
+			final_text += "Mr.Misuraca\nE - Make a bet"
 	
 	var cur_item = get_cur_item()
 	if final_text != "":
@@ -939,6 +974,11 @@ func control_text_setters():
 		final_text += "Duck\nRight Click - Squeak"
 	elif cur_item == 6:
 		final_text += "Redbull\nLeft Click - Give to Ms.Leahy\nRight Click - Drink"
+	elif cur_item == 7:
+		if $"Hand/Bucket 7/Bucket/water".visible:
+			final_text += "Bucket\nRight Click - Pour water out"
+		else:
+			final_text += "Bucket\nFill the bucket to use it"
 	
 	controls_text.text = final_text
 
@@ -952,3 +992,46 @@ func format_time(timer_path,succes_string):
 
 func _on_toilet_timeout_timeout():
 	can_toilet_tp = true
+
+
+func _on_puddle_timeout():
+	boosts["puddle"] = 0
+
+var gamble = []
+
+func open_gambling():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	can_cam_move = false
+	$CanvasLayer/Control/paper.show()
+	gamble = []
+	
+	for i in range(0,3):
+		var g = {
+			"books": randi_range(1,5),
+			"time": randi_range(90,240),
+			"reward": randi_range(3,6),
+			"loss": randi_range(1,3)
+		}
+		gamble.append(g)
+		
+		$CanvasLayer/Control/paper.get_node(NodePath("gamble" + str(i + 1))).text = "if you get %s notebooks in %s seconds, i will give everyone a %s. If you don't, i will take %s books." % [g.books,g.time,$Hand.get_child(g.reward).name,g.loss]
+
+func close_gambling():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	can_cam_move = true
+	$CanvasLayer/Control/paper.hide()
+
+
+func _on_gamblebtn_1_pressed():
+	get_parent().do_bet(steam_name,gamble[0].books,gamble[0].time,gamble[0].loss,gamble[0].reward,$Hand.get_child(gamble[0].reward).name)
+	close_gambling()
+
+
+func _on_gamblebtn_2_pressed():
+	get_parent().do_bet(steam_name,gamble[1].books,gamble[1].time,gamble[1].loss,gamble[1].reward,$Hand.get_child(gamble[1].reward).name)
+	close_gambling()
+
+
+func _on_gamblebtn_3_pressed():
+	get_parent().do_bet(steam_name,gamble[2].books,gamble[2].time,gamble[2].loss,gamble[2].reward,$Hand.get_child(gamble[2].reward).name)
+	close_gambling()

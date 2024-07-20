@@ -4,15 +4,30 @@ extends ColorRect
 
 var enable_livesplit = true
 
+var previous_mouse
+var previous_cam
+
 func _process(_delta):
 	if Input.is_action_just_pressed("escape"):
 		toggle_menu()
+	
+	if visible:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		player.can_cam_move = false
+	
 
 func toggle_menu():
+	if visible == false:
+		previous_mouse = Input.mouse_mode
+		previous_cam = player.can_cam_move
 	visible = !visible
-	player.can_cam_move = !visible
+	
+	
 
 	if visible == true:
+
+		
+		player.can_cam_move = !visible
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		if player.get_parent().players_in_lobby == 1:
 			get_tree().paused = true
@@ -20,7 +35,8 @@ func toggle_menu():
 				if enable_livesplit:
 					LiveSplit.pause()
 	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		Input.mouse_mode = previous_mouse
+		player.can_cam_move = previous_cam
 		get_tree().paused = false
 		if player.get_parent().total_books >= 1:
 			if enable_livesplit:

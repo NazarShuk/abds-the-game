@@ -20,6 +20,21 @@ sky = SubResource("Sky_ce7my")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="Animation" id="Animation_6v2is"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Hey there goofball!"]
+}
+
 [sub_resource type="Animation" id="Animation_yohxs"]
 resource_name = "new_animation"
 length = 20.0
@@ -43,21 +58,6 @@ ones too!!!", "Also you need to
 run from Ms.Leahy!", "Also there are
 vending machines!!", "But it's okay!", "Lock your
 front door tonight.", ""]
-}
-
-[sub_resource type="Animation" id="Animation_6v2is"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:text")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["Hey there goofball!"]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gb2l4"]
@@ -86,6 +86,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="Label2" type="Label" parent="CanvasLayer/Label"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 

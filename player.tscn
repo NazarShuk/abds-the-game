@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=102 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -31,17 +31,21 @@
 [ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
 [ext_resource type="VideoStream" path="res://fox_jump.ogv" id="16_a751i"]
 [ext_resource type="VideoStream" path="res://models/azzu_jumpscare.ogv" id="17_co3v2"]
+[ext_resource type="Texture2D" uid="uid://upa52bysxlmx" path="res://thing.svg" id="18_c15q6"]
 [ext_resource type="VideoStream" path="res://gainy.ogv" id="19_vcsq8"]
 [ext_resource type="Texture2D" uid="uid://bkmj8ey1h4mji" path="res://rubber-duck_0 (1).jpg" id="20_l0oek"]
 [ext_resource type="AudioStream" uid="uid://c1ghfb0atu0rn" path="res://correct.mp3" id="23_vsfyq"]
 [ext_resource type="AudioStream" uid="uid://ctyuoy5tau7hv" path="res://incorrct.mp3" id="24_yj6h8"]
+[ext_resource type="Texture2D" uid="uid://cb10q13033mpt" path="res://0b41253a4041ddb57004d633e4979430.jpg" id="28_k1c3m"]
 [ext_resource type="Texture2D" uid="uid://fk2k3kv323ey" path="res://sunkist.png" id="32_er28m"]
 [ext_resource type="Script" path="res://Menu.gd" id="33_bayr0"]
 [ext_resource type="Texture2D" uid="uid://bg7vk8gl360px" path="res://toggle_on.png" id="34_h7tin"]
 [ext_resource type="Texture2D" uid="uid://b731figcorc53" path="res://toggle_off.png" id="35_1030p"]
 [ext_resource type="Shader" uid="uid://cc4qj1rais5l1" path="res://player.tres" id="36_3gf6v"]
 [ext_resource type="VideoStream" path="res://cool transition.ogv" id="36_ngsvh"]
+[ext_resource type="VideoStream" path="res://misuraca.ogv" id="36_rou35"]
 [ext_resource type="Texture2D" uid="uid://d1o76twd8v5ej" path="res://red_bull.png" id="40_y5awl"]
+[ext_resource type="PackedScene" uid="uid://cj17cyrw686mg" path="res://models/3d/Bucket.glb" id="43_4lnrl"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -299,6 +303,11 @@ albedo_texture = ExtResource("40_y5awl")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_epfbt"]
 albedo_texture = ExtResource("40_y5awl")
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_hkfs2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bk8m"]
+albedo_color = Color(0, 0.529412, 1, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwpal"]
 albedo_texture = ExtResource("2_q3hoo")
 
@@ -316,6 +325,9 @@ outputPath = NodePath("Voice/AudioStreamPlayer")
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43934, -0.0894957)
 target_position = Vector3(0, 0, -2.5)
+
+[node name="Camera target" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="visual_body" type="Node3D" parent="."]
 
@@ -592,6 +604,10 @@ one_shot = true
 wait_time = 60.0
 one_shot = true
 
+[node name="Puddle" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 process_mode = 4
 layer = 5
@@ -628,6 +644,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_c15q6")
+expand_mode = 1
 
 [node name="Control" type="Control" parent="CanvasLayer/Control"]
 visible = false
@@ -1165,6 +1197,163 @@ bus = &"shop"
 stream = ExtResource("24_yj6h8")
 bus = &"shop"
 
+[node name="paper" type="TextureRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -275.0
+offset_right = 220.0
+offset_bottom = 275.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("28_k1c3m")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 52.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 36
+text = "mr.misuraca's gambling"
+horizontal_alignment = 1
+
+[node name="gamble1" type="Label" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 105.0
+offset_bottom = 198.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 24
+text = "if you get n notebooks in n seconds, i will give you a n. If you don't, i will take n books from you"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="gamble2" type="Label" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 249.0
+offset_bottom = 342.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 24
+text = "if you get n notebooks in n seconds, i will give you a n. If you don't, i will take n books from you"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="gamble3" type="Label" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 381.0
+offset_bottom = 474.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 24
+text = "if you get n notebooks in n seconds, i will give you a n. If you don't, i will take n books from you"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="gamblebtn1" type="Button" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -57.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 26
+text = "TAKE THE BET"
+
+[node name="gamblebtn2" type="Button" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 69.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 26
+text = "TAKE THE BET"
+
+[node name="gamblebtn3" type="Button" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 209.0
+offset_bottom = 248.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 26
+text = "TAKE THE BET"
+
+[node name="Minimap" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -351.0
+offset_top = -202.0
+offset_right = 351.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Minimap"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = 33.0
+offset_right = -38.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_tk2de")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Minimap"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 33.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 21
+text = "the minimap"
+horizontal_alignment = 1
+
 [node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -1277,46 +1466,16 @@ stream = ExtResource("19_vcsq8")
 expand = true
 bus = &"Non Mute"
 
-[node name="Minimap" type="ColorRect" parent="CanvasLayer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -351.0
-offset_top = -202.0
-offset_right = 351.0
-offset_bottom = 202.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Minimap"]
+[node name="jumpscare7" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 38.0
-offset_top = 33.0
-offset_right = -38.0
-offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ViewportTexture_tk2de")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/Minimap"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 33.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_l1x2u")
-theme_override_font_sizes/font_size = 21
-text = "the minimap"
-horizontal_alignment = 1
+stream = ExtResource("36_rou35")
+expand = true
+bus = &"Non Mute"
 
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
 process_mode = 3
@@ -1436,82 +1595,94 @@ autostart = true
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(0.262507, 0.127587, -0.40597, 0.124941, 0.432868, 0.21683, 0.406792, -0.215283, 0.19538, 0.513, 0.3, -0.78)
 
-[node name="FruitSnacks 0" type="MeshInstance3D" parent="Hand"]
+[node name="Fruit Snacks" type="MeshInstance3D" parent="Hand"]
 visible = false
 material_override = SubResource("StandardMaterial3D_rimgt")
 mesh = SubResource("QuadMesh_qgndq")
 
-[node name="FruitSnacks2" type="MeshInstance3D" parent="Hand/FruitSnacks 0"]
+[node name="FruitSnacks2" type="MeshInstance3D" parent="Hand/Fruit Snacks"]
 transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_rimgt")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
-[node name="CloroxWipes 1" type="MeshInstance3D" parent="Hand"]
+[node name="Clorox Wipes" type="MeshInstance3D" parent="Hand"]
 visible = false
 material_override = SubResource("StandardMaterial3D_pc7n3")
 mesh = SubResource("QuadMesh_qgndq")
 
-[node name="CloroxWipes2" type="MeshInstance3D" parent="Hand/CloroxWipes 1"]
+[node name="CloroxWipes2" type="MeshInstance3D" parent="Hand/Clorox Wipes"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_pc7n3")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
-[node name="Pizza 2" type="MeshInstance3D" parent="Hand"]
+[node name="Pizza" type="MeshInstance3D" parent="Hand"]
 visible = false
 material_override = SubResource("StandardMaterial3D_oqvka")
 mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/Pizza 2"]
+[node name="Pizza2" type="MeshInstance3D" parent="Hand/Pizza"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_oqvka")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
-[node name="MtnDew 3" type="MeshInstance3D" parent="Hand"]
+[node name="Mtn Dew" type="MeshInstance3D" parent="Hand"]
 visible = false
 material_override = SubResource("StandardMaterial3D_7sabk")
 mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/MtnDew 3"]
+[node name="Pizza2" type="MeshInstance3D" parent="Hand/Mtn Dew"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_nd3oy")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
-[node name="Duck 4" type="MeshInstance3D" parent="Hand"]
+[node name="Duck" type="MeshInstance3D" parent="Hand"]
 visible = false
 material_override = SubResource("StandardMaterial3D_of0xi")
 mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/Duck 4"]
+[node name="Pizza2" type="MeshInstance3D" parent="Hand/Duck"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_rfx4x")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
-[node name="Sunkist 5" type="MeshInstance3D" parent="Hand"]
+[node name="Sunkist" type="MeshInstance3D" parent="Hand"]
 visible = false
 material_override = SubResource("StandardMaterial3D_hao88")
 mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/Sunkist 5"]
+[node name="Pizza2" type="MeshInstance3D" parent="Hand/Sunkist"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_y5jp4")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
-[node name="RedBull 6" type="MeshInstance3D" parent="Hand"]
+[node name="Red Bull" type="MeshInstance3D" parent="Hand"]
 visible = false
 material_override = SubResource("StandardMaterial3D_oy3w8")
 mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/RedBull 6"]
+[node name="Pizza2" type="MeshInstance3D" parent="Hand/Red Bull"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_epfbt")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
+
+[node name="Bucket 7" type="Node3D" parent="Hand"]
+visible = false
+
+[node name="Bucket" parent="Hand/Bucket 7" instance=ExtResource("43_4lnrl")]
+transform = Transform3D(0.194967, 0.0633485, 0, -0.0509231, 0.156725, -0.121939, -0.0376811, 0.115971, 0.164791, 0.35376, -0.365603, 0.526029)
+
+[node name="water" type="MeshInstance3D" parent="Hand/Bucket 7/Bucket"]
+transform = Transform3D(2.07, 9.31323e-10, 0, -1.19209e-07, 0.11, 0, 3.57628e-07, 0, 2.285, 0.076648, 0.945657, -0.0240769)
+visible = false
+mesh = SubResource("CylinderMesh_hkfs2")
+surface_material_override/0 = SubResource("StandardMaterial3D_6bk8m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
@@ -1535,6 +1706,7 @@ autoplay = true
 bus = &"General Voice"
 
 [node name="Minimap" type="SubViewport" parent="."]
+process_mode = 4
 use_occlusion_culling = true
 gui_disable_input = true
 size = Vector2i(800, 600)
@@ -1558,6 +1730,7 @@ far = 100.0
 [connection signal="timeout" from="BreakerTimeout" to="." method="_on_breaker_timeout_timeout"]
 [connection signal="timeout" from="Coffee timeout" to="." method="_on_coffee_timeout_timeout"]
 [connection signal="timeout" from="ToiletTimeout" to="." method="_on_toilet_timeout_timeout"]
+[connection signal="timeout" from="Puddle" to="." method="_on_puddle_timeout"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/rewards btn" to="." method="_on_rewards_btn_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/credits btn" to="." method="_on_credits_btn_pressed"]
 [connection signal="item_clicked" from="CanvasLayer/Control/Shop/ColorRect/question panel/ItemList" to="." method="_on_item_list_item_clicked"]
@@ -1565,6 +1738,9 @@ far = 100.0
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy duck" to="." method="_on_buy_duck_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/Button" to="." method="close_shop"]
 [connection signal="timeout" from="CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn1" to="." method="_on_gamblebtn_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn2" to="." method="_on_gamblebtn_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn3" to="." method="_on_gamblebtn_3_pressed"]
 [connection signal="gui_input" from="CanvasLayer/Control/Minimap/TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]

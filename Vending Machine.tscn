@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://btj7odxogilms"]
+[gd_scene load_steps=7 format=3 uid="uid://btj7odxogilms"]
 
+[ext_resource type="Script" path="res://Vending Machine.gd" id="1_033me"]
 [ext_resource type="Texture2D" uid="uid://dcouwnrkmlr4s" path="res://vending machine.png" id="1_asg5w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_boo68"]
@@ -12,8 +13,14 @@ uv1_offset = Vector3(0.91, 0, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_6xbun"]
 size = Vector3(1.38281, 2.80127, 1)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8rito"]
+properties/0/path = NodePath(".:uses_left")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="VendingMachine" type="StaticBody3D" groups=["vending_machine"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.810454, 0)
+script = ExtResource("1_033me")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["vending_machine"]]
 transform = Transform3D(1.405, 0, 0, 0, 2.81, 0, 0, 0, 1, 0, 0.597213, 0)
@@ -23,3 +30,17 @@ mesh = SubResource("BoxMesh_17ab0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["vending_machine"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.597412, 0)
 shape = SubResource("BoxShape3D_6xbun")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+visible = false
+light_color = Color(1, 0, 0, 1)
+light_energy = 16.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8rito")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

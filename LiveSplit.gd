@@ -22,5 +22,6 @@ func resume():
 
 
 func send_msg(message : String):
+	print(message)
 	var output = []
 	OS.execute("cmd.exe", ["/C", "echo " + message + " > " + pipe_path], output, true)

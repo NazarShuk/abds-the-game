@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=83 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -41,6 +41,8 @@
 [ext_resource type="PackedScene" uid="uid://cx7itjqsyc1xu" path="res://breaker.tscn" id="36_j44h3"]
 [ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="38_ahlvj"]
 [ext_resource type="ArrayOccluder3D" uid="uid://dj2vhfp47eps5" path="res://game.occ" id="40_ba0mq"]
+[ext_resource type="PackedScene" uid="uid://dsqshh6157cwh" path="res://bucket.tscn" id="42_8jmcj"]
+[ext_resource type="PackedScene" uid="uid://kfniphc0hjb6" path="res://misuraca.tscn" id="43_t45wj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -199,8 +201,9 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [sub_resource type="Environment" id="Environment_qell4"]
+background_mode = 2
+sky = SubResource("Sky_bde40")
 ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 1.5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evicu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -241,7 +244,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Disclaimer/Label:theme_override_colors/font_color")
+tracks/0/path = NodePath("handelr/Disclaimer/Label:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -253,7 +256,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Disclaimer:color")
+tracks/1/path = NodePath("handelr/Disclaimer:color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -265,7 +268,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Disclaimer:visible")
+tracks/2/path = NodePath("handelr/Disclaimer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -281,7 +284,7 @@ length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Disclaimer/Label:theme_override_colors/font_color")
+tracks/0/path = NodePath("handelr/Disclaimer/Label:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -293,7 +296,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Disclaimer:color")
+tracks/1/path = NodePath("handelr/Disclaimer:color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -305,7 +308,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Disclaimer:visible")
+tracks/2/path = NodePath("handelr/Disclaimer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -456,7 +459,7 @@ wait_time = 0.1
 autostart = true
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn")
+_spawnable_scenes = PackedStringArray("res://player.tscn", "res://puddle.tscn")
 spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -479,6 +482,9 @@ one_shot = true
 [node name="Discord" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="Bet timer" type="Timer" parent="."]
+one_shot = true
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = 11
@@ -529,7 +535,8 @@ grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 32
-text = "find a ela book!"
+text = "find a ela book!
+"
 metadata/_edit_use_anchors_ = true
 
 [node name="ControlsText" type="Label" parent="CanvasLayer/Main"]
@@ -548,9 +555,9 @@ horizontal_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main"]
 layout_mode = 1
-offset_top = 60.0
+offset_top = 91.0
 offset_right = 276.0
-offset_bottom = 201.0
+offset_bottom = 232.0
 texture = SubResource("CompressedTexture2D_q58lb")
 script = ExtResource("4_ba12c")
 
@@ -1396,15 +1403,30 @@ layout_mode = 2
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Lobby"]
 replication_config = SubResource("SceneReplicationConfig_u6ine")
 
-[node name="Disclaimer" type="ColorRect" parent="CanvasLayer"]
-visible = false
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_rx4qs")
+}
+autoplay = "start"
+
+[node name="handelr" type="Control" parent="CanvasLayer"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Disclaimer"]
+[node name="Disclaimer" type="ColorRect" parent="CanvasLayer/handelr"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/handelr/Disclaimer"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1425,12 +1447,6 @@ This game was NOT made to offend or harrass anyone.
 Do not take this game seriously :)"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
-libraries = {
-"": SubResource("AnimationLibrary_rx4qs")
-}
-autoplay = "start"
 
 [node name="Music0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_grswa")
@@ -1526,9 +1542,6 @@ one_shot = true
 
 [node name="book1" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, 1.078, -69.722)
-
-[node name="book2" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.258, 143.884, -161.746)
 
 [node name="WelcomeLeahy" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.53895, 0, -1.74614, 0, 3.08144, 0, 1.74614, 0, 2.53895, 3.26805, 1.44916, -11.6121)
@@ -1656,7 +1669,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.9436, 1.27832, -34.078)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.2241, 1.27832, -87.9513)
 
 [node name="Book Spawn43" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5619, 1.27832, -148.795)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4897, 1.27832, -160.75)
 
 [node name="Book Spawn44" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.9608, 1.27832, -197.071)
@@ -1671,13 +1684,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.979, 1.27832, -106.6)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.511, 1.27832, -169.662)
 
 [node name="Book Spawn40" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.3802, 1.27832, -17.7691)
-
-[node name="Book Spawn41" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.3802, 1.27832, -17.7691)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1963, 1.27832, -15.1114)
 
 [node name="Book Spawn42" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.305, 1.27832, -19.5574)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3338, 1.27832, -18.802)
 
 [node name="LandMineSpawns" type="Node" parent="."]
 
@@ -2046,11 +2056,27 @@ shape = SubResource("BoxShape3D_ekwb2")
 occluder = ExtResource("40_ba0mq")
 bake_mask = 4294443007
 
+[node name="Bucket" parent="." instance=ExtResource("42_8jmcj")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -70.7328, 0.545469, -133.466)
+
+[node name="Bucket2" parent="." instance=ExtResource("42_8jmcj")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -58.4144, 0.545469, -133.466)
+
+[node name="Bucket3" parent="." instance=ExtResource("42_8jmcj")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 11.8639, 0.545469, -139.785)
+
+[node name="Bucket4" parent="." instance=ExtResource("42_8jmcj")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 90.5943, 0.545469, -139.785)
+
+[node name="Mr_Misuraca" parent="." instance=ExtResource("43_t45wj")]
+transform = Transform3D(1.165, 0, -2.01784, 0, 2.33, 0, 2.01784, 0, 1.165, -67.4405, 1.24283, -168.649)
+
 [connection signal="timeout" from="GameRecorder/Timer" to="GameRecorder" method="_on_timer_timeout"]
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
 [connection signal="timeout" from="GainyTimer" to="." method="_on_gainy_timer_timeout"]
+[connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/connect local" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host_local" to="." method="_on_host_local_pressed"]

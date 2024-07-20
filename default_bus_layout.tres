@@ -1,4 +1,7 @@
-[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://d2kowfgp5k2mb"]
+[gd_resource type="AudioBusLayout" load_steps=7 format=3 uid="uid://d2kowfgp5k2mb"]
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_qy0jh"]
+resource_name = "Capture"
 
 [sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_fkaq4"]
 resource_name = "Distortion"
@@ -37,6 +40,8 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectCapture_qy0jh")
+bus/2/effect/0/enabled = true
 bus/3/name = &"Non Mute"
 bus/3/solo = false
 bus/3/mute = false
