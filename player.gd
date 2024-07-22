@@ -220,7 +220,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			#get_parent().on_collect_book.rpc(name.to_int(), "book1",true)
+			pick_item(6)
 			pass
 
 		if get_parent().game_started:

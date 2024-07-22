@@ -187,7 +187,7 @@ properties/2/replication_mode = 1
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lpe5m"]
-viewport_path = NodePath("EvilLeahy/SubViewport")
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="Theme" id="Theme_ciuim"]
 Label/constants/outline_size = 7
@@ -1479,22 +1479,22 @@ bus = &"Dialogs"
 stream = ExtResource("17_fndpl")
 bus = &"Dialogs"
 
-[node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.451504, 1.42582, -28.4865)
-visible = false
-
-[node name="SubViewport" type="SubViewport" parent="EvilLeahy"]
+[node name="SubViewport" type="SubViewport" parent="."]
 use_occlusion_culling = true
 gui_disable_input = true
 canvas_cull_mask = 4294967289
 
-[node name="skibidiCamera" type="Camera3D" parent="EvilLeahy/SubViewport"]
+[node name="skibidiCamera" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(-1, 1.56557e-08, -1.45851e-07, -2.26267e-08, 0.965926, 0.258819, 1.44933e-07, 0.258819, -0.965926, -0.385, 2.304, 1.865)
 cull_mask = 1048569
 projection = 1
 size = 15.0
 near = 0.001
 far = 1000.0
+
+[node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.451504, 1.42582, -28.4865)
+visible = false
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="EvilLeahy"]
 stream = ExtResource("17_thbsf")
@@ -1672,7 +1672,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.2241, 1.27832, -87.9513)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4897, 1.27832, -160.75)
 
 [node name="Book Spawn44" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.9608, 1.27832, -197.071)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3525, 1.27832, -184.546)
 
 [node name="Book Spawn45" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0713, 1.27832, -75.3781)

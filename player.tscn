@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=98 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -13,13 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://cbdunl7jdeyq" path="res://freaky.png" id="7_0pkf4"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="7_mv5hh"]
 [ext_resource type="AudioStream" uid="uid://d2e0x50n80346" path="res://jumpscare-154489 (1)_01.mp3" id="8_4ilia"]
-[ext_resource type="Texture2D" uid="uid://cc30vv6mhisgy" path="res://fruit snacks.png" id="9_2sbry"]
 [ext_resource type="VideoStream" path="res://models/jumpscare.ogv" id="9_7mdnm"]
 [ext_resource type="Texture2D" uid="uid://bwdkvin85x0lj" path="res://Mouth/mouth_1.png" id="9_usdtn"]
 [ext_resource type="Texture2D" uid="uid://dhj8rt54whhxj" path="res://Mouth/mouth_2.png" id="10_jh8fw"]
-[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="10_s1ndh"]
 [ext_resource type="Material" uid="uid://b8ad2c866xmg3" path="res://retro.tres" id="11_0qkbr"]
-[ext_resource type="Texture2D" uid="uid://clg1lq8iq3x2e" path="res://square pizza.png" id="11_hgbq5"]
 [ext_resource type="Texture2D" uid="uid://du7llvn5hs8h6" path="res://Mouth/mouth_3.png" id="11_wbq0k"]
 [ext_resource type="Texture2D" uid="uid://cl8p5wgm14xp7" path="res://Mouth/mouth_5.png" id="12_t0eun"]
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://shop.mp3" id="12_u07an"]
@@ -45,7 +42,11 @@
 [ext_resource type="VideoStream" path="res://cool transition.ogv" id="36_ngsvh"]
 [ext_resource type="VideoStream" path="res://misuraca.ogv" id="36_rou35"]
 [ext_resource type="Texture2D" uid="uid://d1o76twd8v5ej" path="res://red_bull.png" id="40_y5awl"]
+[ext_resource type="PackedScene" uid="uid://ch0saed6qmuta" path="res://models/3d/fruit snacks.glb" id="41_qfvdr"]
+[ext_resource type="PackedScene" uid="uid://dm2im7sr2g0ks" path="res://models/3d/cloroxo.glb" id="42_mor3f"]
 [ext_resource type="PackedScene" uid="uid://cj17cyrw686mg" path="res://models/3d/Bucket.glb" id="43_4lnrl"]
+[ext_resource type="PackedScene" uid="uid://ba2vqcug0hgbe" path="res://models/3d/pizza.glb" id="43_at2br"]
+[ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="44_aekf8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -268,28 +269,13 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
 viewport_path = NodePath("Minimap")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rimgt"]
-albedo_texture = ExtResource("9_2sbry")
-
-[sub_resource type="QuadMesh" id="QuadMesh_qgndq"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pc7n3"]
-albedo_texture = ExtResource("10_s1ndh")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqvka"]
-albedo_texture = ExtResource("11_hgbq5")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7sabk"]
 albedo_texture = ExtResource("14_sfn8x")
 
+[sub_resource type="QuadMesh" id="QuadMesh_qgndq"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nd3oy"]
 albedo_texture = ExtResource("14_sfn8x")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_of0xi"]
-albedo_texture = ExtResource("20_l0oek")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rfx4x"]
-albedo_texture = ExtResource("20_l0oek")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hao88"]
 albedo_texture = ExtResource("32_er28m")
@@ -1595,38 +1581,23 @@ autostart = true
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(0.262507, 0.127587, -0.40597, 0.124941, 0.432868, 0.21683, 0.406792, -0.215283, 0.19538, 0.513, 0.3, -0.78)
 
-[node name="Fruit Snacks" type="MeshInstance3D" parent="Hand"]
+[node name="Fruit Snacks" type="Node3D" parent="Hand"]
 visible = false
-material_override = SubResource("StandardMaterial3D_rimgt")
-mesh = SubResource("QuadMesh_qgndq")
 
-[node name="FruitSnacks2" type="MeshInstance3D" parent="Hand/Fruit Snacks"]
-transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_rimgt")
-mesh = SubResource("QuadMesh_qgndq")
-skeleton = NodePath("../..")
+[node name="fruit snacks" parent="Hand/Fruit Snacks" instance=ExtResource("41_qfvdr")]
+transform = Transform3D(0.0949972, 0, 0.0312335, 0, 0.1, 0, -0.0312335, 0, 0.0949972, 0.0799663, -0.214143, 0.381425)
 
-[node name="Clorox Wipes" type="MeshInstance3D" parent="Hand"]
+[node name="Clorox Wipes" type="Node3D" parent="Hand"]
 visible = false
-material_override = SubResource("StandardMaterial3D_pc7n3")
-mesh = SubResource("QuadMesh_qgndq")
 
-[node name="CloroxWipes2" type="MeshInstance3D" parent="Hand/Clorox Wipes"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_pc7n3")
-mesh = SubResource("QuadMesh_qgndq")
-skeleton = NodePath("../..")
+[node name="cloroxo" parent="Hand/Clorox Wipes" instance=ExtResource("42_mor3f")]
+transform = Transform3D(0.104551, 0.0165593, -0.344086, -0.0563164, 0.355568, 0, 0.339849, 0.0538268, 0.105855, 0, 0, 0)
 
-[node name="Pizza" type="MeshInstance3D" parent="Hand"]
+[node name="Pizza" type="Node3D" parent="Hand"]
 visible = false
-material_override = SubResource("StandardMaterial3D_oqvka")
-mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/Pizza"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_oqvka")
-mesh = SubResource("QuadMesh_qgndq")
-skeleton = NodePath("../..")
+[node name="pizza" parent="Hand/Pizza" instance=ExtResource("43_at2br")]
+transform = Transform3D(-0.388211, 0.205525, -0.0712483, -0.0583266, 0.0420665, 0.439151, 0.209559, 0.392447, -0.00975981, 0, 0, 0)
 
 [node name="Mtn Dew" type="MeshInstance3D" parent="Hand"]
 visible = false
@@ -1639,16 +1610,11 @@ material_override = SubResource("StandardMaterial3D_nd3oy")
 mesh = SubResource("QuadMesh_qgndq")
 skeleton = NodePath("../..")
 
-[node name="Duck" type="MeshInstance3D" parent="Hand"]
+[node name="Duck" type="Node3D" parent="Hand"]
 visible = false
-material_override = SubResource("StandardMaterial3D_of0xi")
-mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/Duck"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_rfx4x")
-mesh = SubResource("QuadMesh_qgndq")
-skeleton = NodePath("../..")
+[node name="Root Scene" parent="Hand/Duck" instance=ExtResource("44_aekf8")]
+transform = Transform3D(9.895, 2.38419e-07, -9.53674e-07, 4.76837e-07, 9.895, -1.19209e-06, 9.53674e-07, 4.76837e-07, 9.895, 0.102, -0.484, 0.24)
 
 [node name="Sunkist" type="MeshInstance3D" parent="Hand"]
 visible = false

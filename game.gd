@@ -92,6 +92,7 @@ var enable_live_split = true
 @export var controls_text : Label
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioServer.set_bus_solo(6,false)
@@ -170,9 +171,10 @@ func _process(delta):
 		else:
 			collected_books_label.text = "Find a ELA book!"
 		leahy_speed = evil_leahy.SPEED
-		$EvilLeahy/SubViewport/skibidiCamera.global_position = evil_leahy.global_position + Vector3(0,7,0)
-		$EvilLeahy/SubViewport/skibidiCamera.global_rotation_degrees.x = -90
-		$EvilLeahy/SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
+		
+		$SubViewport/skibidiCamera.global_position = evil_leahy.global_position + Vector3(0,7,0)
+		$SubViewport/skibidiCamera.global_rotation_degrees.x = -90
+		$SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
 		
 		var clr:Color = $CanvasLayer2/SomeoneDid.get("theme_override_colors/font_color")
 		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.01))
