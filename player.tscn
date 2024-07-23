@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=97 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -47,6 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://cj17cyrw686mg" path="res://models/3d/Bucket.glb" id="43_4lnrl"]
 [ext_resource type="PackedScene" uid="uid://ba2vqcug0hgbe" path="res://models/3d/pizza.glb" id="43_at2br"]
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="44_aekf8"]
+[ext_resource type="PackedScene" uid="uid://dbg1vtcft7lws" path="res://models/3d/mtndew2.glb" id="44_ya082"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -269,16 +270,10 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
 viewport_path = NodePath("Minimap")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7sabk"]
-albedo_texture = ExtResource("14_sfn8x")
-
-[sub_resource type="QuadMesh" id="QuadMesh_qgndq"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nd3oy"]
-albedo_texture = ExtResource("14_sfn8x")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hao88"]
 albedo_texture = ExtResource("32_er28m")
+
+[sub_resource type="QuadMesh" id="QuadMesh_qgndq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5jp4"]
 albedo_texture = ExtResource("32_er28m")
@@ -316,6 +311,7 @@ target_position = Vector3(0, 0, -2.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="visual_body" type="Node3D" parent="."]
+visible = false
 
 [node name="Default" type="Node3D" parent="visual_body"]
 
@@ -1599,16 +1595,11 @@ visible = false
 [node name="pizza" parent="Hand/Pizza" instance=ExtResource("43_at2br")]
 transform = Transform3D(-0.388211, 0.205525, -0.0712483, -0.0583266, 0.0420665, 0.439151, 0.209559, 0.392447, -0.00975981, 0, 0, 0)
 
-[node name="Mtn Dew" type="MeshInstance3D" parent="Hand"]
+[node name="Mtn Dew" type="Node3D" parent="Hand"]
 visible = false
-material_override = SubResource("StandardMaterial3D_7sabk")
-mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/Mtn Dew"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_nd3oy")
-mesh = SubResource("QuadMesh_qgndq")
-skeleton = NodePath("../..")
+[node name="mtndew2" parent="Hand/Mtn Dew" instance=ExtResource("44_ya082")]
+transform = Transform3D(0.11, 0, 0, 0, 0.104497, -0.0343568, 0, 0.0343568, 0.104497, 0, 0, 0)
 
 [node name="Duck" type="Node3D" parent="Hand"]
 visible = false

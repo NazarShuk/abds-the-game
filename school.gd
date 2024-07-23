@@ -1,14 +1,15 @@
 @tool
 extends Node3D
 
+@export var debug_hide_ceiling = false
+
 func _ready():
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() and debug_hide_ceiling:
 
 		for child in $"FloorSpecial/not floor".get_children():
 			child.visible = false
 		$Navigation/StaticBody3D/MeshInstance3D2.visible = false
-	if not Engine.is_editor_hint():
-
+	else:
 		$Navigation/StaticBody3D/MeshInstance3D2.visible = true
 		for child in $"FloorSpecial/not floor".get_children():
 			child.visible = true

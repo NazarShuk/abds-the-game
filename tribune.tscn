@@ -2,8 +2,8 @@
 
 [ext_resource type="ArrayMesh" uid="uid://cywiqn1drgq1k" path="res://tribunes.res" id="1_cn4bf"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_uy8sv"]
-size = Vector3(15.1193, 6.76086, 11.2561)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_moa0g"]
+points = PackedVector3Array(1.15851, 7.25397, -8.77621, -1.12676, -1.12698, -3.19224, 1.15851, -1.12698, -3.19224, 1.15851, 4.96786, -15.127, -1.12676, 10.0476, -15.127, -1.12676, 3.19147, -0.906153, -1.12676, 4.96786, -15.127, 1.15851, 0.142957, 1.12539, 1.15851, 10.0476, -15.127, -1.12676, -1.12698, 1.12539, 1.15851, 3.19147, -0.906153, -1.12676, 10.0476, -14.3634, 1.15851, -1.12698, 1.12539, -1.12676, 0.142957, 1.12539, 1.15851, 10.0476, -14.3634, 1.15851, 0.905359, -7.25215, -1.12676, 7.25397, -8.77621, -1.12676, 0.905359, -7.25215)
 
 [node name="Tribune" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45909, 0, 17.4399)
@@ -13,5 +13,5 @@ transform = Transform3D(-2.51603e-07, 0, -0.950429, 0, 0.565, 0, 5.756, 0, -4.15
 mesh = ExtResource("1_cn4bf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7151, 2.88043, 0)
-shape = SubResource("BoxShape3D_uy8sv")
+transform = Transform3D(-2.51603e-07, 0, -0.950429, 0, 0.565, 0, 5.756, 0, -4.15446e-08, 0, 0.532, 0)
+shape = SubResource("ConvexPolygonShape3D_moa0g")

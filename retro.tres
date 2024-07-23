@@ -4,7 +4,7 @@
 
 [resource]
 shader = ExtResource("1_15r3v")
-shader_parameter/enabled = true
+shader_parameter/enabled = false
 shader_parameter/dithering = false
 shader_parameter/colors = 9
 shader_parameter/dither_size = 1

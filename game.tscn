@@ -57,7 +57,8 @@ sky_material = SubResource("ProceduralSkyMaterial_kvbmb")
 background_mode = 2
 sky = SubResource("Sky_bde40")
 tonemap_mode = 2
-glow_enabled = true
+ssil_enabled = true
+sdfgi_use_occlusion = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3nj22"]
 properties/0/path = NodePath(".:canPlayersMove")
