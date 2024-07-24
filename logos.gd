@@ -19,9 +19,6 @@ var logos = [
 
 
 func _ready():
-	
-	
-	
 	logos.shuffle()
 	AudioVolume.load_values_and_apply()
 
