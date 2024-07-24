@@ -43,7 +43,7 @@ var on_top_counter = 0
 
 var can_get_item = true
 
-@onready var camera_3d = $CanvasLayer2/SubViewportContainer/SubViewport/Camera3D
+@onready var camera_3d = $CanvasLayer2/SubViewportContainer/SubViewport/XROrigin3D/Camera3D
 @onready var minimap_cam = $Minimap/Camera3D
 
 var leahy_dst = 0
@@ -142,6 +142,7 @@ func _enter_tree():
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if is_multiplayer_authority():
+		$visual_body.hide()
 		
 		setup_voice(name.to_int())
 		var skins = $visual_body.get_children()
@@ -176,9 +177,25 @@ var can_use_coffee = true
 var hand_target_y = -0.5
 var can_toilet_tp = true
 
+const push_force = 1.0
+
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
+		
+		for index in range(get_slide_collision_count()):
+			var collision = get_slide_collision(index)
+			var collider = collision.get_collider()
+			
+			# If the collider is a RigidBody
+			if collider is RigidBody3D:
+				# Calculate the push direction
+				var push_direction = collision.get_normal()
+				
+				# Apply the force to the RigidBody
+				get_parent().push_item.rpc(collider.get_path(),push_direction,push_force)
+				#collider.apply_central_impulse(-push_direction * push_force)
+		
 		control_text_setters()
 		
 		$CanvasLayer/Control/Minimap.visible = is_minimap_open
@@ -220,7 +237,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			get_parent().toggle_power.rpc()
+			pick_item(7)
 			pass
 
 		if get_parent().game_started:
@@ -313,6 +330,12 @@ func _physics_process(delta):
 								$BreakerTimeout.start(get_parent().breaker_timeout)
 							if ray.get_collider().name == "Mr_Misuraca":
 								open_gambling()
+							
+							if ray.get_collider().name.begins_with("DroppedItem"):
+								var dropped_item = ray.get_collider().item
+								if get_cur_item() == -1:
+									pick_item(dropped_item)
+									get_parent().remove_dropped_item.rpc(ray.get_collider().get_path())
 							
 							if ray.get_collider().is_in_group("toilet"):
 								if !can_toilet_tp : return
@@ -433,6 +456,10 @@ func _physics_process(delta):
 				obj.rotation_degrees.z = 0
 
 		if Input.is_action_just_pressed("throw"):
+			if get_cur_item() != -1:
+				var cloned_item = $Hand.get_child(get_cur_item()).get_child(0).get_path()
+				get_parent().spawn_dropped_item.rpc($Hand.global_position,cloned_item,get_cur_item())
+			
 			pick_item(-1)
 
 		if get_parent().leahy_look:

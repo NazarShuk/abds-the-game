@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=100 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -47,7 +47,8 @@
 [ext_resource type="PackedScene" uid="uid://cj17cyrw686mg" path="res://models/3d/Bucket.glb" id="43_4lnrl"]
 [ext_resource type="PackedScene" uid="uid://ba2vqcug0hgbe" path="res://models/3d/pizza.glb" id="43_at2br"]
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="44_aekf8"]
-[ext_resource type="PackedScene" uid="uid://dbg1vtcft7lws" path="res://models/3d/mtndew2.glb" id="44_ya082"]
+[ext_resource type="PackedScene" uid="uid://davmjy5ym8p6a" path="res://models/3d/mtndew3.glb" id="44_ycg53"]
+[ext_resource type="Texture2D" uid="uid://w6amceri0f5d" path="res://mtndew real.png" id="45_777c7"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -270,6 +271,11 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
 viewport_path = NodePath("Minimap")
 
+[sub_resource type="QuadMesh" id="QuadMesh_5njm8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh8wd"]
+albedo_texture = ExtResource("45_777c7")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hao88"]
 albedo_texture = ExtResource("32_er28m")
 
@@ -311,7 +317,6 @@ target_position = Vector3(0, 0, -2.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="visual_body" type="Node3D" parent="."]
-visible = false
 
 [node name="Default" type="Node3D" parent="visual_body"]
 
@@ -610,7 +615,9 @@ use_occlusion_culling = true
 size = Vector2i(1280, 720)
 render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer2/SubViewportContainer/SubViewport"]
+[node name="XROrigin3D" type="XROrigin3D" parent="CanvasLayer2/SubViewportContainer/SubViewport"]
+
+[node name="Camera3D" type="XRCamera3D" parent="CanvasLayer2/SubViewportContainer/SubViewport/XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 cull_mask = 1048573
 far = 1000.0
@@ -1581,7 +1588,7 @@ transform = Transform3D(0.262507, 0.127587, -0.40597, 0.124941, 0.432868, 0.2168
 visible = false
 
 [node name="fruit snacks" parent="Hand/Fruit Snacks" instance=ExtResource("41_qfvdr")]
-transform = Transform3D(0.0949972, 0, 0.0312335, 0, 0.1, 0, -0.0312335, 0, 0.0949972, 0.0799663, -0.214143, 0.381425)
+transform = Transform3D(0.0949972, 0, 0.0062467, 0, 0.1, 0, -0.0312335, 0, 0.0189994, 0.0799663, -0.214143, 0.381425)
 
 [node name="Clorox Wipes" type="Node3D" parent="Hand"]
 visible = false
@@ -1598,8 +1605,13 @@ transform = Transform3D(-0.388211, 0.205525, -0.0712483, -0.0583266, 0.0420665, 
 [node name="Mtn Dew" type="Node3D" parent="Hand"]
 visible = false
 
-[node name="mtndew2" parent="Hand/Mtn Dew" instance=ExtResource("44_ya082")]
-transform = Transform3D(0.11, 0, 0, 0, 0.104497, -0.0343568, 0, 0.0343568, 0.104497, 0, 0, 0)
+[node name="mtndew3" parent="Hand/Mtn Dew" instance=ExtResource("44_ycg53")]
+transform = Transform3D(1.945, 0, 0, 0, 1.92052, -0.307617, 0, 0.307617, 1.92052, -0.246793, 0.130608, -0.118533)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hand/Mtn Dew/mtndew3"]
+transform = Transform3D(0.138039, -3.72529e-09, 0.0233476, 3.72529e-09, 0.14, 0, -0.0233476, -1.86265e-09, 0.138039, 0.034089, -0.15, 0.104613)
+mesh = SubResource("QuadMesh_5njm8")
+surface_material_override/0 = SubResource("StandardMaterial3D_mh8wd")
 
 [node name="Duck" type="Node3D" parent="Hand"]
 visible = false

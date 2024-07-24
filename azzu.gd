@@ -7,6 +7,8 @@ var SPEED = 15
 
 @export var server_target = false
 
+const push_force = 1.0
+
 func _physics_process(_delta):
 	if nav_agent.target_position:
 		var current_location = global_transform.origin
@@ -27,6 +29,20 @@ func _physics_process(_delta):
 		if distance < 5:
 			if multiplayer.is_server():
 				get_parent().azzu_steal.rpc(clorox.launcher)
+	
+	if multiplayer.is_server():
+		for index in range(get_slide_collision_count()):
+			var collision = get_slide_collision(index)
+			var collider = collision.get_collider()
+			
+			# If the collider is a RigidBody
+			if collider is RigidBody3D:
+				# Calculate the push direction
+				var push_direction = collision.get_normal()
+				
+				# Apply the force to the RigidBody
+				get_parent().push_item.rpc(collider.get_path(),push_direction,push_force)
+				#collider.apply_central_impulse(-push_direction * push_force)
 	
 	
 

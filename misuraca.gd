@@ -12,6 +12,8 @@ var init_pos : Vector3
 
 var angerer
 
+const push_force = 1.0
+
 func _ready():
 	init_pos = global_position
 
@@ -39,6 +41,20 @@ func _physics_process(_delta):
 			if multiplayer.is_server():
 				angerer = get_parent().get_node(NodePath(str(clorox.launcher)))
 				get_parent().info_text("Mr.Misuraca is angry")
+	
+	if multiplayer.is_server():
+		for index in range(get_slide_collision_count()):
+			var collision = get_slide_collision(index)
+			var collider = collision.get_collider()
+			
+			# If the collider is a RigidBody
+			if collider is RigidBody3D:
+				# Calculate the push direction
+				var push_direction = collision.get_normal()
+				
+				# Apply the force to the RigidBody
+				get_parent().push_item.rpc(collider.get_path(),push_direction,push_force)
+				#collider.apply_central_impulse(-push_direction * push_force)
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:

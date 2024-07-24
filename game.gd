@@ -1082,4 +1082,32 @@ func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 			get_node(str(p)).choose_item.rpc_id(p,bet_reward)
 		
 		$"Bet timer".stop()
+
+@rpc("any_peer","call_local")
+func spawn_dropped_item(pos,cloned_item,item_id):
+	if multiplayer.is_server():
+		var dropped_item = load("res://dropped_item.tscn").instantiate()
+		add_child(dropped_item,true)
+		dropped_item.global_position = pos
+		dropped_item.item = item_id
+		
+		add_item_to_dropped.rpc(dropped_item.get_path(),cloned_item)
+
+@rpc("authority","call_local")
+func add_item_to_dropped(dropped_item_path,item_path):
+	var clone = get_node(item_path).duplicate()
+		
+	get_node(dropped_item_path).add_child(clone)
 	
+	clone.position = Vector3(0,0,0)
+
+@rpc("any_peer","call_local")
+func remove_dropped_item(path):
+	if multiplayer.is_server():
+		get_node(path).queue_free()
+
+
+@rpc("any_peer","call_local")
+func push_item(collider,push_direction,push_force):
+	if multiplayer.is_server():
+		get_node(collider).apply_central_impulse(-push_direction * push_force)
