@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://40h3xkvclt2r"]
+[gd_scene load_steps=9 format=3 uid="uid://40h3xkvclt2r"]
 
 [ext_resource type="Texture2D" uid="uid://cyjrx1jiupvks" path="res://door1.png" id="1_u3j55"]
 
@@ -17,6 +17,9 @@ albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_cs6jd"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_anlyt"]
+size = Vector3(1, 1, 0.0466309)
+
 [node name="Door" type="MeshInstance3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_7nq2n")
@@ -32,3 +35,8 @@ mesh = SubResource("QuadMesh_ymgma")
 transform = Transform3D(0.50254, 0, 0, 0, 1, 0, 0, 0, 0.0846202, 0, 100, 0)
 material_override = SubResource("StandardMaterial3D_icgk0")
 mesh = SubResource("PlaneMesh_cs6jd")
+
+[node name="Door" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
+shape = SubResource("BoxShape3D_anlyt")

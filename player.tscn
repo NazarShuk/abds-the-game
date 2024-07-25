@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=95 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -40,7 +40,6 @@
 [ext_resource type="Shader" uid="uid://cc4qj1rais5l1" path="res://player.tres" id="36_3gf6v"]
 [ext_resource type="VideoStream" path="res://cool transition.ogv" id="36_ngsvh"]
 [ext_resource type="VideoStream" path="res://misuraca.ogv" id="36_rou35"]
-[ext_resource type="Texture2D" uid="uid://d1o76twd8v5ej" path="res://red_bull.png" id="40_y5awl"]
 [ext_resource type="PackedScene" uid="uid://ch0saed6qmuta" path="res://models/3d/fruit snacks.glb" id="41_qfvdr"]
 [ext_resource type="PackedScene" uid="uid://dm2im7sr2g0ks" path="res://models/3d/cloroxo.glb" id="42_mor3f"]
 [ext_resource type="PackedScene" uid="uid://cj17cyrw686mg" path="res://models/3d/Bucket.glb" id="43_4lnrl"]
@@ -49,6 +48,7 @@
 [ext_resource type="PackedScene" uid="uid://davmjy5ym8p6a" path="res://models/3d/mtndew3.glb" id="44_ycg53"]
 [ext_resource type="Texture2D" uid="uid://w6amceri0f5d" path="res://mtndew real.png" id="45_777c7"]
 [ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="47_f82oh"]
+[ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -275,14 +275,6 @@ viewport_path = NodePath("Minimap")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh8wd"]
 albedo_texture = ExtResource("45_777c7")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oy3w8"]
-albedo_texture = ExtResource("40_y5awl")
-
-[sub_resource type="QuadMesh" id="QuadMesh_qgndq"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_epfbt"]
-albedo_texture = ExtResource("40_y5awl")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_hkfs2"]
 
@@ -1619,16 +1611,11 @@ visible = false
 [node name="sunkist" parent="Hand/Sunkist" instance=ExtResource("47_f82oh")]
 transform = Transform3D(0.245, 0, 0, 0, 0.239557, -0.0513566, 0, 0.0513566, 0.239557, 0, 0.285, 0)
 
-[node name="Red Bull" type="MeshInstance3D" parent="Hand"]
+[node name="Red Bull" type="Node3D" parent="Hand"]
 visible = false
-material_override = SubResource("StandardMaterial3D_oy3w8")
-mesh = SubResource("QuadMesh_qgndq")
 
-[node name="Pizza2" type="MeshInstance3D" parent="Hand/Red Bull"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_epfbt")
-mesh = SubResource("QuadMesh_qgndq")
-skeleton = NodePath("../..")
+[node name="redbull3d" parent="Hand/Red Bull" instance=ExtResource("48_wpr2r")]
+transform = Transform3D(2.71, 0, 0, 0, 2.67589, -0.428608, 0, 0.428608, 2.67589, -0.087, 0.396, -0.119)
 
 [node name="Bucket 7" type="Node3D" parent="Hand"]
 visible = false

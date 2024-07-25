@@ -1,0 +1,125 @@
+[gd_scene load_steps=13 format=3 uid="uid://bylupyln8p7m8"]
+
+[ext_resource type="Script" path="res://evil leahy.gd" id="1_o0g30"]
+[ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmd6h"]
+albedo_texture = ExtResource("1_xr5qm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_vx4ir"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmbo2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uh2wh"]
+size = Vector3(0.0175781, 0.865234, 0.0390625)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_73hak"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rkeq3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7s3wy"]
+albedo_texture = ExtResource("1_xr5qm")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ijt1y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mye61"]
+albedo_color = Color(0, 0.572549, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xrylo"]
+radius = 0.125
+height = 0.25
+
+[node name="EvilLeahy" type="CharacterBody3D" groups=["enemies"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_o0g30")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_tmd6h")
+mesh = SubResource("QuadMesh_vx4ir")
+surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_tmd6h")
+mesh = SubResource("QuadMesh_vx4ir")
+surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_uh2wh")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_73hak")
+
+[node name="EvilLeahy" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EvilLeahy"]
+shape = SubResource("BoxShape3D_rkeq3")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.5, 0)
+material_override = SubResource("StandardMaterial3D_7s3wy")
+mesh = SubResource("PlaneMesh_ijt1y")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+visible = false
+material_override = SubResource("StandardMaterial3D_mye61")
+amount = 13
+mesh = SubResource("CapsuleMesh_xrylo")
+emission_shape = 3
+emission_box_extents = Vector3(0.75, 0.75, 0.75)
+gravity = Vector3(0, -3.045, 0)
+
+[node name="vision" type="Node3D" parent="."]
+
+[node name="RayCast3D" type="RayCast3D" parent="vision"]
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D2" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D3" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D4" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D5" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D6" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D7" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D8" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D9" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D10" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[node name="RayCast3D11" type="RayCast3D" parent="vision"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 0, 0, 0)
+target_position = Vector3(0, 0, 25)
+
+[connection signal="area_entered" from="EvilLeahy" to="." method="_on_evil_leahy_area_entered"]

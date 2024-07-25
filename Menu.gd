@@ -25,8 +25,6 @@ func toggle_menu():
 	
 
 	if visible == true:
-
-		
 		player.can_cam_move = !visible
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		if player.get_parent().players_in_lobby == 1:
@@ -35,8 +33,20 @@ func toggle_menu():
 				if enable_livesplit:
 					LiveSplit.pause()
 	else:
-		Input.mouse_mode = previous_mouse
-		player.can_cam_move = previous_cam
+		
+		if player.is_minimap_open:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			player.can_cam_move = false
+		elif player.is_shop_open:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			player.can_cam_move = false
+		elif $"../paper".visible:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			player.can_cam_move = false
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			player.can_cam_move = true
+		
 		get_tree().paused = false
 		if player.get_parent().total_books >= 1:
 			if enable_livesplit:

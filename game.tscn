@@ -1480,7 +1480,7 @@ gui_disable_input = true
 canvas_cull_mask = 4294967289
 
 [node name="skibidiCamera" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(-1, 1.56557e-08, -1.45851e-07, -2.26267e-08, 0.965926, 0.258819, 1.44933e-07, 0.258819, -0.965926, -0.385, 2.304, 1.865)
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, -0.385, 2.304, 1.865)
 cull_mask = 1048569
 projection = 1
 size = 15.0

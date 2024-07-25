@@ -91,8 +91,6 @@ var enable_live_split = true
 
 @export var controls_text : Label
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioServer.set_bus_solo(6,false)
@@ -656,7 +654,7 @@ func set_singleton(deaths,books,ending):
 	EndGameSingleton.deaths = deaths
 	EndGameSingleton.books_collected = books
 	
-	peer.close()
+	#peer.close()
 	if ending == "normal":
 		get_tree().change_scene_to_file("res://end.tscn")
 	elif ending == "worst":
@@ -675,6 +673,7 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_file("res://sadge.tscn")
 	else:
 		get_tree().change_scene_to_file("res://logos.tscn")
+	peer.close()
 
 @rpc("authority","call_local")
 func show_approaching_label():
@@ -795,6 +794,7 @@ func azzu_dont_steal():
 	
 @rpc("any_peer","call_local")
 func start_da_pacer(id):
+	if is_pacer: return
 	
 	# For everyone
 	$FakeFox/PacerTest.play()
@@ -1110,4 +1110,12 @@ func remove_dropped_item(path):
 @rpc("any_peer","call_local")
 func push_item(collider,push_direction,push_force):
 	if multiplayer.is_server():
-		get_node(collider).apply_central_impulse(-push_direction * push_force)
+		if get_node(collider):
+			get_node(collider).apply_central_impulse(-push_direction * push_force)
+
+@export var noise_points = []
+
+@rpc("any_peer","call_local")
+func add_noise_point(pos):
+	if multiplayer.is_server():
+		noise_points.append(pos)

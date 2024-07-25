@@ -237,7 +237,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			pick_item(7)
+			pick_item(6)
 			pass
 
 		if get_parent().game_started:
@@ -1043,6 +1043,7 @@ func open_gambling():
 		
 		$CanvasLayer/Control/paper.get_node(NodePath("gamble" + str(i + 1))).text = "if you get %s notebooks in %s seconds, i will give everyone a %s. If you don't, i will take %s books." % [g.books,g.time,$Hand.get_child(g.reward).name,g.loss]
 		get_parent().set_player_dead.rpc(name.to_int(), true,false)
+
 func close_gambling():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	can_cam_move = true
@@ -1051,15 +1052,15 @@ func close_gambling():
 
 
 func _on_gamblebtn_1_pressed():
-	get_parent().do_bet(steam_name,gamble[0].books,gamble[0].time,gamble[0].loss,gamble[0].reward,$Hand.get_child(gamble[0].reward).name)
+	get_parent().do_bet.rpc(steam_name,gamble[0].books,gamble[0].time,gamble[0].loss,gamble[0].reward,$Hand.get_child(gamble[0].reward).name)
 	close_gambling()
 
 
 func _on_gamblebtn_2_pressed():
-	get_parent().do_bet(steam_name,gamble[1].books,gamble[1].time,gamble[1].loss,gamble[1].reward,$Hand.get_child(gamble[1].reward).name)
+	get_parent().do_bet.rpc(steam_name,gamble[1].books,gamble[1].time,gamble[1].loss,gamble[1].reward,$Hand.get_child(gamble[1].reward).name)
 	close_gambling()
 
 
 func _on_gamblebtn_3_pressed():
-	get_parent().do_bet(steam_name,gamble[2].books,gamble[2].time,gamble[2].loss,gamble[2].reward,$Hand.get_child(gamble[2].reward).name)
+	get_parent().do_bet.rpc(steam_name,gamble[2].books,gamble[2].time,gamble[2].loss,gamble[2].reward,$Hand.get_child(gamble[2].reward).name)
 	close_gambling()

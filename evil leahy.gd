@@ -45,15 +45,14 @@ func _physics_process(_delta):
 				get_parent().push_item.rpc(collider.get_path(),push_direction,push_force)
 				#collider.apply_central_impulse(-push_direction * push_force)
 		
+		
+		
+		
 	move_and_slide()
-	
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:
 		nav_agent.target_position = target_location
-
-
-
 
 func _on_evil_leahy_area_entered(area):
 	if area.name == "puddle":
