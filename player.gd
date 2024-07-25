@@ -270,217 +270,17 @@ func _physics_process(delta):
 			is_running = true
 		elif Input.is_action_just_released("sprint"):
 			is_running = false
-
-		if get_parent().canPlayersMove:
-			if can_move and not is_suspended:
-				if can_cam_move:
-					var input_dir = Vector3.ZERO
-					input_dir.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
-					input_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-					
-					# Get the forward and right vectors of the character
-					var forward = global_transform.basis.z
-					var right = global_transform.basis.x
-					
-					# Calculate the movement direction in global space
-					var movement = (forward * input_dir.z + right * input_dir.x).normalized()
-					
-					if movement != Vector3.ZERO:
-						velocity.x = (movement * SPEED).x
-						velocity.z = (movement * SPEED).z
-						$AudioStreamPlayer3D.volume_db = 0
-						is_moving = true
-					else:
-						velocity.x = velocity.move_toward(Vector3.ZERO, SPEED).x
-						velocity.z = velocity.move_toward(Vector3.ZERO, SPEED).z
-						is_moving = false
-					
-					move_and_slide()
-					
-					# Update is_moving based on actual movement
-					if velocity.length() < 0.1:
-						is_moving = false
-					
-					if Input.is_action_just_pressed("interact"):
-						if ray.get_collider() != null and get_cur_item() == -1:
-							if ray.get_collider().is_in_group("vending_machine"):
-								get_parent().use_vending_machine.rpc(name.to_int(),ray.get_collider().name)
-							
-						if ray.get_collider() != null and get_parent().game_started:
-							print(ray.get_collider().name)
-							if ray.get_collider().is_in_group("shop"):
-								if !get_parent().enable_shop: return
-								open_shop()
-							if ray.get_collider().name == "CoffeMachine":
-								if !get_parent().enable_coffee: return
-								if !can_use_coffee: return
-								if boosts.has("coffee"):
-									boosts["coffee"] += 1
-								else:
-									boosts["coffee"] = 1
-								get_parent().play_coffee.rpc()
-								coffee_timeout()
-								can_use_coffee = false
-								$"Coffee timeout".start(get_parent().coffee_timeout)
-							if ray.get_collider().name == "Breaker":
-								if !can_use_breaker: return
-								if !get_parent().enable_breaker: return
-								get_parent().toggle_power.rpc()
-								can_use_breaker = false
-								$BreakerTimeout.start(get_parent().breaker_timeout)
-							if ray.get_collider().name == "Mr_Misuraca":
-								open_gambling()
-							
-							if ray.get_collider().name.begins_with("DroppedItem"):
-								var dropped_item = ray.get_collider().item
-								if get_cur_item() == -1:
-									pick_item(dropped_item)
-									get_parent().remove_dropped_item.rpc(ray.get_collider().get_path())
-							
-							if ray.get_collider().is_in_group("toilet"):
-								if !can_toilet_tp : return
-								var spawns = get_parent().get_node("Bathroom spawns").get_children()
-								
-								var farthest_dst = -1
-								var farthest_obj
-								
-								for spawn in spawns:
-									if global_position.distance_to(spawn.global_position) > farthest_dst:
-										farthest_dst = global_position.distance_to(spawn.global_position)
-										farthest_obj = spawn
-								can_toilet_tp = false
-								$ToiletTimeout.start()
-								$"CanvasLayer/Control/cool transition".show()
-								$"CanvasLayer/Control/cool transition".play()
-								await get_tree().create_timer(0.7).timeout
-								global_position = farthest_obj.global_position
-								await  get_tree().create_timer(0.7).timeout
-								$"CanvasLayer/Control/cool transition".hide()
-								play_sound.rpc("res://flush.mp3",5)
-							
-							if ray.get_collider():
-								if ray.get_collider().is_in_group("water fountain"):
-									if get_cur_item() == 7:
-										$"Hand/Bucket 7/Bucket/water".show()
-							if ray.get_collider():
-								if ray.get_collider().is_in_group("bucket"):
-									if get_cur_item() == -1:
-										pick_item(7)
-							
-					
-					if Input.is_action_just_pressed("give"):
-						if get_cur_item() == 3:
-							var evil_leahy = get_tree().get_first_node_in_group("enemies")
-							var distance = global_position.distance_to(evil_leahy.global_position)
-							
-							var fox = get_tree().get_first_node_in_group("fox")
-							var dist = global_position.distance_to(fox.global_position)
-							if dist < 20:
-								pick_item(-1)
-								get_parent().mr_fox_collect.rpc(false)
-							elif distance < 15:
-								pick_item(-1)
-								get_parent().appease_leahy.rpc(steam_name,5)
-						elif get_cur_item() == 5:
-							var evil_leahy = get_tree().get_first_node_in_group("enemies")
-							var distance = global_position.distance_to(evil_leahy.global_position)
-							
-							var fox = get_tree().get_first_node_in_group("fox")
-							var dist = global_position.distance_to(fox.global_position)
-							if dist < 30:
-								pick_item(-1)
-								get_parent().mr_fox_collect.rpc(true)
-							elif distance < 30:
-								pick_item(-1)
-								get_parent().appease_leahy.rpc(steam_name,15)
-						elif get_cur_item() == 6:
-							var evil_leahy = get_tree().get_first_node_in_group("enemies")
-							var distance = global_position.distance_to(evil_leahy.global_position)
-							
-							if distance < 10:
-								pick_item(-1)
-								get_parent().boost_leahy.rpc(steam_name)
-					
-					if Input.is_action_just_pressed("use_item"):
-						if get_cur_item() == 0:
-							pick_item(-1)
-							if boosts.has("fruit snacks"):
-								boosts["fruit snacks"] += 1
-							else:
-								boosts["fruit snacks"] = 1
-							fruit_snacks_timeout()
-						elif get_cur_item() == 1:
-							pick_item(-1)
-							spawn_clorox.rpc()
-						elif get_cur_item() == 2:
-							pick_item(-1)
-							velocity.y += 10
-							shart.rpc()
-						
-						elif get_cur_item() == 4:
-							
-							squeak.rpc()
-							pick_item(-1)
-							get_parent().start_da_pacer.rpc(name.to_int()) # i want to kms because of this
-						elif get_cur_item() == 6:
-							pick_item(-1)
-							if boosts.has("redbull"):
-								boosts["redbull"] += 2
-							else:
-								boosts["redbull"] = 2
-							redbull_timeout()
-							play_sound.rpc("res://redbull.mp3")
-						elif get_cur_item() == 7:
-							if $"Hand/Bucket 7/Bucket/water".visible:
-								$"Hand/Bucket 7/Bucket/water".visible = false
-								pick_item(-1)
-								play_sound.rpc("res://water.mp3")
-								get_parent().spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
-						
 		
-		
-		
+		movement()
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
 		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
-		
-		if can_run:
-			progress_bar.modulate = Color.WHITE
-		else:
-			progress_bar.modulate = Color.RED
-		
-		
 		if get_tree():
 			for obj: Node3D in get_tree().get_nodes_in_group("localface"):
 				obj.look_at(global_position)
 				obj.rotation_degrees.x = 0
 				obj.rotation_degrees.z = 0
 
-		if Input.is_action_just_pressed("throw"):
-			if get_cur_item() != -1:
-				var cloned_item = $Hand.get_child(get_cur_item()).get_child(0).get_path()
-				get_parent().spawn_dropped_item.rpc($Hand.global_position,cloned_item,get_cur_item())
-			
-			pick_item(-1)
 
-		if get_parent().leahy_look:
-			var target = get_tree().get_nodes_in_group("enemies")[0].global_position
-
-			look_at(target)
-			global_rotation_degrees.x = 0
-			global_rotation_degrees.z = 0
-			
-			cam_fov = 10
-		
-		if get_parent().pacer_deadly:
-			var dst = global_position.distance_to(get_parent().get_node("FakeFox").global_position)
-			if dst > 5:
-				$CanvasLayer/Control/Control.show()
-			else:
-				$CanvasLayer/Control/Control.hide()
-			
-			if dst > 10:
-				die("fox")
-				$CanvasLayer/Control/Control.hide()
 				
 		camera_3d.current = true
 		camera_3d.global_transform = $"Camera target".global_transform
@@ -871,9 +671,6 @@ func _on_buy_book_pressed():
 		a.bus = "Dialogs"
 		a.play()
 
-
-
-
 func _on_buy_duck_pressed():
 	if credits >= 10:
 		credits -= 10
@@ -956,6 +753,8 @@ func _on_stamina_flash_timeout():
 	else:
 		progress_bar_handler.visible = true
 
+# INFOTEXT
+
 func control_text_setters():
 	var looking_at = ray.get_collider()
 	
@@ -1024,6 +823,8 @@ func _on_toilet_timeout_timeout():
 func _on_puddle_timeout():
 	boosts["puddle"] = 0
 
+# GAMBLING
+
 var gamble = []
 
 func open_gambling():
@@ -1064,3 +865,203 @@ func _on_gamblebtn_2_pressed():
 func _on_gamblebtn_3_pressed():
 	get_parent().do_bet.rpc(steam_name,gamble[2].books,gamble[2].time,gamble[2].loss,gamble[2].reward,$Hand.get_child(gamble[2].reward).name)
 	close_gambling()
+
+# MOVEMENT
+
+func movement():
+	
+	if can_run:
+		progress_bar.modulate = Color.WHITE
+	else:
+		progress_bar.modulate = Color.RED
+	
+	if get_parent().canPlayersMove:
+		if can_move and not is_suspended:
+			if can_cam_move:
+				var input_dir = Vector3.ZERO
+				input_dir.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
+				input_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+				
+				# Get the forward and right vectors of the character
+				var forward = global_transform.basis.z
+				var right = global_transform.basis.x
+				
+				# Calculate the movement direction in global space
+				var movement = (forward * input_dir.z + right * input_dir.x).normalized()
+				
+				if movement != Vector3.ZERO:
+					velocity.x = (movement * SPEED).x
+					velocity.z = (movement * SPEED).z
+					$AudioStreamPlayer3D.volume_db = 0
+					is_moving = true
+				else:
+					velocity.x = velocity.move_toward(Vector3.ZERO, SPEED).x
+					velocity.z = velocity.move_toward(Vector3.ZERO, SPEED).z
+					is_moving = false
+				
+				move_and_slide()
+				
+				# Update is_moving based on actual movement
+				if velocity.length() < 0.1:
+					is_moving = false
+				
+				if Input.is_action_just_pressed("interact"):
+					if ray.get_collider() != null and get_cur_item() == -1:
+						if ray.get_collider().is_in_group("vending_machine"):
+							get_parent().use_vending_machine.rpc(name.to_int(),ray.get_collider().name)
+						
+					if ray.get_collider() != null and get_parent().game_started:
+						print(ray.get_collider().name)
+						if ray.get_collider().is_in_group("shop"):
+							if !get_parent().enable_shop: return
+							open_shop()
+						if ray.get_collider().name == "CoffeMachine":
+							if !get_parent().enable_coffee: return
+							if !can_use_coffee: return
+							if boosts.has("coffee"):
+								boosts["coffee"] += 1
+							else:
+								boosts["coffee"] = 1
+							get_parent().play_coffee.rpc()
+							coffee_timeout()
+							can_use_coffee = false
+							$"Coffee timeout".start(get_parent().coffee_timeout)
+						if ray.get_collider().name == "Breaker":
+							if !can_use_breaker: return
+							if !get_parent().enable_breaker: return
+							get_parent().toggle_power.rpc()
+							can_use_breaker = false
+							$BreakerTimeout.start(get_parent().breaker_timeout)
+						if ray.get_collider().name == "Mr_Misuraca":
+							open_gambling()
+						
+						if ray.get_collider().name.begins_with("DroppedItem"):
+							var dropped_item = ray.get_collider().item
+							if get_cur_item() == -1:
+								pick_item(dropped_item)
+								get_parent().remove_dropped_item.rpc(ray.get_collider().get_path())
+						
+						if ray.get_collider().is_in_group("toilet"):
+							if !can_toilet_tp : return
+							var spawns = get_parent().get_node("Bathroom spawns").get_children()
+							
+							var farthest_dst = -1
+							var farthest_obj
+							
+							for spawn in spawns:
+								if global_position.distance_to(spawn.global_position) > farthest_dst:
+									farthest_dst = global_position.distance_to(spawn.global_position)
+									farthest_obj = spawn
+							can_toilet_tp = false
+							$ToiletTimeout.start()
+							$"CanvasLayer/Control/cool transition".show()
+							$"CanvasLayer/Control/cool transition".play()
+							await get_tree().create_timer(0.7).timeout
+							global_position = farthest_obj.global_position
+							await  get_tree().create_timer(0.7).timeout
+							$"CanvasLayer/Control/cool transition".hide()
+							play_sound.rpc("res://flush.mp3",5)
+						
+						if ray.get_collider():
+							if ray.get_collider().is_in_group("water fountain"):
+								if get_cur_item() == 7:
+									$"Hand/Bucket 7/Bucket/water".show()
+						if ray.get_collider():
+							if ray.get_collider().is_in_group("bucket"):
+								if get_cur_item() == -1:
+									pick_item(7)
+						
+				
+				if Input.is_action_just_pressed("give"):
+					if get_cur_item() == 3:
+						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var distance = global_position.distance_to(evil_leahy.global_position)
+						
+						var fox = get_tree().get_first_node_in_group("fox")
+						var dist = global_position.distance_to(fox.global_position)
+						if dist < 20:
+							pick_item(-1)
+							get_parent().mr_fox_collect.rpc(false)
+						elif distance < 15:
+							pick_item(-1)
+							get_parent().appease_leahy.rpc(steam_name,5)
+					elif get_cur_item() == 5:
+						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var distance = global_position.distance_to(evil_leahy.global_position)
+						
+						var fox = get_tree().get_first_node_in_group("fox")
+						var dist = global_position.distance_to(fox.global_position)
+						if dist < 30:
+							pick_item(-1)
+							get_parent().mr_fox_collect.rpc(true)
+						elif distance < 30:
+							pick_item(-1)
+							get_parent().appease_leahy.rpc(steam_name,15)
+					elif get_cur_item() == 6:
+						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var distance = global_position.distance_to(evil_leahy.global_position)
+						
+						if distance < 10:
+							pick_item(-1)
+							get_parent().boost_leahy.rpc(steam_name)
+				
+				if Input.is_action_just_pressed("use_item"):
+					if get_cur_item() == 0:
+						pick_item(-1)
+						if boosts.has("fruit snacks"):
+							boosts["fruit snacks"] += 1
+						else:
+							boosts["fruit snacks"] = 1
+						fruit_snacks_timeout()
+					elif get_cur_item() == 1:
+						pick_item(-1)
+						spawn_clorox.rpc()
+					elif get_cur_item() == 2:
+						pick_item(-1)
+						velocity.y += 10
+						shart.rpc()
+					
+					elif get_cur_item() == 4:
+						
+						squeak.rpc()
+						pick_item(-1)
+						get_parent().start_da_pacer.rpc(name.to_int()) # i want to kms because of this
+					elif get_cur_item() == 6:
+						pick_item(-1)
+						if boosts.has("redbull"):
+							boosts["redbull"] += 2
+						else:
+							boosts["redbull"] = 2
+						redbull_timeout()
+						play_sound.rpc("res://redbull.mp3")
+					elif get_cur_item() == 7:
+						if $"Hand/Bucket 7/Bucket/water".visible:
+							$"Hand/Bucket 7/Bucket/water".visible = false
+							pick_item(-1)
+							play_sound.rpc("res://water.mp3")
+							get_parent().spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
+	
+	if Input.is_action_just_pressed("throw"):
+		if get_cur_item() != -1:
+			var cloned_item = $Hand.get_child(get_cur_item()).get_child(0).get_path()
+			get_parent().spawn_dropped_item.rpc($Hand.global_position,cloned_item,get_cur_item())
+		
+		pick_item(-1)
+	if get_parent().leahy_look:
+		var target = get_tree().get_nodes_in_group("enemies")[0].global_position
+		look_at(target)
+		global_rotation_degrees.x = 0
+		global_rotation_degrees.z = 0
+		
+		cam_fov = 10
+	
+	if get_parent().pacer_deadly:
+		var dst = global_position.distance_to(get_parent().get_node("FakeFox").global_position)
+		if dst > 5:
+			$CanvasLayer/Control/Control.show()
+		else:
+			$CanvasLayer/Control/Control.hide()
+		
+		if dst > 10:
+			die("fox")
+			$CanvasLayer/Control/Control.hide()
