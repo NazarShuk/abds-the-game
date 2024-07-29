@@ -1,26 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx7itjqsyc1xu"]
+[gd_scene load_steps=5 format=3 uid="uid://cx7itjqsyc1xu"]
 
-[ext_resource type="Texture2D" uid="uid://dmrvkb3hoqxvd" path="res://breaker.png" id="1_7l76w"]
 [ext_resource type="Script" path="res://breaker.gd" id="1_m5dcq"]
 [ext_resource type="AudioStream" uid="uid://i2dkw33jamoi" path="res://breaker.mp3" id="2_blw3u"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2s62"]
-albedo_texture = ExtResource("1_7l76w")
-
-[sub_resource type="QuadMesh" id="QuadMesh_3h5tg"]
+[ext_resource type="PackedScene" uid="uid://dpwcylt8vvrkv" path="res://models/3d/Fuse Box.glb" id="3_knyfq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5libq"]
-size = Vector3(1, 1.38281, 0.191406)
+size = Vector3(1.22998, 0.818846, 0.191406)
 
 [node name="Breaker" type="StaticBody3D"]
 script = ExtResource("1_m5dcq")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1.34341, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_i2s62")
-mesh = SubResource("QuadMesh_3h5tg")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11499, 0.281982, 0)
 shape = SubResource("BoxShape3D_5libq")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
@@ -38,5 +29,8 @@ bus = &"Dialogs"
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="Fuse Box" parent="." instance=ExtResource("3_knyfq")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0032116, 0.355725, 0)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

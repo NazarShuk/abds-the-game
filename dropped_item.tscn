@@ -16,7 +16,7 @@ properties/2/path = NodePath(".:item")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="DroppedItem" type="RigidBody3D"]
+[node name="DroppedItem" type="RigidBody3D" groups=["dropped_item"]]
 mass = 0.25
 script = ExtResource("1_abqcx")
 
@@ -25,3 +25,10 @@ shape = SubResource("SphereShape3D_gbdem")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_aee1h")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

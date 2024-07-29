@@ -114,6 +114,8 @@ var music_pitch_target = 1
 var music_pitch_boost = 1
 
 
+var expired_items = []
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
@@ -139,8 +141,22 @@ func _process(delta):
 					else:
 						broken_vending_machines.append(vm)
 		
-		
-		
+		if expired_items.size() > 0:
+			
+			var closest_item = null
+			var closetst_distance = INF
+			
+			for item in expired_items:
+				var dst = mr_azzu.global_position.distance_to(get_node(item).global_position) 
+				if dst < closetst_distance:
+					closetst_distance = dst
+					closest_item = item
+			
+			mr_azzu.server_target = true
+			var exp_item = get_node(closest_item)
+			mr_azzu.update_target_location(exp_item.global_position)
+			if mr_azzu.global_position.distance_to(exp_item.global_position) < 1:
+				exp_item.queue_free()
 		
 		if broken_vending_machines.size() > 0:
 			$Mr_Misuraca.update_target_location(broken_vending_machines[0].global_position)

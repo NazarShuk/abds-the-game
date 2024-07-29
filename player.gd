@@ -237,7 +237,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			pick_item(6)
+			#pick_item(6)
 			pass
 
 		if get_parent().game_started:
@@ -392,6 +392,7 @@ func _on_revive_timer_timeout():
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = true
 	$CollisionShape3D.disabled = false
+	close_gambling(false)
 
 func pick_item(item: int):
 	for i in $Hand.get_children().size():
@@ -845,11 +846,12 @@ func open_gambling():
 		$CanvasLayer/Control/paper.get_node(NodePath("gamble" + str(i + 1))).text = "if you get %s notebooks in %s seconds, i will give everyone a %s. If you don't, i will take %s books." % [g.books,g.time,$Hand.get_child(g.reward).name,g.loss]
 		get_parent().set_player_dead.rpc(name.to_int(), true,false)
 
-func close_gambling():
+func close_gambling(do_deaths = true):
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	can_cam_move = true
 	$CanvasLayer/Control/paper.hide()
-	get_parent().set_player_dead.rpc(name.to_int(), false,false)
+	if do_deaths:
+		get_parent().set_player_dead.rpc(name.to_int(), false,false)
 
 
 func _on_gamblebtn_1_pressed():
@@ -1065,3 +1067,7 @@ func movement():
 		if dst > 10:
 			die("fox")
 			$CanvasLayer/Control/Control.hide()
+
+
+func _on_button_pressed():
+	close_gambling()

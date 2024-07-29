@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=94 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -45,10 +45,10 @@
 [ext_resource type="PackedScene" uid="uid://cj17cyrw686mg" path="res://models/3d/Bucket.glb" id="43_4lnrl"]
 [ext_resource type="PackedScene" uid="uid://ba2vqcug0hgbe" path="res://models/3d/pizza.glb" id="43_at2br"]
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="44_aekf8"]
-[ext_resource type="PackedScene" uid="uid://davmjy5ym8p6a" path="res://models/3d/mtndew3.glb" id="44_ycg53"]
-[ext_resource type="Texture2D" uid="uid://w6amceri0f5d" path="res://mtndew real.png" id="45_777c7"]
+[ext_resource type="PackedScene" uid="uid://du3qk3pgny2hf" path="res://models/3d/mtndewfinal.glb" id="44_jqyrq"]
 [ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="47_f82oh"]
 [ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
+[ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -268,13 +268,11 @@ radius = 1.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mp62"]
 bg_color = Color(1, 1, 1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4sv6d"]
+bg_color = Color(1, 1, 1, 0)
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
 viewport_path = NodePath("Minimap")
-
-[sub_resource type="QuadMesh" id="QuadMesh_5njm8"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh8wd"]
-albedo_texture = ExtResource("45_777c7")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_hkfs2"]
 
@@ -1193,13 +1191,32 @@ expand_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_right = -161.0
 offset_bottom = 52.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 36
-text = "mr.misuraca's gambling"
+text = "mr.misuraca's bet"
 horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/paper"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -38.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_4sv6d")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4sv6d")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4sv6d")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4sv6d")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4sv6d")
+text = "X"
 
 [node name="gamble1" type="Label" parent="CanvasLayer/Control/paper"]
 layout_mode = 1
@@ -1591,13 +1608,8 @@ transform = Transform3D(-0.388211, 0.205525, -0.0712483, -0.0583266, 0.0420665, 
 [node name="Mtn Dew" type="Node3D" parent="Hand"]
 visible = false
 
-[node name="mtndew3" parent="Hand/Mtn Dew" instance=ExtResource("44_ycg53")]
-transform = Transform3D(2.71, 0, 0, 0, 2.67589, -0.428608, 0, 0.428608, 2.67589, -0.087, 0.396, -0.119)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Hand/Mtn Dew/mtndew3"]
-transform = Transform3D(0.138039, -3.72529e-09, 0.0233476, 3.72529e-09, 0.14, 0, -0.0233476, -1.86265e-09, 0.138039, 0.034089, -0.15, 0.104613)
-mesh = SubResource("QuadMesh_5njm8")
-surface_material_override/0 = SubResource("StandardMaterial3D_mh8wd")
+[node name="mtndewfinal" parent="Hand/Mtn Dew" instance=ExtResource("44_jqyrq")]
+transform = Transform3D(1.92593, -0.109245, 1.90341, 0.366605, 2.67628, -0.217339, -1.87096, 0.411947, 1.91674, -0.087, 0.396, -0.119)
 
 [node name="Duck" type="Node3D" parent="Hand"]
 visible = false
@@ -1615,7 +1627,7 @@ transform = Transform3D(0.245, 0, 0, 0, 0.239557, -0.0513566, 0, 0.0513566, 0.23
 visible = false
 
 [node name="redbull3d" parent="Hand/Red Bull" instance=ExtResource("48_wpr2r")]
-transform = Transform3D(2.71, 0, 0, 0, 2.67589, -0.428608, 0, 0.428608, 2.67589, -0.087, 0.396, -0.119)
+transform = Transform3D(1.92593, -0.109245, 1.90341, 0.366605, 2.67628, -0.217339, -1.87096, 0.411947, 1.91674, -0.087, 0.396, -0.119)
 
 [node name="Bucket 7" type="Node3D" parent="Hand"]
 visible = false
@@ -1628,6 +1640,13 @@ transform = Transform3D(2.07, 9.31323e-10, 0, -1.19209e-07, 0.11, 0, 3.57628e-07
 visible = false
 mesh = SubResource("CylinderMesh_hkfs2")
 surface_material_override/0 = SubResource("StandardMaterial3D_6bk8m")
+
+[node name="Mtn Dew Baja" type="Node3D" parent="Hand"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, -1.49012e-08, 2.98023e-08, 0, 1, 0, 0, 0)
+visible = false
+
+[node name="mtndewbajamod" parent="Hand/Mtn Dew Baja" instance=ExtResource("49_uh1ld")]
+transform = Transform3D(1.92593, -0.109245, 1.90341, 0.366605, 2.67628, -0.217339, -1.87096, 0.411947, 1.91674, -0.0870001, 0.396, -0.119)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
@@ -1683,6 +1702,7 @@ far = 100.0
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy duck" to="." method="_on_buy_duck_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/Button" to="." method="close_shop"]
 [connection signal="timeout" from="CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/Control/paper/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn1" to="." method="_on_gamblebtn_1_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn2" to="." method="_on_gamblebtn_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn3" to="." method="_on_gamblebtn_3_pressed"]

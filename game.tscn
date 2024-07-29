@@ -2029,7 +2029,7 @@ stream = ExtResource("35_ir6cm")
 bus = &"Dialogs"
 
 [node name="Breaker" parent="." node_paths=PackedStringArray("game") instance=ExtResource("36_j44h3")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 50.7154, 1.71703, -1.16068)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 50.7154, 1.2029, -1.13751)
 game = NodePath("..")
 yellow_light = Color(1, 1, 0.447059, 1)
 red_light = Color(0.999748, 0.245733, 0.188282, 1)
