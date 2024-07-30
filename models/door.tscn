@@ -1,14 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://40h3xkvclt2r"]
+[gd_scene load_steps=7 format=3 uid="uid://40h3xkvclt2r"]
 
-[ext_resource type="Texture2D" uid="uid://cyjrx1jiupvks" path="res://door1.png" id="1_u3j55"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7nq2n"]
-albedo_texture = ExtResource("1_u3j55")
-
-[sub_resource type="QuadMesh" id="QuadMesh_w5axy"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccax6"]
-albedo_texture = ExtResource("1_u3j55")
+[ext_resource type="Script" path="res://models/door.gd" id="1_5tv56"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_ymgma"]
 
@@ -18,21 +10,30 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_cs6jd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_anlyt"]
-size = Vector3(1, 1, 0.0466309)
+size = Vector3(1, 1, 2.35156)
 
-[node name="Door" type="MeshInstance3D"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_77bgg"]
+properties/0/path = NodePath(".:is_open")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="Door" type="Node3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_7nq2n")
-cast_shadow = 0
-mesh = SubResource("QuadMesh_w5axy")
+script = ExtResource("1_5tv56")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_ccax6")
+layers = 524288
+mesh = SubResource("QuadMesh_ymgma")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+layers = 524288
 mesh = SubResource("QuadMesh_ymgma")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.50254, 0, 0, 0, 1, 0, 0, 0, 0.0846202, 0, 100, 0)
+layers = 524288
 material_override = SubResource("StandardMaterial3D_icgk0")
 mesh = SubResource("PlaneMesh_cs6jd")
 
@@ -40,3 +41,6 @@ mesh = SubResource("PlaneMesh_cs6jd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
 shape = SubResource("BoxShape3D_anlyt")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_77bgg")

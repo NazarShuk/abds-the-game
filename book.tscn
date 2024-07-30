@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://v2iinasnnnjg"]
+[gd_scene load_steps=12 format=3 uid="uid://v2iinasnnnjg"]
 
 [ext_resource type="Texture2D" uid="uid://cop2rccne3feg" path="res://ela book.png" id="1_ppkux"]
+[ext_resource type="Texture2D" uid="uid://cilpn5pgdsjbk" path="res://models/3d/book.png" id="2_kekwu"]
+[ext_resource type="ArrayMesh" uid="uid://cbs8b83a63gka" path="res://models/3d/book.obj" id="2_t20i5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qmt1q"]
 size = Vector3(1.1684, 1, 1)
@@ -73,6 +75,9 @@ albedo_texture = ExtResource("1_ppkux")
 
 [sub_resource type="QuadMesh" id="QuadMesh_drc1m"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4c7m"]
+albedo_texture = ExtResource("2_kekwu")
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jdh3v"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -95,6 +100,7 @@ autoplay = "spin"
 [node name="Meshes" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Meshes"]
+visible = false
 layers = 4
 material_override = SubResource("StandardMaterial3D_1kx2u")
 mesh = SubResource("QuadMesh_drc1m")
@@ -102,9 +108,16 @@ skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Meshes"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+visible = false
 layers = 4
 material_override = SubResource("StandardMaterial3D_1kx2u")
 mesh = SubResource("QuadMesh_drc1m")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.04, 0, 0, 0, -1.74846e-09, -0.04, 0, 0.04, -1.74846e-09, 0, 0, -0.0885955)
+material_override = SubResource("StandardMaterial3D_u4c7m")
+mesh = ExtResource("2_t20i5")
 skeleton = NodePath("../..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

@@ -1,4 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c176sfrtxowxt"]
+[gd_scene load_steps=9 format=3 uid="uid://c176sfrtxowxt"]
+
+[ext_resource type="Script" path="res://puddle.gd" id="1_x4fni"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_don47"]
 height = 0.1
@@ -35,7 +37,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(3, 3, 3)]
+"values": [Vector3(0.01, 0.01, 0.01), Vector3(3, 3, 3)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k5dnd"]
@@ -46,7 +48,13 @@ _data = {
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_luqud"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jq3ew"]
+properties/0/path = NodePath(".:can_slowdown")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="Puddle" type="Node3D"]
+script = ExtResource("1_x4fni")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_don47")
@@ -62,3 +70,13 @@ autoplay = "grow"
 
 [node name="puddle" type="CollisionShape3D" parent="puddle"]
 shape = SubResource("BoxShape3D_luqud")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jq3ew")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

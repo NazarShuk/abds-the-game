@@ -91,6 +91,8 @@ var enable_live_split = true
 
 @export var controls_text : Label
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioServer.set_bus_solo(6,false)
@@ -115,6 +117,9 @@ var music_pitch_boost = 1
 
 
 var expired_items = []
+
+var is_leahy_baja_blast = false
+var leahy_baja_timer = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -223,28 +228,53 @@ func _process(delta):
 	if game_started and multiplayer.is_server() and !absent:
 		if !leahy_appeased:
 			if !is_powered_off:
-				var closest = null
-				var closest_distance = INF
-				
-				for p in players_ids:
-					if !players[p].is_dead:
-						var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
-						
-						update_approching_label.rpc_id(p,distance)
+				if !is_leahy_baja_blast:
+					var closest = null
+					var closest_distance = INF
 					
-						if distance < closest_distance:
-							closest = get_node(str(p)).global_position
-							closest_distance = distance
-							show_approaching_label.rpc_id(p)
+					for p in players_ids:
+						if !players[p].is_dead:
+							var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
+							
+							update_approching_label.rpc_id(p,distance)
+						
+							if distance < closest_distance:
+								closest = get_node(str(p)).global_position
+								closest_distance = distance
+								show_approaching_label.rpc_id(p)
+							else:
+								hide_approaching_label.rpc_id(p)
 						else:
 							hide_approaching_label.rpc_id(p)
+					
+					if closest:
+						evil_leahy.update_target_location(closest)
 					else:
-						hide_approaching_label.rpc_id(p)
-				
-				if closest:
-					evil_leahy.update_target_location(closest)
+						evil_leahy.update_target_location(evil_leahy.global_position)
 				else:
-					evil_leahy.update_target_location(evil_leahy.global_position)
+					# baja blast
+					
+					var bathrooms = $"Bathroom spawns".get_children()
+					
+					var clst_dist = INF
+					var clst_bathroom = null
+					
+					for bathroom : Node3D in bathrooms:
+						var dst = evil_leahy.global_position.distance_to(bathroom.global_position)
+						if dst < clst_dist:
+							clst_dist = dst
+							clst_bathroom = bathroom
+					
+					evil_leahy.update_target_location(clst_bathroom.global_position)
+					
+					if clst_dist < 5 && leahy_baja_timer <= 15:
+						leahy_baja_timer += delta
+						print(leahy_baja_timer)
+					
+					if leahy_baja_timer >= 15:
+						is_leahy_baja_blast = false
+						leahy_baja_timer = 0
+					
 			else:
 				evil_leahy.update_target_location($Breaker.global_position)
 				hide_approaching_label.rpc()
@@ -517,13 +547,22 @@ func split_for_everyone():
 func use_vending_machine(id,machine_name):
 	if !multiplayer.is_server(): return
 	var vending_machine = get_node("School/Navigation").get_node(NodePath(machine_name))
+	if !vending_machine: return
+	
 	if game_started:
 		for child in get_children():
 			if child.name == str(id):
 				if vending_machine.uses_left >= 0:
-					child.choose_item.rpc_id(id,-1)
-					vending_machine.uses_left -= 1
+					if vending_machine.override_drops:
+						var item = pick_random_weighted(vending_machine.overriden_drops)
+						
+						child.choose_item.rpc_id(id,item)
+						vending_machine.uses_left -= 1
+					else:
+						child.choose_item.rpc_id(id,-1)
+						vending_machine.uses_left -= 1
 					break
+	
 	else:
 		for child in get_children():
 			if child.name == str(id):
@@ -531,6 +570,25 @@ func use_vending_machine(id,machine_name):
 					child.choose_item.rpc_id(id,2)
 					vending_machine.uses_left -= 1
 					break
+
+func pick_random_weighted(items_chances: Dictionary) -> Variant:
+	# Calculate the total weight
+	var total_weight = 0.0
+	for weight in items_chances.values():
+		total_weight += weight
+	
+	# Pick a random value within the range of total_weight
+	var random_value = randf() * total_weight
+	var cumulative_weight = 0.0
+	
+	# Iterate through the dictionary to find the item
+	for item in items_chances.keys():
+		cumulative_weight += items_chances[item]
+		if random_value <= cumulative_weight:
+			return item
+	
+	# Fallback in case of rounding errors
+	return items_chances.keys()[-1]
 
 @rpc("authority","call_local")
 func start_da_game():
@@ -544,6 +602,7 @@ func start_da_game():
 
 	$grrrrrr.play()
 	$EvilLeahy/AudioStreamPlayer3D.play()
+
 	
 	if multiplayer.is_server():
 		if !debug_host or !Allsingleton.non_steam:
@@ -879,6 +938,7 @@ func _on_pacer_speed_increase_timeout():
 func _on_leahy_pos_diff_timeout():
 	if !multiplayer.has_multiplayer_peer(): return
 	if !multiplayer.is_server(): return
+	if is_leahy_baja_blast: return
 	
 	leahy_diff = evil_leahy.global_position.distance_to(leahy_last_pos)
 	leahy_last_pos = evil_leahy.global_position
@@ -1120,7 +1180,8 @@ func add_item_to_dropped(dropped_item_path,item_path):
 @rpc("any_peer","call_local")
 func remove_dropped_item(path):
 	if multiplayer.is_server():
-		get_node(path).queue_free()
+		if get_node(path):
+			get_node(path).queue_free()
 
 
 @rpc("any_peer","call_local")
@@ -1135,3 +1196,17 @@ func push_item(collider,push_direction,push_force):
 func add_noise_point(pos):
 	if multiplayer.is_server():
 		noise_points.append(pos)
+
+@rpc("any_peer","call_local")
+func do_baja(steam_name):
+	is_leahy_baja_blast = true
+	info_text(steam_name + " gave Ms.Leahy baja blast...")
+
+@rpc("any_peer","call_local")
+func set_door_state(door_path,open):
+	if multiplayer.is_server():
+		if get_node(door_path):
+			get_node(door_path).set_open(open)
+@rpc("any_peer","call_local")
+func play_the_j():
+	$Videoplayer.play()

@@ -122,6 +122,8 @@ func process_voice():
 		playback.push_frame(Vector2(receive_buffer[0],receive_buffer[0]))
 		receive_buffer.remove_at(0)
 
+var parent = null
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	if !Allsingleton.non_steam:
@@ -138,6 +140,7 @@ func _enter_tree():
 		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_3d = true
 		$CanvasLayer2.process_mode = Node.PROCESS_MODE_INHERIT
 		#$Local.stream_mix_rate = float(current_sample_rate)
+		parent = get_parent()
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -182,6 +185,8 @@ const push_force = 1.0
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
+		
+		update_item_weights()
 		
 		for index in range(get_slide_collision_count()):
 			var collision = get_slide_collision(index)
@@ -237,7 +242,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(get_parent().get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			#pick_item(6)
+			pick_item(8)
 			pass
 
 		if get_parent().game_started:
@@ -310,6 +315,15 @@ func toilet_tp_timeout():
 	await get_tree().create_timer(60).timeout
 	can_toilet_tp = true
 
+func baja_timeout():
+	await get_tree().create_timer(7.5).timeout
+	boosts["baja"] -= 4.5
+	baja_slow_timeout()
+
+func baja_slow_timeout():
+	await get_tree().create_timer(15).timeout
+	boosts["baja"] += 0.5
+
 var is_in_leahy = false
 
 func _on_area_3d_area_entered(area):
@@ -339,6 +353,7 @@ func _on_area_3d_area_entered(area):
 	elif area.name == "gainy":
 		get_parent().stop_gainy.rpc(name.to_int())
 	elif area.name == "puddle":
+		if !area.get_parent().can_slowdown: return
 		if boosts.has("puddle"):
 			boosts["puddle"] -= 0.5
 		else:
@@ -348,6 +363,14 @@ func _on_area_3d_area_entered(area):
 		if area.get_parent().is_angry == true:
 			die("misuraca")
 			get_parent().stop_misuraca.rpc()
+	elif area.name == "Door":
+		get_parent().set_door_state.rpc(area.get_parent().get_path(),true)
+		play_sound.rpc("res://door_open.mp3")
+
+func _on_area_3d_area_exited(area):
+	if area.name == "Door":
+		get_parent().set_door_state.rpc(area.get_parent().get_path(),false)
+		play_sound.rpc("res://door_close.mp3")
 
 
 func _on_timer_timeout():
@@ -418,24 +441,28 @@ func get_cur_item():
 
 	return id
 
+var item_weights = {}
 
+func update_item_weights():
+	var book_multiplier = (get_parent().total_books / get_parent().books_to_collect) * 3	
+	item_weights = {
+		"0":40,
+		"1":25,
+		"2":20,
+		"3":15 + book_multiplier,
+		"4":3 ,
+		"5":2 + book_multiplier,
+		"6":2 + book_multiplier,
+		"8":1 + book_multiplier
+	}
 @rpc("any_peer", "call_local")
 func choose_item(item_ov):
 	if item_ov == -1:
 		if can_get_item:
 			can_get_item = false
 			
-			var book_multiplier = (get_parent().total_books / get_parent().books_to_collect) * 3
 			
-			var item_weights = {
-				"0":40,
-				"1":25,
-				"2":20,
-				"3":15 + book_multiplier,
-				"4":3 ,
-				"5":2 + book_multiplier,
-				"6":2 + book_multiplier
-			}
+
 			
 			pick_item(pick_random_weighted(item_weights).to_int())
 	else:
@@ -628,12 +655,27 @@ func generate_show_question():
 	
 	$"CanvasLayer/Control/Shop/ColorRect/question panel/Label2".text = str(num1) + " + " + str(num2)
 	item_list.clear()
+	var is_right_there = false
+	
 	for i in range(0,4):
 		if i != right_choice:
-			item_list.add_item(str(ans + randi_range(-5,5)))
-		else:
+			var rand_change = null
 			
+			if randi_range(0,1) == 0:
+				rand_change = randi_range(-10,-1)
+			else:
+				rand_change = randi_range(10,1)
+			
+			item_list.add_item(str(ans + rand_change))
+		else:
 			right_ans_index = item_list.add_item(str(ans))
+			is_right_there = true
+	
+	
+	
+	if is_right_there == false:
+		print("answer not here. skipping")
+		generate_show_question()
 
 func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
 
@@ -667,10 +709,7 @@ func _on_buy_book_pressed():
 		Achievements.books_collected += 1
 		Achievements.save_all()
 		
-		var a = AudioStreamPlayer.new()
-		a.stream = load("res://money.mp3")
-		a.bus = "Dialogs"
-		a.play()
+		play_sound.rpc("res://money.mp3")
 
 func _on_buy_duck_pressed():
 	if credits >= 10:
@@ -678,10 +717,15 @@ func _on_buy_duck_pressed():
 		close_shop()
 		pick_item(4)
 		
-		var a = AudioStreamPlayer.new()
-		a.stream = load("res://money.mp3")
-		a.bus = "Dialogs"
-		a.play()
+		play_sound.rpc("res://money.mp3")
+
+func _on_buy_baja_pressed():
+	if credits >= 15:
+		credits -= 15
+		close_shop()
+		pick_item(8)
+		
+		play_sound.rpc("res://money.mp3")
 
 
 func _on_breaker_timeout_timeout():
@@ -693,12 +737,13 @@ func _on_coffee_timeout_timeout():
 
 @rpc("any_peer","call_local")
 func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20):
-	var a = AudioStreamPlayer3D.new()
+	
+	var a = load("res://player_sound.tscn").instantiate()
 	a.stream = load(stream_path)
 	a.bus = bus
 	a.max_distance = max_distance
 	a.volume_db = volume_db
-	get_parent().add_child(a)
+	get_parent().add_child(a,true)
 	a.global_position = global_position
 	a.play()
 
@@ -784,6 +829,8 @@ func control_text_setters():
 					final_text += "Water fountain\nBucket is full"
 		if looking_at.name == "Mr_Misuraca":
 			final_text += "Mr.Misuraca\nE - Make a bet"
+		if looking_at.name == "thej":
+			final_text += "Projector\n E - play"
 	
 	var cur_item = get_cur_item()
 	if final_text != "":
@@ -795,10 +842,12 @@ func control_text_setters():
 		final_text += "Clorox Wipes\nRight Click - Launch"
 	elif cur_item == 2:
 		final_text += "Square Pizza\nRight Click - Eat"
-	elif cur_item == 3 or cur_item == 5:
+	elif cur_item == 3:
 		final_text += "Mtn Dew\nLeft Click - Give to a teacher"
 	elif cur_item == 4:
 		final_text += "Duck\nRight Click - Squeak"
+	elif cur_item == 5:
+		final_text += "Sunkist Orange\nLeft Click - Give to a teacher"
 	elif cur_item == 6:
 		final_text += "Redbull\nLeft Click - Give to Ms.Leahy\nRight Click - Drink"
 	elif cur_item == 7:
@@ -806,6 +855,8 @@ func control_text_setters():
 			final_text += "Bucket\nRight Click - Pour water out"
 		else:
 			final_text += "Bucket\nFill the bucket to use it"
+	elif cur_item == 8:
+		final_text += "Baja Blast\nRight Click - Drink\nLeft Click - Give to Ms.Leahy"
 	
 	controls_text.text = final_text
 
@@ -943,6 +994,9 @@ func movement():
 								pick_item(dropped_item)
 								get_parent().remove_dropped_item.rpc(ray.get_collider().get_path())
 						
+						if ray.get_collider().name == "thej":
+							get_parent().play_the_j.rpc()
+						
 						if ray.get_collider().is_in_group("toilet"):
 							if !can_toilet_tp : return
 							var spawns = get_parent().get_node("Bathroom spawns").get_children()
@@ -1006,6 +1060,13 @@ func movement():
 						if distance < 10:
 							pick_item(-1)
 							get_parent().boost_leahy.rpc(steam_name)
+					elif get_cur_item() == 8:
+						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var distance = global_position.distance_to(evil_leahy.global_position)
+						
+						if distance < 10:
+							pick_item(-1)
+							get_parent().do_baja.rpc(steam_name)
 				
 				if Input.is_action_just_pressed("use_item"):
 					if get_cur_item() == 0:
@@ -1042,7 +1103,17 @@ func movement():
 							pick_item(-1)
 							play_sound.rpc("res://water.mp3")
 							get_parent().spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
-	
+					elif get_cur_item() == 8:
+						pick_item(-1)
+						is_baja = true
+						
+						if boosts.has("baja"):
+							boosts["baja"] += 4
+						else:
+							boosts["baja"] = 4
+						baja_timeout()
+						$"baja trail".start()
+						
 	if Input.is_action_just_pressed("throw"):
 		if get_cur_item() != -1:
 			var cloned_item = $Hand.get_child(get_cur_item()).get_child(0).get_path()
@@ -1071,3 +1142,21 @@ func movement():
 
 func _on_button_pressed():
 	close_gambling()
+
+
+var is_baja = false
+var baja_previous_pos = Vector3()
+
+func _on_pp_timeout_timeout():
+	if is_multiplayer_authority():
+		if is_baja:
+			var pos = global_position
+			pos.y = 0
+			
+			if baja_previous_pos.distance_to(pos) > 0.75:
+						get_parent().spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
+			baja_previous_pos = pos
+
+
+func _on_baja_trail_timeout():
+	is_baja = false

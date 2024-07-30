@@ -56,6 +56,8 @@ func update_target_location(target_location):
 
 func _on_evil_leahy_area_entered(area):
 	if area.name == "puddle":
+		if !area.get_parent().can_slowdown: return
+		
 		overwrite_speed = true
 		speed = SPEED / 2
 		$CPUParticles3D.show()
