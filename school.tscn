@@ -6649,10 +6649,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 97.176
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 12.1224, 0.8, -98.277)
 
 [node name="VendingMachine2" parent="Navigation" instance=ExtResource("11_or820")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 97.1764, 0.8, 14.9866)
-
-[node name="VendingMachine3" parent="Navigation" instance=ExtResource("11_or820")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 114.75, 0.8, -3.85719)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 82.6071, 0.8, 33.001)
 
 [node name="VendingMachine4" parent="Navigation" instance=ExtResource("11_or820")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.6002, 0.8, -14.6891)
@@ -6662,6 +6659,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.4261, 0.8, -14.6891)
 
 [node name="VendingMachine6" parent="Navigation" instance=ExtResource("11_or820")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28.6846, 0.8, 3.14355)
+
+[node name="VendingMachine11" parent="Navigation" instance=ExtResource("11_or820")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 22.8933, 0.8, 99.4641)
 
 [node name="VendingMachine7" parent="Navigation" instance=ExtResource("11_or820")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.8515, 0.8, 83.8778)
@@ -9995,9 +9995,9 @@ size = Vector3(43.1546, 0.183838, 56.4386)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D16" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.267, 3.12499, 5.19391)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.26, 3.12499, 5.19391)
 layers = 4
-size = Vector3(14.8483, 0.183838, 23.6935)
+size = Vector3(14.8343, 0.183838, 23.6935)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D23" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]

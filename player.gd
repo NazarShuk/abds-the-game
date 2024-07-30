@@ -456,17 +456,19 @@ func update_item_weights():
 		"6":2 + book_multiplier,
 		"8":1 + book_multiplier
 	}
+
 @rpc("any_peer", "call_local")
-func choose_item(item_ov):
+func choose_item(item_ov,ov_timeout = false):
 	if item_ov == -1:
 		if can_get_item:
 			can_get_item = false
 			
-			
-
-			
 			pick_item(pick_random_weighted(item_weights).to_int())
 	else:
+		if ov_timeout:
+			if !can_get_item: return
+			can_get_item = false
+		
 		pick_item(item_ov)
 
 func pick_random_weighted(items_chances: Dictionary) -> Variant:
@@ -962,7 +964,7 @@ func movement():
 				if Input.is_action_just_pressed("interact"):
 					if ray.get_collider() != null and get_cur_item() == -1:
 						if ray.get_collider().is_in_group("vending_machine"):
-							parent.use_vending_machine.rpc(name.to_int(),ray.get_collider().name)
+							parent.use_vending_machine.rpc(name.to_int(),ray.get_collider().name,item_weights)
 						
 					if ray.get_collider() != null and parent.game_started:
 						print(ray.get_collider().name)

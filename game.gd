@@ -544,7 +544,7 @@ func split_for_everyone():
 
 
 @rpc("any_peer","call_local")
-func use_vending_machine(id,machine_name):
+func use_vending_machine(id,machine_name,item_weights):
 	if !multiplayer.is_server(): return
 	var vending_machine = get_node("School/Navigation").get_node(NodePath(machine_name))
 	if !vending_machine: return
@@ -554,12 +554,20 @@ func use_vending_machine(id,machine_name):
 			if child.name == str(id):
 				if vending_machine.uses_left >= 0:
 					if vending_machine.override_drops:
-						var item = pick_random_weighted(vending_machine.overriden_drops)
 						
-						child.choose_item.rpc_id(id,item)
+						var vending_machine_weights : Dictionary = vending_machine.overriden_drops
+						var new_weights = item_weights
+						
+						for key in vending_machine_weights.keys():
+							if new_weights[str(key)] != vending_machine_weights[str(key)]:
+								new_weights[str(key)] = vending_machine_weights[str(key)]
+						
+						var item = pick_random_weighted(new_weights)
+						
+						child.choose_item.rpc_id(id,int(item),true)
 						vending_machine.uses_left -= 1
 					else:
-						child.choose_item.rpc_id(id,-1)
+						child.choose_item.rpc_id(id,-1,true)
 						vending_machine.uses_left -= 1
 					break
 	
@@ -567,7 +575,7 @@ func use_vending_machine(id,machine_name):
 		for child in get_children():
 			if child.name == str(id):
 				if vending_machine.uses_left >= 0:
-					child.choose_item.rpc_id(id,2)
+					child.choose_item.rpc_id(id,2,true)
 					vending_machine.uses_left -= 1
 					break
 
