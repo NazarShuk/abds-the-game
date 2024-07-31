@@ -8,6 +8,7 @@ var open_mat : StandardMaterial3D = load("res://models/door_open.tres")
 func _ready():
 	set_open(false)
 
+@rpc("authority","call_local")
 func set_open(open):
 	is_open = open
 	if !is_open:

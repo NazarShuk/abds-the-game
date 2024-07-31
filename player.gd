@@ -132,9 +132,9 @@ func _enter_tree():
 	else:
 		$nametag.text = "Offline player"
 		steam_name = "Offline player"
-
+	parent = get_parent()
+	
 	if is_multiplayer_authority():
-		parent = get_parent()
 		$CanvasLayer.show()
 		parent.hide_menu()
 		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_2d = true
@@ -366,12 +366,16 @@ func _on_area_3d_area_entered(area):
 			parent.stop_misuraca.rpc()
 	elif area.name == "Door":
 		parent.set_door_state.rpc(area.get_parent().get_path(),true)
-		play_sound.rpc("res://door_open.mp3")
+		play_sound("res://door_open.mp3")
 
 func _on_area_3d_area_exited(area):
+	if !is_multiplayer_authority(): return
+	if is_dead: return
+	if is_shop_open: return
+	
 	if area.name == "Door":
 		parent.set_door_state.rpc(area.get_parent().get_path(),false)
-		play_sound.rpc("res://door_close.mp3")
+		play_sound("res://door_close.mp3")
 
 
 func _on_timer_timeout():
@@ -402,7 +406,7 @@ func _on_stamina_timeout_timeout():
 
 
 func _on_revive_timer_timeout():
-
+	if !is_multiplayer_authority(): return
 	if not is_suspended:
 		global_position = parent.get_node("PlayerSpawns").get_children().pick_random().global_position
 		parent.set_player_dead.rpc(name.to_int(), false,false)
@@ -499,7 +503,7 @@ func spawn_clorox():
 	var packed_clorox = load("res://Clorox Wipes.tscn")
 	var clorox: StaticBody3D = packed_clorox.instantiate()
 
-	parent.add_child(clorox)
+	get_parent().add_child(clorox)
 
 	clorox.initial_pos = $RayCast3D.global_position
 	clorox.global_position = $RayCast3D.global_position
@@ -514,7 +518,7 @@ func shart():
 
 	sp.stream = load("res://shart.mp3")
 	sp.bus = "Dialogs"
-	parent.add_child(sp)
+	get_parent().add_child(sp)
 	sp.global_position = global_position
 	sp.play()
 
@@ -587,7 +591,7 @@ func squeak():
 
 	sp.stream = load("res://squeak.mp3")
 	sp.bus = "Dialogs"
-	parent.add_child(sp)
+	get_parent().add_child(sp)
 	sp.play()
 
 @rpc("any_peer","call_local")
@@ -712,7 +716,7 @@ func _on_buy_book_pressed():
 		Achievements.books_collected += 1
 		Achievements.save_all()
 		
-		play_sound.rpc("res://money.mp3")
+		play_sound("res://money.mp3")
 
 func _on_buy_duck_pressed():
 	if credits >= 10:
@@ -720,7 +724,7 @@ func _on_buy_duck_pressed():
 		close_shop()
 		pick_item(4)
 		
-		play_sound.rpc("res://money.mp3")
+		play_sound("res://money.mp3")
 
 func _on_buy_baja_pressed():
 	if credits >= 15:
@@ -728,7 +732,7 @@ func _on_buy_baja_pressed():
 		close_shop()
 		pick_item(8)
 		
-		play_sound.rpc("res://money.mp3")
+		play_sound("res://money.mp3")
 
 
 func _on_breaker_timeout_timeout():
@@ -738,17 +742,9 @@ func _on_breaker_timeout_timeout():
 func _on_coffee_timeout_timeout():
 	can_use_coffee = true
 
-@rpc("any_peer","call_local")
 func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20):
-	
-	var a = load("res://player_sound.tscn").instantiate()
-	a.stream = load(stream_path)
-	a.bus = bus
-	a.max_distance = max_distance
-	a.volume_db = volume_db
-	parent.add_child(a,true)
-	a.global_position = global_position
-	a.play()
+	parent.play_sound.rpc(stream_path,volume_db,bus,max_distance,global_position)
+
 
 var is_minimap_open = false
 @onready var minimap_zoom = minimap_cam.size
@@ -1019,7 +1015,7 @@ func movement():
 							global_position = farthest_obj.global_position
 							await  get_tree().create_timer(0.7).timeout
 							$"CanvasLayer/Control/cool transition".hide()
-							play_sound.rpc("res://flush.mp3",5)
+							play_sound("res://flush.mp3",5)
 						
 						if ray.get_collider():
 							if ray.get_collider().is_in_group("water fountain"):
@@ -1099,12 +1095,12 @@ func movement():
 						else:
 							boosts["redbull"] = 2
 						redbull_timeout()
-						play_sound.rpc("res://redbull.mp3")
+						play_sound("res://redbull.mp3")
 					elif get_cur_item() == 7:
 						if $"Hand/Bucket 7/Bucket/water".visible:
 							$"Hand/Bucket 7/Bucket/water".visible = false
 							pick_item(-1)
-							play_sound.rpc("res://water.mp3")
+							play_sound("res://water.mp3")
 							parent.spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 					elif get_cur_item() == 8:
 						pick_item(-1)

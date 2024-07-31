@@ -1214,7 +1214,28 @@ func do_baja(steam_name):
 func set_door_state(door_path,open):
 	if multiplayer.is_server():
 		if get_node(door_path):
-			get_node(door_path).set_open(open)
+			get_node(door_path).set_open.rpc(open)
+			
 @rpc("any_peer","call_local")
 func play_the_j():
 	$Videoplayer.play()
+
+@rpc("any_peer","call_local")
+func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
+	if !multiplayer.is_server(): return
+	
+	var a = load("res://player_sound.tscn").instantiate()
+	add_child(a,true)
+	actually_play_sound.rpc(a.get_path(),stream_path,volume_db,bus,max_distance,pos)
+
+
+@rpc("authority","call_local")
+func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
+	var sound = get_node(sound_path)
+	if sound:
+		sound.stream = load(stream_path)
+		sound.bus = bus
+		sound.max_distance = max_distance
+		sound.volume_db = volume_db
+		sound.global_position = pos
+		sound.play()
