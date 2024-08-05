@@ -243,7 +243,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(parent.get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			pick_item(8)
+			pick_item(0)
 			pass
 
 		if parent.game_started:
@@ -342,7 +342,8 @@ func _on_area_3d_area_entered(area):
 		if parent.absent == false:
 			if parent.is_powered_off == false:
 				if parent.leahy_appeased == false:
-					die("leahy")
+					if parent.is_leahy_baja_blast == false:
+						die("leahy")
 
 	elif area.name == "Landmine" and parent.game_started == true:
 		die("mine")
@@ -423,6 +424,7 @@ func _on_revive_timer_timeout():
 	close_gambling(false)
 
 func pick_item(item: int):
+	
 	for i in $Hand.get_children().size():
 		set_item_vis.rpc(i,false)
 	
@@ -449,16 +451,16 @@ func get_cur_item():
 var item_weights = {}
 
 func update_item_weights():
-	var book_multiplier = (parent.total_books / parent.books_to_collect) * 3	
+	var book_multiplier = (parent.total_books / parent.books_to_collect) * 3
 	item_weights = {
-		"0":40,
-		"1":25,
-		"2":20,
-		"3":15 + book_multiplier,
-		"4":3 ,
-		"5":2 + book_multiplier,
-		"6":2 + book_multiplier,
-		"8":1 + book_multiplier
+		"0":40, # Fruit Snacks
+		"1":25, # Clorox
+		"2":20, # Pizza
+		"3":15 + book_multiplier, # Mtn Dew
+		"4":3, # Duck
+		"5":2 + book_multiplier, # Sunkist
+		"6":2 + book_multiplier, # Redbull
+		"8":1 + book_multiplier # Baja Blast
 	}
 
 @rpc("any_peer", "call_local")
@@ -995,6 +997,11 @@ func movement():
 						
 						if ray.get_collider().name == "thej":
 							parent.play_the_j.rpc()
+						if ray.get_collider().name == "fire":
+							ray.get_collider().get_parent().break_glass.rpc()
+							print(ray.get_collider().get_parent().strength_left)
+							if ray.get_collider().get_parent().strength_left == 10:
+								pick_item(9)
 						
 						if ray.get_collider().is_in_group("toilet"):
 							if !can_toilet_tp : return
@@ -1112,6 +1119,10 @@ func movement():
 							boosts["baja"] = 4
 						baja_timeout()
 						$"baja trail".start()
+					elif get_cur_item() == 9:
+						pick_item(-1)
+						parent.spawn_smoke.rpc(global_position)
+						play_sound("res://fire extinguisher.mp3")
 						
 	if Input.is_action_just_pressed("throw"):
 		if get_cur_item() != -1:

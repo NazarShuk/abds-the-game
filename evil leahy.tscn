@@ -54,6 +54,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
 shape = SubResource("BoxShape3D_uh2wh")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+use_3d_avoidance = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_73hak")

@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=3 uid="uid://dkenas21xnj0n"]
+
+[ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="1_bppgy"]
+[ext_resource type="Script" path="res://fire extinguisher pickup.gd" id="1_d5svp"]
+[ext_resource type="AudioStream" uid="uid://dn5727m67jxj" path="res://glass_big.mp3" id="3_pkan8"]
+[ext_resource type="AudioStream" uid="uid://cs28ddkshn05e" path="res://glass_small.mp3" id="4_fkm8a"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vy0xu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vp2po"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.392157)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kb8c7"]
+size = Vector3(0.830322, 1.26001, 0.628906)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_be4di"]
+properties/0/path = NodePath(".:strength_left")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_2j2vy"]
+size = Vector3(0.05, 0.05, 0.05)
+
+[node name="FireExtinguisherPickup" type="Node3D"]
+script = ExtResource("1_d5svp")
+
+[node name="Fire Extinguisher" parent="." instance=ExtResource("1_bppgy")]
+transform = Transform3D(2.23517e-08, 0, -0.15, 0, 0.15, 0, 0.15, 0, 2.23517e-08, 0.0448065, 0, -0.0225338)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.04891e-08, 0, -0.667954, 0, 1.08105, 0, 0.109932, 0, 7.45058e-08, 0.0448064, 0.25671, -0.254787)
+mesh = SubResource("BoxMesh_vy0xu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.04891e-08, 0, -0.667954, 0, 1.08105, 0, 0.109932, 0, 7.45058e-08, 0.0448065, 0.25671, 0.229206)
+mesh = SubResource("BoxMesh_vy0xu")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.109932, 0, -2.98023e-08, 0, 1.08105, 0, 1.86265e-09, 0, -0.582339, -0.258625, 0.25671, -0.0183778)
+mesh = SubResource("BoxMesh_vy0xu")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.109932, 0, -1.49012e-08, 0, 1.08105, 0, 7.45058e-09, 0, -0.572455, 0.33431, 0.25671, -0.0183778)
+mesh = SubResource("BoxMesh_vy0xu")
+surface_material_override/0 = SubResource("StandardMaterial3D_vp2po")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.594275, 0, 0, 0, 0.0620106, 0, 0, 0, -0.550861, 0.0798614, 0.764246, 0.0143435)
+mesh = SubResource("BoxMesh_vy0xu")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.594275, 0, 0, 0, 0.0620106, 0, 0, 0, -0.550861, 0.0798614, -0.250206, 0.0143435)
+mesh = SubResource("BoxMesh_vy0xu")
+
+[node name="fire" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035156, 0.30896, 0)
+
+[node name="fire" type="CollisionShape3D" parent="fire"]
+shape = SubResource("BoxShape3D_kb8c7")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_be4di")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.438908, 0.309327, 0)
+emitting = false
+amount = 20
+lifetime = 0.25
+one_shot = true
+mesh = SubResource("BoxMesh_2j2vy")
+emission_shape = 3
+emission_box_extents = Vector3(0.25, 0.5, 0.25)
+direction = Vector3(1, 1, 0)
+initial_velocity_min = 2.5
+initial_velocity_max = 2.5
+
+[node name="big" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_pkan8")
+max_distance = 10.0
+bus = &"Dialogs"
+
+[node name="small" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_fkm8a")
+max_distance = 10.0
+bus = &"Dialogs"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -91,6 +91,9 @@ var enable_live_split = true
 
 @export var controls_text : Label
 
+@onready var world_environment : WorldEnvironment = $"Lighting and stuff/WorldEnvironment"
+@onready var environment = world_environment.environment
+@onready var sun = $"Lighting and stuff/DirectionalLight3D"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -118,8 +121,11 @@ var music_pitch_boost = 1
 
 var expired_items = []
 
-var is_leahy_baja_blast = false
+@export var is_leahy_baja_blast = false
 var leahy_baja_timer = 0
+
+var is_misuraca_fixing = false
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -161,12 +167,15 @@ func _process(delta):
 			var exp_item = get_node(closest_item)
 			mr_azzu.update_target_location(exp_item.global_position)
 			if mr_azzu.global_position.distance_to(exp_item.global_position) < 1:
+				
 				exp_item.queue_free()
 		
 		if broken_vending_machines.size() > 0:
 			$Mr_Misuraca.update_target_location(broken_vending_machines[0].global_position)
+			is_misuraca_fixing = true
 		else:
 			$Mr_Misuraca.go_back()
+			is_misuraca_fixing = false
 		
 		
 		
@@ -234,8 +243,8 @@ func _process(delta):
 					
 					for p in players_ids:
 						if !players[p].is_dead:
-							var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
-							
+							#var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
+							var distance = evil_leahy.distance_to_target
 							update_approching_label.rpc_id(p,distance)
 						
 							if distance < closest_distance:
@@ -404,7 +413,8 @@ func _on_peer_connected(id = 1):
 		#"username":str(id),
 		"books_collected":0,
 		"is_dead":false,
-		"deaths":0
+		"deaths":0,
+		"team":0
 	}
 	players_ids.append(id)
 	books_to_collect += notebooks_per_player
@@ -427,9 +437,20 @@ func pre_start_game_btn():
 		if !debug_host or !Allsingleton.non_steam:
 			if lobby_id:
 				Steam.setLobbyJoinable(lobby_id,false)
+		
+		var weather_chance = randi_range(0,20)
+	
+		print(weather_chance)
+		if weather_chance < 2:
+			set_fog_density.rpc(0.05)
+		elif weather_chance < 5:
+			set_fog_density.rpc(0.025)
+		
 		pre_started_game = true
 
 func spawn_players():
+	
+	await get_tree().create_timer(3.5).timeout
 	for pl_id in players_ids:
 		var packed_player = preload("res://player.tscn")
 		var player = packed_player.instantiate()
@@ -438,12 +459,24 @@ func spawn_players():
 		player.name = str(pl_id)
 
 		call_deferred("add_child",player,false)
+		await get_tree().process_frame
+		player.global_position = $"pre_start_game_anim/SCHOOL BUS/pl spawn".global_position + Vector3(randf_range(-3,3),0,randf_range(-3,3))
+		
 	players_spawned = true
+
+
+@rpc("authority","call_local")
+func set_fog_density(density):
+	environment.volumetric_fog_density = density
 
 @rpc("authority","call_local")
 func pre_start_game():
 	$CanvasLayer/Lobby.hide()
 	$CanvasLayer/MultiPlayer.hide()
+	$CanvasLayer/Main.show()
+	$pre_start_game_anim/AnimationPlayer.play("pre")
+	
+	
 	
 func _on_peer_disconnect(id):
 	if get_node_or_null(str(id)):
@@ -487,8 +520,9 @@ func on_collect_book(id,book_name,personal):
 			
 			
 			if total == 1:
-				start_da_game.rpc()
-				canPlayersMove = false
+				if !game_started:
+					start_da_game.rpc()
+					canPlayersMove = false
 			elif total >= books_to_collect:
 				
 				var total_deaths = 0
@@ -510,7 +544,10 @@ func on_collect_book(id,book_name,personal):
 			
 			total_books = total
 			
-			evil_leahy.SPEED += (leahy_speed_per_notebook * players_in_lobby)
+			if players_in_lobby > 1:
+				evil_leahy.SPEED += (leahy_speed_per_notebook * (players_in_lobby / 0.5))
+			else:
+				evil_leahy.SPEED += leahy_speed_per_notebook
 			
 			if personal:
 				info_text(player_name + " collected a book!")
@@ -706,15 +743,17 @@ func set_player_dead(id,is_dead,do_deaths):
 			if is_pacer:
 				stop_pacer.rpc()
 			
-			
-			if total_deaths >= (max_deaths + (deaths_per_player * players_in_lobby)):
-				
-				if total_books == 1:
-					end_game.rpc("you suck")
-				elif total_books > 1:
-					end_game.rpc("worst")
-				elif total_books == 0:
-					end_game("dumb")
+			if !is_dp:
+				if total_deaths >= (max_deaths + (deaths_per_player * players_in_lobby)):
+					
+					if total_books == 1:
+						end_game.rpc("you suck")
+					elif total_books > 1:
+						end_game.rpc("worst")
+					elif total_books == 0:
+						end_game("dumb")
+			else:
+				end_game.rpc("none")
 
 
 @rpc("any_peer","call_local")
@@ -891,7 +930,7 @@ func start_da_pacer(id):
 	# Server only
 	if multiplayer.is_server():
 		for pl in players_ids:
-			get_node(str(pl)).server_pos.rpc_id(pl,$PacerPos.global_position)
+			get_node(str(pl)).server_pos.rpc_id(pl,$PacerPos.global_position + Vector3(randf_range(-10,10),0,randf_range(-10,10)))
 		
 		var username = get_node(str(id)).steam_name
 		info_text(username + " angered Mr.Fox...")
@@ -942,30 +981,60 @@ func stop_pacer():
 func _on_pacer_speed_increase_timeout():
 	$FakeFox/AnimationPlayer.speed_scale += 0.005
 
+var penalties = {
+	"EvilLeahy": 0,
+	"Mr_Azzu": 0,
+	"Mr Fox": 0,
+	"Ms_Gainy": 0,
+	"Mr_Misuraca": 0
+}
+var last_poses = {
+	"EvilLeahy": Vector3(),
+	"Mr_Azzu": Vector3(),
+	"Mr Fox": Vector3(),
+	"Ms_Gainy": Vector3(),
+	"Mr_Misuraca": Vector3()
+}
 
 func _on_leahy_pos_diff_timeout():
 	if !multiplayer.has_multiplayer_peer(): return
 	if !multiplayer.is_server(): return
-	if is_leahy_baja_blast: return
+	if !game_started: return
 	
-	leahy_diff = evil_leahy.global_position.distance_to(leahy_last_pos)
-	leahy_last_pos = evil_leahy.global_position
-	if leahy_diff < 1 and !leahy_appeased and !absent and game_started:
-		leahy_diff_penalty += 1
-	if leahy_diff > 1 and !leahy_appeased and !absent and game_started:
-		leahy_diff_penalty = 0
-	
-	if leahy_diff_penalty > 7:
-		var min_dst = 99999
-		var cls_pos = Vector3(0,0,0)
-		for respawn_pos : Node3D in $LeahyPenaltyPos.get_children():
-			var dst = evil_leahy.global_position.distance_to(respawn_pos.global_position)
-			if dst < min_dst:
-				cls_pos = respawn_pos.global_position
-				min_dst = dst
+	for teacher in penalties:
+		var diff = last_poses[teacher].distance_to(get_node(teacher).global_position)
+		last_poses[teacher] = get_node(teacher).global_position
+		if diff > 1:
+			penalties[teacher] = 0
+		else:
+			if teacher == "Ms_Gainy":
+				if gainy_target:
+					penalties[teacher] += 1
+			elif teacher == "Mr Fox":
+				if fox_notebooks_left > 0:
+					penalties[teacher] += 1
+			elif teacher == "EvilLeahy":
+				if !is_leahy_baja_blast:
+					if !leahy_appeased:
+						if !absent:
+							penalties[teacher] += 1
+			elif teacher == "Mr_Misuraca":
+				if $Mr_Misuraca.angerer or is_misuraca_fixing:
+					penalties[teacher] += 1
+			else:
+				penalties[teacher] += 1
 		
-		evil_leahy.global_position = cls_pos
-		leahy_diff_penalty = 0
+		if penalties[teacher] > 7:
+			var min_dst = 99999
+			var cls_pos = Vector3(0,0,0)
+			for respawn_pos : Node3D in $LeahyPenaltyPos.get_children():
+				var dst = get_node(teacher).global_position.distance_to(respawn_pos.global_position)
+				if dst < min_dst:
+					cls_pos = respawn_pos.global_position
+					min_dst = dst
+		
+			get_node(teacher).global_position = cls_pos
+			penalties[teacher] = 0
 
 
 func _on_open_config_pressed():
@@ -1074,8 +1143,7 @@ func play_coffee():
 
 @rpc("any_peer","call_local")
 func toggle_power(do_ov = false, ov = false):
-	var world_environment : WorldEnvironment = $"Lighting and stuff/WorldEnvironment"
-	var environment = world_environment.environment
+
 	
 	if !do_ov:
 		is_powered_off = !is_powered_off
@@ -1084,6 +1152,7 @@ func toggle_power(do_ov = false, ov = false):
 	
 	if !is_powered_off:
 		environment.background_energy_multiplier = 1
+		sun.light_energy = 1
 		
 		$Music2.play()
 		
@@ -1095,6 +1164,7 @@ func toggle_power(do_ov = false, ov = false):
 		is_powered_off = false
 	else:
 		environment.background_energy_multiplier = 0
+		sun.light_energy = 0
 		$Music2.stop()
 		
 		info_text("Power got broken")
@@ -1139,6 +1209,24 @@ func do_bet(pl_name,books,time,loss,reward,item_name):
 	
 	info_text(pl_name + " started a bet. Win to get a " + item_name)
 
+var is_dp = false
+
+@rpc("authority","call_local")
+func depression_ending():
+	var dp = $"CanvasLayer/Main/fake dp ending"
+	$"CanvasLayer/Main/fake dp ending/AnimationPlayer".play("fake dp ending")
+	dp.show()
+	
+	$Music2.volume_db = -80
+	environment.background_energy_multiplier = 0.25
+	await get_tree().create_timer(9).timeout
+	environment.background_energy_multiplier = 1
+	await get_tree().create_timer(2).timeout
+	if multiplayer.is_server():
+		canPlayersMove = false
+		is_dp = true
+		evil_leahy.SPEED += 30
+	
 
 func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 	if !multiplayer.is_server(): return
@@ -1156,7 +1244,8 @@ func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 			total += players[p].books_collected
 		
 		if total < 0:
-			end_game.rpc("br")
+			#end_game.rpc("br")
+			depression_ending.rpc()
 		
 		
 	elif bet_books_left <= 0 or (overwrite and won == true):
@@ -1180,7 +1269,7 @@ func spawn_dropped_item(pos,cloned_item,item_id):
 @rpc("authority","call_local")
 func add_item_to_dropped(dropped_item_path,item_path):
 	var clone = get_node(item_path).duplicate()
-		
+	
 	get_node(dropped_item_path).add_child(clone)
 	
 	clone.position = Vector3(0,0,0)
@@ -1207,8 +1296,9 @@ func add_noise_point(pos):
 
 @rpc("any_peer","call_local")
 func do_baja(steam_name):
-	is_leahy_baja_blast = true
-	info_text(steam_name + " gave Ms.Leahy baja blast...")
+	if multiplayer.is_server():
+		is_leahy_baja_blast = true
+		info_text(steam_name + " gave Ms.Leahy baja blast...")
 
 @rpc("any_peer","call_local")
 func set_door_state(door_path,open):
@@ -1239,3 +1329,11 @@ func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0,
 		sound.volume_db = volume_db
 		sound.global_position = pos
 		sound.play()
+
+
+@rpc("any_peer","call_local")
+func spawn_smoke(pos):
+	if multiplayer.is_server():
+		var smoke = load("res://smoke wall.tscn").instantiate()
+		add_child(smoke,true)
+		smoke.global_position = pos

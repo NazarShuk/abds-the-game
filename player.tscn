@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=99 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -49,6 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="47_f82oh"]
 [ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
 [ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
+[ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="50_ulo8b"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -256,6 +257,21 @@ _data = {
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgtva"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
+[sub_resource type="Animation" id="Animation_w67xc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_d40jq"]
 resource_name = "spin"
 loop_mode = 1
@@ -272,7 +288,13 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_w67xc"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ke47x"]
+_data = {
+"RESET": SubResource("Animation_w67xc"),
+"spin": SubResource("Animation_d40jq")
+}
+
+[sub_resource type="Animation" id="Animation_5cb8v"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -285,12 +307,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ke47x"]
-_data = {
-"RESET": SubResource("Animation_w67xc"),
-"spin": SubResource("Animation_d40jq")
 }
 
 [sub_resource type="Animation" id="Animation_ib3dm"]
@@ -307,21 +323,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_5cb8v"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_31hlf"]
@@ -1132,6 +1133,7 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k6dj7")
 
 [node name="ticket" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+layout_mode = 0
 offset_left = 70.0
 offset_top = 306.0
 offset_right = 129.0
@@ -1836,6 +1838,13 @@ visible = false
 [node name="mtndewbajamod" parent="Hand/Mtn Dew Baja" instance=ExtResource("49_uh1ld")]
 transform = Transform3D(1.92593, -0.109245, 1.90341, 0.366605, 2.67628, -0.217339, -1.87096, 0.411947, 1.91674, -0.0870001, 0.396, -0.119)
 
+[node name="Fire Extinguisher" type="Node3D" parent="Hand"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, -1.49012e-08, 2.98023e-08, 0, 1, 0, 0, 0)
+visible = false
+
+[node name="Fire Extinguisher" parent="Hand/Fire Extinguisher" instance=ExtResource("50_ulo8b")]
+transform = Transform3D(0.0815899, 0.0538958, 0.246299, 0.0400426, 0.252819, -0.068587, -0.248927, 0.0583339, 0.0696957, 0, -0.75, 0)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 material_override = SubResource("StandardMaterial3D_lwpal")
@@ -1843,9 +1852,6 @@ cast_shadow = 0
 mesh = SubResource("PlaneMesh_5fuhc")
 
 [node name="http" type="HTTPRequest" parent="."]
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_energy = 0.5
 
 [node name="Voice" type="Node3D" parent="."]
 
@@ -1865,10 +1871,15 @@ size = Vector2i(800, 600)
 
 [node name="Camera3D" type="Camera3D" parent="Minimap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
-cull_mask = 1048569
+cull_mask = 1048057
 projection = 1
 size = 100.0
 far = 100.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.370945, -0.0430524)
+spot_range = 48.4692
+spot_angle = 16.4922
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]

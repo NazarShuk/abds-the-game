@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ceo00cwwipkt0"]
+
+[ext_resource type="Shader" uid="uid://hrbkunmq0otv" path="res://smoke.tres" id="1_thmaj"]
+[ext_resource type="Script" path="res://smoke wall.gd" id="2_uq6gs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_88wdr"]
+shader = ExtResource("1_thmaj")
+shader_parameter/density = 2.0
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/emission = Color(0.493545, 0.493546, 0.493546, 1)
+shader_parameter/height_falloff = 0.0
+shader_parameter/edge_fade = 0.1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_le16i"]
+size = Vector3(6.14868, 6.0332, 5.23926)
+
+[node name="SmokeWall" type="FogVolume"]
+size = Vector3(6.91689, 6.49085, 5.2445)
+material = SubResource("ShaderMaterial_88wdr")
+script = ExtResource("2_uq6gs")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_le16i")
+disabled = true

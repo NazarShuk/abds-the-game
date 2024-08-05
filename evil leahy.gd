@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@onready var nav_agent = $NavigationAgent3D
+@onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var SPEED = 6.0
@@ -10,6 +10,8 @@ var overwrite_speed = false
 
 const push_force = 1.0
 
+var distance_to_target = -1
+
 func _physics_process(_delta):
 	if !overwrite_speed:
 		speed = SPEED
@@ -18,6 +20,18 @@ func _physics_process(_delta):
 	var next_location = nav_agent.get_next_path_position()
 	
 	var new_velocity = (next_location - current_location).normalized() * speed
+	
+	distance_to_target = 0
+	
+	var path = nav_agent.get_current_navigation_path()
+	
+	for point in range(path.size()):
+		if path[point - 1]:
+			distance_to_target += path[point - 1].distance_to(path[point])
+		else:
+			distance_to_target += global_position.distance_to(path[point])
+	
+	distance_to_target = distance_to_target / 2
 	
 	velocity = new_velocity
 	if global_transform.origin != next_location:

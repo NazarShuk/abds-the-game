@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7mumnqeu2re3"]
+
+[ext_resource type="VideoStream" path="res://fruit.ogv" id="2_w7qqe"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_lh7j4"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rbc13"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okpvk"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_rbc13")
+
+[node name="Videoplayer" type="Node3D"]
+
+[node name="thej" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_lh7j4")
+surface_material_override/0 = SubResource("StandardMaterial3D_okpvk")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_w7qqe")
+autoplay = true
+expand = true
+bus = &"Music"

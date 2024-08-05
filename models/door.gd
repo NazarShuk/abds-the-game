@@ -7,6 +7,7 @@ var open_mat : StandardMaterial3D = load("res://models/door_open.tres")
 
 func _ready():
 	set_open(false)
+	$MeshInstance3D2.hide()
 
 @rpc("authority","call_local")
 func set_open(open):
