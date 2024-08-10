@@ -43,3 +43,7 @@ func convert_csg_to_meshinstance():
 		mesh_instance.transform = csg_transform
 	
 		csg_shape.get_parent().remove_child(csg_shape)
+
+
+func _on_button_pressed():
+	pass # Replace with function body.

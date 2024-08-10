@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=104 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -25,8 +25,10 @@
 [ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://impossibleend_back.png" id="14_b3bg4"]
 [ext_resource type="VideoStream" path="res://dum.ogv" id="14_b58yc"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
+[ext_resource type="Texture2D" uid="uid://dcgs0fxmh71wv" path="res://models/player_dirty.png" id="15_3le1j"]
 [ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
 [ext_resource type="VideoStream" path="res://fox_jump.ogv" id="16_a751i"]
+[ext_resource type="Texture2D" uid="uid://blwkn3dly2c54" path="res://models/player_back_dirty.png" id="16_ka4ol"]
 [ext_resource type="VideoStream" path="res://models/azzu_jumpscare.ogv" id="17_co3v2"]
 [ext_resource type="Texture2D" uid="uid://upa52bysxlmx" path="res://thing.svg" id="18_c15q6"]
 [ext_resource type="VideoStream" path="res://gainy.ogv" id="19_vcsq8"]
@@ -50,6 +52,7 @@
 [ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
 [ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="50_ulo8b"]
+[ext_resource type="PackedScene" uid="uid://byaexesg86uo0" path="res://sonicgummies.tscn" id="51_b4gs7"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -111,6 +114,12 @@ albedo_texture = ExtResource("6_rnntf")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftxcc"]
 albedo_texture = ExtResource("14_b3bg4")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1vlt"]
+albedo_texture = ExtResource("15_3le1j")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wjd3x"]
+albedo_texture = ExtResource("16_ka4ol")
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tu1hv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ndfqc"]
@@ -150,6 +159,9 @@ properties/9/replication_mode = 1
 properties/10/path = NodePath("AudioStreamPlayer3D:pitch_scale")
 properties/10/spawn = true
 properties/10/replication_mode = 1
+properties/11/path = NodePath("visual_body/Disoriented:visible")
+properties/11/spawn = true
+properties/11/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_2f5dv"]
 length = 0.001
@@ -369,6 +381,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 [node name="visual_body" type="Node3D" parent="."]
 
 [node name="Default" type="Node3D" parent="visual_body"]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="visual_body/Default"]
 transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
@@ -567,6 +580,56 @@ mesh = SubResource("QuadMesh_jxa1y")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="visual_body/Impossible/Mouth"]
 replication_config = SubResource("SceneReplicationConfig_j5uy5")
 
+[node name="Disoriented" type="Node3D" parent="visual_body"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="visual_body/Disoriented"]
+transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_orlgu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_b1vlt")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="visual_body/Disoriented"]
+transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_orlgu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wjd3x")
+
+[node name="Mouth" type="Node3D" parent="visual_body/Disoriented"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.132746)
+
+[node name="0" type="MeshInstance3D" parent="visual_body/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+material_override = SubResource("StandardMaterial3D_83xys")
+mesh = SubResource("QuadMesh_jxa1y")
+
+[node name="1" type="MeshInstance3D" parent="visual_body/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_mawv5")
+mesh = SubResource("QuadMesh_jxa1y")
+
+[node name="2" type="MeshInstance3D" parent="visual_body/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_m1o4l")
+mesh = SubResource("QuadMesh_jxa1y")
+
+[node name="3" type="MeshInstance3D" parent="visual_body/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_3jk6g")
+mesh = SubResource("QuadMesh_jxa1y")
+
+[node name="4" type="MeshInstance3D" parent="visual_body/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_xntha")
+mesh = SubResource("QuadMesh_jxa1y")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="visual_body/Disoriented/Mouth"]
+replication_config = SubResource("SceneReplicationConfig_j5uy5")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_tu1hv")
 
@@ -673,9 +736,7 @@ use_occlusion_culling = true
 size = Vector2i(1280, 720)
 render_target_update_mode = 0
 
-[node name="XROrigin3D" type="XROrigin3D" parent="CanvasLayer2/SubViewportContainer/SubViewport"]
-
-[node name="Camera3D" type="XRCamera3D" parent="CanvasLayer2/SubViewportContainer/SubViewport/XROrigin3D"]
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer2/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 cull_mask = 1048573
 far = 1000.0
@@ -1844,6 +1905,13 @@ visible = false
 
 [node name="Fire Extinguisher" parent="Hand/Fire Extinguisher" instance=ExtResource("50_ulo8b")]
 transform = Transform3D(0.0815899, 0.0538958, 0.246299, 0.0400426, 0.252819, -0.068587, -0.248927, 0.0583339, 0.0696957, 0, -0.75, 0)
+
+[node name="Sonic Gummies" type="Node3D" parent="Hand"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, -1.49012e-08, 2.98023e-08, 0, 1, 0, 0, 0)
+visible = false
+
+[node name="sonicgummies" parent="Hand/Sonic Gummies" instance=ExtResource("51_b4gs7")]
+transform = Transform3D(-1.31134e-08, 0.3, 0, -0.3, -1.31134e-08, 0, 0, 0, 0.3, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)

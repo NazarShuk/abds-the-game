@@ -57,8 +57,8 @@ func _on_disconnect_btn_pressed():
 	$Main/DisconnectBtn.disabled = true
 	get_tree().paused = false
 	if !multiplayer.is_server():
+		get_tree().change_scene_to_file("res://game.tscn")
 		multiplayer.multiplayer_peer.close()
-		get_tree().reload_current_scene()
 	else:
 		player.get_parent().end_game.rpc("none")
 

@@ -103,7 +103,7 @@ func _ready():
 	AudioServer.set_bus_mute(1,false)
 	AudioServer.set_bus_mute(2,false)
 	
-	AudioVolume.load_values_and_apply()
+	Settings.load_values_and_apply()
 	
 	get_friends_lobbies()
 	peer.lobby_created.connect(_on_lobby_connected)
@@ -112,7 +112,39 @@ func _ready():
 	multiplayer.server_disconnected.connect(_on_disconnect_from_server)
 	peer.lobby_kicked.connect(_on_disconnect_from_server)
 	reset_pacer_times()
+	
+	if Settings.better_lighting != null:
+		sun.visible = Settings.better_lighting
+	prepare_leaderboard()
 
+func prepare_leaderboard():
+	var http = $LeaderBoard/HTTPRequest
+	http.request(Leaderboard.api_url,["User-Agent: insomnia/9.3.2","Accept: /*/","Content-Length: 0"],HTTPClient.METHOD_GET)
+
+func on_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+	if result == 0:
+		var leaderboard : Dictionary = JSON.parse_string(body.get_string_from_utf8())
+		print(leaderboard)
+		
+		var keys : Array = leaderboard.keys()
+		for key in range(keys.size()):
+			if key == 0:
+				$LeaderBoard/w1.show()
+				
+				var mesh : TextMesh = $LeaderBoard/w1.mesh
+				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
+			if key == 1:
+				$LeaderBoard/w2.show()
+				
+				var mesh : TextMesh = $LeaderBoard/w2.mesh
+				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
+			if key == 2:
+				$LeaderBoard/w3.show()
+				var mesh : TextMesh = $LeaderBoard/w3.mesh
+				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
+	else:
+		print("error while getting leaderboard")
+		$LeaderBoard.hide()
 
 var leahy_power_fix_num = 0
 var music_pitch_target = 1
@@ -243,9 +275,9 @@ func _process(delta):
 					
 					for p in players_ids:
 						if !players[p].is_dead:
-							#var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
-							var distance = evil_leahy.distance_to_target
-							update_approching_label.rpc_id(p,distance)
+							var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
+							var showed_distance = evil_leahy.distance_to_target
+							update_approching_label.rpc_id(p,showed_distance)
 						
 							if distance < closest_distance:
 								closest = get_node(str(p)).global_position
@@ -386,7 +418,7 @@ func receive_steam_usr(id,username):
 func disconenct_btn():
 	
 	multiplayer.multiplayer_peer.close()
-	get_tree().reload_current_scene()
+	get_tree().change_scene_to_file("res://game.tscn")
 
 func _on_disconnect_from_server():
 	pass
@@ -428,7 +460,7 @@ func request_steam_usr():
 	if !Allsingleton.non_steam:
 		receive_steam_usr.rpc(peer.get_unique_id(),Steam.getPersonaName())
 	else:
-		receive_steam_usr.rpc(peer.get_unique_id(),"Offline player")
+		receive_steam_usr.rpc(peer.get_unique_id(),OS.get_environment("USERNAME"))
 
 func pre_start_game_btn():
 	spawn_players()
@@ -450,7 +482,7 @@ func pre_start_game_btn():
 
 func spawn_players():
 	
-	await get_tree().create_timer(3.5).timeout
+	await get_tree().create_timer(8).timeout
 	for pl_id in players_ids:
 		var packed_player = preload("res://player.tscn")
 		var player = packed_player.instantiate()
@@ -537,9 +569,15 @@ func on_collect_book(id,book_name,personal):
 						# perfect run
 						end_game.rpc("perfect")
 					elif total_deaths > 3:
-						end_game.rpc("normal")
+						if !do_vertical_camera:
+							end_game.rpc("normal")
+						else:
+							end_game.rpc("disoriented")
 				else:
-					end_game.rpc("normal")
+					if !do_vertical_camera:
+						end_game.rpc("normal")
+					else:
+						end_game.rpc("disoriented")
 				
 			
 			total_books = total
@@ -793,6 +831,8 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_file("res://dumb_ahh_end.tscn")
 	elif ending == "br":
 		get_tree().change_scene_to_file("res://sadge.tscn")
+	elif ending == "disoriented":
+		get_tree().change_scene_to_file("res://disoriented_end.tscn")
 	else:
 		get_tree().change_scene_to_file("res://logos.tscn")
 	peer.close()
@@ -1335,5 +1375,10 @@ func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0,
 func spawn_smoke(pos):
 	if multiplayer.is_server():
 		var smoke = load("res://smoke wall.tscn").instantiate()
-		add_child(smoke,true)
+		$School/Navigation.add_child(smoke,true)
 		smoke.global_position = pos
+		smoke.navigation_mesh = $School/Navigation
+		
+func _exit_tree():
+	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
+		end_game.rpc("none")

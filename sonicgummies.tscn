@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://byaexesg86uo0"]
+
+[ext_resource type="PackedScene" uid="uid://c3wil400h80vp" path="res://models/3d/sonicgummies.glb" id="1_0ybyw"]
+[ext_resource type="Texture2D" uid="uid://bcky4b3vwhtkd" path="res://models/3d/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg" id="2_0djob"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r53j5"]
+resource_name = "Material"
+cull_mode = 2
+albedo_texture = ExtResource("2_0djob")
+roughness = 0.5
+uv1_scale = Vector3(4, 4.015, 1)
+uv1_offset = Vector3(-0.505, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_twko3"]
+resource_name = "Material.001"
+cull_mode = 2
+albedo_color = Color(0.360783, 0.580398, 0.68627, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_3d24q"]
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2.00001, 2.00001, 2),
+"format": 34896613377,
+"index_count": 12,
+"index_data": PackedByteArray(3, 0, 6, 0, 2, 0, 3, 0, 7, 0, 6, 0, 5, 0, 0, 0, 4, 0, 5, 0, 1, 0, 0, 0),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray(254, 255, 254, 255, 0, 0, 0, 0, 254, 255, 0, 0, 0, 0, 0, 0, 254, 255, 254, 255, 255, 255, 0, 0, 254, 255, 0, 0, 255, 255, 0, 0, 0, 0, 254, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 254, 255, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0)
+}, {
+"aabb": AABB(-1, -1, -1, 2.00001, 2.00001, 2),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray(0, 0, 6, 0, 4, 0, 0, 0, 2, 0, 6, 0, 7, 0, 4, 0, 6, 0, 7, 0, 5, 0, 4, 0, 5, 0, 3, 0, 1, 0, 5, 0, 7, 0, 3, 0, 1, 0, 2, 0, 0, 0, 1, 0, 3, 0, 2, 0),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray(254, 255, 254, 255, 0, 0, 0, 0, 254, 255, 0, 0, 0, 0, 0, 0, 254, 255, 254, 255, 255, 255, 0, 0, 254, 255, 0, 0, 255, 255, 0, 0, 0, 0, 254, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 254, 255, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_apbkx"]
+resource_name = "sonicgummies_Cube"
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2.00001, 2.00001, 2),
+"attribute_data": PackedByteArray(255, 159, 255, 127, 255, 95, 255, 127, 255, 159, 255, 63, 255, 95, 255, 63, 255, 159, 255, 191, 255, 95, 255, 191, 255, 159, 0, 0, 255, 95, 0, 0),
+"format": 34896613399,
+"index_count": 12,
+"index_data": PackedByteArray(3, 0, 6, 0, 2, 0, 3, 0, 7, 0, 6, 0, 5, 0, 0, 0, 4, 0, 5, 0, 1, 0, 0, 0),
+"material": SubResource("StandardMaterial3D_r53j5"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray(254, 255, 254, 255, 0, 0, 255, 255, 254, 255, 0, 0, 0, 0, 255, 255, 254, 255, 254, 255, 255, 255, 255, 191, 254, 255, 0, 0, 255, 255, 255, 191, 0, 0, 254, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 254, 255, 255, 255, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 191, 255, 191, 255, 191, 255, 191, 255, 255, 255, 255, 255, 255, 255, 255, 255, 191, 255, 191, 255, 191, 255, 191, 255, 255, 255, 255, 255, 255, 255, 255)
+}, {
+"aabb": AABB(-1, -1, -1, 2.00001, 2.00001, 2),
+"attribute_data": PackedByteArray(255, 159, 255, 127, 255, 159, 255, 127, 255, 95, 255, 127, 255, 95, 255, 127, 255, 159, 255, 63, 255, 159, 255, 63, 255, 95, 255, 63, 255, 95, 255, 63, 255, 223, 255, 127, 255, 159, 255, 191, 255, 31, 255, 127, 255, 95, 255, 191, 255, 223, 255, 63, 255, 159, 255, 255, 255, 31, 255, 63, 255, 95, 255, 255),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray(0, 0, 12, 0, 8, 0, 0, 0, 4, 0, 12, 0, 15, 0, 9, 0, 13, 0, 15, 0, 11, 0, 9, 0, 10, 0, 6, 0, 2, 0, 10, 0, 14, 0, 6, 0, 3, 0, 5, 0, 1, 0, 3, 0, 7, 0, 5, 0),
+"material": SubResource("StandardMaterial3D_twko3"),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray(254, 255, 254, 255, 0, 0, 255, 255, 254, 255, 254, 255, 0, 0, 84, 213, 254, 255, 0, 0, 0, 0, 255, 191, 254, 255, 0, 0, 0, 0, 84, 213, 254, 255, 254, 255, 255, 255, 255, 255, 254, 255, 254, 255, 255, 255, 84, 213, 254, 255, 0, 0, 255, 255, 255, 191, 254, 255, 0, 0, 255, 255, 84, 213, 0, 0, 254, 255, 0, 0, 255, 255, 0, 0, 254, 255, 0, 0, 84, 213, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 254, 255, 255, 255, 255, 255, 0, 0, 254, 255, 255, 255, 84, 213, 0, 0, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 255, 255, 84, 213, 255, 127, 255, 191, 170, 42, 170, 42, 0, 0, 255, 127, 170, 42, 170, 42, 255, 127, 255, 191, 170, 42, 170, 42, 0, 0, 255, 127, 170, 42, 170, 42, 255, 127, 255, 191, 84, 213, 84, 213, 0, 0, 255, 127, 84, 213, 84, 213, 255, 127, 255, 191, 84, 213, 84, 213, 0, 0, 255, 127, 84, 213, 84, 213)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_3d24q")
+
+[node name="sonicgummies" instance=ExtResource("1_0ybyw")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Cube" parent="." index="0"]
+transform = Transform3D(2.138, 0, 0, 0, 1.682, 0, 0, 0, 0.387, 0, 0, 0)
+mesh = SubResource("ArrayMesh_apbkx")

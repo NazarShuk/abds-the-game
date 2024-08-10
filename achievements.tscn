@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://ci0ihc8o740fp"]
+[gd_scene load_steps=50 format=3 uid="uid://ci0ihc8o740fp"]
 
 [ext_resource type="Script" path="res://achievementiks.gd" id="1_stpc6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_un4ex"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://cl8p5wgm14xp7" path="res://Mouth/mouth_5.png" id="10_sthrk"]
 [ext_resource type="Texture2D" uid="uid://dta0u30sd2fbk" path="res://freaky_back.png" id="12_0agdt"]
 [ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://impossibleend_back.png" id="16_vdrfj"]
+[ext_resource type="Texture2D" uid="uid://dcgs0fxmh71wv" path="res://models/player_dirty.png" id="17_gg5ju"]
+[ext_resource type="Texture2D" uid="uid://blwkn3dly2c54" path="res://models/player_back_dirty.png" id="18_osudu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_botq8"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -74,6 +76,48 @@ albedo_texture = ExtResource("9_5oead")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5hsj4"]
 albedo_texture = ExtResource("16_vdrfj")
+
+[sub_resource type="QuadMesh" id="QuadMesh_fudqn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rap2p"]
+albedo_texture = ExtResource("17_gg5ju")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3h3d"]
+albedo_texture = ExtResource("18_osudu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjvan"]
+albedo_texture = ExtResource("6_d2nmc")
+
+[sub_resource type="QuadMesh" id="QuadMesh_q1lqy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3pqj"]
+albedo_texture = ExtResource("7_hheet")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlc0d"]
+albedo_texture = ExtResource("8_qdlme")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1mvl"]
+albedo_texture = ExtResource("9_pyye5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1vjg"]
+albedo_texture = ExtResource("10_sthrk")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w88gw"]
+properties/0/path = NodePath("0:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("1:visible")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("2:visible")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("3:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("4:visible")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_4oxbx"]
 length = 0.001
@@ -234,11 +278,12 @@ offset_right = -47.0
 offset_bottom = 239.0
 grow_horizontal = 0
 grow_vertical = 2
-item_count = 4
+item_count = 5
 item_0/text = "Default"
 item_1/text = "𝓯𝓻𝓮𝓪𝓴𝔂"
 item_2/text = "Perfect"
 item_3/text = "Impossible"
+item_4/text = "Disoriented"
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
 anchors_preset = 8
@@ -456,6 +501,56 @@ transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 
 visible = false
 material_override = SubResource("StandardMaterial3D_omrqb")
 mesh = SubResource("QuadMesh_rk21y")
+
+[node name="Disoriented" type="Node3D" parent="Player"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Disoriented"]
+transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_fudqn")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_rap2p")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Disoriented"]
+transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_fudqn")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_p3h3d")
+
+[node name="Mouth" type="Node3D" parent="Player/Disoriented"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.132746)
+
+[node name="0" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+material_override = SubResource("StandardMaterial3D_jjvan")
+mesh = SubResource("QuadMesh_q1lqy")
+
+[node name="1" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_p3pqj")
+mesh = SubResource("QuadMesh_q1lqy")
+
+[node name="2" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_xlc0d")
+mesh = SubResource("QuadMesh_q1lqy")
+
+[node name="3" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_g1mvl")
+mesh = SubResource("QuadMesh_q1lqy")
+
+[node name="4" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
+transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
+visible = false
+material_override = SubResource("StandardMaterial3D_v1vjg")
+mesh = SubResource("QuadMesh_q1lqy")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Player/Disoriented/Mouth"]
+replication_config = SubResource("SceneReplicationConfig_w88gw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 libraries = {

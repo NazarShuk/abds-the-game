@@ -17,11 +17,11 @@ func _ready():
 	sfx_slider.value = db_to_linear(AudioServer.get_bus_volume_db(2))
 	
 	
-	if AudioVolume.mic_threshold:
-		threshold_slider.value = AudioVolume.mic_threshold
+	if Settings.mic_threshold:
+		threshold_slider.value = Settings.mic_threshold
 	else:
-		AudioVolume.mic_threshold = threshold_slider.value
-		AudioVolume.save_values()
+		Settings.mic_threshold = threshold_slider.value
+		Settings.save_values()
 	
 	var mics = AudioServer.get_input_device_list()
 	
@@ -29,10 +29,11 @@ func _ready():
 	for mic in mics:
 		mic_list.add_item(mic)
 	
-	if AudioVolume.input_device:
-		mic_list.select(mics.find(AudioVolume.input_device),true)
+	if Settings.input_device:
+		mic_list.select(mics.find(Settings.input_device),true)
 	
-	
+	if Settings.better_lighting != null:
+		$CanvasLayer/BetterLightingToggle.button_pressed = Settings.better_lighting
 
 func _exit_tree():
 	AudioServer.set_bus_mute(4,true)
@@ -66,14 +67,14 @@ func _on_music_slider_changed(value):
 	AudioServer.set_bus_volume_db(1,linear_to_db(value))
 	
 	
-	AudioVolume.music_vol = linear_to_db(value)
-	AudioVolume.save_values()
+	Settings.music_vol = linear_to_db(value)
+	Settings.save_values()
 
 func _on_sfx_slider_changed(value):
 	AudioServer.set_bus_volume_db(2,linear_to_db(value))
 	
-	AudioVolume.sfx_vol = linear_to_db(value)
-	AudioVolume.save_values()
+	Settings.sfx_vol = linear_to_db(value)
+	Settings.save_values()
 	
 	if cangoof:
 		var audio = AudioStreamPlayer.new()
@@ -94,8 +95,8 @@ func _on_button_2_pressed():
 		get_tree().change_scene_to_file("res://noescape.tscn")
 
 func _on_threshold_slider_value_changed(value):
-	AudioVolume.mic_threshold = value
-	AudioVolume.save_values()
+	Settings.mic_threshold = value
+	Settings.save_values()
 
 
 func _on_check_button_toggled(toggled_on):
@@ -103,13 +104,18 @@ func _on_check_button_toggled(toggled_on):
 
 
 func _on_v_cslider_value_changed(value):
-	AudioVolume.voice_chat_vol = value
-	AudioVolume.save_values()
+	Settings.voice_chat_vol = value
+	Settings.save_values()
 	AudioServer.set_bus_volume_db(7,linear_to_db(value))
 
 
 func _on_mic_list_item_selected(index):
 	var dev = mic_list.get_item_text(index)
 	AudioServer.input_device = dev
-	AudioVolume.input_device = dev
-	AudioVolume.save_values()
+	Settings.input_device = dev
+	Settings.save_values()
+
+
+func _on_better_lighting_toggle_toggled(toggled_on):
+	Settings.better_lighting = toggled_on
+	Settings.save_values()

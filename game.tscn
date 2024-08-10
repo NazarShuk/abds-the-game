@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=98 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
+[ext_resource type="Texture2D" uid="uid://vvklw85x26dt" path="res://models/blackboard/blackboard-_0009_Layer-1.png" id="16_7uv2o"]
 [ext_resource type="PackedScene" uid="uid://xxyguo1ps1gc" path="res://school.tscn" id="17_3oefh"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://3u3ef1rrt1c0" path="res://pop.mp3" id="17_fndpl"]
@@ -42,8 +43,8 @@
 [ext_resource type="PackedScene" uid="uid://dsqshh6157cwh" path="res://bucket.tscn" id="42_8jmcj"]
 [ext_resource type="PackedScene" uid="uid://kfniphc0hjb6" path="res://misuraca.tscn" id="43_t45wj"]
 [ext_resource type="PackedScene" uid="uid://jrc22nnpwkws" path="res://videoplayer.tscn" id="44_jjv51"]
+[ext_resource type="PackedScene" uid="uid://chuhguxkuwyn1" path="res://models/3d/school_bus.glb" id="45_5hyb8"]
 [ext_resource type="AudioStream" uid="uid://dlu3b8bxaa7jm" path="res://models/bus.mp3" id="45_xyeqq"]
-[ext_resource type="PackedScene" uid="uid://dlgc8te7epclx" path="res://models/3d/SCHOOL BUS.glb" id="46_4rqx5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -398,6 +399,35 @@ _data = {
 "start": SubResource("Animation_iyet2")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vl53x"]
+transparency = 1
+albedo_texture = ExtResource("16_7uv2o")
+
+[sub_resource type="QuadMesh" id="QuadMesh_2h50m"]
+
+[sub_resource type="TextMesh" id="TextMesh_gxe37"]
+text = "WARRIORS OF THE GAME"
+font = ExtResource("7_1xl1k")
+font_size = 36
+
+[sub_resource type="TextMesh" id="TextMesh_0f466"]
+text = "Warrior 1
+123 books"
+font = ExtResource("7_1xl1k")
+font_size = 32
+
+[sub_resource type="TextMesh" id="TextMesh_wut4u"]
+text = "Warrior 1
+123 books"
+font = ExtResource("7_1xl1k")
+font_size = 32
+
+[sub_resource type="TextMesh" id="TextMesh_w6kao"]
+text = "Warrior 1
+123 books"
+font = ExtResource("7_1xl1k")
+font_size = 32
+
 [sub_resource type="SphereMesh" id="SphereMesh_2pqsq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_both1"]
@@ -515,62 +545,74 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SCHOOL BUS:position")
+tracks/0/path = NodePath("Camera3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(185.553, 133.372, 2.05351)]
+"values": [Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("SCHOOL BUS:rotation")
+tracks/1/path = NodePath("Camera3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-1.5708, -1.5708, 0)]
+"values": [Vector3(0, 1.265, 12.045)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("SCHOOL BUS:scale")
+tracks/2/path = NodePath("SCHOOL BUS:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.09, 0.09, 0.09)]
+"values": [Vector3(193.036, 133.372, 2.05351)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("SCHOOL BUS:visible")
+tracks/3/path = NodePath("SCHOOL BUS:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [Vector3(4.37112e-08, -3.14159, -3.69549e-06)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Camera3D:rotation")
+tracks/4/path = NodePath("SCHOOL BUS:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(0.8811, 0.8811, 0.8811)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:process_mode")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_yxcq5"]
@@ -579,62 +621,88 @@ length = 15.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SCHOOL BUS:position")
+tracks/0/path = NodePath("Camera3D:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2, 3, 3.5, 12.6, 13, 15),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.9, 1.9, 2.6, 3.3, 3.9, 4, 4.1, 4.2, 5.5, 5.6, 6, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(185.553, 133.372, 2.05351), Vector3(16.5174, -0.280045, 5.45871), Vector3(8.83138, -0.280045, 5.45871), Vector3(8.83138, -0.280045, 5.45871), Vector3(8.83138, -0.280045, 5.45871), Vector3(8.83138, -0.280045, 5.45871), Vector3(-259.87, 149.147, 5.45871)]
+"values": [Vector3(0, 0, 0), Vector3(0.764454, -1.21649, 0), Vector3(0.467748, -1.48702, 0), Vector3(0.136136, -1.22522, 0), Vector3(0.0575959, -1.00705, 0), Vector3(0.0575959, -1.00705, 0), Vector3(0.0575959, -1.00705, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("SCHOOL BUS:rotation")
-tracks/1/interp = 2
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.6, 2, 3.5, 12.6, 13, 13.3, 15),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(4, 4.1, 6, 7, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(-0.785398, -1.5708, 0), Vector3(-0.785398, -1.5708, 0), Vector3(-1.5708, -1.5708, 0), Vector3(-1.5708, -1.5708, 0), Vector3(-1.5708, -1.5708, 0), Vector3(-1.5708, -1.5708, 0), Vector3(-2.35619, -1.5708, 0), Vector3(-1.5708, -1.5708, 0)]
+"values": [Vector3(0, 1.265, 12.045), Vector3(16.215, 3.335, 8.77), Vector3(7.595, 3.335, 8.77), Vector3(6.46, 3.335, 7.985), Vector3(6.46, 1.48, 5.765)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("SCHOOL BUS:scale")
-tracks/2/interp = 1
+tracks/2/path = NodePath("SCHOOL BUS:position")
+tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(14.5, 15),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 4, 4.1, 11.5, 11.9, 15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.09, 0.09, 0.09), Vector3(0.001, 0, 0)]
+"values": [Vector3(193.036, 133.372, 2.05351), Vector3(16.181, 0.097, 8.694), Vector3(16.181, 0.0970001, 8.694), Vector3(16.181, 0.0970001, 8.694), Vector3(16.181, 0.0970001, 8.694), Vector3(-239.362, 232.718, 8.694)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("SCHOOL BUS:visible")
-tracks/3/interp = 1
+tracks/3/path = NodePath("SCHOOL BUS:rotation")
+tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
+"times": PackedFloat32Array(0, 4, 4.1, 11.5, 11.9, 15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, 3.14159, -3.69549e-06)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Camera3D:rotation")
+tracks/4/path = NodePath("SCHOOL BUS:scale")
 tracks/4/interp = 2
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.9, 2, 2.6, 3.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 4, 4.1, 11.5, 11.9, 14.8, 15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.764454, -1.21649, 0), Vector3(0.467748, -1.48702, 0), Vector3(0.136136, -1.22522, 0), Vector3(0.0575959, -1.00705, 0)]
+"values": [Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:process_mode")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 4]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Camera3D")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(15),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uvnkd"]
@@ -759,7 +827,6 @@ grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 32
-text = "find a ela book!"
 horizontal_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main"]
@@ -868,7 +935,7 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 40
-text = "Alsotn Bridge Diddle School
+text = "Alostn Bridge Diddle School
 The Game"
 horizontal_alignment = 1
 
@@ -911,20 +978,20 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -31.0
-offset_right = 72.0
+offset_right = 19.0
 grow_vertical = 0
-text = "Connect"
+text = "C"
 
 [node name="host_local" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 72.0
+offset_left = 20.0
 offset_top = -31.0
-offset_right = 155.0
+offset_right = 41.0
 grow_vertical = 0
-text = "host local"
+text = "H"
 
 [node name="settings" type="Button" parent="CanvasLayer/MultiPlayer"]
 layout_mode = 1
@@ -1689,6 +1756,35 @@ size = 15.0
 near = 0.001
 far = 20.0
 
+[node name="LeaderBoard" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.0521, 1.46694, -132.968)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeaderBoard"]
+transform = Transform3D(8.75648, 0, 0, 0, 2.76064, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_vl53x")
+mesh = SubResource("QuadMesh_2h50m")
+
+[node name="title" type="MeshInstance3D" parent="LeaderBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.170549, 0.889932, 0)
+mesh = SubResource("TextMesh_gxe37")
+
+[node name="w1" type="MeshInstance3D" parent="LeaderBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5202, 0.0768692, 0)
+visible = false
+mesh = SubResource("TextMesh_0f466")
+
+[node name="w2" type="MeshInstance3D" parent="LeaderBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.264769, 0.0768692, 0)
+visible = false
+mesh = SubResource("TextMesh_wut4u")
+
+[node name="w3" type="MeshInstance3D" parent="LeaderBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82804, 0.0768692, 0)
+visible = false
+mesh = SubResource("TextMesh_w6kao")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="LeaderBoard"]
+
 [node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.451504, 1.42582, -28.4865)
 visible = false
@@ -2281,19 +2377,21 @@ spot_range = 16.9131
 
 [node name="pre_start_game_anim" type="Node3D" parent="."]
 
-[node name="SCHOOL BUS" parent="pre_start_game_anim" instance=ExtResource("46_4rqx5")]
-transform = Transform3D(-3.25799e-07, 0.09, 3.25799e-07, 0, -3.25799e-07, 0.09, 0.09, 3.25799e-07, 1.17939e-12, 185.553, 133.372, 2.05351)
+[node name="SCHOOL BUS" parent="pre_start_game_anim" instance=ExtResource("45_5hyb8")]
+transform = Transform3D(-0.8811, -3.2561e-06, -2.23375e-06, -3.2561e-06, 0.8811, -3.85139e-08, 2.23375e-06, -3.85057e-08, -0.8811, 193.036, 133.372, 2.05351)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="pre_start_game_anim/SCHOOL BUS"]
+transform = Transform3D(4.10849e-06, -1.13494, -4.24378e-06, -4.95946e-08, -4.24379e-06, 1.13494, -1.13494, -4.10849e-06, -4.961e-08, 8.49295, 3.05176e-05, 0)
 stream = ExtResource("45_xyeqq")
 autoplay = true
 max_distance = 100.0
 bus = &"Dialogs"
 
 [node name="pl spawn" type="Node3D" parent="pre_start_game_anim/SCHOOL BUS"]
-transform = Transform3D(1, -7.10543e-15, -1.69407e-21, 7.10543e-15, 1, -7.10543e-15, 0, 7.10543e-15, 1, -38.0268, -19.3379, 24.6674)
+transform = Transform3D(3.69764e-07, -0.102145, -3.81941e-07, -4.46352e-09, -3.81941e-07, 0.102145, -0.102145, -3.69764e-07, -4.4649e-09, 10.4682, 2.51967, 3.88426)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="pre_start_game_anim/SCHOOL BUS"]
+transform = Transform3D(3.69764e-07, -0.102145, -3.81941e-07, -4.46352e-09, -3.81941e-07, 0.102145, -0.102145, -3.69764e-07, -4.4649e-09, 8.49295, 3.05176e-05, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="pre_start_game_anim/SCHOOL BUS/StaticBody3D"]
 transform = Transform3D(1, -7.10543e-15, -7.708e-20, 7.10543e-15, 1, -7.10543e-15, 0, 7.10543e-15, 1, 0, 0, 28.9526)
@@ -2332,6 +2430,7 @@ transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 2.98023e-08, 2.98023e-08, 0, 1
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
+[connection signal="request_completed" from="LeaderBoard/HTTPRequest" to="." method="on_request_completed"]
 [connection signal="timeout" from="EvilLeahy/LeahyCoolTimer" to="." method="_on_leahy_cool_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]

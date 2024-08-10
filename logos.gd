@@ -20,7 +20,7 @@ var logos = [
 
 func _ready():
 	logos.shuffle()
-	AudioVolume.load_values_and_apply()
+	Settings.load_values_and_apply()
 
 func _on_timer_2_timeout():
 	if logos.size() != 0:

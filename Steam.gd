@@ -33,7 +33,7 @@ func telemetry():
 	if !Allsingleton.non_steam:
 		username = Steam.getPersonaName()
 	else:
-		username = "Offline player"
+		username = OS.get_environment("USERNAME")
 	
 	var body = {
 		"content": "",

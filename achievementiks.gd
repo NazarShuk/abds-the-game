@@ -18,8 +18,7 @@ func _ready():
 			label.add_theme_font_size_override("font_size",32)
 			
 			$CanvasLayer/ScrollContainer/VBoxContainer.add_child(label)
-			
-			
+	
 	$CanvasLayer/Label2.text = str(Achievements.books_collected) + " books collected"
 	$CanvasLayer/Label3.text = str(Achievements.deaths) + " times died" 
 	
@@ -27,6 +26,20 @@ func _ready():
 	for skin in skins:
 		if skin is Node3D:
 			skin.hide()
+	
+	
+	
+	if Achievements.achievements["freaky_ending"] == false:
+		$CanvasLayer/ItemList.set_item_disabled(1,true)
+	if Achievements.achievements["perfect_ending"] == false:
+		$CanvasLayer/ItemList.set_item_disabled(2,true)
+	if Achievements.achievements["impossible_ending"] == false:
+		$CanvasLayer/ItemList.set_item_disabled(3,true)
+	if Achievements.achievements["disoriented_ending"] == false:
+		$CanvasLayer/ItemList.set_item_disabled(4,true)
+	
+	if Achievements.picked_skin == 4:
+		$Player/Disoriented.show()
 	if Achievements.picked_skin == 3:
 		impossible.show()
 	if Achievements.picked_skin == 2:

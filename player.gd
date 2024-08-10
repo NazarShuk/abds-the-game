@@ -43,7 +43,7 @@ var on_top_counter = 0
 
 var can_get_item = true
 
-@onready var camera_3d = $CanvasLayer2/SubViewportContainer/SubViewport/XROrigin3D/Camera3D
+@onready var camera_3d = $CanvasLayer2/SubViewportContainer/SubViewport/Camera3D
 @onready var minimap_cam = $Minimap/Camera3D
 
 var leahy_dst = 0
@@ -130,8 +130,8 @@ func _enter_tree():
 		$nametag.text = Steam.getPersonaName()
 		steam_name = Steam.getPersonaName()
 	else:
-		$nametag.text = "Offline player"
-		steam_name = "Offline player"
+		$nametag.text =OS.get_environment("USERNAME")
+		steam_name = OS.get_environment("USERNAME")
 	parent = get_parent()
 	
 	if is_multiplayer_authority():
@@ -238,12 +238,11 @@ func _physics_process(delta):
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
 		# Voice chat
 		processMic()
-		inputThreshold = AudioVolume.mic_threshold
+		inputThreshold = Settings.mic_threshold
 		
 		leahy_dst = global_position.distance_to(parent.get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			pick_item(0)
 			pass
 
 		if parent.game_started:
@@ -320,6 +319,10 @@ func baja_timeout():
 	await get_tree().create_timer(7.5).timeout
 	boosts["baja"] -= 4.5
 	baja_slow_timeout()
+	
+func sonic_timeout():
+	await get_tree().create_timer(5).timeout
+	boosts["sonic"] -= 3
 
 func baja_slow_timeout():
 	await get_tree().create_timer(15).timeout
@@ -460,7 +463,8 @@ func update_item_weights():
 		"4":3, # Duck
 		"5":2 + book_multiplier, # Sunkist
 		"6":2 + book_multiplier, # Redbull
-		"8":1 + book_multiplier # Baja Blast
+		"8":1 + book_multiplier, # Baja Blast
+		"10": 0.1 # Sonic gummies
 	}
 
 @rpc("any_peer", "call_local")
@@ -858,7 +862,10 @@ func control_text_setters():
 			final_text += "Bucket\nFill the bucket to use it"
 	elif cur_item == 8:
 		final_text += "Baja Blast\nRight Click - Drink\nLeft Click - Give to Ms.Leahy"
-	
+	elif cur_item == 9:
+		final_text += "Fire Extinguisher\n Right Click - Use"
+	elif cur_item == 10:
+		final_text += "Sonic Gummies\n Right Click - Eat"
 	controls_text.text = final_text
 
 func format_time(timer_path,succes_string):
@@ -999,8 +1006,7 @@ func movement():
 							parent.play_the_j.rpc()
 						if ray.get_collider().name == "fire":
 							ray.get_collider().get_parent().break_glass.rpc()
-							print(ray.get_collider().get_parent().strength_left)
-							if ray.get_collider().get_parent().strength_left == 10:
+							if ray.get_collider().get_parent().can_pickup:
 								pick_item(9)
 						
 						if ray.get_collider().is_in_group("toilet"):
@@ -1123,7 +1129,15 @@ func movement():
 						pick_item(-1)
 						parent.spawn_smoke.rpc(global_position)
 						play_sound("res://fire extinguisher.mp3")
-						
+					elif get_cur_item() == 10:
+						pick_item(-1)
+						if boosts.has("sonic"):
+							boosts["sonic"] += 3
+						else:
+							boosts["sonic"] = 3
+						sonic_timeout()
+						play_sound("res://models/sonic.mp3",3)
+
 	if Input.is_action_just_pressed("throw"):
 		if get_cur_item() != -1:
 			var cloned_item = $Hand.get_child(get_cur_item()).get_child(0).get_path()

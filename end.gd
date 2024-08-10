@@ -18,7 +18,9 @@ func _ready():
 	if multiplayer.has_multiplayer_peer():
 		multiplayer.multiplayer_peer.close()
 		get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())
-
+	
+	Leaderboard.set_values()
+	
 func _on_timer_timeout():
 	get_tree().change_scene_to_file("res://game.tscn")
 

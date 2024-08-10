@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ceo00cwwipkt0"]
+[gd_scene load_steps=6 format=3 uid="uid://ceo00cwwipkt0"]
 
 [ext_resource type="Shader" uid="uid://hrbkunmq0otv" path="res://smoke.tres" id="1_thmaj"]
 [ext_resource type="Script" path="res://smoke wall.gd" id="2_uq6gs"]
@@ -14,6 +14,14 @@ shader_parameter/edge_fade = 0.1
 [sub_resource type="BoxShape3D" id="BoxShape3D_le16i"]
 size = Vector3(6.14868, 6.0332, 5.23926)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_yeqy4"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("StaticBody3D/CollisionShape3D:disabled")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
 [node name="SmokeWall" type="FogVolume"]
 size = Vector3(6.91689, 6.49085, 5.2445)
 material = SubResource("ShaderMaterial_88wdr")
@@ -24,3 +32,6 @@ script = ExtResource("2_uq6gs")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_le16i")
 disabled = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_yeqy4")

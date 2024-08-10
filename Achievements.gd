@@ -3,19 +3,12 @@ extends Node
 const FILE_PATH = "user://achievements.save"
 
 var achievements = {
+	"freaky_ending":false,
 	"perfect_ending":false,
 	"impossible_ending":false,
-	"freaky_ending":false,
+	"disoriented_ending": false,
 	"bad_ending":false,
 	"good_ending":false,
-	"10_deaths":false,
-	"30_deaths":false,
-	"50_deaths":false,
-	"100_deaths":false,
-	"10_books":false,
-	"30_books":false,
-	"50_books":false,
-	"100_books":false
 }
 
 var picked_skin = 0
@@ -33,11 +26,16 @@ func _ready():
 		if !typeof(achievements) == TYPE_DICTIONARY:
 			achievements = ach
 		
+		
 		books_collected = game_save.get_var()
 		deaths = game_save.get_var()
 		picked_skin = game_save.get_var()
 		if !picked_skin:
 			picked_skin = 0
+		
+		if !achievements.has("disoriented_ending"):
+			achievements["disoriented_ending"] = false
+			save_all()
 
 func check_achievement(achievement_name):
 	return achievements[achievement_name]
