@@ -9,6 +9,8 @@ var voice_chat_vol
 var input_device
 
 var better_lighting
+var resolution_scale
+var render_distance
 
 func save_values():
 	var game_save = FileAccess.open(FILE_PATH,FileAccess.WRITE)
@@ -19,6 +21,8 @@ func save_values():
 	game_save.store_var(voice_chat_vol)
 	game_save.store_var(input_device)
 	game_save.store_var(better_lighting)
+	game_save.store_var(resolution_scale)
+	game_save.store_var(render_distance)
 	game_save.close()
 	
 
@@ -32,6 +36,8 @@ func load_values_and_apply():
 		voice_chat_vol = game_save.get_var()
 		input_device = game_save.get_var()
 		better_lighting = game_save.get_var()
+		resolution_scale = game_save.get_var()
+		render_distance = game_save.get_var()
 		
 		if music_vol:
 			AudioServer.set_bus_volume_db(1,music_vol)
@@ -47,5 +53,8 @@ func load_values_and_apply():
 		else:
 			input_device = "Default"
 			AudioServer.input_device = "Default"
+		
+		if resolution_scale:
+			get_viewport().scaling_3d_scale = resolution_scale
 		
 		game_save.close()

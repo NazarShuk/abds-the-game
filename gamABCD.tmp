@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=123 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="5_jibb3"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
-[ext_resource type="Shader" path="res://black squares.gdshader" id="5_xgi1f"]
 [ext_resource type="AudioStream" uid="uid://cvwobq8jsn8xc" path="res://failedme.mp3" id="6_8cxyt"]
 [ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="6_roq42"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
@@ -50,20 +49,11 @@
 [ext_resource type="PackedScene" uid="uid://rhxdyygmn50t" path="res://models/Car.glb" id="47_6sv53"]
 [ext_resource type="PackedScene" uid="uid://b0kihxyehcgo4" path="res://models/Sports Car.glb" id="48_in3nt"]
 [ext_resource type="Script" path="res://wheel.gd" id="49_dpi7y"]
-[ext_resource type="AudioStream" uid="uid://bo50ffdvv6lv2" path="res://money.mp3" id="50_loy87"]
-[ext_resource type="PackedScene" uid="uid://ch0saed6qmuta" path="res://models/3d/fruit snacks.glb" id="50_x830a"]
-[ext_resource type="PackedScene" uid="uid://ba2vqcug0hgbe" path="res://models/3d/pizza.glb" id="51_603ci"]
-[ext_resource type="PackedScene" uid="uid://du3qk3pgny2hf" path="res://models/3d/mtndewfinal.glb" id="52_vtthx"]
-[ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="53_01kym"]
-[ext_resource type="PackedScene" uid="uid://byaexesg86uo0" path="res://sonicgummies.tscn" id="54_ruu6w"]
-[ext_resource type="Texture2D" uid="uid://be83fcuv2llo3" path="res://RAY_1032_crop-removebg-preview.png" id="55_edgin"]
-[ext_resource type="Texture2D" uid="uid://cop2rccne3feg" path="res://ela book.png" id="56_ks1ig"]
-[ext_resource type="Texture2D" uid="uid://dbo74xllmx2vx" path="res://RAY_1063_crop-removebg-preview.png" id="57_s5o7m"]
-[ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="57_tmkqp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
 sky_horizon_color = Color(1, 1, 1, 1)
+sky_curve = 22.4768
 ground_bottom_color = Color(1, 1, 1, 1)
 ground_horizon_color = Color(1, 1, 1, 1)
 
@@ -200,16 +190,6 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("SomeoneDid:theme_override_colors/font_outline_color")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_beb0e"]
-shader = ExtResource("5_xgi1f")
-shader_parameter/square_width = 9.664
-shader_parameter/square_height = 25.0
-shader_parameter/noise_density = 0.035
-shader_parameter/time_speed = 0.1
-shader_parameter/resolution = Vector2(100, 2000)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ha7mg"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
@@ -743,69 +723,6 @@ _data = {
 }
 point_count = 6
 
-[sub_resource type="Animation" id="Animation_1v4jt"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Path3D/PathFollow3D2:progress_ratio")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Path3D/PathFollow3D3:progress_ratio")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Path3D/PathFollow3D4:progress_ratio")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Path3D:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_rpmyj"]
 resource_name = "carpool"
 length = 30.0
@@ -869,6 +786,69 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(100, 100, 100), Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(100, 100, 100)]
+}
+
+[sub_resource type="Animation" id="Animation_1v4jt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path3D/PathFollow3D2:progress_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path3D/PathFollow3D3:progress_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Path3D/PathFollow3D4:progress_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path3D:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7psxp"]
@@ -994,20 +974,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qn7gv")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04f1e"]
-transparency = 1
-albedo_texture = ExtResource("55_edgin")
-
-[sub_resource type="QuadMesh" id="QuadMesh_gdkvb"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s5gwa"]
-transparency = 1
-albedo_texture = ExtResource("56_ks1ig")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xvlq7"]
-transparency = 1
-albedo_texture = ExtResource("57_s5o7m")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2y06w"]
 resource_name = "Material.006"
@@ -1207,17 +1173,6 @@ replication_config = SubResource("SceneReplicationConfig_dw4kk")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 6
-
-[node name="Glitch" type="TextureRect" parent="CanvasLayer"]
-visible = false
-material = SubResource("ShaderMaterial_beb0e")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("PlaceholderTexture2D_ha7mg")
-expand_mode = 1
 
 [node name="Main" type="Control" parent="CanvasLayer"]
 visible = false
@@ -1939,6 +1894,7 @@ game = NodePath("../../../../../..")
 param_name = "leahy_start_speed"
 label_text = "Leahy starting speed"
 max_val = 999.0
+min_val = 1.0
 
 [node name="NumBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
 layout_mode = 2
@@ -2214,7 +2170,7 @@ mesh = SubResource("TextMesh_w6kao")
 [node name="HTTPRequest" type="HTTPRequest" parent="LeaderBoard"]
 
 [node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3.494, 1.07576, -23.905)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.451504, 1.42582, -28.4865)
 visible = false
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="EvilLeahy"]
@@ -2853,7 +2809,7 @@ cubic_interp = false
 transform = Transform3D(2.55, 0, 0, 0, 2.55, 0, 0, 0, 2.55, 0, 0, 0)
 
 [node name="PathFollow3D3" type="PathFollow3D" parent="Carpool/Path3D"]
-transform = Transform3D(0.999906, 0, 0.00040016, 0, 1, 0, -0.00040016, 0, 0.999906, 40.53, 0, 117.125)
+transform = Transform3D(0.999906, 0, 0.000400159, 0, 1, 0, -0.000400159, 0, 0.999906, 40.53, 0, 117.125)
 cubic_interp = false
 
 [node name="Car2" parent="Carpool/Path3D/PathFollow3D3" instance=ExtResource("47_6sv53")]
@@ -2872,52 +2828,14 @@ libraries = {
 }
 autoplay = "carpool"
 
-[node name="wheel" type="Node3D" parent="." node_paths=PackedStringArray("game")]
-transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -1.75163, 0.494339, -44.4715)
+[node name="wheel" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.2136, 0.494339, -37.774)
 script = ExtResource("49_dpi7y")
-game = NodePath("..")
 
 [node name="Cylinder" type="MeshInstance3D" parent="wheel"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.01255, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, 0.5, -2.18557e-08, -0.866025, 0.866025, -3.78552e-08, 0.5, 0, 1.01255, 0)
 mesh = SubResource("ArrayMesh_nn80w")
 skeleton = NodePath("")
-
-[node name="fruit snacks" parent="wheel/Cylinder" instance=ExtResource("50_x830a")]
-transform = Transform3D(-1.31134e-09, 0.03, 1.31134e-09, -1.11022e-16, -1.31134e-09, 0.03, 0.03, 1.31134e-09, -1.11022e-16, 0.685828, 0.0747986, -0.169637)
-
-[node name="pizza" parent="wheel/Cylinder" instance=ExtResource("51_603ci")]
-transform = Transform3D(0.11, -7.51536e-16, -5.1346e-30, 7.51536e-16, 0.11, 1.1273e-15, -2.5673e-30, -1.1273e-15, 0.11, 0.547302, 0.0620613, -0.558637)
-
-[node name="mtndewfinal" parent="wheel/Cylinder" instance=ExtResource("52_vtthx")]
-transform = Transform3D(6.73759e-09, 0.565, 2.46969e-08, 2.78017e-07, -2.46969e-08, 0.565, 0.565, -6.73758e-09, -2.18412e-07, 0.268204, 0.0754471, -0.737332)
-
-[node name="sunkist" parent="wheel/Cylinder" instance=ExtResource("53_01kym")]
-transform = Transform3D(-2.18557e-09, 0.0499999, -2.18557e-09, -0.05, -2.18557e-09, 2.18557e-09, 2.18557e-09, 2.18557e-09, 0.0499999, -0.135448, 0.0946846, -0.761195)
-
-[node name="sonicgummies" parent="wheel/Cylinder" instance=ExtResource("54_ruu6w")]
-transform = Transform3D(0.05, -3.67636e-23, 1.60699e-30, 0, -2.18557e-09, -0.05, 3.67636e-23, 0.05, -2.18557e-09, -0.514791, 0.0797539, -0.506867)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="wheel/Cylinder"]
-transform = Transform3D(-1.57361e-08, 0.36, 1.57361e-08, -1.77636e-15, -1.57361e-08, 0.36, 0.36, 1.57361e-08, -3.55271e-15, -0.699267, 0.0624237, -0.219118)
-material_override = SubResource("StandardMaterial3D_04f1e")
-mesh = SubResource("QuadMesh_gdkvb")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="wheel/Cylinder"]
-transform = Transform3D(-1.57361e-08, 0.36, 1.57361e-08, -1.77636e-15, -1.57361e-08, 0.36, 0.36, 1.57361e-08, -2.13163e-14, -0.73216, 0.0624237, 0.188793)
-material_override = SubResource("StandardMaterial3D_s5gwa")
-mesh = SubResource("QuadMesh_gdkvb")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="wheel/Cylinder"]
-transform = Transform3D(-0.18, 0.311769, 7.86806e-09, 5.7598e-09, -5.75982e-09, 0.36, 0.311769, 0.18, -2.10826e-09, -0.173051, 0.0624237, 0.688786)
-material_override = SubResource("StandardMaterial3D_xvlq7")
-mesh = SubResource("QuadMesh_gdkvb")
-
-[node name="Root Scene" parent="wheel/Cylinder" instance=ExtResource("57_tmkqp")]
-transform = Transform3D(3.255, -1.01662e-14, -1.21191e-21, 1.01662e-14, 3.255, 7.11636e-14, 1.21191e-21, -7.11636e-14, 3.255, -0.362463, 0.038147, 0.401501)
-
-[node name="Label3D" type="Label3D" parent="wheel/Cylinder"]
-transform = Transform3D(0.311638, 0.9502, 4.37114e-08, 8.9407e-08, -2.98023e-08, 1, 0.9502, -0.311638, 2.98023e-08, 0.200385, 0.0586662, 0.623045)
-text = "pee pee"
 
 [node name="Cube" type="MeshInstance3D" parent="wheel"]
 transform = Transform3D(0.0792309, 0, 0, 0, 1.44142, 0, 0, 0, 0.243857, 0.0315807, 0.667949, 0)
@@ -2943,10 +2861,6 @@ replication_config = SubResource("SceneReplicationConfig_f7wrw")
 [node name="wheel" type="CollisionShape3D" parent="wheel/wheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.74115, -0.0045166)
 shape = SubResource("BoxShape3D_oauyd")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="wheel"]
-stream = ExtResource("50_loy87")
-bus = &"Dialogs"
 
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]

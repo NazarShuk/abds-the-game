@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch2f3vx6wu3mm"]
+
+[ext_resource type="PackedScene" uid="uid://ciif8uxogouwk" path="res://models/3d/wheel.glb" id="1_nvivi"]
+
+[node name="wheel" instance=ExtResource("1_nvivi")]

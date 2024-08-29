@@ -34,6 +34,12 @@ func _ready():
 	
 	if Settings.better_lighting != null:
 		$CanvasLayer/BetterLightingToggle.button_pressed = Settings.better_lighting
+	
+	if Settings.resolution_scale != null:
+		$CanvasLayer/InGameResolutionSlider.value = Settings.resolution_scale
+	
+	if Settings.render_distance != null:
+		$CanvasLayer/RenderDistanceSlider.value = Settings.render_distance
 
 func _exit_tree():
 	AudioServer.set_bus_mute(4,true)
@@ -118,4 +124,14 @@ func _on_mic_list_item_selected(index):
 
 func _on_better_lighting_toggle_toggled(toggled_on):
 	Settings.better_lighting = toggled_on
+	Settings.save_values()
+
+
+func _on_in_game_resolution_slider_value_changed(value):
+	Settings.resolution_scale = value
+	Settings.save_values()
+
+
+func _on_render_distance_slider_value_changed(value):
+	Settings.render_distance = value
 	Settings.save_values()

@@ -303,6 +303,75 @@ theme_override_icons/unchecked_disabled_mirrored = ExtResource("6_7sk2p")
 button_pressed = true
 text = "Enable better lighting"
 
+[node name="InGameResolution" type="Label" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 900.0
+offset_top = -222.0
+offset_right = -233.0
+offset_bottom = -183.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rc34d")
+theme_override_font_sizes/font_size = 24
+text = "In game resolution"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InGameResolutionSlider" type="HSlider" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 151.0
+offset_top = -187.5
+offset_right = 515.0
+offset_bottom = -150.5
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 0.01
+max_value = 0.75
+step = 0.05
+value = 0.75
+
+[node name="RenderDistance" type="Label" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 877.0
+offset_top = -160.0
+offset_right = -210.0
+offset_bottom = -121.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rc34d")
+theme_override_font_sizes/font_size = 24
+text = "Render distance"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RenderDistanceSlider" type="HSlider" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 151.0
+offset_top = -125.5
+offset_right = 515.0
+offset_bottom = -88.5
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 1.0
+max_value = 250.0
+value = 250.0
+
 [node name="Button" type="Button" parent="CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
@@ -334,5 +403,7 @@ bus = &"Voice Chat"
 [connection signal="toggled" from="CanvasLayer/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="item_selected" from="CanvasLayer/MicList" to="." method="_on_mic_list_item_selected"]
 [connection signal="toggled" from="CanvasLayer/BetterLightingToggle" to="." method="_on_better_lighting_toggle_toggled"]
+[connection signal="value_changed" from="CanvasLayer/InGameResolutionSlider" to="." method="_on_in_game_resolution_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/RenderDistanceSlider" to="." method="_on_render_distance_slider_value_changed"]
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="goofballTimer" to="." method="_on_goofball_timer_timeout"]

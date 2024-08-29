@@ -43,7 +43,7 @@ var on_top_counter = 0
 
 var can_get_item = true
 
-@onready var camera_3d = $CanvasLayer2/SubViewportContainer/SubViewport/Camera3D
+@onready var camera_3d = $Camera3D
 @onready var minimap_cam = $Minimap/Camera3D
 
 var leahy_dst = 0
@@ -137,9 +137,6 @@ func _enter_tree():
 	if is_multiplayer_authority():
 		$CanvasLayer.show()
 		parent.hide_menu()
-		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_2d = true
-		$CanvasLayer2/SubViewportContainer/SubViewport.audio_listener_enable_3d = true
-		$CanvasLayer2.process_mode = Node.PROCESS_MODE_INHERIT
 		#$Local.stream_mix_rate = float(current_sample_rate)
 		
 
@@ -171,8 +168,9 @@ func _ready():
 		
 		if picked_skin == false:
 			default.show()
-		
-		
+	
+		if Settings.render_distance:
+			camera_3d.far = Settings.render_distance
 
 var is_freaky = false
 var can_use_breaker = true
@@ -289,7 +287,9 @@ func _physics_process(delta):
 				
 		camera_3d.current = true
 		camera_3d.global_transform = $"Camera target".global_transform
-		$CanvasLayer2.visible = true
+
+var vertical_angle = 0.0
+var max_vertical_angle = 89.0  # You can adjust this as needed.
 
 func _input(event):
 	if !is_multiplayer_authority():
@@ -302,6 +302,13 @@ func _input(event):
 				if parent.do_vertical_camera:
 					# funni
 					rotate_x(deg_to_rad(event.relative.y * -0.3))
+					
+					## Calculate new vertical angle
+					#vertical_angle -= event.relative.y * 0.3
+					#vertical_angle = clamp(vertical_angle, -max_vertical_angle, max_vertical_angle)
+#
+					## Set the new rotation by using Euler angles
+					#rotation.x = deg_to_rad(vertical_angle)
 
 func coffee_timeout():
 	await get_tree().create_timer(6).timeout
@@ -456,8 +463,8 @@ var item_weights = {}
 func update_item_weights():
 	var book_multiplier = (parent.total_books / parent.books_to_collect) * 3
 	item_weights = {
-		"0":40, # Fruit Snacks
-		"1":25, # Clorox
+		"0":25, # Fruit Snacks
+		"1":20, # Clorox
 		"2":20, # Pizza
 		"3":15 + book_multiplier, # Mtn Dew
 		"4":3, # Duck
@@ -836,6 +843,8 @@ func control_text_setters():
 			final_text += "Mr.Misuraca\nE - Make a bet"
 		if looking_at.name == "thej":
 			final_text += "Projector\n E - play"
+		if looking_at.name == "wheel":
+			final_text += "Wheel\n E - Spin"
 	
 	var cur_item = get_cur_item()
 	if final_text != "":
@@ -1008,6 +1017,8 @@ func movement():
 							ray.get_collider().get_parent().break_glass.rpc()
 							if ray.get_collider().get_parent().can_pickup:
 								pick_item(9)
+						if ray.get_collider().name == "wheel":
+							ray.get_collider().get_parent().spin.rpc()
 						
 						if ray.get_collider().is_in_group("toilet"):
 							if !can_toilet_tp : return

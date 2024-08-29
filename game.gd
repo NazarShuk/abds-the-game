@@ -98,12 +98,15 @@ var enable_live_split = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	AudioServer.set_bus_mute(1,false)
 	AudioServer.set_bus_mute(2,false)
 	
 	Settings.load_values_and_apply()
+	if Settings.render_distance:
+		$pre_start_game_anim/Camera3D.far = Settings.render_distance
 	
 	get_friends_lobbies()
 	peer.lobby_created.connect(_on_lobby_connected)
@@ -116,6 +119,19 @@ func _ready():
 	if Settings.better_lighting != null:
 		sun.visible = Settings.better_lighting
 	prepare_leaderboard()
+	
+	
+	if Allsingleton.is_bossfight:
+		$CanvasLayer/Glitch.show()
+		$WelcomeLeahy.hide()
+		$WelcomeLeahy/AudioStreamPlayer3D.stop()
+		$Music1.stream = load("res://pre_boss.mp3")
+		$Music2.stream = load("res://bossfight_130.mp3")
+		$Music0.stream = load("res://noise.mp3")
+		$Music0.play()
+		
+		sun.visible = false
+
 
 func prepare_leaderboard():
 	var http = $LeaderBoard/HTTPRequest
@@ -127,6 +143,8 @@ func on_request_completed(result: int, _response_code: int, _headers: PackedStri
 		print(leaderboard)
 		
 		var keys : Array = leaderboard.keys()
+		keys.reverse()
+		
 		for key in range(keys.size()):
 			if key == 0:
 				$LeaderBoard/w1.show()
@@ -157,6 +175,7 @@ var expired_items = []
 var leahy_baja_timer = 0
 
 var is_misuraca_fixing = false
+var is_misuraca_disabled = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -202,9 +221,13 @@ func _process(delta):
 				
 				exp_item.queue_free()
 		
-		if broken_vending_machines.size() > 0:
-			$Mr_Misuraca.update_target_location(broken_vending_machines[0].global_position)
-			is_misuraca_fixing = true
+		if !is_misuraca_disabled:
+			if broken_vending_machines.size() > 0:
+				$Mr_Misuraca.update_target_location(broken_vending_machines[0].global_position)
+				is_misuraca_fixing = true
+			else:
+				$Mr_Misuraca.go_back()
+				is_misuraca_fixing = false
 		else:
 			$Mr_Misuraca.go_back()
 			is_misuraca_fixing = false
@@ -225,9 +248,12 @@ func _process(delta):
 		players_in_lobby = players_ids.size()
 		
 		if game_started:
-			collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
-			if is_bet:
-				collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
+			if !Allsingleton.is_bossfight:
+				collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
+				if is_bet:
+					collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
+			else:
+				collected_books_label.text = ""
 		else:
 			collected_books_label.text = "Find a ELA book!"
 		leahy_speed = evil_leahy.SPEED
@@ -265,69 +291,69 @@ func _process(delta):
 					pacer_times.remove_at(pacer_times.find(ptime))
 					on_collect_book(-1,"",false)
 
-		
-	if game_started and multiplayer.is_server() and !absent:
-		if !leahy_appeased:
-			if !is_powered_off:
-				if !is_leahy_baja_blast:
-					var closest = null
-					var closest_distance = INF
-					
-					for p in players_ids:
-						if !players[p].is_dead:
-							var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
-							var showed_distance = evil_leahy.distance_to_target
-							update_approching_label.rpc_id(p,showed_distance)
+	if !Allsingleton.is_bossfight:
+		if game_started and multiplayer.is_server() and !absent:
+			if !leahy_appeased:
+				if !is_powered_off:
+					if !is_leahy_baja_blast:
+						var closest = null
+						var closest_distance = INF
 						
-							if distance < closest_distance:
-								closest = get_node(str(p)).global_position
-								closest_distance = distance
-								show_approaching_label.rpc_id(p)
+						for p in players_ids:
+							if !players[p].is_dead:
+								var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
+								var showed_distance = evil_leahy.distance_to_target
+								update_approching_label.rpc_id(p,showed_distance)
+							
+								if distance < closest_distance:
+									closest = get_node(str(p)).global_position
+									closest_distance = distance
+									show_approaching_label.rpc_id(p)
+								else:
+									hide_approaching_label.rpc_id(p)
 							else:
 								hide_approaching_label.rpc_id(p)
+						
+						if closest:
+							evil_leahy.update_target_location(closest)
 						else:
-							hide_approaching_label.rpc_id(p)
-					
-					if closest:
-						evil_leahy.update_target_location(closest)
+							evil_leahy.update_target_location(evil_leahy.global_position)
 					else:
-						evil_leahy.update_target_location(evil_leahy.global_position)
+						# baja blast
+						
+						var bathrooms = $"Bathroom spawns".get_children()
+						
+						var clst_dist = INF
+						var clst_bathroom = null
+						
+						for bathroom : Node3D in bathrooms:
+							var dst = evil_leahy.global_position.distance_to(bathroom.global_position)
+							if dst < clst_dist:
+								clst_dist = dst
+								clst_bathroom = bathroom
+						
+						evil_leahy.update_target_location(clst_bathroom.global_position)
+						
+						if clst_dist < 5 && leahy_baja_timer <= 15:
+							leahy_baja_timer += delta
+							print(leahy_baja_timer)
+						
+						if leahy_baja_timer >= 15:
+							is_leahy_baja_blast = false
+							leahy_baja_timer = 0
+						
 				else:
-					# baja blast
-					
-					var bathrooms = $"Bathroom spawns".get_children()
-					
-					var clst_dist = INF
-					var clst_bathroom = null
-					
-					for bathroom : Node3D in bathrooms:
-						var dst = evil_leahy.global_position.distance_to(bathroom.global_position)
-						if dst < clst_dist:
-							clst_dist = dst
-							clst_bathroom = bathroom
-					
-					evil_leahy.update_target_location(clst_bathroom.global_position)
-					
-					if clst_dist < 5 && leahy_baja_timer <= 15:
-						leahy_baja_timer += delta
-						print(leahy_baja_timer)
-					
-					if leahy_baja_timer >= 15:
-						is_leahy_baja_blast = false
-						leahy_baja_timer = 0
-					
+					evil_leahy.update_target_location($Breaker.global_position)
+					hide_approaching_label.rpc()
+					var breaker_dst = evil_leahy.global_position.distance_to($Breaker.global_position)
+					if breaker_dst < 2:
+						leahy_power_fix_num += delta
+						if leahy_power_fix_num >= 3:
+							toggle_power.rpc(true,false)
+							leahy_power_fix_num = 0
+						
 			else:
-				evil_leahy.update_target_location($Breaker.global_position)
-				hide_approaching_label.rpc()
-				var breaker_dst = evil_leahy.global_position.distance_to($Breaker.global_position)
-				if breaker_dst < 2:
-					leahy_power_fix_num += delta
-					if leahy_power_fix_num >= 3:
-						toggle_power.rpc(true,false)
-						leahy_power_fix_num = 0
-					
-		else:
-			evil_leahy.update_target_location(evil_leahy.global_position)
+				evil_leahy.update_target_location(evil_leahy.global_position)
 	
 	if multiplayer.has_multiplayer_peer() and !game_started and multiplayer.is_server():
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
@@ -482,7 +508,8 @@ func pre_start_game_btn():
 
 func spawn_players():
 	
-	await get_tree().create_timer(8).timeout
+	if !OS.has_feature("debug"):
+		await get_tree().create_timer(8).timeout
 	for pl_id in players_ids:
 		var packed_player = preload("res://player.tscn")
 		var player = packed_player.instantiate()
@@ -492,7 +519,8 @@ func spawn_players():
 
 		call_deferred("add_child",player,false)
 		await get_tree().process_frame
-		player.global_position = $"pre_start_game_anim/SCHOOL BUS/pl spawn".global_position + Vector3(randf_range(-3,3),0,randf_range(-3,3))
+		if !OS.has_feature("debug"):
+			player.global_position = $"pre_start_game_anim/SCHOOL BUS/pl spawn".global_position + Vector3(randf_range(-3,3),0,randf_range(-3,3))
 		
 	players_spawned = true
 
@@ -679,19 +707,20 @@ func start_da_game():
 	$Music1.stop()
 	$Music2/Timer.start()
 	$WelcomeLeahy.hide()
-	$WelcomeLeahy/AudioStreamPlayer3D.stop()
-	$CanvasLayer/Main/LeahyAngeredLabel.show()
-	evil_leahy.show()
-
-	$grrrrrr.play()
-	$EvilLeahy/AudioStreamPlayer3D.play()
+	if !Allsingleton.is_bossfight:
+		$WelcomeLeahy/AudioStreamPlayer3D.stop()
+		$CanvasLayer/Main/LeahyAngeredLabel.show()
+		evil_leahy.show()
+		$grrrrrr.play()
+		$EvilLeahy/AudioStreamPlayer3D.play()
 
 	
 	if multiplayer.is_server():
 		if !debug_host or !Allsingleton.non_steam:
 			Steam.setLobbyJoinable(lobby_id,false)
-		leahy_look = true
-		$GainyTimer.start(gainy_attack_interval)
+		if !Allsingleton.is_bossfight:
+			leahy_look = true
+			$GainyTimer.start(gainy_attack_interval)
 
 func _on_host_local_pressed():
 	peer = ENetMultiplayerPeer.new()
@@ -1113,16 +1142,19 @@ func _on_gainy_timer_timeout():
 		
 		
 		if randi_range(0,gainy_attack_chance) == 1:
-			gainy_attack = true
-			var pls = get_tree().get_nodes_in_group("player")
-			
-			var just_some_random_guy = pls.pick_random()
-			
-			ms_gainy.update_target_location(just_some_random_guy.global_position)
-			
-			gainy_target = just_some_random_guy
-			
-			info_text("Ms.Gainy is angry at " + just_some_random_guy.steam_name)
+			gainy_attack_func()
+
+func gainy_attack_func():
+	gainy_attack = true
+	var pls = get_tree().get_nodes_in_group("player")
+	
+	var just_some_random_guy = pls.pick_random()
+	
+	ms_gainy.update_target_location(just_some_random_guy.global_position)
+	
+	gainy_target = just_some_random_guy
+	
+	info_text("Ms.Gainy is angry at " + just_some_random_guy.steam_name)
 
 @rpc("any_peer","call_local")
 func stop_gainy(id):
@@ -1183,7 +1215,6 @@ func play_coffee():
 
 @rpc("any_peer","call_local")
 func toggle_power(do_ov = false, ov = false):
-
 	
 	if !do_ov:
 		is_powered_off = !is_powered_off
@@ -1268,24 +1299,29 @@ func depression_ending():
 		evil_leahy.SPEED += 30
 	
 
+func loose_notebooks(books_loss):
+	for p in players.keys():
+		print(players[p])
+		players[p].books_collected -= books_loss / players_in_lobby
+	
+	var total = 0
+	for p in players.keys():
+		total += players[p].books_collected
+	
+	if total < 0:
+		#end_game.rpc("br")
+		depression_ending.rpc()
+
 func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 	if !multiplayer.is_server(): return
 	is_bet = false
 	if bet_books_left > 0 or (overwrite and won == false):
 		info_text("You lost the bet")
-		for p in players.keys():
-			print(players[p])
-			players[p].books_collected -= bet_loss / players_in_lobby
+		loose_notebooks(bet_loss)
 		bet_books_left = -1
 		$"Bet timer".stop()
 		
-		var total = 0
-		for p in players.keys():
-			total += players[p].books_collected
-		
-		if total < 0:
-			#end_game.rpc("br")
-			depression_ending.rpc()
+
 		
 		
 	elif bet_books_left <= 0 or (overwrite and won == true):
@@ -1378,7 +1414,12 @@ func spawn_smoke(pos):
 		$School/Navigation.add_child(smoke,true)
 		smoke.global_position = pos
 		smoke.navigation_mesh = $School/Navigation
-		
+
+
+func give_item_to_everyone(item_id):
+	for pl in players.keys():
+		get_node(str(pl)).choose_item.rpc_id(pl,item_id,true)
+
 func _exit_tree():
 	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
 		end_game.rpc("none")

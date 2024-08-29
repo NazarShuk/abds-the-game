@@ -6,3 +6,5 @@ var firstTime = true
 var is_fullscreen = false
 var non_steam
 var playbacks = []
+
+var is_bossfight = false
