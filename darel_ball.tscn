@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://koabukarf3pg"]
+
+[ext_resource type="Texture2D" uid="uid://jtxxltvntbtu" path="res://models/lil_darel.png" id="1_6w7n4"]
+[ext_resource type="Script" path="res://darel_ball.gd" id="1_634cm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qiph7"]
+radius = 1.12845
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_esrlu"]
+transparency = 1
+albedo_texture = ExtResource("1_6w7n4")
+
+[sub_resource type="SphereMesh" id="SphereMesh_8mscp"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih7nk"]
+transparency = 1
+albedo_color = Color(0.691123, 0.605332, 0.617718, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_e1gql"]
+radius = 1.0
+height = 2.0
+
+[node name="DarelBall" type="RigidBody3D"]
+script = ExtResource("1_634cm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qiph7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_esrlu")
+mesh = SubResource("SphereMesh_8mscp")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.948039, 0, 0, 0, 0.948039, 0, 0, 0, 0.948039, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ih7nk")
+mesh = SubResource("SphereMesh_e1gql")
+
+[node name="darel ball" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="darel ball"]
+shape = SubResource("SphereShape3D_qiph7")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

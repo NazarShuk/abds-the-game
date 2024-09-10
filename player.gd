@@ -143,13 +143,19 @@ func _enter_tree():
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if is_multiplayer_authority():
+		
+		if Allsingleton.is_bossfight:
+			$"CanvasLayer/Control/Progress bar handler/ProgressBar".hide()
+		
+		# Store the original position and rotation of the hand
+		original_rotation = $Hand.rotation_degrees
+		
 		$visual_body.hide()
 		
 		setup_voice(name.to_int())
 		var skins = $visual_body.get_children()
 		for skin in skins:
-			if skin.name != "Mouth":
-				skin.hide()
+			skin.hide()
 			
 		var picked_skin = false
 		
@@ -185,6 +191,15 @@ func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
 		
+		if Input.is_action_just_pressed("revive"):
+			if is_dead_of_dariel:
+				_on_revive_timer_timeout()
+		
+		if Input.is_action_just_pressed("punch"):
+			punch()
+		
+		arm_sway(delta)
+		
 		update_item_weights()
 		
 		for index in range(get_slide_collision_count()):
@@ -199,7 +214,7 @@ func _physics_process(delta):
 				# Apply the force to the RigidBody
 				parent.push_item.rpc(collider.get_path(),push_direction,push_force)
 				#collider.apply_central_impulse(-push_direction * push_force)
-		
+				
 		control_text_setters()
 		
 		$CanvasLayer/Control/Minimap.visible = is_minimap_open
@@ -241,6 +256,7 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(parent.get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
+			#parent.on_collect_book.rpc(name.to_int(), "book1",true)
 			pass
 
 		if parent.game_started:
@@ -258,35 +274,49 @@ func _physics_process(delta):
 				parent.skibidi.rpc()
 			else:
 				global_position.z = 0
-
-		if global_position.y >= 3.727:
-			is_on_top = true
-		else:
-			is_on_top = false
 		
-		if not is_on_floor() and not is_dead:
-			velocity.y -= gravity * delta
+		movement(delta)
 		
-		$AudioStreamPlayer3D.volume_db = -80
-
-		if Input.is_action_just_pressed("sprint"):
-			is_running = true
-		elif Input.is_action_just_released("sprint"):
-			is_running = false
-		
-		movement()
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
 		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
-		if get_tree():
-			for obj: Node3D in get_tree().get_nodes_in_group("localface"):
-				obj.look_at(global_position)
-				obj.rotation_degrees.x = 0
-				obj.rotation_degrees.z = 0
+		
+		#if get_tree():
+		#	for obj: Node3D in get_tree().get_nodes_in_group("localface"):
+		#		obj.look_at(global_position)
+		#		obj.rotation_degrees.x = 0
+		#		obj.rotation_degrees.z = 0
 
 
 				
 		camera_3d.current = true
 		camera_3d.global_transform = $"Camera target".global_transform
+
+func punch():
+	if !ray.get_collider(): return
+	
+	var collider = ray.get_collider()
+	
+	if collider.is_in_group("lil darel"):
+		
+		$VisualHand/AnimationPlayer.play("parry")
+		collider.inverse = true
+		collider.is_stopped = true
+		await get_tree().create_timer(0.15).timeout
+		$"Parry sound".play()
+		
+		parry_pause(collider)
+		$CanvasLayer/Control/parry.show()
+		get_tree().paused = true
+		
+	else:
+		$VisualHand/AnimationPlayer.play("punch")
+
+func parry_pause(collider):
+	await get_tree().create_timer(0.25).timeout
+	get_tree().paused = false
+	collider.is_stopped = false
+	$CanvasLayer/Control/parry.hide()
+	
 
 var vertical_angle = 0.0
 var max_vertical_angle = 89.0  # You can adjust this as needed.
@@ -302,13 +332,14 @@ func _input(event):
 				if parent.do_vertical_camera:
 					# funni
 					rotate_x(deg_to_rad(event.relative.y * -0.3))
-					
-					## Calculate new vertical angle
-					#vertical_angle -= event.relative.y * 0.3
-					#vertical_angle = clamp(vertical_angle, -max_vertical_angle, max_vertical_angle)
-#
-					## Set the new rotation by using Euler angles
-					#rotation.x = deg_to_rad(vertical_angle)
+				
+				if parent.do_vertical_camera_normal:
+					# Calculate new vertical angle
+					vertical_angle -= event.relative.y * 0.3
+					vertical_angle = clamp(vertical_angle, -max_vertical_angle, max_vertical_angle)
+	
+					# Set the new rotation by using Euler angles
+					rotation.x = deg_to_rad(vertical_angle)
 
 func coffee_timeout():
 	await get_tree().create_timer(6).timeout
@@ -378,6 +409,11 @@ func _on_area_3d_area_entered(area):
 	elif area.name == "Door":
 		parent.set_door_state.rpc(area.get_parent().get_path(),true)
 		play_sound("res://door_open.mp3")
+	elif area.is_in_group("pacer target"):
+		parent.check_if_finished_pacer_lap.rpc(name,area.get_path())
+	elif area.name == "darel ball":
+		die("darel")
+		area.get_parent().queue_free()
 
 func _on_area_3d_area_exited(area):
 	if !is_multiplayer_authority(): return
@@ -396,7 +432,8 @@ func _on_timer_timeout():
 	if is_running and is_moving:
 		if stamina > 0:
 			if can_run:
-				stamina -= 1
+				if !Allsingleton.is_bossfight:
+					stamina -= 1
 				boosts["run"] = 1
 		else:
 			is_running = false
@@ -432,6 +469,11 @@ func _on_revive_timer_timeout():
 	can_move = true
 	$CollisionShape3D.disabled = false
 	close_gambling(false)
+	
+	$"CanvasLayer/Control/Died thing/darel death".hide()
+	$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer".stop()
+	is_dead_of_dariel = false
+	$"CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".stop()
 
 func pick_item(item: int):
 	
@@ -535,6 +577,8 @@ func shart():
 	sp.global_position = global_position
 	sp.play()
 
+var is_dead_of_dariel = false
+
 @rpc("any_peer","call_local")
 func die(cause):
 	if is_dead: return
@@ -548,7 +592,8 @@ func die(cause):
 	else:
 		parent.set_player_dead.rpc(name.to_int(), true,true)
 	$"CanvasLayer/Control/Died thing".show()
-	$ReviveTimer.start(parent.death_timeout)
+	if cause != "darel":
+		$ReviveTimer.start(parent.death_timeout)
 	is_dead = true
 	AudioServer.set_bus_mute(1, true)
 	AudioServer.set_bus_mute(2, true)
@@ -558,6 +603,7 @@ func die(cause):
 	Achievements.save_all()
 	$CanvasLayer/Control/Control.hide()
 	close_shop(false)
+	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
 		if parent.do_silent_lunch:
@@ -580,6 +626,14 @@ func die(cause):
 		$"CanvasLayer/Control/Died thing/jumpscare6".play()
 	elif cause == "misuraca":
 		$"CanvasLayer/Control/Died thing/jumpscare7".play()
+	elif cause == "darel":
+		$"CanvasLayer/Control/Died thing/darel death".show()
+		$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer".play("ha")
+		is_dead_of_dariel = true
+		get_tree().get_first_node_in_group("evil darel").health = 100
+		$"CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".play()
+		$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer2".play("textfadein")
+		
 
 func _on_silent_lunch_timeout():
 	is_suspended = false
@@ -590,11 +644,11 @@ func _on_silent_lunch_timeout():
 func _on_anti_wall_walk_timeout():
 	if is_on_top:
 		on_top_counter += 1
-
 		if on_top_counter == 10:
-			die("wall")
+			if !Allsingleton.is_bossfight:
+				die("wall")
+				global_position.y = 1
 			on_top_counter = 0
-			global_position.y = 1
 	else:
 		on_top_counter = 0
 
@@ -823,15 +877,15 @@ func control_text_setters():
 				final_text += "Vending Machine\nE - grab item"
 			else:
 				final_text += "Vending Machine\nYou already have an item"
-		if looking_at.name == "CoffeMachine":
+		elif looking_at.name == "CoffeMachine":
 			final_text += "Coffee Machine\n" + format_time("Coffee timeout","E - drink")
-		if looking_at.is_in_group("shop"):
+		elif looking_at.is_in_group("shop"):
 			final_text += "The Shop\n" + format_time("ShopTimeout","E - open the shop")
-		if looking_at.name == "Breaker":
+		elif looking_at.name == "Breaker":
 			final_text += "The Breaker\n" + format_time("BreakerTimeout","E - turn off power")
-		if looking_at.is_in_group("toilet"):
+		elif looking_at.is_in_group("toilet"):
 			final_text += "Toilet\n" + format_time("ToiletTimeout","E - flush down")
-		if looking_at.name == "water fountain":
+		elif looking_at.name == "water fountain":
 			if get_cur_item() != 7:
 				final_text += "Water fountain\nGet a bucket to fill it"
 			else:
@@ -839,12 +893,14 @@ func control_text_setters():
 					final_text += "Water fountain\nE - fill the bucket"
 				else:
 					final_text += "Water fountain\nBucket is full"
-		if looking_at.name == "Mr_Misuraca":
+		elif looking_at.name == "Mr_Misuraca":
 			final_text += "Mr.Misuraca\nE - Make a bet"
-		if looking_at.name == "thej":
+		elif looking_at.name == "thej":
 			final_text += "Projector\n E - play"
-		if looking_at.name == "wheel":
+		elif looking_at.name == "wheel":
 			final_text += "Wheel\n E - Spin"
+		elif looking_at.is_in_group("fence"):
+			final_text += "Wheel\n You need more notebooks to spin it!"
 	
 	var cur_item = get_cur_item()
 	if final_text != "":
@@ -938,7 +994,29 @@ func _on_gamblebtn_3_pressed():
 
 # MOVEMENT
 
-func movement():
+func movement(delta):
+	
+	if global_position.y >= 3.727:
+			is_on_top = true
+	else:
+			is_on_top = false
+	
+	if Allsingleton.is_bossfight:
+		if parent.game_started:
+			if is_on_floor() and not is_dead:
+				if Input.is_action_just_pressed("jump"):
+					velocity.y += 5
+	
+	if not is_on_floor() and not is_dead:
+		velocity.y -= gravity * delta
+		
+		
+	if Input.is_action_just_pressed("sprint"):
+		is_running = true
+	elif Input.is_action_just_released("sprint"):
+		is_running = false
+	
+	$AudioStreamPlayer3D.volume_db = -80
 	
 	if can_run:
 		progress_bar.modulate = Color.WHITE
@@ -1163,16 +1241,16 @@ func movement():
 		
 		cam_fov = 10
 	
-	if parent.pacer_deadly:
-		var dst = global_position.distance_to(parent.get_node("FakeFox").global_position)
-		if dst > 5:
-			$CanvasLayer/Control/Control.show()
-		else:
-			$CanvasLayer/Control/Control.hide()
-		
-		if dst > 10:
-			die("fox")
-			$CanvasLayer/Control/Control.hide()
+	#if parent.pacer_deadly:
+	#	var dst = global_position.distance_to(parent.get_node("FakeFox").global_position)
+	#	if dst > 5:
+	#		$CanvasLayer/Control/Control.show()
+	#	else:
+	#		$CanvasLayer/Control/Control.hide()
+	#	
+	#	if dst > 10:
+	#		die("fox")
+	#		$CanvasLayer/Control/Control.hide()
 
 
 func _on_button_pressed():
@@ -1192,6 +1270,29 @@ func _on_pp_timeout_timeout():
 						parent.spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 			baja_previous_pos = pos
 
-
 func _on_baja_trail_timeout():
 	is_baja = false
+
+@export var max_sway_rotation: float = 1
+@export var sway_smoothness: float = 10.0
+@export var return_speed: float = 10.0
+
+var sway_rotation: Vector3 = Vector3.ZERO
+var original_rotation: Vector3
+
+func arm_sway(delta):
+	if !is_multiplayer_authority(): return
+	var mouse_delta = Input.get_last_mouse_velocity()
+
+	# Calculate sway rotation based on mouse movement
+	if parent.do_vertical_camera_normal:
+		sway_rotation.x = mouse_delta.y * max_sway_rotation * delta
+	sway_rotation.y = -mouse_delta.x * max_sway_rotation * delta
+
+	# Smooth the rotation and return to the original orientation
+	var new_rotation = original_rotation + sway_rotation
+	$Hand.rotation_degrees = lerp($Hand.rotation_degrees, new_rotation, delta * sway_smoothness)
+
+
+func _on_voice_chat_toggled(toggled_on):
+	AudioServer.set_bus_mute(5,!toggled_on)

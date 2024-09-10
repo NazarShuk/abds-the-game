@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=121 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -41,17 +41,23 @@
 [ext_resource type="Shader" uid="uid://cc4qj1rais5l1" path="res://player.tres" id="36_3gf6v"]
 [ext_resource type="VideoStream" path="res://cool transition.ogv" id="36_ngsvh"]
 [ext_resource type="VideoStream" path="res://misuraca.ogv" id="36_rou35"]
+[ext_resource type="Texture2D" uid="uid://dmy478ab084mf" path="res://models/darel_mouth_open.png" id="41_bsrbc"]
 [ext_resource type="PackedScene" uid="uid://ch0saed6qmuta" path="res://models/3d/fruit snacks.glb" id="41_qfvdr"]
+[ext_resource type="Texture2D" uid="uid://dhfo4m0lnl5se" path="res://models/darel_mouth_closed.png" id="42_288w1"]
 [ext_resource type="PackedScene" uid="uid://dm2im7sr2g0ks" path="res://models/3d/cloroxo.glb" id="42_mor3f"]
 [ext_resource type="PackedScene" uid="uid://cj17cyrw686mg" path="res://models/3d/Bucket.glb" id="43_4lnrl"]
 [ext_resource type="PackedScene" uid="uid://ba2vqcug0hgbe" path="res://models/3d/pizza.glb" id="43_at2br"]
+[ext_resource type="AudioStream" uid="uid://c11sbkoa3h1eq" path="res://ultrakill-ha-computer-laughing.mp3" id="43_ql2wl"]
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="44_aekf8"]
 [ext_resource type="PackedScene" uid="uid://du3qk3pgny2hf" path="res://models/3d/mtndewfinal.glb" id="44_jqyrq"]
+[ext_resource type="AudioStream" uid="uid://bdxoptn6hof48" path="res://darel_death.mp3" id="44_yuw5a"]
 [ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="47_f82oh"]
 [ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
 [ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="50_ulo8b"]
 [ext_resource type="PackedScene" uid="uid://byaexesg86uo0" path="res://sonicgummies.tscn" id="51_b4gs7"]
+[ext_resource type="Texture2D" uid="uid://b2r7lba4oyrdr" path="res://player_hand.png" id="53_0cocr"]
+[ext_resource type="AudioStream" uid="uid://gf4ovd7mf66p" path="res://parry-ultrakill.mp3" id="54_hj1a3"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -351,6 +357,144 @@ bg_color = Color(1, 1, 1, 0)
 [sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
 viewport_path = NodePath("Minimap")
 
+[sub_resource type="Animation" id="Animation_w14s4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("closed:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("open:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_mxvn3"]
+resource_name = "ha"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("closed:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("open:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.44614,
+"start_offset": 0.0,
+"stream": ExtResource("43_ql2wl")
+}],
+"times": PackedFloat32Array(0.7)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b8gyo"]
+_data = {
+"RESET": SubResource("Animation_w14s4"),
+"ha": SubResource("Animation_mxvn3")
+}
+
+[sub_resource type="Animation" id="Animation_jhcll"]
+resource_name = "textfadein"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label2:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kon6j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label2:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qaqna"]
+_data = {
+"RESET": SubResource("Animation_kon6j"),
+"textfadein": SubResource("Animation_jhcll")
+}
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_hkfs2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bk8m"]
@@ -363,6 +507,137 @@ albedo_texture = ExtResource("2_q3hoo")
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_n68p1"]
 mix_rate = 48000.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mair5"]
+albedo_texture = ExtResource("53_0cocr")
+
+[sub_resource type="QuadMesh" id="QuadMesh_6r6kl"]
+
+[sub_resource type="Animation" id="Animation_loa3q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.439967, 0.693739, -0.500088)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.32, 0.335, -0.425)]
+}
+
+[sub_resource type="Animation" id="Animation_8lpml"]
+resource_name = "parry"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.25, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.753982, 0), Vector3(-0.620465, 0.925779, -0.89908), Vector3(-0.0572852, 0.337418, -0.923793), Vector3(-0.0572852, 0.337418, -0.923793), Vector3(-0.0572852, 0.337418, -2.27714)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.25, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.32, -0.285, -0.425), Vector3(-0.3, 0.307, -0.516), Vector3(-0.142187, 0.517766, -0.637567), Vector3(-0.142187, 0.517766, -0.637567), Vector3(0.367, -0.143, -0.454), Vector3(0.602, -0.763, -0.859)]
+}
+
+[sub_resource type="Animation" id="Animation_8586j"]
+resource_name = "punch"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.4, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.753982, 0), Vector3(-0.439967, 0.693739, -0.500088), Vector3(-0.620465, 0.925779, -0.89908), Vector3(-0.439967, 0.693739, -0.500088), Vector3(0, 0.753982, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.4, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.32, -0.285, -0.425), Vector3(-0.32, 0.335, -0.425), Vector3(-0.3, 0.307, -0.516), Vector3(-0.300079, 0.456958, -0.516236), Vector3(-0.32, -0.285, -0.425)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0hlu0"]
+_data = {
+"RESET": SubResource("Animation_loa3q"),
+"parry": SubResource("Animation_8lpml"),
+"punch": SubResource("Animation_8586j")
+}
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 7
@@ -1699,6 +1974,106 @@ stream = ExtResource("36_rou35")
 expand = true
 bus = &"Non Mute"
 
+[node name="darel death" type="ColorRect" parent="CanvasLayer/Control/Died thing"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="open" type="TextureRect" parent="CanvasLayer/Control/Died thing/darel death"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -185.0
+offset_right = 180.0
+offset_bottom = 185.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("41_bsrbc")
+expand_mode = 2
+
+[node name="closed" type="TextureRect" parent="CanvasLayer/Control/Died thing/darel death"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -185.0
+offset_right = 180.0
+offset_bottom = 185.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("42_288w1")
+expand_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+libraries = {
+"": SubResource("AnimationLibrary_b8gyo")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+bus = &"Non Mute"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+stream = ExtResource("44_yuw5a")
+volume_db = 5.0
+bus = &"Non Mute"
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Died thing/darel death"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 91.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 71
+text = "YOU ARE DEAD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/Died thing/darel death"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -84.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 71
+text = "PRESS [R] TO RESTART"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+libraries = {
+"": SubResource("AnimationLibrary_qaqna")
+}
+
+[node name="parry" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.501961)
+
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
 process_mode = 3
 visible = false
@@ -1746,9 +2121,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -39.5
-offset_top = -29.0
+offset_top = -54.0
 offset_right = 39.5
-offset_bottom = 2.0
+offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Continue"
@@ -1761,9 +2136,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -47.0
-offset_top = 8.0
+offset_top = -17.0
 offset_right = 47.0
-offset_bottom = 39.0001
+offset_bottom = 14.0001
 grow_horizontal = 2
 grow_vertical = 2
 text = "Disconnect"
@@ -1775,12 +2150,19 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -74.0
-offset_right = 80.0
-offset_bottom = -34.0
+offset_left = -98.0
+offset_top = -94.0
+offset_right = 98.0
+offset_bottom = -54.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_icons/checked = ExtResource("34_h7tin")
 theme_override_icons/checked_disabled = ExtResource("34_h7tin")
 theme_override_icons/unchecked = ExtResource("35_1030p")
@@ -1790,25 +2172,38 @@ theme_override_icons/checked_disabled_mirrored = ExtResource("34_h7tin")
 theme_override_icons/unchecked_mirrored = ExtResource("35_1030p")
 theme_override_icons/unchecked_disabled_mirrored = ExtResource("35_1030p")
 button_pressed = true
+text = "LiveSplit"
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/Menu/Main"]
+[node name="Voice Chat" type="CheckButton" parent="CanvasLayer/Control/Menu/Main"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -114.0
-offset_top = -70.0
-offset_right = 4.0
-offset_bottom = -34.0
+offset_left = -98.0
+offset_top = -53.0
+offset_right = 98.0
+offset_bottom = -13.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_l1x2u")
-text = "Enable LiveSplit:"
-horizontal_alignment = 2
-vertical_alignment = 1
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_icons/checked = ExtResource("34_h7tin")
+theme_override_icons/checked_disabled = ExtResource("34_h7tin")
+theme_override_icons/unchecked = ExtResource("35_1030p")
+theme_override_icons/unchecked_disabled = ExtResource("35_1030p")
+theme_override_icons/checked_mirrored = ExtResource("34_h7tin")
+theme_override_icons/checked_disabled_mirrored = ExtResource("34_h7tin")
+theme_override_icons/unchecked_mirrored = ExtResource("35_1030p")
+theme_override_icons/unchecked_disabled_mirrored = ExtResource("35_1030p")
+button_pressed = true
+text = "Voice chat"
 
 [node name="stamina flash" type="Timer" parent="CanvasLayer/Control"]
 wait_time = 0.25
@@ -1928,6 +2323,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.370945, -0.0430524)
 spot_range = 48.4692
 spot_angle = 16.4922
 
+[node name="VisualHand" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.239033, 0.0770259, 0.343605, -0.128775, 0.471567, 0.252963, -0.119946, -0.352778, 0.413165, -0.32, 0.335, -0.425)
+visible = false
+material_override = SubResource("StandardMaterial3D_mair5")
+mesh = SubResource("QuadMesh_6r6kl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualHand"]
+libraries = {
+"": SubResource("AnimationLibrary_0hlu0")
+}
+
+[node name="Parry sound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("54_hj1a3")
+bus = &"Dialogs"
+
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
@@ -1960,4 +2371,5 @@ spot_angle = 16.4922
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control/Menu/Main/Enable live split" to="CanvasLayer/Control/Menu" method="_on_enable_live_split_toggled"]
+[connection signal="toggled" from="CanvasLayer/Control/Menu/Main/Voice Chat" to="." method="_on_voice_chat_toggled"]
 [connection signal="timeout" from="CanvasLayer/Control/stamina flash" to="." method="_on_stamina_flash_timeout"]

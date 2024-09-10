@@ -76,7 +76,6 @@ var leahy_diff_penalty = 0
 
 @export var shop : StaticBody3D
 
-
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
 var players_spawned = false
 
@@ -95,9 +94,12 @@ var enable_live_split = true
 @onready var environment = world_environment.environment
 @onready var sun = $"Lighting and stuff/DirectionalLight3D"
 
+var do_vertical_camera_normal = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	Allsingleton.is_bossfight = true
 	
 	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -114,7 +116,6 @@ func _ready():
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.server_disconnected.connect(_on_disconnect_from_server)
 	peer.lobby_kicked.connect(_on_disconnect_from_server)
-	reset_pacer_times()
 	
 	if Settings.better_lighting != null:
 		sun.visible = Settings.better_lighting
@@ -129,6 +130,21 @@ func _ready():
 		$Music2.stream = load("res://bossfight_130.mp3")
 		$Music0.stream = load("res://noise.mp3")
 		$Music0.play()
+		
+		# Main menu
+		$CanvasLayer/MultiPlayer/Title.hide()
+		$CanvasLayer/MultiPlayer/ItemList.hide()
+		$"CanvasLayer/MultiPlayer/refresh btn".hide()
+		$CanvasLayer/MultiPlayer/azzu.hide()
+		
+		# Lobby
+		$CanvasLayer/Lobby/Button7.hide()
+		$CanvasLayer/Lobby/Button8.hide()
+		$CanvasLayer/Lobby/Label4.hide()
+		$CanvasLayer/Lobby/Label2.hide()
+		$CanvasLayer/Lobby/achievement.hide()
+		$CanvasLayer/Lobby/Label3.hide()
+		$CanvasLayer/Lobby/playerListText.hide()
 		
 		sun.visible = false
 
@@ -177,14 +193,46 @@ var leahy_baja_timer = 0
 var is_misuraca_fixing = false
 var is_misuraca_disabled = false
 
-
+@onready var boss_bar = $CanvasLayer/Main/Bossbar/ProgressBar
+@onready var evil_darel = $EvilDarel
+@onready var previous_darel_health = evil_darel.health
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	
 	if Input.is_anything_pressed():
 		$CanvasLayer/handelr.hide()
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
+		if Allsingleton.is_bossfight:
+			
+			if Input.is_action_just_pressed("debug"):
+				evil_darel.health -= 5
+			
+			if game_started:
+				boss_bar.value = lerp(boss_bar.value,float(evil_darel.health),0.1)
+				evil_darel.look_at(get_tree().get_first_node_in_group("player").global_position)
+				
+				$CanvasLayer/Main.scale = lerp($CanvasLayer/Main.scale, Vector2(1,1),0.1)
+				
+				if previous_darel_health > evil_darel.health:
+					$CanvasLayer/Main.scale += Vector2(0.1,0.1)
+				
+				previous_darel_health = evil_darel.health
+				music_pitch_target = ((100 - evil_darel.health) / 200) + 1
+				
+				if evil_darel.health < 50:
+					if $EvilDarel/Timer.is_stopped():
+						$EvilDarel/Timer.start()
+				else:
+					if !$EvilDarel/Timer.is_stopped():
+						$EvilDarel/Timer.stop()
+			
+			
+		if Input.is_action_just_pressed("jump"):
+			if is_pacer_intro:
+				$FakeFox/PacerTest/PacerStartTimer.stop()
+				_on_pacer_start_timer_timeout()
 		
 		var total = 0
 			
@@ -249,11 +297,15 @@ func _process(delta):
 		
 		if game_started:
 			if !Allsingleton.is_bossfight:
-				collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
-				if is_bet:
-					collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
+				if !is_pacer:
+					collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
+					if is_bet:
+						collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
 			else:
-				collected_books_label.text = ""
+				if !$EvilDarel/Timer.is_stopped():
+					collected_books_label.text = str(floor($EvilDarel/Timer.time_left)) + "s left"
+				else:
+					collected_books_label.text = ""
 		else:
 			collected_books_label.text = "Find a ELA book!"
 		leahy_speed = evil_leahy.SPEED
@@ -282,14 +334,6 @@ func _process(delta):
 					
 		else:
 			ms_gainy.go_back()
-		
-		if is_pacer:
-			var time = 1363 - $FakeFox/PacerTest/PacerLevelTimer.time_left
-			
-			for ptime in pacer_times:
-				if time >= ptime:
-					pacer_times.remove_at(pacer_times.find(ptime))
-					on_collect_book(-1,"",false)
 
 	if !Allsingleton.is_bossfight:
 		if game_started and multiplayer.is_server() and !absent:
@@ -472,14 +516,22 @@ func _on_peer_connected(id = 1):
 		"books_collected":0,
 		"is_dead":false,
 		"deaths":0,
-		"team":0
+		"team":0,
+		"finished_pacer":true
 	}
 	players_ids.append(id)
 	books_to_collect += notebooks_per_player
 	
 	update_player_text()
+	
+	
+	
 	await get_tree().create_timer(1).timeout
 	request_steam_usr.rpc_id(id)
+	
+	if Allsingleton.is_bossfight:
+		pre_start_game_btn()
+	
 
 @rpc("any_peer","call_local")
 func request_steam_usr():
@@ -578,6 +630,8 @@ func on_collect_book(id,book_name,personal):
 				book_pos = spawnpoint
 				get_node(NodePath(book_name)).global_position = book_pos
 			
+			if total >= 3:
+				remove_fence.rpc()
 			
 			if total == 1:
 				if !game_started:
@@ -633,12 +687,21 @@ func on_collect_book(id,book_name,personal):
 				bet_books_left -= 1
 				if bet_books_left <= 0:
 					_on_bet_timer_timeout(true,true)
+			
+			if Allsingleton.is_bossfight:
+				evil_darel.health -= 5
+			
 		else:
 			info_text(player_name + " slipped")
 			var spawnpoint = $LandMineSpawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
 			spawnpoint.y = 0.143
 			$Landmine.position = spawnpoint
+
+@rpc("authority","call_local")
+func remove_fence():
+	if get_node_or_null("wheel/Fence"):
+		$wheel/Fence.queue_free()
 
 @rpc("any_peer","call_local")
 func split_for_everyone():
@@ -705,7 +768,10 @@ func pick_random_weighted(items_chances: Dictionary) -> Variant:
 func start_da_game():
 	$bum.play()
 	$Music1.stop()
-	$Music2/Timer.start()
+	if !Allsingleton.is_bossfight:
+		$Music2/Timer.start()
+	else:
+		$Music2/Timer.start(0.01)
 	$WelcomeLeahy.hide()
 	if !Allsingleton.is_bossfight:
 		$WelcomeLeahy/AudioStreamPlayer3D.stop()
@@ -713,6 +779,8 @@ func start_da_game():
 		evil_leahy.show()
 		$grrrrrr.play()
 		$EvilLeahy/AudioStreamPlayer3D.play()
+	else:
+		$CanvasLayer/Glitch.hide()
 
 	
 	if multiplayer.is_server():
@@ -744,7 +812,15 @@ func _on_timer_timeout():
 		leahy_look = false
 		$FakeFox/AnimationPlayer.play("new_animation")
 		evil_leahy.SPEED = leahy_start_speed
-		$Absences.start(absence_interval)
+		if !Allsingleton.is_bossfight:
+			$Absences.start(absence_interval)
+		
+		if Allsingleton.is_bossfight:
+			$School.toggle_ceiling(false)
+			do_vertical_camera_normal = true
+			$EvilDarel.show()
+			$CanvasLayer/Main/Bossbar.show()
+		
 
 @rpc("authority","call_local")
 func update_approching_label(meters):
@@ -938,6 +1014,7 @@ func _on_absences_timeout():
 	if !game_started : return
 	if !do_absences: return
 	if is_powered_off: return
+	if Allsingleton.is_bossfight: return
 	
 	if randi_range(0,absence_chance) == 1: 
 		set_absent.rpc(true)
@@ -982,10 +1059,91 @@ func azzu_dont_steal():
 		azzu_angered = false
 		mr_azzu.server_target = false
 		mr_azzu._on_timer_timeout()
-	
+
+
+
+@onready var current_pacer_target = $"Pacer/Pacer target"
+
+func switch_pacer_target():
+	if current_pacer_target.get_path() == $"Pacer/Pacer target".get_path():
+		current_pacer_target = $"Pacer/Pacer target2"
+	else:
+		current_pacer_target = $"Pacer/Pacer target"
+
 @rpc("any_peer","call_local")
-func start_da_pacer(id):
+func check_if_finished_pacer_lap(id,target_path):
+	if multiplayer.is_server():
+		print(target_path,current_pacer_target.get_path())
+		if target_path == current_pacer_target.get_path():
+			players[id.to_int()].finished_pacer = true
+			print(id, "finished the pacer lap")
+			
+			
+			set_pacer_target_visibility.rpc_id(id.to_int(),target_path,false)
+
+@rpc("authority","call_local")
+func set_pacer_target_visibility(target_path,visibility):
+	get_node(target_path).visible = visibility
+
+@rpc("authority","call_local")
+func play_pacer_lap_sound():
+	$FakeFox/PacerLap.play()
+
+@rpc("authority","call_local")
+func play_pacer_level_sound():
+	$FakeFox/PacerLevel.play()
+
+var is_test_active: bool = false
+
+
+func run_pacer_test() -> void:
+	var current_level: int = 1
+	var current_shuttle: int = 1
+	var total_laps: int = 0
+	is_test_active = true
+	const INITIAL_TIME: float = 9.0
+	const DECREMENT: float = 0.5
+	const SHUTTLES_PER_LEVEL: int = 7
+
+	while is_test_active:
+		var time_for_shuttle: float = INITIAL_TIME - (current_level - 1) * DECREMENT
+		print("Level: %d, Shuttle: %d, Time: %.1f seconds" % [current_level, current_shuttle, time_for_shuttle])
+		play_pacer_lap_sound.rpc()
+		collected_books_label.text = "Level " + str(current_level) + "\nLap " + str(total_laps)
+		
+		for p in players.keys():
+			var pl = players[p]
+			
+			pl.finished_pacer = false
+		
+		await get_tree().create_timer(time_for_shuttle).timeout
+
+		total_laps += 1
+		current_shuttle += 1
+
+		if current_shuttle > SHUTTLES_PER_LEVEL:
+			# Level up
+			current_level += 1
+			current_shuttle = 1
+			play_pacer_level_sound.rpc()
+			info_text("Level " + str(current_level))
+		
+		if total_laps % 10 == 0:
+			on_collect_book(-1,"",false)
+		
+		for p in players.keys():
+			var pl = players[p]
+			
+			if pl.finished_pacer == false:
+				get_node(str(p)).die.rpc_id(p,"fox")
+		
+		switch_pacer_target()
+		set_pacer_target_visibility.rpc(current_pacer_target.get_path(),true)
+
+@rpc("any_peer","call_local")
+func start_da_pacer(id = -1):
 	if is_pacer: return
+	if is_pacer_intro: return
 	
 	# For everyone
 	$FakeFox/PacerTest.play()
@@ -1001,54 +1159,60 @@ func start_da_pacer(id):
 		for pl in players_ids:
 			get_node(str(pl)).server_pos.rpc_id(pl,$PacerPos.global_position + Vector3(randf_range(-10,10),0,randf_range(-10,10)))
 		
-		var username = get_node(str(id)).steam_name
-		info_text(username + " angered Mr.Fox...")
+		if id != -1:
+			var username = get_node(str(id)).steam_name
+			info_text(username + " angered Mr.Fox...")
+		else:
+			info_text("Mr.Fox is angry...")
 		leahy_appeased = true
 		$FakeFox/PacerTest/PacerStartTimer.start()
 		canPlayersMove = false
 		is_pacer_intro = true
-		$FakeFox/PacerTest/PacerLevelTimer.start()
-		reset_pacer_times()
 		$"Bet timer".paused = true
+		hide_approaching_label.rpc()
 
 
 func _on_pacer_start_timer_timeout():
-	leahy_appeased = false
 	canPlayersMove = true
 	is_pacer = true
-	info_text("FOLLOW MR.FOX OR ELSE...")
+	info_text("Pacer test started!")
 	$FakeFox/PacerTest/PacerStartTimer2.start()
 	is_pacer_intro = false
 	
+	set_pacer_target_visibility.rpc(current_pacer_target.get_path(),true)
+	after_pacer_intro_end.rpc()
+	run_pacer_test()
+
+@rpc("authority","call_local")
+func after_pacer_intro_end():
+	$FakeFox/PacerTest.stop()
+	$FakeFox/PacerMusic.play()
+
 func _on_pacer_start_timer_2_timeout():
 	pacer_deadly = true
-	$FakeFox/PacerTest/PacerSpeedIncrease.start()
 
 @rpc("authority","call_local")
 func stop_pacer():
 	$FakeFox/PacerTest.stop()
 	$Music2.play()
 	$FakeFox.hide()
-	$FakeFox/PacerTest/PacerSpeedIncrease.stop()
 	$FakeFox/AnimationPlayer.speed_scale = 1
 	$"Mr Fox".show()
 	$"Mr Fox".mute = false
+	$FakeFox/PacerMusic.stop()
 	
 	if multiplayer.is_server():
 		is_pacer = false
 		is_pacer_intro = false
 		pacer_deadly = false
-		$FakeFox/PacerTest/PacerLevelTimer.stop()
+		leahy_appeased = false
+		is_test_active = false
 		
 		$"Bet timer".paused = false
 		$FakeFox/PacerTest/PacerStartTimer.stop()
 		$FakeFox/PacerTest/PacerStartTimer2.stop()
-		$FakeFox/PacerTest/PacerSpeedIncrease.stop()
-		$FakeFox/PacerTest/PacerLevelTimer.stop()
-
-
-func _on_pacer_speed_increase_timeout():
-	$FakeFox/AnimationPlayer.speed_scale += 0.005
+		set_pacer_target_visibility.rpc($"Pacer/Pacer target".get_path(),false)
+		set_pacer_target_visibility.rpc($"Pacer/Pacer target2".get_path(),false)
 
 var penalties = {
 	"EvilLeahy": 0,
@@ -1135,6 +1299,7 @@ var gainy_target
 
 
 func _on_gainy_timer_timeout():
+	if Allsingleton.is_bossfight: return
 	if multiplayer.is_server():
 		$GainyTimer.start(gainy_attack_interval)
 		if (!do_gainy_spawn): return
@@ -1179,33 +1344,6 @@ func _on_auto_refresh_timeout():
 
 func _on_leahy_cool_timer_timeout():
 	$EvilLeahy/AudioStreamPlayer3D.pitch_scale = randf_range(0.75,1.75)
-
-func reset_pacer_times():
-	pacer_times = [
-		127,
-		167,
-		205,
-		278,
-		348,
-		413,
-		476,
-		537,
-		595,
-		705,
-		809,
-		907,
-		1000,
-		1089,
-		1175,
-		1296,
-		1363
-	]
-
-
-func _on_pacer_level_timer_timeout():
-	if multiplayer.is_server():
-		stop_pacer.rpc()
-
 
 @rpc("any_peer","call_local")
 func play_coffee():
@@ -1341,6 +1479,10 @@ func spawn_dropped_item(pos,cloned_item,item_id):
 		dropped_item.item = item_id
 		
 		add_item_to_dropped.rpc(dropped_item.get_path(),cloned_item)
+		
+		if item_id == 4:
+			if randi_range(0,15) == 1:
+				start_da_pacer.rpc()
 
 @rpc("authority","call_local")
 func add_item_to_dropped(dropped_item_path,item_path):
@@ -1392,8 +1534,14 @@ func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dial
 	
 	var a = load("res://player_sound.tscn").instantiate()
 	add_child(a,true)
+	
+	var audio_stream : AudioStream = load(stream_path)
+	
+	
 	actually_play_sound.rpc(a.get_path(),stream_path,volume_db,bus,max_distance,pos)
-
+	
+	await get_tree().create_timer(audio_stream.get_length()).timeout
+	a.queue_free()
 
 @rpc("authority","call_local")
 func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):

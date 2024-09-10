@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=151 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -26,11 +26,14 @@
 [ext_resource type="AudioStream" uid="uid://3u3ef1rrt1c0" path="res://pop.mp3" id="17_fndpl"]
 [ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="17_thbsf"]
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
-[ext_resource type="AudioStream" uid="uid://cqi02xkju5nxo" path="res://pacer_full.mp3" id="19_4cjwu"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
 [ext_resource type="PackedScene" uid="uid://bd6avbb065m7b" path="res://leahy_respawn_pos.tscn" id="20_rxfji"]
+[ext_resource type="AudioStream" uid="uid://dvadaniflxexc" path="res://pacer_songs/pacer_intro.mp3" id="21_kuvoj"]
+[ext_resource type="AudioStream" uid="uid://baxilhywlt8r3" path="res://pacer_songs/pacer_music.mp3" id="22_3b7ci"]
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
+[ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
+[ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="25_pddg1"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
 [ext_resource type="PackedScene" uid="uid://ksynis5kuf5a" path="res://bathroom_spawn.tscn" id="29_kjme3"]
@@ -60,6 +63,8 @@
 [ext_resource type="Texture2D" uid="uid://cop2rccne3feg" path="res://ela book.png" id="56_ks1ig"]
 [ext_resource type="Texture2D" uid="uid://dbo74xllmx2vx" path="res://RAY_1063_crop-removebg-preview.png" id="57_s5o7m"]
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="57_tmkqp"]
+[ext_resource type="PackedScene" uid="uid://tnochmf7dcl8" path="res://models/3d/Wooden fence.glb" id="61_hs1ei"]
+[ext_resource type="PackedScene" uid="uid://diy5vww1d7cf4" path="res://evil darel.tscn" id="65_a2gyi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -77,6 +82,8 @@ ambient_light_color = Color(1, 1, 1, 1)
 tonemap_exposure = 1.25
 ssil_enabled = true
 sdfgi_use_occlusion = true
+glow_enabled = true
+glow_intensity = 0.5
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_emission = Color(0.277528, 0.277528, 0.277528, 1)
@@ -210,6 +217,12 @@ shader_parameter/time_speed = 0.1
 shader_parameter/resolution = Vector2(100, 2000)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ha7mg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjapy"]
+bg_color = Color(0.423529, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4uf2"]
+bg_color = Color(1, 0, 0.254902, 1)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
@@ -499,6 +512,15 @@ _data = {
 albedo_texture = ExtResource("3_jr10u")
 
 [sub_resource type="QuadMesh" id="QuadMesh_pjpdc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1eh6s"]
+size = Vector3(3.34937, 8.0752, 59.4199)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kas3n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqqde"]
+transparency = 1
+albedo_color = Color(0.345098, 0.52549, 1, 0.705882)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3nmsg"]
 size = Vector3(1.01855, 1.13477, 0.827148)
@@ -1129,6 +1151,9 @@ properties/0/replication_mode = 1
 [sub_resource type="BoxShape3D" id="BoxShape3D_oauyd"]
 size = Vector3(0.234375, 2.4823, 1.97437)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_d8n1e"]
+size = Vector3(1, 4.0097, 2.53809)
+
 [node name="Game" type="Node3D" node_paths=PackedStringArray("shop", "school", "controls_text")]
 script = ExtResource("1_y4eyb")
 shop = NodePath("shop")
@@ -1232,6 +1257,42 @@ offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Bossbar" type="Control" parent="CanvasLayer/Main"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 117.0
+grow_horizontal = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Main/Bossbar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 103.0
+offset_top = -27.0
+offset_right = -103.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_cjapy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_m4uf2")
+
+[node name="Label" type="Label" parent="CanvasLayer/Main/Bossbar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 21.0
+offset_bottom = 84.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 41
+text = "DAREL.PNG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CollectedBooksLabel" type="Label" parent="CanvasLayer/Main"]
 layout_mode = 1
 anchors_preset = 10
@@ -1329,10 +1390,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -175.0
-offset_right = 175.0
-offset_bottom = 175.0
+offset_left = 419.0
+offset_top = 152.0
+offset_right = 769.0
+offset_bottom = 502.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_wpkks")
@@ -2242,7 +2303,7 @@ libraries = {
 }
 
 [node name="PacerTest" type="AudioStreamPlayer3D" parent="FakeFox"]
-stream = ExtResource("19_4cjwu")
+stream = ExtResource("21_kuvoj")
 max_distance = 75.0
 panning_strength = 2.0
 bus = &"Music"
@@ -2255,11 +2316,19 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
-[node name="PacerSpeedIncrease" type="Timer" parent="FakeFox/PacerTest"]
+[node name="PacerMusic" type="AudioStreamPlayer" parent="FakeFox"]
+stream = ExtResource("22_3b7ci")
+bus = &"Music"
 
-[node name="PacerLevelTimer" type="Timer" parent="FakeFox/PacerTest"]
-wait_time = 1363.0
-one_shot = true
+[node name="PacerLap" type="AudioStreamPlayer" parent="FakeFox"]
+stream = ExtResource("23_psl6s")
+volume_db = 7.0
+bus = &"Dialogs"
+
+[node name="PacerLevel" type="AudioStreamPlayer" parent="FakeFox"]
+stream = ExtResource("24_s8xkw")
+volume_db = 7.0
+bus = &"Dialogs"
 
 [node name="book1" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, 1.078, -69.722)
@@ -2670,6 +2739,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -40.3144)
 [node name="Bathroom spawn4" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -49.0816)
 
+[node name="Pacer" type="Node" parent="."]
+
+[node name="Pacer target" type="Area3D" parent="Pacer" groups=["pacer target"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8435, 0, -177.237)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pacer/Pacer target"]
+shape = SubResource("BoxShape3D_1eh6s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pacer/Pacer target"]
+transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
+mesh = SubResource("BoxMesh_kas3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
+
+[node name="Pacer target2" type="Area3D" parent="Pacer" groups=["pacer target"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.7666, 0, -177.237)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pacer/Pacer target2"]
+shape = SubResource("BoxShape3D_1eh6s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pacer/Pacer target2"]
+transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
+mesh = SubResource("BoxMesh_kas3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
+
 [node name="School" parent="." instance=ExtResource("17_3oefh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 24.5635, 0, -137.18)
 
@@ -2948,6 +3043,36 @@ shape = SubResource("BoxShape3D_oauyd")
 stream = ExtResource("50_loy87")
 bus = &"Dialogs"
 
+[node name="Fence" type="Node3D" parent="wheel"]
+
+[node name="Wooden fence" parent="wheel/Fence" instance=ExtResource("61_hs1ei")]
+transform = Transform3D(1.55206, 0, -0.415873, 0, 1.60681, 0, 0.415873, 0, 1.55206, -0.517544, -0.471481, -0.718746)
+
+[node name="Wooden fence2" parent="wheel/Fence" instance=ExtResource("61_hs1ei")]
+transform = Transform3D(0.803406, 0, 1.39154, 0, 1.60681, 0, -1.39154, 0, 0.803406, -0.0195656, -0.471481, 0.948366)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="wheel/Fence" groups=["fence"]]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -0.53936, 0, 0.00500488)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wheel/Fence/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62939e-06, 1.50485, -0.769039)
+shape = SubResource("BoxShape3D_d8n1e")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="wheel/Fence" groups=["fence"]]
+transform = Transform3D(0.5, 0, 0.866026, 0, 1, 0, -0.866026, 0, 0.5, 0.678593, 0, 1.32482)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wheel/Fence/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62939e-06, 1.50485, -0.769039)
+shape = SubResource("BoxShape3D_d8n1e")
+
+[node name="EvilDarel" parent="." instance=ExtResource("65_a2gyi")]
+transform = Transform3D(-5.24537e-06, 60, 103.923, 0, 103.923, -60, -120, -2.62268e-06, -4.54262e-06, -71.921, 89.0039, -87.2176)
+visible = false
+
+[node name="Timer" type="Timer" parent="EvilDarel"]
+wait_time = 90.0
+one_shot = true
+
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
@@ -2972,5 +3097,3 @@ bus = &"Dialogs"
 [connection signal="timeout" from="EvilLeahy/LeahyCoolTimer" to="." method="_on_leahy_cool_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]
-[connection signal="timeout" from="FakeFox/PacerTest/PacerSpeedIncrease" to="." method="_on_pacer_speed_increase_timeout"]
-[connection signal="timeout" from="FakeFox/PacerTest/PacerLevelTimer" to="." method="_on_pacer_level_timer_timeout"]

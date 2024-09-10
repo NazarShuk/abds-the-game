@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg2ic00kw6fx5"]
+
+[ext_resource type="Script" path="res://darel ray.gd" id="1_b2x03"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jy8mw"]
+transparency = 1
+albedo_color = Color(1, 0.654902, 0, 0.733333)
+emission_enabled = true
+emission = Color(1, 0.6, 0, 1)
+emission_energy_multiplier = 3.0
+
+[node name="DarelRay" type="Node3D"]
+script = ExtResource("1_b2x03")
+
+[node name="Path3D" type="Path3D" parent="."]
+
+[node name="darel ray" type="CSGPolygon3D" parent="."]
+use_collision = true
+polygon = PackedVector2Array()
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("StandardMaterial3D_jy8mw")

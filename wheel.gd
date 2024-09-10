@@ -8,6 +8,7 @@ var rotate_speed = 1.0
 var target_speed = 1.0
 
 var is_idle = true
+var can_spin = true
 var target_rot = -1
 
 var rewards = [
@@ -88,9 +89,12 @@ func _process(delta):
 func spin():
 	if !multiplayer.is_server(): return
 	if !is_idle: return
+	if !can_spin: return
+	
 	var target_reward = rewards.pick_random()
 	var target_rotation = randf_range(target_reward.from,target_reward.to)
 	rotate_speed = 20
+	can_spin = false
 	await get_tree().create_timer(5).timeout
 	
 	rotate_speed = 0
@@ -105,6 +109,7 @@ func spin():
 	await get_tree().create_timer(60).timeout
 	rotate_speed = 1
 	is_idle = true
+	can_spin = true
 
 func give_reward(what_name):
 	if !multiplayer.is_server(): return

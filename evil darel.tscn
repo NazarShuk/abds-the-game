@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://diy5vww1d7cf4"]
+[gd_scene load_steps=8 format=3 uid="uid://diy5vww1d7cf4"]
 
 [ext_resource type="Script" path="res://evil darel.gd" id="1_4ars2"]
 [ext_resource type="Texture2D" uid="uid://b38xixrxxfdw4" path="res://darel.png" id="2_yfc2a"]
@@ -12,38 +12,54 @@ albedo_texture = ExtResource("2_yfc2a")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmbo2"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_uh2wh"]
-size = Vector3(0.0175781, 0.865234, 0.0390625)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7mawf"]
+data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_73hak"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
+[sub_resource type="BoxShape3D" id="BoxShape3D_lfje6"]
+size = Vector3(0.412964, 0.703186, 0.0615234)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rkeq3"]
-
-[node name="EvilDarel" type="CharacterBody3D" groups=["enemies"]]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+[node name="EvilDarel" type="CharacterBody3D" groups=["evil darel"]]
+transform = Transform3D(120, 0, 0, 0, 120, 0, 0, 0, 120, 0, 0, 0)
+collision_layer = 4096
 script = ExtResource("1_4ars2")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_krjd7")
 mesh = SubResource("QuadMesh_vx4ir")
 surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_uh2wh")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_7mawf")
+disabled = true
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-use_3d_avoidance = true
+[node name="Barrel" type="Node3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -0.303921, -0.10787, -0.0157021)
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_73hak")
+[node name="Mouth" type="Node3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -0.0454542, -0.168379, -0.0157021)
 
-[node name="EvilDarel" type="Area3D" parent="."]
+[node name="Right eye" type="RayCast3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -0.000853765, -0.029927, -0.0157021)
+target_position = Vector3(0, 0, -10)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EvilDarel"]
-shape = SubResource("BoxShape3D_rkeq3")
+[node name="Left eye" type="RayCast3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -0.168669, -0.0417029, -0.0157021)
+target_position = Vector3(0, 0, -10)
+
+[node name="lil darel timeout" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="big darel" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="big darel"]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -0.0786742, -0.103424, 0)
+shape = SubResource("BoxShape3D_lfje6")
+
+[node name="darel ball" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="lil darel timeout" to="." method="_on_lil_darel_timeout_timeout"]
+[connection signal="timeout" from="darel ball" to="." method="_on_darel_ball_timeout"]
