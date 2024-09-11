@@ -1,4 +1,4 @@
-[gd_scene load_steps=151 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=154 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -207,6 +207,67 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("SomeoneDid:theme_override_colors/font_outline_color")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_8oj72"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xnwpc"]
+resource_name = "bomboklatz"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e226w"]
+_data = {
+"RESET": SubResource("Animation_8oj72"),
+"bomboklatz": SubResource("Animation_xnwpc")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_beb0e"]
 shader = ExtResource("5_xgi1f")
@@ -1233,6 +1294,19 @@ replication_config = SubResource("SceneReplicationConfig_dw4kk")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 6
 
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_e226w")
+}
+
 [node name="Glitch" type="TextureRect" parent="CanvasLayer"]
 visible = false
 material = SubResource("ShaderMaterial_beb0e")
@@ -1716,6 +1790,22 @@ theme_override_font_sizes/font_size = 40
 text = "Connecting..."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/MultiPlayer/LoadingRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = 142.5
+offset_right = 78.0
+offset_bottom = 214.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 46
+text = "Cancel"
 
 [node name="Lobby" type="Control" parent="CanvasLayer"]
 visible = false
@@ -3089,6 +3179,7 @@ one_shot = true
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/refresh btn" to="." method="_on_button_pressed"]
 [connection signal="item_clicked" from="CanvasLayer/MultiPlayer/ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="timeout" from="CanvasLayer/MultiPlayer/ItemList/Auto Refresh" to="." method="_on_auto_refresh_timeout"]
+[connection signal="pressed" from="CanvasLayer/MultiPlayer/LoadingRect/Button" to="." method="reload_game"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="." method="_on_reset_to_default_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]

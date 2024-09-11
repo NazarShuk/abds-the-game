@@ -5,6 +5,7 @@ extends CharacterBody3D
 const LIL_DAREL = preload("res://lil_darel.tscn")
 const DAREL_BALL = preload("res://darel_ball.tscn")
 const DAREL_RAY = preload("res://darel ray.tscn")
+const EXPLOSION = preload("res://explosion.tscn")
 
 @onready var barrel = $Barrel
 @onready var mouth = $Mouth
@@ -33,8 +34,6 @@ func _process(delta):
 			get_parent().add_child(darel)
 			
 			darel.global_position = mouth.global_position
-			
-			ray_attack()
 	
 	previous_health = health
 	
@@ -97,11 +96,28 @@ func _on_darel_ball_timeout():
 	
 	darel_ball.global_position = barrel.global_position
 	darel_ball.apply_central_impulse(impulse)
+	
+	if floor($ray.time_left) == 10:
+		if !did_play_charge:
+			$AudioStreamPlayer.play()
+			did_play_charge = true
+
+var did_play_charge = false
 
 func ray_attack():
 	
-	var right_point = right_eye.global_position + Vector3(0,0,-200)
-	var left_point = left_eye.global_position + Vector3(0,0,-200)
+	did_play_charge = false
+	
+	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
+	if !player: return
+	
+	if game.game_started == false:
+		return
+	if Allsingleton.is_bossfight == false:
+		return
+	
+	var right_point = right_eye.global_position + Vector3(0,0,200)
+	var left_point = left_eye.global_position + Vector3(0,0,200)
 	
 	if right_eye.get_collider():
 		right_point = right_eye.get_collision_point()
@@ -129,3 +145,26 @@ func ray_attack():
 	
 	ray1.set_curve()
 	ray2.set_curve()
+	
+	var explosion1 = EXPLOSION.instantiate()
+	var explosion2 = EXPLOSION.instantiate()
+	
+	get_parent().add_child(explosion1)
+	get_parent().add_child(explosion2)
+	
+	explosion1.global_position = right_point
+	explosion2.global_position = left_point
+	
+	await get_tree().create_timer(0.25).timeout
+	if right_point.distance_to(player.global_position) < 4:
+		player.die("darel")
+	elif left_point.distance_to(player.global_position) < 4:
+		player.die("darel")
+	
+	await get_tree().create_timer(5).timeout
+	
+	explosion1.queue_free()
+	explosion2.queue_free()
+	
+	ray1.queue_free()
+	ray2.queue_free()

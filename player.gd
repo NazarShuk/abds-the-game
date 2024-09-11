@@ -634,6 +634,9 @@ func die(cause):
 		$"CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".play()
 		$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer2".play("textfadein")
 		
+		for lil_darel in get_tree().get_nodes_in_group("lil darel"):
+			lil_darel.queue_free()
+		
 
 func _on_silent_lunch_timeout():
 	is_suspended = false

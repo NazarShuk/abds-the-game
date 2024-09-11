@@ -820,7 +820,7 @@ func _on_timer_timeout():
 			do_vertical_camera_normal = true
 			$EvilDarel.show()
 			$CanvasLayer/Main/Bossbar.show()
-		
+			$CanvasLayer/ColorRect/AnimationPlayer.play("bomboklatz")
 
 @rpc("authority","call_local")
 func update_approching_label(meters):
@@ -877,12 +877,15 @@ func set_player_dead(id,is_dead,do_deaths):
 	if multiplayer.is_server():
 		players[id].is_dead = is_dead
 		if is_dead and do_deaths:
-			players[id].deaths += 1
+			
+			if !Allsingleton.is_bossfight:
+				players[id].deaths += 1
 			var total_deaths = 0
 			for pl_id in players_ids:
 				total_deaths += players[pl_id].deaths
 			
-			info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(max_deaths + (deaths_per_player * players_in_lobby)))
+			if !Allsingleton.is_bossfight:
+				info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(max_deaths + (deaths_per_player * players_in_lobby)))
 			if is_pacer:
 				stop_pacer.rpc()
 			
@@ -902,6 +905,7 @@ func set_player_dead(id,is_dead,do_deaths):
 @rpc("any_peer","call_local")
 func skibidi():
 	if multiplayer.is_server():
+		
 		end_game.rpc("freaky")
 
 @rpc("authority","call_local")
@@ -929,7 +933,21 @@ func set_singleton(deaths,books,ending):
 	elif ending == "imp":
 		get_tree().change_scene_to_file("res://impossible_end.tscn")
 	elif ending == "freaky":
-		get_tree().change_scene_to_file("res://huh_ending.tscn")
+		
+		var can_bossfight = false
+		
+		if Achievements.check_achievement("impossible_ending"):
+			if Achievements.check_achievement("perfect_ending"):
+				if Achievements.check_achievement("freaky_ending"):
+					if Achievements.check_achievement("disoriented_ending"):
+						if Achievements.check_achievement("good_ending"):
+							if Achievements.check_achievement("bad_ending"):
+								can_bossfight = true
+		
+		if !can_bossfight:
+			get_tree().change_scene_to_file("res://huh_ending.tscn")
+		else:
+			get_tree().change_scene_to_file("res://huh_ending_2.tscn")
 	elif ending == "you suck":
 		get_tree().change_scene_to_file("res://worst_end.tscn")
 	elif ending == "dumb":
@@ -1571,3 +1589,6 @@ func give_item_to_everyone(item_id):
 func _exit_tree():
 	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
 		end_game.rpc("none")
+
+func reload_game():
+	get_tree().change_scene_to_file("res://logos.tscn")
