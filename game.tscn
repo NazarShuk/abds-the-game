@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=156 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -284,6 +284,12 @@ bg_color = Color(0.423529, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4uf2"]
 bg_color = Color(1, 0, 0.254902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_al1dq"]
+bg_color = Color(0.358229, 0.229203, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v8ix"]
+bg_color = Color(1, 0.670588, 0, 1)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
 load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
@@ -1352,6 +1358,22 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_cjapy")
 theme_override_styles/fill = SubResource("StyleBoxFlat_m4uf2")
+
+[node name="ProgressBar2" type="ProgressBar" parent="CanvasLayer/Main/Bossbar/ProgressBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_al1dq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3v8ix")
+max_value = 80.0
+value = 80.0
+show_percentage = false
 
 [node name="Label" type="Label" parent="CanvasLayer/Main/Bossbar"]
 layout_mode = 1
@@ -3159,8 +3181,8 @@ shape = SubResource("BoxShape3D_d8n1e")
 transform = Transform3D(-5.24537e-06, 60, 103.923, 0, 103.923, -60, -120, -2.62268e-06, -4.54262e-06, -71.921, 89.0039, -87.2176)
 visible = false
 
-[node name="Timer" type="Timer" parent="EvilDarel"]
-wait_time = 90.0
+[node name="darel_timer" type="Timer" parent="EvilDarel"]
+wait_time = 80.0
 one_shot = true
 
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
@@ -3188,3 +3210,4 @@ one_shot = true
 [connection signal="timeout" from="EvilLeahy/LeahyCoolTimer" to="." method="_on_leahy_cool_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]
+[connection signal="timeout" from="EvilDarel/darel_timer" to="." method="_on_darel_timer_timeout"]

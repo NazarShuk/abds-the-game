@@ -6,6 +6,11 @@ const LIL_DAREL = preload("res://lil_darel.tscn")
 const DAREL_BALL = preload("res://darel_ball.tscn")
 const DAREL_RAY = preload("res://darel ray.tscn")
 const EXPLOSION = preload("res://explosion.tscn")
+const BIGGER_EXPLOSION = preload("res://bigger_explosion.tscn")
+const SHOCKWAVE = preload("res://shockwave.tscn")
+
+@onready var nav_agent = $NavigationAgent3D
+var SPEED = 10
 
 @onready var barrel = $Barrel
 @onready var mouth = $Mouth
@@ -18,6 +23,11 @@ var can_do_lil_darel = true
 
 var previous_health = health
 
+var is_phase_2 = false
+var is_actual_phase_2 = false
+
+var stunned = false
+
 func _process(delta):
 	
 	if game.game_started == false:
@@ -29,11 +39,12 @@ func _process(delta):
 	if previous_health > health:
 		
 		if health <= 80:
-			var darel = LIL_DAREL.instantiate()
-			
-			get_parent().add_child(darel)
-			
-			darel.global_position = mouth.global_position
+			if !is_phase_2:
+				var darel = LIL_DAREL.instantiate()
+				
+				get_parent().add_child(darel)
+				
+				darel.global_position = mouth.global_position
 	
 	previous_health = health
 	
@@ -41,7 +52,6 @@ func _process(delta):
 	if !player: return
 	
 	var dst = global_position.distance_to(player.global_position)
-	
 	if dst < 90:
 		lil_darel_attack(1)
 	
@@ -50,18 +60,101 @@ func _process(delta):
 	
 	health = clampf(health,0.0,100.0)
 	
+	cloroxes_damage()
+	
+	if health <= 0:
+		if !is_phase_2:
+			transition_to_phase_2()
+	
+	if is_actual_phase_2 and not stunned:
+		update_target_location(player.global_position)
+		pathfinding()
+
+func pathfinding():
+	var current_location = global_transform.origin
+	var next_location = nav_agent.get_next_path_position()
+	
+	var new_velocity = (next_location - current_location).normalized() * SPEED
+	
+	velocity = new_velocity
+	
+	move_and_slide()
+
+func update_target_location(target_location):
+	if typeof(target_location) == TYPE_VECTOR3:
+		nav_agent.target_position = target_location
+
+func cloroxes_damage():
 	var cloroxes = get_tree().get_nodes_in_group("clorox_wipes")
 	
 	for clorox in cloroxes:
 		var distance = global_position.distance_to(clorox.global_position)
-		if distance < 50:
+		var required_dst = 50
+		
+		if is_phase_2:
+			required_dst = 2
+		
+		if distance < required_dst:
 			health -= 5
 			clorox.queue_free()
+			
+			if is_phase_2:
+				stunned = true
+				$"phase 2 stun".start(2)
+				shake(2,50,1)
+		
 
+func transition_to_phase_2():
+	if is_phase_2: return
+	
+	$bigboom.play()
+	$AudioStreamPlayer.stop()
+	game.darel_phase2_transition()
+	
+	shake(3, 100, 5)
+	
+	for lil_darel in get_tree().get_nodes_in_group("lil darel"):
+		lil_darel.queue_free()
+	
+	for darel_ball in get_tree().get_nodes_in_group("darel_ball"):
+		darel_ball.queue_free()
+	
+	is_phase_2 = true
+	
+	for i in range(0,5):
+		var big_explosion = BIGGER_EXPLOSION.instantiate()
+		get_parent().add_child(big_explosion)
+		big_explosion.global_position = global_position + Vector3(randf_range(-30,30),randf_range(-30,30),randf_range(-30,30))
+		await get_tree().create_timer(0.5).timeout
+	
+	
+	
+	await get_tree().create_timer(3).timeout
+	$transition_music.play()
+	scale = Vector3(4,4,4)
+	global_position.y = 2
+	
+
+	$transition_dialog.play()
+	$transition_timer.start($transition_dialog.stream.get_length() / $transition_dialog.pitch_scale)
+	
+	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
+	
+	player.global_position = global_position
+	player.global_position.x = global_position.x + 5
+	
+
+func start_phase_2():
+	health = 100
+	game.darel_phase2_start()
+	is_actual_phase_2 = true
+	$transition_dialog.stop()
+	$transition_music.stop()
+	$"phase 2 attack".start()
 
 func lil_darel_attack(amount = 1):
 	if !can_do_lil_darel: return
-	
+	if is_phase_2: return
 	
 	for i in range(0,amount):
 		var darel = LIL_DAREL.instantiate()
@@ -83,6 +176,8 @@ func _on_darel_ball_timeout():
 		return
 	if Allsingleton.is_bossfight == false:
 		return
+	if is_phase_2: return
+	
 	
 	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
 	if !player: return
@@ -105,7 +200,7 @@ func _on_darel_ball_timeout():
 var did_play_charge = false
 
 func ray_attack():
-	
+	if is_phase_2: return
 	did_play_charge = false
 	
 	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
@@ -168,3 +263,55 @@ func ray_attack():
 	
 	ray1.queue_free()
 	ray2.queue_free()
+
+const ATTACKS = [
+	"ground_slam",
+	"clorox"
+]
+
+func _on_phase_2_attack_timeout():
+	if stunned: return
+	
+	var attack = ATTACKS.pick_random()
+	
+	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
+	if !player: return
+	
+	if attack == "ground_slam":
+		var sw = SHOCKWAVE.instantiate()
+		
+		get_parent().add_child(sw)
+		
+		sw.global_position = global_position
+		sw.global_position.y = 0
+	elif attack == "clorox":
+		var clorox = load("res://Clorox Wipes.tscn").instantiate()
+		
+		get_parent().add_child(clorox)
+		
+		clorox.global_position = player.global_position
+		clorox.look_at(global_position)
+		clorox.is_evil = true
+		clorox.start_timer(3)
+		clorox.auto_aim = true
+		clorox.auto_aim_node = self
+		
+
+
+func _on_phase_2_stun_timeout():
+	stunned = false
+
+func shake(time_sec = 1.0, speed = 10.0, strength = 5.0, do_static = true):
+	
+	var initial_pos = global_position
+	
+	var timer = 0.0
+	while timer < time_sec:
+		if !do_static:
+			global_position += Vector3(randf_range(-strength, strength), randf_range(-strength, strength), randf_range(-strength, strength))
+		else:
+			global_position = initial_pos + Vector3(randf_range(-strength, strength), randf_range(-strength, strength), randf_range(-strength, strength))
+		await get_tree().create_timer(1.0 / speed).timeout
+		timer += 1.0 / speed
+	if do_static:
+		global_position = initial_pos

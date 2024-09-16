@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://c8afi101lcnu"]
+
+[ext_resource type="Script" path="res://explosion.gd" id="1_5jyps"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjm78"]
+transparency = 1
+albedo_color = Color(1, 0.690196, 0, 0.584314)
+emission_enabled = true
+emission = Color(1, 0.572549, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_reqcp"]
+material = SubResource("StandardMaterial3D_yjm78")
+radius = 2.0
+height = 3.0
+
+[sub_resource type="Curve" id="Curve_bah76"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l238e"]
+transparency = 1
+albedo_color = Color(1, 0.2, 0, 0.584314)
+emission_enabled = true
+emission = Color(1, 0.572549, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_t0yyb"]
+material = SubResource("StandardMaterial3D_l238e")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4ows"]
+transparency = 1
+albedo_color = Color(0.584314, 0.588235, 0.6, 0.584314)
+emission_enabled = true
+emission = Color(1, 0.572549, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_fe73x"]
+material = SubResource("StandardMaterial3D_r4ows")
+radius = 0.25
+height = 0.5
+
+[node name="Explosion" type="Node3D"]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+script = ExtResource("1_5jyps")
+
+[node name="Explosion" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+mesh = SubResource("SphereMesh_reqcp")
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_bah76")
+
+[node name="Explosion2" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+mesh = SubResource("SphereMesh_t0yyb")
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_bah76")
+
+[node name="Explosion3" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+mesh = SubResource("SphereMesh_fe73x")
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_bah76")

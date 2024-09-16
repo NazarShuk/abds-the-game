@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://diy5vww1d7cf4"]
+[gd_scene load_steps=12 format=3 uid="uid://diy5vww1d7cf4"]
 
 [ext_resource type="Script" path="res://evil darel.gd" id="1_4ars2"]
 [ext_resource type="Texture2D" uid="uid://b38xixrxxfdw4" path="res://darel.png" id="2_yfc2a"]
 [ext_resource type="AudioStream" uid="uid://ik0wsysbvlni" path="res://charge.mp3" id="3_ctbu8"]
+[ext_resource type="AudioStream" uid="uid://dv1grhh8m3i8x" path="res://dariel/darel_speech.mp3" id="4_mpl4u"]
+[ext_resource type="AudioStream" uid="uid://pxp5ea00ppax" path="res://dariel/placeholders/versus_intro.mp3" id="5_0tq6d"]
+[ext_resource type="AudioStream" uid="uid://uxvu0fafr84l" path="res://explosion(1).wav" id="5_tdn62"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krjd7"]
 transparency = 1
@@ -31,8 +34,8 @@ mesh = SubResource("QuadMesh_vx4ir")
 surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_7mawf")
-disabled = true
 
 [node name="Barrel" type="Node3D" parent="."]
 transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -0.303921, -0.10787, -0.0157021)
@@ -71,6 +74,33 @@ stream = ExtResource("3_ctbu8")
 volume_db = -10.0
 bus = &"Dialogs"
 
+[node name="transition_dialog" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_mpl4u")
+bus = &"Dialogs"
+
+[node name="transition_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0tq6d")
+bus = &"Dialogs"
+
+[node name="transition_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_height_offset = -1.5
+
+[node name="bigboom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_tdn62")
+bus = &"Dialogs"
+
+[node name="phase 2 attack" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="phase 2 stun" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="lil darel timeout" to="." method="_on_lil_darel_timeout_timeout"]
 [connection signal="timeout" from="darel ball" to="." method="_on_darel_ball_timeout"]
 [connection signal="timeout" from="ray" to="." method="ray_attack"]
+[connection signal="timeout" from="transition_timer" to="." method="start_phase_2"]
+[connection signal="timeout" from="phase 2 attack" to="." method="_on_phase_2_attack_timeout"]
+[connection signal="timeout" from="phase 2 stun" to="." method="_on_phase_2_stun_timeout"]

@@ -22,7 +22,7 @@ albedo_color = Color(0.691123, 0.605332, 0.617718, 1)
 radius = 1.0
 height = 2.0
 
-[node name="DarelBall" type="RigidBody3D"]
+[node name="DarelBall" type="RigidBody3D" groups=["darel_ball"]]
 script = ExtResource("1_634cm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

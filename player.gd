@@ -177,6 +177,10 @@ func _ready():
 	
 		if Settings.render_distance:
 			camera_3d.far = Settings.render_distance
+		
+		# skip the book collect
+		if OS.has_feature("debug"):
+			parent.on_collect_book.rpc(name.to_int(), "book1",true)
 
 var is_freaky = false
 var can_use_breaker = true
@@ -190,6 +194,9 @@ const push_force = 1.0
 func _physics_process(delta):
 	process_voice()
 	if is_multiplayer_authority():
+		
+		if global_position.distance_to(get_tree().get_first_node_in_group("evil darel").global_position) < 1:
+			die("darel")
 		
 		if Input.is_action_just_pressed("revive"):
 			if is_dead_of_dariel:

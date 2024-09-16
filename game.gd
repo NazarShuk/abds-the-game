@@ -127,7 +127,7 @@ func _ready():
 		$WelcomeLeahy.hide()
 		$WelcomeLeahy/AudioStreamPlayer3D.stop()
 		$Music1.stream = load("res://pre_boss.mp3")
-		$Music2.stream = load("res://bossfight_130.mp3")
+		$Music2.stream = load("res://dariel/placeholders/Glory [kzbbO_lyZ94].mp3")
 		$Music0.stream = load("res://noise.mp3")
 		$Music0.play()
 		
@@ -219,14 +219,21 @@ func _process(delta):
 					$CanvasLayer/Main.scale += Vector2(0.1,0.1)
 				
 				previous_darel_health = evil_darel.health
-				music_pitch_target = ((100 - evil_darel.health) / 200) + 1
+				music_pitch_target = 1 #((100 - evil_darel.health) / 200) + 1
 				
-				if evil_darel.health < 50:
-					if $EvilDarel/Timer.is_stopped():
-						$EvilDarel/Timer.start()
+				if !evil_darel.is_phase_2:
+					if evil_darel.health < 50:
+						if $EvilDarel/darel_timer.is_stopped():
+							$EvilDarel/darel_timer.start()
+						$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.value = $EvilDarel/darel_timer.time_left
+						$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = true
+					else:
+						if !$EvilDarel/darel_timer.is_stopped():
+							$EvilDarel/darel_timer.stop()
+						$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = false
 				else:
-					if !$EvilDarel/Timer.is_stopped():
-						$EvilDarel/Timer.stop()
+					$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = false
+					
 			
 			
 		if Input.is_action_just_pressed("jump"):
@@ -242,7 +249,7 @@ func _process(delta):
 		
 		var vending_machines = get_tree().get_nodes_in_group("vending_machine")
 		var broken_vending_machines = []
-		
+		 
 		for vm in vending_machines:
 			if vm is StaticBody3D:
 				if vm.uses_left <= 0:
@@ -302,10 +309,7 @@ func _process(delta):
 					if is_bet:
 						collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
 			else:
-				if !$EvilDarel/Timer.is_stopped():
-					collected_books_label.text = str(floor($EvilDarel/Timer.time_left)) + "s left"
-				else:
-					collected_books_label.text = ""
+				collected_books_label.text = ""
 		else:
 			collected_books_label.text = "Find a ELA book!"
 		leahy_speed = evil_leahy.SPEED
@@ -1592,3 +1596,18 @@ func _exit_tree():
 
 func reload_game():
 	get_tree().change_scene_to_file("res://logos.tscn")
+
+
+func _on_darel_timer_timeout():
+	get_tree().get_first_node_in_group("player").die("darel")
+
+func darel_phase2_transition():
+	$Music2.stop()
+	$EvilDarel/darel_timer.stop()
+	$CanvasLayer/ColorRect/AnimationPlayer.play("bomboklatz")
+
+func darel_phase2_start():
+	$Music2.stream = load("res://dariel/placeholders/versus_loop.mp3")
+	$Music2.play()
+	
+
