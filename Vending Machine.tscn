@@ -16,7 +16,7 @@ size = Vector3(1.38281, 2.80127, 1)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8rito"]
 properties/0/path = NodePath(".:uses_left")
 properties/0/spawn = true
-properties/0/replication_mode = 1
+properties/0/replication_mode = 2
 
 [node name="VendingMachine" type="StaticBody3D" groups=["vending_machine"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.810454, 0)

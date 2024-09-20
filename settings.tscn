@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b5rnn1lgesysr"]
+[gd_scene load_steps=9 format=3 uid="uid://b5rnn1lgesysr"]
 
 [ext_resource type="AudioStream" uid="uid://bypabovlsrkor" path="res://The Builder (128kbps)_01.mp3" id="1_3ydfj"]
 [ext_resource type="Script" path="res://settings.gd" id="1_3yio5"]
@@ -9,14 +9,6 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ongwm"]
 texture = ExtResource("4_u1oj5")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1kfeh"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fnsc3"]
-size = Vector2(6, 26)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yss8r"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_stdf6"]
 
@@ -132,144 +124,6 @@ grow_vertical = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
-
-[node name="VoiceChatVolumeLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 179.0
-offset_top = -135.0
-offset_right = -902.0
-offset_bottom = -96.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_rc34d")
-theme_override_font_sizes/font_size = 24
-text = "Voice Chat Volume"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VCslider" type="HSlider" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -544.0
-offset_top = -100.5
-offset_right = -180.0
-offset_bottom = -63.5002
-grow_horizontal = 2
-grow_vertical = 2
-max_value = 1.0
-step = 0.01
-value = 1.0
-
-[node name="MicSetupLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 182.0
-offset_top = -32.0
-offset_right = -906.0
-offset_bottom = 7.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_rc34d")
-theme_override_font_sizes/font_size = 24
-text = "Microphone setup"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MicSetupInfoLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 99.0
-offset_top = 34.0
-offset_right = -823.0
-offset_bottom = 49.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_rc34d")
-theme_override_font_sizes/font_size = 12
-text = "Adjust the slider until it lights up green only when you are speaking."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="mic_vol" type="ProgressBar" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -528.0
-offset_top = 3.0
-offset_right = -196.0
-offset_bottom = 30.0002
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_1kfeh")
-max_value = 1.0
-step = 0.001
-show_percentage = false
-
-[node name="threshold_slider" type="HSlider" parent="CanvasLayer/mic_vol"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_icons/grabber = SubResource("PlaceholderTexture2D_fnsc3")
-theme_override_icons/grabber_highlight = SubResource("PlaceholderTexture2D_fnsc3")
-theme_override_icons/grabber_disabled = SubResource("PlaceholderTexture2D_fnsc3")
-theme_override_styles/slider = SubResource("StyleBoxFlat_yss8r")
-max_value = 1.0
-step = 0.001
-value = 1.0
-
-[node name="CheckButton" type="CheckButton" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -197.0
-offset_top = -5.0
-offset_right = -121.0
-offset_bottom = 35.0002
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_icons/checked = ExtResource("5_5i7pj")
-theme_override_icons/checked_disabled = ExtResource("5_5i7pj")
-theme_override_icons/unchecked = ExtResource("6_7sk2p")
-theme_override_icons/unchecked_disabled = ExtResource("6_7sk2p")
-theme_override_icons/checked_mirrored = ExtResource("5_5i7pj")
-theme_override_icons/checked_disabled_mirrored = ExtResource("5_5i7pj")
-theme_override_icons/unchecked_mirrored = ExtResource("6_7sk2p")
-theme_override_icons/unchecked_disabled_mirrored = ExtResource("6_7sk2p")
-
-[node name="MicList" type="ItemList" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -538.0
-offset_top = 71.0
-offset_right = -186.0
-offset_bottom = 153.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_rc34d")
 
 [node name="BetterLightingToggle" type="CheckButton" parent="CanvasLayer"]
 anchors_preset = 8
@@ -398,10 +252,6 @@ bus = &"Voice Chat"
 [connection signal="pressed" from="CanvasLayer/SecretButton" to="." method="_on_button_2_pressed"]
 [connection signal="value_changed" from="CanvasLayer/MusicSlider" to="." method="_on_music_slider_changed"]
 [connection signal="value_changed" from="CanvasLayer/SfxSlider" to="." method="_on_sfx_slider_changed"]
-[connection signal="value_changed" from="CanvasLayer/VCslider" to="." method="_on_v_cslider_value_changed"]
-[connection signal="value_changed" from="CanvasLayer/mic_vol/threshold_slider" to="." method="_on_threshold_slider_value_changed"]
-[connection signal="toggled" from="CanvasLayer/CheckButton" to="." method="_on_check_button_toggled"]
-[connection signal="item_selected" from="CanvasLayer/MicList" to="." method="_on_mic_list_item_selected"]
 [connection signal="toggled" from="CanvasLayer/BetterLightingToggle" to="." method="_on_better_lighting_toggle_toggled"]
 [connection signal="value_changed" from="CanvasLayer/InGameResolutionSlider" to="." method="_on_in_game_resolution_slider_value_changed"]
 [connection signal="value_changed" from="CanvasLayer/RenderDistanceSlider" to="." method="_on_render_distance_slider_value_changed"]

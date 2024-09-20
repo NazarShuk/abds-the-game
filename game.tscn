@@ -1,4 +1,4 @@
-[gd_scene load_steps=156 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=160 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://Steam.gd" id="2_0aku0"]
@@ -65,6 +65,7 @@
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="57_tmkqp"]
 [ext_resource type="PackedScene" uid="uid://tnochmf7dcl8" path="res://models/3d/Wooden fence.glb" id="61_hs1ei"]
 [ext_resource type="PackedScene" uid="uid://diy5vww1d7cf4" path="res://evil darel.tscn" id="65_a2gyi"]
+[ext_resource type="PackedScene" uid="uid://dj1d6i6p2fxdx" path="res://freezer.tscn" id="66_wjnwv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -278,6 +279,67 @@ shader_parameter/time_speed = 0.1
 shader_parameter/resolution = Vector2(100, 2000)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ha7mg"]
+
+[sub_resource type="Animation" id="Animation_20rqs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ol4it"]
+resource_name = "new_animation"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3g3yf"]
+_data = {
+"RESET": SubResource("Animation_20rqs"),
+"new_animation": SubResource("Animation_ol4it")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjapy"]
 bg_color = Color(0.423529, 0, 0, 1)
@@ -1324,6 +1386,20 @@ grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_ha7mg")
 expand_mode = 1
 
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect2"]
+root_node = NodePath("../../ColorRect2")
+libraries = {
+"": SubResource("AnimationLibrary_3g3yf")
+}
+
 [node name="Main" type="Control" parent="CanvasLayer"]
 visible = false
 layout_mode = 3
@@ -1486,10 +1562,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 419.0
-offset_top = 152.0
-offset_right = 769.0
-offset_bottom = 502.0
+offset_left = -175.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_wpkks")
@@ -3184,6 +3260,15 @@ visible = false
 [node name="darel_timer" type="Timer" parent="EvilDarel"]
 wait_time = 80.0
 one_shot = true
+
+[node name="Freezer" parent="." instance=ExtResource("66_wjnwv")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -58.8009, -2.38419e-07, -213.653)
+
+[node name="Freezer2" parent="." instance=ExtResource("66_wjnwv")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -58.8009, -2.38419e-07, -212.045)
+
+[node name="Freezer3" parent="." instance=ExtResource("66_wjnwv")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -58.8009, -2.38419e-07, -210.288)
 
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]

@@ -99,7 +99,6 @@ var do_vertical_camera_normal = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	Allsingleton.is_bossfight = true
 	
 	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -196,6 +195,9 @@ var is_misuraca_disabled = false
 @onready var boss_bar = $CanvasLayer/Main/Bossbar/ProgressBar
 @onready var evil_darel = $EvilDarel
 @onready var previous_darel_health = evil_darel.health
+
+var leahy_p_timeout = 0
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
@@ -364,8 +366,14 @@ func _process(delta):
 						
 						if closest:
 							evil_leahy.update_target_location(closest)
+							leahy_p_timeout = 0
 						else:
-							evil_leahy.update_target_location(evil_leahy.global_position)
+							
+							leahy_p_timeout += delta
+							if leahy_p_timeout < 5:
+								evil_leahy.update_target_location(evil_leahy.global_position)
+							else:
+								evil_leahy.update_target_location(mr_azzu.global_position)
 					else:
 						# baja blast
 						
@@ -669,7 +677,7 @@ func on_collect_book(id,book_name,personal):
 			total_books = total
 			
 			if players_in_lobby > 1:
-				evil_leahy.SPEED += (leahy_speed_per_notebook * (players_in_lobby / 0.5))
+				evil_leahy.SPEED += (leahy_speed_per_notebook * (players_in_lobby / 2))
 			else:
 				evil_leahy.SPEED += leahy_speed_per_notebook
 			
@@ -920,7 +928,8 @@ func end_game(ending : String):
 			if id != 1:
 				set_singleton.rpc_id(id,players[id].deaths,players[id].books_collected,ending)
 		
-		await get_tree().create_timer(1).timeout
+		$CanvasLayer/ColorRect2/AnimationPlayer.play("new_animation")
+		await get_tree().create_timer(5).timeout
 		set_singleton(players[1].deaths,players[1].books_collected,ending)
 @rpc("authority","call_local")
 func set_singleton(deaths,books,ending):
@@ -946,7 +955,8 @@ func set_singleton(deaths,books,ending):
 					if Achievements.check_achievement("disoriented_ending"):
 						if Achievements.check_achievement("good_ending"):
 							if Achievements.check_achievement("bad_ending"):
-								can_bossfight = true
+								#can_bossfight = true
+								pass
 		
 		if !can_bossfight:
 			get_tree().change_scene_to_file("res://huh_ending.tscn")

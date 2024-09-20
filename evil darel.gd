@@ -264,15 +264,16 @@ func ray_attack():
 	ray1.queue_free()
 	ray2.queue_free()
 
-const ATTACKS = [
-	"ground_slam",
-	"clorox"
-]
+const ATTACKS = {
+	"ground_slam" : 100,
+	"clorox" : 25,
+	"lildarel" : 10
+}
 
 func _on_phase_2_attack_timeout():
 	if stunned: return
 	
-	var attack = ATTACKS.pick_random()
+	var attack = pick_random_weighted(ATTACKS)
 	
 	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
 	if !player: return
@@ -295,8 +296,36 @@ func _on_phase_2_attack_timeout():
 		clorox.start_timer(3)
 		clorox.auto_aim = true
 		clorox.auto_aim_node = self
+	elif attack == "lildarel":
 		
-
+		for i in range(0,5):
+			await get_tree().create_timer(0.1).timeout
+			
+			var darel = LIL_DAREL.instantiate()
+			
+			get_parent().add_child(darel)
+			
+			darel.global_position = global_position + Vector3(randf_range(-5,5),10,randf_range(-5,5))
+			
+		
+func pick_random_weighted(items_chances: Dictionary) -> Variant:
+	# Calculate the total weight
+	var total_weight = 0.0
+	for weight in items_chances.values():
+		total_weight += weight
+	
+	# Pick a random value within the range of total_weight
+	var random_value = randf() * total_weight
+	var cumulative_weight = 0.0
+	
+	# Iterate through the dictionary to find the item
+	for item in items_chances.keys():
+		cumulative_weight += items_chances[item]
+		if random_value <= cumulative_weight:
+			return item
+	
+	# Fallback in case of rounding errors
+	return items_chances.keys()[-1]
 
 func _on_phase_2_stun_timeout():
 	stunned = false

@@ -12,7 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var books_collected = 0
 
 var is_running = false
-var stamina = 75
+var stamina = 100
 var can_run = true
 var is_moving = false
 var can_move = true
@@ -48,79 +48,11 @@ var can_get_item = true
 
 var leahy_dst = 0
 
-# Voice chat (maybe)
-@onready var input = $Voice/input
-var effect : AudioEffectCapture
-var playback : AudioStreamGeneratorPlayback
-@export var outputPath : NodePath
-var inputThreshold = 0.08
-
-var receive_buffer := PackedFloat32Array()
 
 var credits = 0
 var can_use_shop = true
 
 @onready var controls_text = get_parent().controls_text
-
-func setup_voice(_id):
-	if is_multiplayer_authority():
-		$Voice/input.stream = AudioStreamMicrophone.new()
-		$Voice/input.play()
-		effect = AudioServer.get_bus_effect(5,4)
-		
-	get_node(outputPath).play()
-	playback = $Voice/AudioStreamPlayer.get_stream_playback()
-
-func processMic():
-	var stereoData : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
-	
-	if stereoData.size() > 0:
-		var data = PackedFloat32Array()
-		data.resize(stereoData.size())
-		var maxAmplitude := 0.0
-		
-		for i in range(stereoData.size()):
-			var value = (stereoData[i].x + stereoData[i].y) / 2
-			maxAmplitude = max(value,maxAmplitude)
-			data[i] = value
-		
-		if maxAmplitude < 0.1:
-			set_mouth(0)
-		elif maxAmplitude < 0.2:
-			set_mouth(1)
-		elif maxAmplitude < 0.3:
-			set_mouth(2)
-		elif maxAmplitude < 0.4:
-			set_mouth(3)
-		elif maxAmplitude > 0.5:
-			set_mouth(4)
-		else:
-			set_mouth(0)
-		
-		if maxAmplitude < inputThreshold:
-			return
-		
-
-		
-		send_voice_data.rpc(data)
-		#send_voice_data(data) #local test
-
-@rpc("any_peer","call_remote","unreliable_ordered")
-func send_voice_data(data:PackedFloat32Array):
-	receive_buffer.append_array(data)
-
-func process_voice():
-	playback = $Voice/AudioStreamPlayer.get_stream_playback()
-	
-	if receive_buffer.size() <= 0:
-		return
-	elif receive_buffer.size() >= 2048:
-		receive_buffer = receive_buffer.slice(0,2048)
-		#playback.clear_buffer()
-
-	for i in range(min(playback.get_frames_available(),receive_buffer.size())):
-		playback.push_frame(Vector2(receive_buffer[0],receive_buffer[0]))
-		receive_buffer.remove_at(0)
 
 var parent = null
 
@@ -152,7 +84,6 @@ func _ready():
 		
 		$visual_body.hide()
 		
-		setup_voice(name.to_int())
 		var skins = $visual_body.get_children()
 		for skin in skins:
 			skin.hide()
@@ -180,7 +111,8 @@ func _ready():
 		
 		# skip the book collect
 		if OS.has_feature("debug"):
-			parent.on_collect_book.rpc(name.to_int(), "book1",true)
+			#parent.on_collect_book.rpc(name.to_int(), "book1",true)
+			pass
 
 var is_freaky = false
 var can_use_breaker = true
@@ -192,7 +124,6 @@ var can_toilet_tp = true
 const push_force = 1.0
 
 func _physics_process(delta):
-	process_voice()
 	if is_multiplayer_authority():
 		
 		if global_position.distance_to(get_tree().get_first_node_in_group("evil darel").global_position) < 1:
@@ -256,14 +187,11 @@ func _physics_process(delta):
 		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor($"CanvasLayer/Control/Shop/shop timer".time_left)) + "s left"
 		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
-		# Voice chat
-		processMic()
-		inputThreshold = Settings.mic_threshold
 		
 		leahy_dst = global_position.distance_to(parent.get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			#parent.on_collect_book.rpc(name.to_int(), "book1",true)
+			parent.on_collect_book.rpc(name.to_int(), "book1",true)
 			pass
 
 		if parent.game_started:
@@ -589,6 +517,7 @@ var is_dead_of_dariel = false
 @rpc("any_peer","call_local")
 func die(cause):
 	if is_dead: return
+	
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
 	if cause == "mine":
@@ -1004,6 +933,8 @@ func _on_gamblebtn_3_pressed():
 
 # MOVEMENT
 
+var is_in_freezer = false
+
 func movement(delta):
 	
 	if global_position.y >= 3.727:
@@ -1033,6 +964,14 @@ func movement(delta):
 	else:
 		progress_bar.modulate = Color.RED
 	
+	if Input.is_action_just_pressed("jump"):
+		if is_in_freezer:
+			can_move = true
+			is_in_freezer = false
+			parent.set_player_dead.rpc(name.to_int(), false,false)
+			$CanvasLayer/Control/Freezer/AnimationPlayer.play("RESET")
+			$freezerDeath.stop()
+	
 	if parent.canPlayersMove:
 		if can_move and not is_suspended:
 			if can_cam_move:
@@ -1056,12 +995,14 @@ func movement(delta):
 					velocity.x = velocity.move_toward(Vector3.ZERO, SPEED).x
 					velocity.z = velocity.move_toward(Vector3.ZERO, SPEED).z
 					is_moving = false
-				
+					
 				move_and_slide()
 				
 				# Update is_moving based on actual movement
 				if velocity.length() < 0.1:
 					is_moving = false
+				
+				
 				
 				if Input.is_action_just_pressed("interact"):
 					if ray.get_collider() != null and get_cur_item() == -1:
@@ -1107,6 +1048,19 @@ func movement(delta):
 								pick_item(9)
 						if ray.get_collider().name == "wheel":
 							ray.get_collider().get_parent().spin.rpc()
+						if ray.get_collider().is_in_group("freezer"):
+							global_position.x = ray.get_collider().global_position.x
+							global_position.z = ray.get_collider().global_position.z
+							can_move = false
+							global_rotation.y = -ray.get_collider().global_rotation.y
+							parent.set_player_dead.rpc(name.to_int(), true,false)
+							is_in_freezer = true
+							$CanvasLayer/Control/Freezer/AnimationPlayer.play("freez")
+							
+							$freezerDeath.start()
+							
+								
+							
 						
 						if ray.get_collider().is_in_group("toilet"):
 							if !can_toilet_tp : return
@@ -1306,3 +1260,9 @@ func arm_sway(delta):
 
 func _on_voice_chat_toggled(toggled_on):
 	AudioServer.set_bus_mute(5,!toggled_on)
+
+func freezer_death():
+	if is_in_freezer:
+		die("freezer")
+		$CanvasLayer/Control/Freezer/AnimationPlayer.play("RESET")
+		$freezerDeath.stop()
