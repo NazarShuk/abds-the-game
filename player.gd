@@ -111,7 +111,6 @@ func _ready():
 		
 		# skip the book collect
 		if OS.has_feature("debug"):
-			#parent.on_collect_book.rpc(name.to_int(), "book1",true)
 			pass
 
 var is_freaky = false
@@ -191,7 +190,6 @@ func _physics_process(delta):
 		leahy_dst = global_position.distance_to(parent.get_node("EvilLeahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
-			parent.on_collect_book.rpc(name.to_int(), "book1",true)
 			pass
 
 		if parent.game_started:
