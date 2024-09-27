@@ -265,7 +265,6 @@ func ray_attack():
 	ray2.queue_free()
 
 const ATTACKS = {
-	"ground_slam" : 100,
 	"clorox" : 25,
 	"lildarel" : 10
 }
@@ -278,14 +277,7 @@ func _on_phase_2_attack_timeout():
 	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
 	if !player: return
 	
-	if attack == "ground_slam":
-		var sw = SHOCKWAVE.instantiate()
-		
-		get_parent().add_child(sw)
-		
-		sw.global_position = global_position
-		sw.global_position.y = 0
-	elif attack == "clorox":
+	if attack == "clorox":
 		var clorox = load("res://Clorox Wipes.tscn").instantiate()
 		
 		get_parent().add_child(clorox)

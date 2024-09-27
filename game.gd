@@ -99,6 +99,7 @@ var do_vertical_camera_normal = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
+	Allsingleton.is_bossfight = true
 	
 	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

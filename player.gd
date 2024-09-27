@@ -838,6 +838,8 @@ func control_text_setters():
 			final_text += "Wheel\n E - Spin"
 		elif looking_at.is_in_group("fence"):
 			final_text += "Wheel\n You need more notebooks to spin it!"
+		elif looking_at.is_in_group("freezer"):
+			final_text += "Freezer\n E - Get inside"
 	
 	var cur_item = get_cur_item()
 	if final_text != "":
