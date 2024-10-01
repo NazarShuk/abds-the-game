@@ -495,7 +495,7 @@ func spawn_clorox():
 
 	clorox.initial_pos = $RayCast3D.global_position
 	clorox.global_position = $RayCast3D.global_position
-	clorox.global_rotation = $RayCast3D.global_rotation
+	clorox.global_rotation = $"Camera target".global_rotation
 	clorox.launcher = name.to_int()
 	clorox.add_to_group("clorox_wipes")
 
@@ -947,6 +947,11 @@ func movement(delta):
 			if is_on_floor() and not is_dead:
 				if Input.is_action_just_pressed("jump"):
 					velocity.y += 5
+	else:
+		if Input.is_action_pressed("jump"):
+			$"Camera target".rotation_degrees.y = 180
+		else:
+			$"Camera target".rotation_degrees.y = 0
 	
 	if not is_on_floor() and not is_dead:
 		velocity.y -= gravity * delta

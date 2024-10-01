@@ -1,11 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://diy5vww1d7cf4"]
+[gd_scene load_steps=17 format=3 uid="uid://diy5vww1d7cf4"]
 
 [ext_resource type="Script" path="res://evil darel.gd" id="1_4ars2"]
+[ext_resource type="AudioStream" uid="uid://e6cbbc4tgc6e" path="res://dariel/scream1.mp3" id="2_4gq3x"]
 [ext_resource type="Texture2D" uid="uid://b38xixrxxfdw4" path="res://darel.png" id="2_yfc2a"]
+[ext_resource type="AudioStream" uid="uid://da865wfeobfjr" path="res://dariel/scream2.mp3" id="3_bn8h4"]
 [ext_resource type="AudioStream" uid="uid://ik0wsysbvlni" path="res://charge.mp3" id="3_ctbu8"]
+[ext_resource type="AudioStream" uid="uid://e562ot7tgwem" path="res://dariel/scream3.mp3" id="4_d2uyn"]
 [ext_resource type="AudioStream" uid="uid://dv1grhh8m3i8x" path="res://dariel/darel_speech.mp3" id="4_mpl4u"]
 [ext_resource type="AudioStream" uid="uid://pxp5ea00ppax" path="res://dariel/placeholders/versus_intro.mp3" id="5_0tq6d"]
 [ext_resource type="AudioStream" uid="uid://uxvu0fafr84l" path="res://explosion(1).wav" id="5_tdn62"]
+[ext_resource type="AudioStream" uid="uid://ctpu2rhkyw33a" path="res://dariel/scream4.mp3" id="5_upp6i"]
+[ext_resource type="AudioStream" uid="uid://3cmsksv07nqy" path="res://dariel/scream5.mp3" id="6_ej8id"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krjd7"]
 transparency = 1
@@ -26,6 +31,7 @@ size = Vector3(0.412964, 0.703186, 0.0615234)
 transform = Transform3D(120, 0, 0, 0, 120, 0, 0, 0, 120, 0, 0, 0)
 collision_layer = 4096
 script = ExtResource("1_4ars2")
+screams = Array[AudioStreamMP3]([ExtResource("2_4gq3x"), ExtResource("3_bn8h4"), ExtResource("4_d2uyn"), ExtResource("5_upp6i"), ExtResource("6_ej8id")])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -97,6 +103,10 @@ wait_time = 3.0
 
 [node name="phase 2 stun" type="Timer" parent="."]
 one_shot = true
+
+[node name="scream" type="AudioStreamPlayer3D" parent="."]
+volume_db = 15.0
+bus = &"Dialogs"
 
 [connection signal="timeout" from="lil darel timeout" to="." method="_on_lil_darel_timeout_timeout"]
 [connection signal="timeout" from="darel ball" to="." method="_on_darel_ball_timeout"]

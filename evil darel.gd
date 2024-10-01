@@ -9,6 +9,8 @@ const EXPLOSION = preload("res://explosion.tscn")
 const BIGGER_EXPLOSION = preload("res://bigger_explosion.tscn")
 const SHOCKWAVE = preload("res://shockwave.tscn")
 
+@export var screams : Array[AudioStreamMP3]
+
 @onready var nav_agent = $NavigationAgent3D
 var SPEED = 10
 
@@ -102,6 +104,11 @@ func cloroxes_damage():
 				stunned = true
 				$"phase 2 stun".start(2)
 				shake(2,50,1)
+				
+				var stream = screams.pick_random()
+				$scream.stream = stream
+				$scream.play()
+				
 		
 
 func transition_to_phase_2():
@@ -289,12 +296,11 @@ func _on_phase_2_attack_timeout():
 		clorox.auto_aim = true
 		clorox.auto_aim_node = self
 	elif attack == "lildarel":
-		
 		for i in range(0,5):
 			await get_tree().create_timer(0.1).timeout
 			
 			var darel = LIL_DAREL.instantiate()
-			
+			darel.SPEED = 5
 			get_parent().add_child(darel)
 			
 			darel.global_position = global_position + Vector3(randf_range(-5,5),10,randf_range(-5,5))
