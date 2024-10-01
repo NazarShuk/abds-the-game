@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://1khjygrnpih"]
 
 [ext_resource type="Texture2D" uid="uid://dob2ip0gck8mc" path="res://landmine.png" id="1_64ax1"]
-[ext_resource type="Script" path="res://hideble_object.gd" id="1_lxjq5"]
+[ext_resource type="Script" path="res://scripts/hideble_object.gd" id="1_lxjq5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yr1he"]
 albedo_color = Color(0, 1, 1, 1)

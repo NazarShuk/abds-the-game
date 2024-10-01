@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://nht2w38yjxk6"]
 
-[ext_resource type="Script" path="res://noescape.gd" id="1_5tvjs"]
+[ext_resource type="Script" path="res://scripts/noescape.gd" id="1_5tvjs"]
 [ext_resource type="VideoStream" path="res://lore.ogv" id="1_skrvp"]
 
 [node name="Noescape" type="Node2D"]

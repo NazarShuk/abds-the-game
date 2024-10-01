@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bg2ic00kw6fx5"]
 
-[ext_resource type="Script" path="res://darel ray.gd" id="1_b2x03"]
+[ext_resource type="Script" path="res://scripts/darel ray.gd" id="1_b2x03"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jy8mw"]
 transparency = 1

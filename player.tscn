@@ -1,6 +1,6 @@
 [gd_scene load_steps=124 format=3 uid="uid://dmiwtnuhovfv5"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_lrwcd"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_lrwcd"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="3_jix2i"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
@@ -35,7 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://byu0k4uhhrlcn" path="res://models/golden_ticket.png" id="26_bhd5m"]
 [ext_resource type="AudioStream" uid="uid://bkdgbgtv4tcoy" path="res://sounds/correct_new.mp3" id="27_xfgq1"]
 [ext_resource type="Texture2D" uid="uid://cb10q13033mpt" path="res://0b41253a4041ddb57004d633e4979430.jpg" id="28_k1c3m"]
-[ext_resource type="Script" path="res://Menu.gd" id="33_bayr0"]
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="33_bayr0"]
 [ext_resource type="Texture2D" uid="uid://bg7vk8gl360px" path="res://toggle_on.png" id="34_h7tin"]
 [ext_resource type="Texture2D" uid="uid://b731figcorc53" path="res://toggle_off.png" id="35_1030p"]
 [ext_resource type="Shader" uid="uid://cc4qj1rais5l1" path="res://player.tres" id="36_3gf6v"]

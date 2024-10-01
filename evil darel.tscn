@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://diy5vww1d7cf4"]
 
-[ext_resource type="Script" path="res://evil darel.gd" id="1_4ars2"]
+[ext_resource type="Script" path="res://scripts/evil darel.gd" id="1_4ars2"]
 [ext_resource type="AudioStream" uid="uid://e6cbbc4tgc6e" path="res://dariel/scream1.mp3" id="2_4gq3x"]
 [ext_resource type="Texture2D" uid="uid://b38xixrxxfdw4" path="res://darel.png" id="2_yfc2a"]
 [ext_resource type="AudioStream" uid="uid://da865wfeobfjr" path="res://dariel/scream2.mp3" id="3_bn8h4"]

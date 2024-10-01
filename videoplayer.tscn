@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://jrc22nnpwkws"]
 
-[ext_resource type="Script" path="res://videoplayer.gd" id="1_06eul"]
+[ext_resource type="Script" path="res://scripts/videoplayer.gd" id="1_06eul"]
 [ext_resource type="VideoStream" path="res://models/the j.mp3.ogv" id="1_bptja"]
 [ext_resource type="AudioStream" uid="uid://cvcy3v74vj542" path="res://models/the j.mp3.mp3" id="2_dskrk"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dpyou6w048r5m"]
 
-[ext_resource type="Script" path="res://azzu.gd" id="1_s00pa"]
+[ext_resource type="Script" path="res://scripts/azzu.gd" id="1_s00pa"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="2_q42rl"]
 [ext_resource type="AudioStream" uid="uid://bwlexvmpwptwm" path="res://download_01.mp3" id="3_r52kj"]
 

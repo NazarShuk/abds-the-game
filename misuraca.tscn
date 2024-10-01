@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://kfniphc0hjb6"]
 
-[ext_resource type="Script" path="res://misuraca.gd" id="1_il38w"]
+[ext_resource type="Script" path="res://scripts/misuraca.gd" id="1_il38w"]
 [ext_resource type="Texture2D" uid="uid://dbo74xllmx2vx" path="res://RAY_1063_crop-removebg-preview.png" id="2_td6or"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgjck"]

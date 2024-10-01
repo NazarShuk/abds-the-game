@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c7aceaiulp2j6"]
 
 [ext_resource type="Texture2D" uid="uid://jtxxltvntbtu" path="res://models/lil_darel.png" id="1_00po0"]
-[ext_resource type="Script" path="res://lil_darel.gd" id="1_8t21g"]
+[ext_resource type="Script" path="res://scripts/lil_darel.gd" id="1_8t21g"]
 [ext_resource type="AudioStream" uid="uid://ddqullgs6xhpe" path="res://screams.mp3" id="3_y6kxt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jx7ai"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://c176sfrtxowxt"]
 
-[ext_resource type="Script" path="res://puddle.gd" id="1_x4fni"]
+[ext_resource type="Script" path="res://scripts/puddle.gd" id="1_x4fni"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_don47"]
 height = 0.1

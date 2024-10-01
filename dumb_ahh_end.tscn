@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://5347rc0sng70"]
 
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="1_b6jhy"]
-[ext_resource type="Script" path="res://dumb_ahh_end.gd" id="1_pbf4d"]
+[ext_resource type="Script" path="res://scripts/dumb_ahh_end.gd" id="1_pbf4d"]
 [ext_resource type="AudioStream" uid="uid://dtoilsl48esgw" path="res://bee.mp3" id="3_oy3bo"]
 
 [sub_resource type="Animation" id="Animation_p2e0x"]

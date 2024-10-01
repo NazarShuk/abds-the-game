@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dabuuhhrl22km"]
 
-[ext_resource type="Script" path="res://fox.gd" id="1_7a5un"]
+[ext_resource type="Script" path="res://scripts/fox.gd" id="1_7a5un"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="2_e6wkd"]
 [ext_resource type="AudioStream" uid="uid://b7pm5d3uiydah" path="res://pacer.mp3" id="3_gj3ac"]
 

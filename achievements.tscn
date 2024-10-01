@@ -1,6 +1,6 @@
 [gd_scene load_steps=50 format=3 uid="uid://ci0ihc8o740fp"]
 
-[ext_resource type="Script" path="res://achievementiks.gd" id="1_stpc6"]
+[ext_resource type="Script" path="res://scripts/achievementiks.gd" id="1_stpc6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_un4ex"]
 [ext_resource type="AudioStream" uid="uid://oep1yjhjspd5" path="res://Meatball Parade_01.mp3" id="2_pdwv6"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="4_akldp"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=828 format=3 uid="uid://xxyguo1ps1gc"]
 
-[ext_resource type="Script" path="res://school.gd" id="1_ag1mx"]
+[ext_resource type="Script" path="res://scripts/school.gd" id="1_ag1mx"]
 [ext_resource type="Texture2D" uid="uid://dppqsqvhn47mm" path="res://pages-from-1262-m16_site-submittal_2017-06-08-page-0011.jpg" id="1_e4dum"]
 [ext_resource type="Texture2D" uid="uid://bs2hbw6eckr2j" path="res://floor.png" id="4_6b2yd"]
 [ext_resource type="PackedScene" uid="uid://40h3xkvclt2r" path="res://models/door.tscn" id="5_j3ox0"]

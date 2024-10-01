@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ca2gwi4pyu1lt"]
 
-[ext_resource type="Script" path="res://tutor.gd" id="1_cbg43"]
+[ext_resource type="Script" path="res://scripts/tutor.gd" id="1_cbg43"]
 [ext_resource type="VideoStream" path="res://tutor_mp4.ogv" id="2_f0jgr"]
 
 [node name="Tutor" type="Node2D"]

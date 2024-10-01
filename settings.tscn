@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b5rnn1lgesysr"]
 
 [ext_resource type="AudioStream" uid="uid://bypabovlsrkor" path="res://The Builder (128kbps)_01.mp3" id="1_3ydfj"]
-[ext_resource type="Script" path="res://settings.gd" id="1_3yio5"]
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_3yio5"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_rc34d"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="4_u1oj5"]
 [ext_resource type="Texture2D" uid="uid://bg7vk8gl360px" path="res://toggle_on.png" id="5_5i7pj"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://btr7o125j5p5n"]
 
-[ext_resource type="Script" path="res://end.gd" id="1_4latu"]
+[ext_resource type="Script" path="res://scripts/end.gd" id="1_4latu"]
 [ext_resource type="VideoStream" path="res://impossible.ogv" id="2_b6m4b"]
 [ext_resource type="AudioStream" uid="uid://svkm1tu1alt6" path="res://impossible.mp3" id="3_he2hm"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="4_58vmn"]

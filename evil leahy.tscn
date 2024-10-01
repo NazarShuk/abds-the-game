@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bylupyln8p7m8"]
 
-[ext_resource type="Script" path="res://evil leahy.gd" id="1_o0g30"]
+[ext_resource type="Script" path="res://scripts/evil leahy.gd" id="1_o0g30"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmd6h"]

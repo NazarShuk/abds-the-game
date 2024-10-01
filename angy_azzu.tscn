@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cjcij6cpnj6bg"]
 
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="1_4aop6"]
-[ext_resource type="Script" path="res://angy_azzu.gd" id="1_rxmu0"]
+[ext_resource type="Script" path="res://scripts/angy_azzu.gd" id="1_rxmu0"]
 [ext_resource type="Texture2D" uid="uid://b87kxq485sc1x" path="res://8ql00u.jpg" id="2_nr8t0"]
 [ext_resource type="AudioStream" uid="uid://dg8cia14qd4vc" path="res://touch.mp3" id="3_4ot6e"]
 

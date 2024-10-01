@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://btj7odxogilms"]
 
-[ext_resource type="Script" path="res://Vending Machine.gd" id="1_033me"]
+[ext_resource type="Script" path="res://scripts/Vending Machine.gd" id="1_033me"]
 [ext_resource type="Texture2D" uid="uid://dcouwnrkmlr4s" path="res://vending machine.png" id="1_asg5w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_boo68"]

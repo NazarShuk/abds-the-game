@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cx7itjqsyc1xu"]
 
-[ext_resource type="Script" path="res://breaker.gd" id="1_m5dcq"]
+[ext_resource type="Script" path="res://scripts/breaker.gd" id="1_m5dcq"]
 [ext_resource type="AudioStream" uid="uid://i2dkw33jamoi" path="res://breaker.mp3" id="2_blw3u"]
 [ext_resource type="PackedScene" uid="uid://dpwcylt8vvrkv" path="res://models/3d/Fuse Box.glb" id="3_knyfq"]
 
