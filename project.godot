@@ -37,6 +37,7 @@ Achievements="*res://scripts/Achievements.gd"
 LiveSplit="*res://scripts/LiveSplit.gd"
 Idk="*res://scripts/idk.gd"
 Leaderboard="*res://scripts/Leaderboard.gd"
+TipManager="*res://scripts/tips_controller.gd"
 
 [debug]
 

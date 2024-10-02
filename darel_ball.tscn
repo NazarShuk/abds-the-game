@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://koabukarf3pg"]
 
 [ext_resource type="Texture2D" uid="uid://jtxxltvntbtu" path="res://models/lil_darel.png" id="1_6w7n4"]
-[ext_resource type="Script" path="res://scripts/darel_ball.gd" id="1_634cm"]
+[ext_resource type="Script" path="res://scripts/darel_ball.gd" id="1_xhl4f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qiph7"]
 radius = 1.12845
@@ -23,7 +23,7 @@ radius = 1.0
 height = 2.0
 
 [node name="DarelBall" type="RigidBody3D" groups=["darel_ball"]]
-script = ExtResource("1_634cm")
+script = ExtResource("1_xhl4f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_qiph7")

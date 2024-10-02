@@ -1,4 +1,4 @@
-[gd_scene load_steps=160 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=159 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
@@ -65,7 +65,6 @@
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="57_tmkqp"]
 [ext_resource type="PackedScene" uid="uid://tnochmf7dcl8" path="res://models/3d/Wooden fence.glb" id="61_hs1ei"]
 [ext_resource type="PackedScene" uid="uid://diy5vww1d7cf4" path="res://evil darel.tscn" id="65_a2gyi"]
-[ext_resource type="PackedScene" uid="uid://dj1d6i6p2fxdx" path="res://freezer.tscn" id="66_wjnwv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -1562,10 +1561,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 419.0
-offset_top = 152.0
-offset_right = 769.0
-offset_bottom = 502.0
+offset_left = -175.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_wpkks")
@@ -2533,401 +2532,7 @@ autoplay = true
 max_distance = 10.0
 bus = &"Dialogs"
 
-[node name="BookSpawns" type="Node" parent="."]
-
-[node name="Book Spawn" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.606, 1.27832, -34.7769)
-
-[node name="Book Spawn2" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.7622, 1.27832, -34.6517)
-
-[node name="Book Spawn3" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.1722, 1.27832, -34.4013)
-
-[node name="Book Spawn4" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.3369, 1.27832, -34.7769)
-
-[node name="Book Spawn5" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.503, 1.27832, -44.4184)
-
-[node name="Book Spawn6" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.2065, 1.27832, -44.0428)
-
-[node name="Book Spawn7" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.6919, 1.27832, -55.1869)
-
-[node name="Book Spawn8" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.0178, 1.27832, -55.3121)
-
-[node name="Book Spawn9" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.45852, 1.27832, -56.5643)
-
-[node name="Book Spawn12" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93257, 1.27832, -118.42)
-
-[node name="Book Spawn13" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1069, 1.27832, -126.184)
-
-[node name="Book Spawn14" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.6559, 1.27832, -126.935)
-
-[node name="Book Spawn15" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.4501, 1.27832, -126.184)
-
-[node name="Book Spawn16" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.0865, 1.27832, -145.842)
-
-[node name="Book Spawn17" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4604, 1.27832, -166.628)
-
-[node name="Book Spawn18" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.6131, 1.27832, -168.757)
-
-[node name="Book Spawn19" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.2358, 1.27832, -141.71)
-
-[node name="Book Spawn20" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10502, 1.27832, -143.564)
-
-[node name="Book Spawn21" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.03207, 1.27832, -183.891)
-
-[node name="Book Spawn22" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.95913, 1.27832, -227.231)
-
-[node name="Book Spawn23" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.7625, 1.27832, -223.059)
-
-[node name="Book Spawn24" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92.7847, 1.27832, -225.609)
-
-[node name="Book Spawn25" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.9564, 1.27832, -197.334)
-
-[node name="Book Spawn26" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.4199, 1.27832, -157.47)
-
-[node name="Book Spawn27" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.0035, 1.27832, -126.414)
-
-[node name="Book Spawn28" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.346, 1.27832, -124.096)
-
-[node name="Book Spawn29" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.4836, 1.27832, -160.251)
-
-[node name="Book Spawn30" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.7754, 1.27832, -195.016)
-
-[node name="Book Spawn31" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.8113, 1.27832, -83.3955)
-
-[node name="Book Spawn32" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5609, 1.27832, -41.4485)
-
-[node name="Book Spawn33" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.5901, 1.27832, -55.2222)
-
-[node name="Book Spawn34" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124.913, 1.27832, -54.9717)
-
-[node name="Book Spawn35" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.944, 1.27832, -44.078)
-
-[node name="Book Spawn36" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.9436, 1.27832, -34.078)
-
-[node name="Book Spawn37" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.2241, 1.27832, -87.9513)
-
-[node name="Book Spawn43" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4897, 1.27832, -160.75)
-
-[node name="Book Spawn44" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3525, 1.27832, -184.546)
-
-[node name="Book Spawn45" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0713, 1.27832, -75.3781)
-
-[node name="Book Spawn38" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.979, 1.27832, -106.6)
-
-[node name="Book Spawn39" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.511, 1.27832, -169.662)
-
-[node name="Book Spawn40" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1963, 1.27832, -15.1114)
-
-[node name="Book Spawn42" parent="BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3338, 1.27832, -18.802)
-
-[node name="LandMineSpawns" type="Node" parent="."]
-
-[node name="LandMine Spawn" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13273, 1.27832, -33.4708)
-
-[node name="LandMine Spawn2" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39368, 1.27832, -61.3339)
-
-[node name="LandMine Spawn3" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1611, 1.27832, -95.5918)
-
-[node name="LandMine Spawn4" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.9247, 1.27832, -108.686)
-
-[node name="LandMine Spawn5" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8436, 1.27832, -111.122)
-
-[node name="LandMine Spawn6" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.9622, 1.27832, -87.0654)
-
-[node name="LandMine Spawn7" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.2306, 1.27832, -126.932)
-
-[node name="LandMine Spawn8" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.1057, 1.27832, -126.448)
-
-[node name="LandMine Spawn9" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3002, 1.27832, -120.408)
-
-[node name="LandMine Spawn10" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.4819, 1.27832, -128.381)
-
-[node name="LandMine Spawn11" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.3545, 1.27832, -106.878)
-
-[node name="LandMine Spawn12" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6632, 1.27832, -74.0183)
-
-[node name="LandMine Spawn13" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8042, 1.27832, -48.6489)
-
-[node name="LandMine Spawn14" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.8844, 1.27832, -33.6688)
-
-[node name="LandMine Spawn15" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.227, 1.27832, -33.9105)
-
-[node name="LandMine Spawn16" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.2742, 1.27832, -34.1521)
-
-[node name="LandMine Spawn17" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.6568, 1.27832, -55.6557)
-
-[node name="LandMine Spawn18" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.59, 1.27832, -54.4476)
-
-[node name="LandMine Spawn19" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.174, 1.27832, -44.5415)
-
-[node name="LandMine Spawn20" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.0396, 1.27832, -35.0088)
-
-[node name="LandMine Spawn21" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.2654, 1.27832, -55.389)
-
-[node name="LandMine Spawn22" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3347, 1.27832, -34.0227)
-
-[node name="LandMine Spawn23" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.3366, 1.27832, -38.2959)
-
-[node name="LandMine Spawn24" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.6138, 1.27832, -126.72)
-
-[node name="LandMine Spawn25" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.681, 1.27832, -138.075)
-
-[node name="LandMine Spawn26" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107.99, 1.27832, -178.666)
-
-[node name="LandMine Spawn27" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.6474, 1.27832, -182.291)
-
-[node name="LandMine Spawn28" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.53471, 1.27832, -201.378)
-
-[node name="LandMine Spawn29" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.05146, 1.27832, -150.156)
-
-[node name="LandMine Spawn30" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.7296, 1.27832, -222.882)
-
-[node name="LandMine Spawn31" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.8777, 1.27832, -224.331)
-
-[node name="LandMine Spawn32" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.858, 1.27832, -223.606)
-
-[node name="LandMine Spawn33" parent="LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.1733, 1.27832, -170.21)
-
-[node name="PlayerSpawns" type="Node" parent="."]
-
-[node name="PlayerSpawn" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.30137, 0, -48.4325)
-
-[node name="PlayerSpawn2" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.97046, 0, -103.698)
-
-[node name="PlayerSpawn3" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7771, 0, -127.028)
-
-[node name="PlayerSpawn4" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.9201, 0, -137.618)
-
-[node name="PlayerSpawn5" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.4223, 0, -177.238)
-
-[node name="PlayerSpawn6" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.82187, 0, -188.718)
-
-[node name="PlayerSpawn7" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.1476, 0, -223.161)
-
-[node name="PlayerSpawn8" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.4167, 0, -208.528)
-
-[node name="PlayerSpawn9" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.2912, 0, -127.263)
-
-[node name="PlayerSpawn10" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.2776, 0, -34.066)
-
-[node name="PlayerSpawn11" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.978, 0, -78.8634)
-
-[node name="PlayerSpawn12" parent="PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.7667, 0, -172.886)
-
-[node name="LeahyPenaltyPos" type="Node" parent="."]
-
-[node name="LeahyRespawnPos" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7587, 0.846554, -34.7027)
-
-[node name="LeahyRespawnPos2" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.946, 0.846554, -54.8791)
-
-[node name="LeahyRespawnPos3" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.7563, 0.846554, -34.5725)
-
-[node name="LeahyRespawnPos4" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75003, 0.846554, -64.5016)
-
-[node name="LeahyRespawnPos5" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.21874, 0.846554, -125.245)
-
-[node name="LeahyRespawnPos6" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.0975, 0.846554, -125.777)
-
-[node name="LeahyRespawnPos7" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.2663, 0.846554, -158.008)
-
-[node name="LeahyRespawnPos8" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5013, 0.846554, -155.599)
-
-[node name="LeahyRespawnPos9" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.19352, 0.846554, -176.801)
-
-[node name="LeahyRespawnPos10" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15727, 0.846554, -220.892)
-
-[node name="LeahyRespawnPos11" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1573, 0.846554, -219.892)
-
-[node name="LeahyRespawnPos12" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.4533, 0.846554, -222.783)
-
-[node name="LeahyRespawnPos13" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.7305, 0.846554, -187.607)
-
-[node name="LeahyRespawnPos14" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.4895, 0.846554, -141.588)
-
-[node name="LeahyRespawnPos15" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.0953, 0.846554, -92.9189)
-
-[node name="LeahyRespawnPos16" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.3556, 0.846554, -56.0807)
-
-[node name="LeahyRespawnPos17" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.439, 0.846554, -54.7142)
-
-[node name="LeahyRespawnPos18" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.967, 0.846554, -55.3215)
-
-[node name="LeahyRespawnPos19" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.69, 0.846554, -34.8244)
-
-[node name="LeahyRespawnPos20" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102.69, 0.846554, -33.8244)
-
-[node name="LeahyRespawnPos21" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.7691, 0.846554, -34.4317)
-
-[node name="LeahyRespawnPos22" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.30357, 0.846554, -38.5312)
-
-[node name="LeahyRespawnPos23" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6193, 0.846554, -96.5968)
-
-[node name="LeahyRespawnPos24" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.0007, 0.846554, -104.307)
-
-[node name="LeahyRespawnPos25" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5982, 0.846554, -108.403)
-
-[node name="LeahyRespawnPos26" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3843, 0.846554, -87.6822)
-
-[node name="LeahyRespawnPos27" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.0709, 0.846554, -68.6482)
-
-[node name="LeahyRespawnPos28" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.774, 0.846554, -90.0915)
-
-[node name="LeahyRespawnPos29" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.109, 0.846554, -107.921)
-
-[node name="LeahyRespawnPos30" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.275, 0.846554, -123.1)
-
-[node name="LeahyRespawnPos31" parent="LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.761, 0.846554, -178.274)
-
-[node name="Bathroom spawns" type="Node" parent="."]
-
-[node name="Bathroom spawn" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.2967, 0, -41.1336)
-
-[node name="Bathroom spawn5" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8249, 0, -138.525)
-
-[node name="Bathroom spawn6" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2333, 0, -138.691)
-
-[node name="Bathroom spawn7" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.0083, 0, -144.785)
-
-[node name="Bathroom spawn8" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.2159, 0, -145.322)
-
-[node name="Bathroom spawn9" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.2167, 0, -240.212)
-
-[node name="Bathroom spawn10" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 103.81, 0, -239.632)
-
-[node name="Bathroom spawn2" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.4932, 0, -48.7337)
-
-[node name="Bathroom spawn3" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -40.3144)
-
-[node name="Bathroom spawn4" parent="Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -49.0816)
-
-[node name="Pacer" type="Node" parent="."]
+[node name="Pacer" type="Node3D" parent="."]
 
 [node name="Pacer target" type="Area3D" parent="Pacer" groups=["pacer target"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8435, 0, -177.237)
@@ -2955,6 +2560,405 @@ surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
 
 [node name="School" parent="." instance=ExtResource("17_3oefh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 24.5635, 0, -137.18)
+
+[node name="BookSpawns" type="Node3D" parent="School"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
+
+[node name="Book Spawn" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.606, 1.27832, -34.7769)
+
+[node name="Book Spawn2" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.7622, 1.27832, -34.6517)
+
+[node name="Book Spawn3" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.1722, 1.27832, -34.4013)
+
+[node name="Book Spawn4" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.3369, 1.27832, -34.7769)
+
+[node name="Book Spawn5" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.503, 1.27832, -44.4184)
+
+[node name="Book Spawn6" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.2065, 1.27832, -44.0428)
+
+[node name="Book Spawn7" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.6919, 1.27832, -55.1869)
+
+[node name="Book Spawn8" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.0178, 1.27832, -55.3121)
+
+[node name="Book Spawn9" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.45852, 1.27832, -56.5643)
+
+[node name="Book Spawn12" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93257, 1.27832, -118.42)
+
+[node name="Book Spawn13" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1069, 1.27832, -126.184)
+
+[node name="Book Spawn14" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.6559, 1.27832, -126.935)
+
+[node name="Book Spawn15" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.4501, 1.27832, -126.184)
+
+[node name="Book Spawn16" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.0865, 1.27832, -145.842)
+
+[node name="Book Spawn17" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4604, 1.27832, -166.628)
+
+[node name="Book Spawn18" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.6131, 1.27832, -168.757)
+
+[node name="Book Spawn19" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.2358, 1.27832, -141.71)
+
+[node name="Book Spawn20" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10502, 1.27832, -143.564)
+
+[node name="Book Spawn21" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.03207, 1.27832, -183.891)
+
+[node name="Book Spawn22" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.95913, 1.27832, -227.231)
+
+[node name="Book Spawn23" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.7625, 1.27832, -223.059)
+
+[node name="Book Spawn24" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92.7847, 1.27832, -225.609)
+
+[node name="Book Spawn25" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.9564, 1.27832, -197.334)
+
+[node name="Book Spawn26" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.4199, 1.27832, -157.47)
+
+[node name="Book Spawn27" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.0035, 1.27832, -126.414)
+
+[node name="Book Spawn28" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.346, 1.27832, -124.096)
+
+[node name="Book Spawn29" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.4836, 1.27832, -160.251)
+
+[node name="Book Spawn30" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.7754, 1.27832, -195.016)
+
+[node name="Book Spawn31" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.8113, 1.27832, -83.3955)
+
+[node name="Book Spawn32" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5609, 1.27832, -41.4485)
+
+[node name="Book Spawn33" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.5901, 1.27832, -55.2222)
+
+[node name="Book Spawn34" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124.913, 1.27832, -54.9717)
+
+[node name="Book Spawn35" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.944, 1.27832, -44.078)
+
+[node name="Book Spawn36" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.9436, 1.27832, -34.078)
+
+[node name="Book Spawn37" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.2241, 1.27832, -87.9513)
+
+[node name="Book Spawn43" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4897, 1.27832, -160.75)
+
+[node name="Book Spawn44" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3525, 1.27832, -184.546)
+
+[node name="Book Spawn45" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0713, 1.27832, -75.3781)
+
+[node name="Book Spawn38" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.979, 1.27832, -106.6)
+
+[node name="Book Spawn39" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.511, 1.27832, -169.662)
+
+[node name="Book Spawn40" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1963, 1.27832, -15.1114)
+
+[node name="Book Spawn42" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3338, 1.27832, -18.802)
+
+[node name="LandMineSpawns" type="Node3D" parent="School"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
+
+[node name="LandMine Spawn" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13273, 1.27832, -33.4708)
+
+[node name="LandMine Spawn2" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39368, 1.27832, -61.3339)
+
+[node name="LandMine Spawn3" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1611, 1.27832, -95.5918)
+
+[node name="LandMine Spawn4" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.9247, 1.27832, -108.686)
+
+[node name="LandMine Spawn5" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8436, 1.27832, -111.122)
+
+[node name="LandMine Spawn6" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.9622, 1.27832, -87.0654)
+
+[node name="LandMine Spawn7" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.2306, 1.27832, -126.932)
+
+[node name="LandMine Spawn8" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.1057, 1.27832, -126.448)
+
+[node name="LandMine Spawn9" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3002, 1.27832, -120.408)
+
+[node name="LandMine Spawn10" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.4819, 1.27832, -128.381)
+
+[node name="LandMine Spawn11" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.3545, 1.27832, -106.878)
+
+[node name="LandMine Spawn12" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6632, 1.27832, -74.0183)
+
+[node name="LandMine Spawn13" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8042, 1.27832, -48.6489)
+
+[node name="LandMine Spawn14" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.8844, 1.27832, -33.6688)
+
+[node name="LandMine Spawn15" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.227, 1.27832, -33.9105)
+
+[node name="LandMine Spawn16" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.2742, 1.27832, -34.1521)
+
+[node name="LandMine Spawn17" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.6568, 1.27832, -55.6557)
+
+[node name="LandMine Spawn18" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.59, 1.27832, -54.4476)
+
+[node name="LandMine Spawn19" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.174, 1.27832, -44.5415)
+
+[node name="LandMine Spawn20" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.0396, 1.27832, -35.0088)
+
+[node name="LandMine Spawn21" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.2654, 1.27832, -55.389)
+
+[node name="LandMine Spawn22" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3347, 1.27832, -34.0227)
+
+[node name="LandMine Spawn23" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.3366, 1.27832, -38.2959)
+
+[node name="LandMine Spawn24" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.6138, 1.27832, -126.72)
+
+[node name="LandMine Spawn25" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.681, 1.27832, -138.075)
+
+[node name="LandMine Spawn26" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107.99, 1.27832, -178.666)
+
+[node name="LandMine Spawn27" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.6474, 1.27832, -182.291)
+
+[node name="LandMine Spawn28" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.53471, 1.27832, -201.378)
+
+[node name="LandMine Spawn29" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.05146, 1.27832, -150.156)
+
+[node name="LandMine Spawn30" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.7296, 1.27832, -222.882)
+
+[node name="LandMine Spawn31" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.8777, 1.27832, -224.331)
+
+[node name="LandMine Spawn32" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.858, 1.27832, -223.606)
+
+[node name="LandMine Spawn33" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.1733, 1.27832, -170.21)
+
+[node name="PlayerSpawns" type="Node3D" parent="School"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
+
+[node name="PlayerSpawn" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.30137, 0, -48.4325)
+
+[node name="PlayerSpawn2" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.97046, 0, -103.698)
+
+[node name="PlayerSpawn3" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7771, 0, -127.028)
+
+[node name="PlayerSpawn4" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.9201, 0, -137.618)
+
+[node name="PlayerSpawn5" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.4223, 0, -177.238)
+
+[node name="PlayerSpawn6" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.82187, 0, -188.718)
+
+[node name="PlayerSpawn7" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.1476, 0, -223.161)
+
+[node name="PlayerSpawn8" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.4167, 0, -208.528)
+
+[node name="PlayerSpawn9" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.2912, 0, -127.263)
+
+[node name="PlayerSpawn10" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.2776, 0, -34.066)
+
+[node name="PlayerSpawn11" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.978, 0, -78.8634)
+
+[node name="PlayerSpawn12" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.7667, 0, -172.886)
+
+[node name="LeahyPenaltyPos" type="Node3D" parent="School"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
+
+[node name="LeahyRespawnPos" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7587, 0.846554, -34.7027)
+
+[node name="LeahyRespawnPos2" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.946, 0.846554, -54.8791)
+
+[node name="LeahyRespawnPos3" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.7563, 0.846554, -34.5725)
+
+[node name="LeahyRespawnPos4" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75003, 0.846554, -64.5016)
+
+[node name="LeahyRespawnPos5" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.21874, 0.846554, -125.245)
+
+[node name="LeahyRespawnPos6" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.0975, 0.846554, -125.777)
+
+[node name="LeahyRespawnPos7" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.2663, 0.846554, -158.008)
+
+[node name="LeahyRespawnPos8" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5013, 0.846554, -155.599)
+
+[node name="LeahyRespawnPos9" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.19352, 0.846554, -176.801)
+
+[node name="LeahyRespawnPos10" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15727, 0.846554, -220.892)
+
+[node name="LeahyRespawnPos11" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1573, 0.846554, -219.892)
+
+[node name="LeahyRespawnPos12" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.4533, 0.846554, -222.783)
+
+[node name="LeahyRespawnPos13" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.7305, 0.846554, -187.607)
+
+[node name="LeahyRespawnPos14" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.4895, 0.846554, -141.588)
+
+[node name="LeahyRespawnPos15" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.0953, 0.846554, -92.9189)
+
+[node name="LeahyRespawnPos16" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.3556, 0.846554, -56.0807)
+
+[node name="LeahyRespawnPos17" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.439, 0.846554, -54.7142)
+
+[node name="LeahyRespawnPos18" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.967, 0.846554, -55.3215)
+
+[node name="LeahyRespawnPos19" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.69, 0.846554, -34.8244)
+
+[node name="LeahyRespawnPos20" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102.69, 0.846554, -33.8244)
+
+[node name="LeahyRespawnPos21" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.7691, 0.846554, -34.4317)
+
+[node name="LeahyRespawnPos22" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.30357, 0.846554, -38.5312)
+
+[node name="LeahyRespawnPos23" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6193, 0.846554, -96.5968)
+
+[node name="LeahyRespawnPos24" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.0007, 0.846554, -104.307)
+
+[node name="LeahyRespawnPos25" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5982, 0.846554, -108.403)
+
+[node name="LeahyRespawnPos26" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3843, 0.846554, -87.6822)
+
+[node name="LeahyRespawnPos27" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.0709, 0.846554, -68.6482)
+
+[node name="LeahyRespawnPos28" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.774, 0.846554, -90.0915)
+
+[node name="LeahyRespawnPos29" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.109, 0.846554, -107.921)
+
+[node name="LeahyRespawnPos30" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.275, 0.846554, -123.1)
+
+[node name="LeahyRespawnPos31" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.761, 0.846554, -178.274)
+
+[node name="Bathroom spawns" type="Node3D" parent="School"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
+
+[node name="Bathroom spawn" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.2967, 0, -41.1336)
+
+[node name="Bathroom spawn5" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8249, 0, -138.525)
+
+[node name="Bathroom spawn6" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2333, 0, -138.691)
+
+[node name="Bathroom spawn7" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.0083, 0, -144.785)
+
+[node name="Bathroom spawn8" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.2159, 0, -145.322)
+
+[node name="Bathroom spawn9" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.2167, 0, -240.212)
+
+[node name="Bathroom spawn10" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 103.81, 0, -239.632)
+
+[node name="Bathroom spawn2" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.4932, 0, -48.7337)
+
+[node name="Bathroom spawn3" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -40.3144)
+
+[node name="Bathroom spawn4" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -49.0816)
 
 [node name="Mr Fox" parent="." instance=ExtResource("20_kw6s4")]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 1.24168, -174.032)
@@ -3115,7 +3119,7 @@ far = 141.72
 [node name="Camera3D2" type="Node3D" parent="pre_start_game_anim/Camera3D"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 2.98023e-08, 2.98023e-08, 0, 1, 0, 0, 0)
 
-[node name="Carpool" type="Node" parent="."]
+[node name="Carpool" type="Node3D" parent="."]
 
 [node name="Path3D" type="Path3D" parent="Carpool"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.677, 16.609)
@@ -3260,15 +3264,6 @@ visible = false
 [node name="darel_timer" type="Timer" parent="EvilDarel"]
 wait_time = 80.0
 one_shot = true
-
-[node name="Freezer" parent="." instance=ExtResource("66_wjnwv")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -58.8009, -2.38419e-07, -213.653)
-
-[node name="Freezer2" parent="." instance=ExtResource("66_wjnwv")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -58.8009, -2.38419e-07, -212.045)
-
-[node name="Freezer3" parent="." instance=ExtResource("66_wjnwv")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -58.8009, -2.38419e-07, -210.288)
 
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]

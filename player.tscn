@@ -1,6 +1,6 @@
-[gd_scene load_steps=124 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=129 format=3 uid="uid://dmiwtnuhovfv5"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_lrwcd"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="3_jix2i"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
@@ -35,7 +35,6 @@
 [ext_resource type="Texture2D" uid="uid://byu0k4uhhrlcn" path="res://models/golden_ticket.png" id="26_bhd5m"]
 [ext_resource type="AudioStream" uid="uid://bkdgbgtv4tcoy" path="res://sounds/correct_new.mp3" id="27_xfgq1"]
 [ext_resource type="Texture2D" uid="uid://cb10q13033mpt" path="res://0b41253a4041ddb57004d633e4979430.jpg" id="28_k1c3m"]
-[ext_resource type="Script" path="res://scripts/Menu.gd" id="33_bayr0"]
 [ext_resource type="Texture2D" uid="uid://bg7vk8gl360px" path="res://toggle_on.png" id="34_h7tin"]
 [ext_resource type="Texture2D" uid="uid://b731figcorc53" path="res://toggle_off.png" id="35_1030p"]
 [ext_resource type="Shader" uid="uid://cc4qj1rais5l1" path="res://player.tres" id="36_3gf6v"]
@@ -51,6 +50,9 @@
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="44_aekf8"]
 [ext_resource type="PackedScene" uid="uid://du3qk3pgny2hf" path="res://models/3d/mtndewfinal.glb" id="44_jqyrq"]
 [ext_resource type="AudioStream" uid="uid://bdxoptn6hof48" path="res://darel_death.mp3" id="44_yuw5a"]
+[ext_resource type="Script" path="res://scripts/Tip.gd" id="45_6blne"]
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="45_ndhl0"]
+[ext_resource type="AudioStream" uid="uid://10f2ypovtuab" path="res://sounds/whoosh.mp3" id="46_6m3r2"]
 [ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="47_f82oh"]
 [ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
 [ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
@@ -415,9 +417,6 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4sv6d"]
 bg_color = Color(1, 1, 1, 0)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
-viewport_path = NodePath("Minimap")
-
 [sub_resource type="Animation" id="Animation_w14s4"]
 length = 0.001
 tracks/0/type = "value"
@@ -555,6 +554,70 @@ _data = {
 "RESET": SubResource("Animation_kon6j"),
 "textfadein": SubResource("Animation_jhcll")
 }
+
+[sub_resource type="Animation" id="Animation_bgcx7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_nsk8q"]
+resource_name = "popup"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2b5lc"]
+_data = {
+"RESET": SubResource("Animation_bgcx7"),
+"popup": SubResource("Animation_nsk8q")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
+viewport_path = NodePath("Minimap")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_hkfs2"]
 
@@ -703,7 +766,7 @@ _data = {
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 7
 collision_mask = 7
-script = ExtResource("1_lrwcd")
+script = ExtResource("1_la8in")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43934, -0.0894957)
@@ -1061,7 +1124,6 @@ one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
-visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -1890,47 +1952,6 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 26
 text = "TAKE THE BET"
 
-[node name="Minimap" type="ColorRect" parent="CanvasLayer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -351.0
-offset_top = -202.0
-offset_right = 351.0
-offset_bottom = 202.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Minimap"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 38.0
-offset_top = 33.0
-offset_right = -38.0
-offset_bottom = -33.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_tk2de")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/Minimap"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 33.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_l1x2u")
-theme_override_font_sizes/font_size = 21
-text = "the minimap"
-horizontal_alignment = 1
-
 [node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -2144,6 +2165,96 @@ libraries = {
 "": SubResource("AnimationLibrary_qaqna")
 }
 
+[node name="Tip" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -348.0
+offset_top = -238.0
+offset_right = 348.0
+offset_bottom = -126.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.501961)
+script = ExtResource("45_6blne")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Tip"]
+libraries = {
+"": SubResource("AnimationLibrary_2b5lc")
+}
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/Control/Tip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 11.0
+offset_right = -18.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+bbcode_enabled = true
+fit_content = true
+shortcut_keys_enabled = false
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Control/Tip"]
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Tip"]
+stream = ExtResource("46_6m3r2")
+bus = &"Dialogs"
+
+[node name="Minimap" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -351.0
+offset_top = -202.0
+offset_right = 351.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Minimap"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = 33.0
+offset_right = -38.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_tk2de")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Minimap"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 33.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 21
+text = "the minimap"
+horizontal_alignment = 1
+
 [node name="parry" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -2165,7 +2276,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(20, 20)
 color = Color(0, 0, 0, 0.556863)
-script = ExtResource("33_bayr0")
+script = ExtResource("45_ndhl0")
 
 [node name="Main" type="ColorRect" parent="CanvasLayer/Control/Menu"]
 layout_mode = 1
@@ -2417,6 +2528,7 @@ bus = &"Dialogs"
 [connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn1" to="." method="_on_gamblebtn_1_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn2" to="." method="_on_gamblebtn_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn3" to="." method="_on_gamblebtn_3_pressed"]
+[connection signal="timeout" from="CanvasLayer/Control/Tip/Timer" to="CanvasLayer/Control/Tip" method="_on_timer_timeout"]
 [connection signal="gui_input" from="CanvasLayer/Control/Minimap/TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]
