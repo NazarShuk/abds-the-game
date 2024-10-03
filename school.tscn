@@ -2434,6 +2434,7 @@ uv1_world_triplanar = true
 
 [node name="School" type="Node3D"]
 script = ExtResource("1_ag1mx")
+debug_hide_ceiling = true
 
 [node name="Navigation" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_nerbr")
@@ -2445,6 +2446,7 @@ shape = SubResource("WorldBoundaryShape3D_ot3ig")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Navigation/StaticBody3D"]
 transform = Transform3D(150, 0, 0, 0, 150, 0, 0, 0, 150, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_ngapa")
 mesh = SubResource("PlaneMesh_j5tmp")
 skeleton = NodePath("../../..")
@@ -9914,198 +9916,231 @@ material = SubResource("StandardMaterial3D_a6qq7")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4086, 8.11772, -48.5273)
+visible = false
 layers = 4
 size = Vector3(52.1098, 0.183838, 54.4144)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D17" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3839, 3.12499, 95.4266)
+visible = false
 layers = 4
 size = Vector3(76.5219, 0.183838, 39.0257)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.5274, 3.12499, -97.7064)
+visible = false
 layers = 4
 size = Vector3(43.5983, 0.183838, 71.9262)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93.2411, 3.12499, -96.3027)
+visible = false
 layers = 4
 size = Vector3(63.0257, 0.183838, 69.1189)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.119, 3.12499, -67.0149)
+visible = false
 layers = 4
 size = Vector3(46.0745, 0.183838, 26.0767)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.9072, 3.12499, 54.0011)
+visible = false
 layers = 4
 size = Vector3(27.962, 0.183838, 141.535)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D20" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.156, 3.12499, 103.862)
+visible = false
 layers = 4
 size = Vector3(70.46, 0.183838, 41.8125)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D21" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -115.519, 3.12499, 71.774)
+visible = false
 layers = 4
 size = Vector3(43.734, 0.183838, 23.3584)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D22" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114.405, 7.58235, 31.8854)
+visible = false
 layers = 4
 size = Vector3(41.5052, 0.183838, 57.8136)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D18" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.9675, 3.12499, 95.8409)
+visible = false
 layers = 4
 size = Vector3(6.92238, 0.183838, 38.0892)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D19" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6361, 3.12499, -24.1418)
+visible = false
 layers = 4
 size = Vector3(8.25953, 0.183838, 57.0254)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5632, 17.0773, 40.0464)
+visible = false
 layers = 4
 size = Vector3(81.8159, 0.183838, 73.0516)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.7359, 3.12499, -92.9478)
+visible = false
 layers = 4
 size = Vector3(114.074, 0.183838, 62.6101)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D25" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1052, 3.12499, -103.462)
+visible = false
 layers = 4
 size = Vector3(79.9882, 0.183838, 55.3277)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D26" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.3882, 3.12499, -63.3458)
+visible = false
 layers = 4
 size = Vector3(24.3471, 0.183838, 135.561)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D27" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.98707, 3.12499, -133.664)
+visible = false
 layers = 4
 size = Vector3(47.8798, 0.183838, 5.82485)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D28" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3339, 3.12499, -8.56662)
+visible = false
 layers = 4
 size = Vector3(56.4607, 0.183838, 25.1301)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.4149, 3.12499, -117.824)
+visible = false
 layers = 4
 size = Vector3(107.772, 0.183838, 26.0562)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.2463, 3.12499, -119.084)
+visible = false
 layers = 4
 size = Vector3(45.8697, 0.183838, 28.5745)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.546, 3.12499, -66.8146)
+visible = false
 layers = 4
 size = Vector3(47.2582, 0.183838, 26.5729)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D13" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.78, 3.12499, -10.301)
+visible = false
 layers = 4
 size = Vector3(104.896, 0.183838, 11.5511)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D32" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.8027, 3.12499, -5.83951)
+visible = false
 layers = 4
 size = Vector3(59.7298, 0.183838, 20.4741)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D14" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.3676, 3.12499, -26.8939)
+visible = false
 layers = 4
 size = Vector3(7.11178, 0.183838, 74.7806)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D15" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.2808, 3.12499, 101.173)
+visible = false
 layers = 4
 size = Vector3(69.8973, 0.183838, 59.4756)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D31" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9994, 3.12499, 67.8073)
+visible = false
 layers = 4
 size = Vector3(16.4601, 0.183838, 34.6098)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D29" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7335, 3.12499, 38.4775)
+visible = false
 layers = 4
 size = Vector3(10.8027, 0.183838, 68.7188)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D30" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.2801, 3.12499, 61.6953)
+visible = false
 layers = 4
 size = Vector3(21.8959, 0.183838, 22.2832)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D24" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 103.595, 3.12499, 108.374)
+visible = false
 layers = 4
 size = Vector3(43.1546, 0.183838, 56.4386)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D16" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.26, 3.12499, 5.19391)
+visible = false
 layers = 4
 size = Vector3(14.8343, 0.183838, 23.6935)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D23" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.883, 7.53573, 35.0483)
+visible = false
 layers = 4
 size = Vector3(60.8498, 0.183838, 83.4023)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D33" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.0511, 7.53573, 26.9075)
+visible = false
 layers = 4
 size = Vector3(59.799, 0.183838, 49.9904)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D34" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.0033, 7.53573, 61.8866)
+visible = false
 layers = 4
 size = Vector3(33.1499, 0.183838, 20.9489)
 material = ExtResource("18_s1sy1")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="FloorSpecial/not floor" groups=["ceiling"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -130.285, 3.12499, -117.93)
+visible = false
 layers = 4
 size = Vector3(13.9896, 0.183838, 25.8646)
 material = ExtResource("18_s1sy1")
