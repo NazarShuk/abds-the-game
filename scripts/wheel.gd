@@ -114,7 +114,7 @@ func spin():
 func give_reward(what_name):
 	if !multiplayer.is_server(): return
 	play_cool_sound()
-	Game.info_text.rpc("Rolled " + what_name + "!")
+	info_text("Rolled " + what_name + "!")
 	if what_name == "Fruit Snacks":
 		game.give_item_to_everyone(0)
 	elif what_name == "Pizza":

@@ -1,4 +1,4 @@
-[gd_scene load_steps=153 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=154 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
 [ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="5_grswa"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="5_jibb3"]
+[ext_resource type="Script" path="res://scripts/SomeoneDid.gd" id="5_pfett"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
 [ext_resource type="Shader" path="res://black squares.gdshader" id="5_xgi1f"]
@@ -1282,13 +1283,13 @@ shop_timeout = null
 breaker_timeout = null
 coffee_timeout = null
 do_achievements = null
-shop = NodePath("shop")
 is_in_lobby = null
-school = NodePath("School")
-controls_text = NodePath("CanvasLayer/Main/ControlsText")
 is_leahy_baja_blast = null
 absent = null
 noise_points = null
+shop = NodePath("shop")
+school = NodePath("School")
+controls_text = NodePath("CanvasLayer/Main/ControlsText")
 
 [node name="Lighting and stuff" type="Node" parent="."]
 script = ExtResource("2_uakk8")
@@ -1356,6 +1357,7 @@ theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+script = ExtResource("5_pfett")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer2"]
 replication_config = SubResource("SceneReplicationConfig_dw4kk")
@@ -3048,6 +3050,8 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 90.5943, 0.545469, -139
 
 [node name="Mr_Misuraca" parent="." instance=ExtResource("43_t45wj")]
 transform = Transform3D(1.165, 0, -2.01784, 0, 2.33, 0, 2.01784, 0, 1.165, -67.4405, 1.24283, -168.649)
+server_target = null
+is_angry = null
 
 [node name="Videoplayer" parent="." instance=ExtResource("44_jjv51")]
 transform = Transform3D(12.342, 0, 0, 0, 5.42195, 0, 0, 0, 1, -25.9642, 4.66635, -194.005)

@@ -95,7 +95,6 @@ func _ready():
 	Game.world_environment = $"Lighting and stuff/WorldEnvironment"
 	Game.environment = Game.world_environment.environment
 	Game.sun = $"Lighting and stuff/DirectionalLight3D"
-	Game.on_info_text.connect(_on_info_text)
 	
 	
 	AudioServer.set_bus_solo(6,false)
@@ -266,11 +265,7 @@ func _process(delta):
 		$SubViewport/skibidiCamera.global_rotation_degrees.x = -90
 		$SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
 		
-		var clr:Color = $CanvasLayer2/SomeoneDid.get("theme_override_colors/font_color")
-		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.01))
-		
-		var outline_color = $CanvasLayer2/SomeoneDid.get("theme_override_colors/font_outline_color")
-		$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_outline_color",outline_color.lerp(Color(0,0,0,0),0.01))
+
 		
 		if fox_follow && do_fox_help:
 			mr_fox.update_target_location(book_pos)
@@ -977,13 +972,6 @@ func _on_button_2_pressed():
 
 func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
-
-func _on_info_text(info):
-	if Allsingleton.is_bossfight: return
-	$CanvasLayer2/SomeoneDid.text = info
-	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
-	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_outline_color",Color.WHITE)
-	#get_node("1").info_text.rpc(info)
 
 func hide_menu():
 	$CanvasLayer/MultiPlayer.hide()

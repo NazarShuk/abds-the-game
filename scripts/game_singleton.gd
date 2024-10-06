@@ -39,6 +39,9 @@ func set_pre_game_started():
 func set_param(param_name : String, val):
 	set(param_name,val)
 
-@rpc("any_peer","call_local")
 func info_text(text : String):
+	rpc_info_text(text)
+
+@rpc("any_peer","call_local")
+func rpc_info_text(text):
 	on_info_text.emit(text)

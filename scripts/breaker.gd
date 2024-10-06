@@ -41,7 +41,7 @@ func toggle_power(do_ov = false, ov = false):
 		
 		$Music2.play()
 		
-		Game.info_text.rpc("Power was fixed")
+		info_text("Power was fixed")
 		$Breaker.audio(true)
 		$Breaker/AudioStreamPlayer.stop()
 		$BreakerRoomClosedDoor.set_collision_layer_value(2,false)
@@ -52,7 +52,7 @@ func toggle_power(do_ov = false, ov = false):
 		Game.sun.light_energy = 0
 		$Music2.stop()
 		
-		Game.info_text.rpc("Power got broken")
+		info_text("Power got broken")
 		$Breaker.audio(false)
 		$Breaker/AudioStreamPlayer.play()
 		$BreakerRoomClosedDoor.set_collision_layer_value(2,true)
