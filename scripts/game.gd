@@ -340,13 +340,15 @@ func _process(delta):
 							leahy_baja_timer = 0
 						
 				else:
-					evil_leahy.update_target_location($Breaker.global_position)
+					var breaker = get_tree().get_first_node_in_group("breaker")
+					
+					evil_leahy.update_target_location(breaker.global_position)
 					hide_approaching_label.rpc()
-					var breaker_dst = evil_leahy.global_position.distance_to($Breaker.global_position)
+					var breaker_dst = evil_leahy.global_position.distance_to(breaker.global_position)
 					if breaker_dst < 2:
 						leahy_power_fix_num += delta
 						if leahy_power_fix_num >= 3:
-							toggle_power.rpc(true,false)
+							breaker.toggle_power.rpc(true,false)
 							leahy_power_fix_num = 0
 						
 			else:
@@ -535,7 +537,7 @@ func spawn_players():
 
 @rpc("authority","call_local")
 func set_fog_density(density):
-	environment.volumetric_fog_density = density
+	Game.environment.volumetric_fog_density = density
 
 @rpc("authority","call_local")
 func pre_start_game():
@@ -628,9 +630,9 @@ func on_collect_book(id,book_name,personal):
 				evil_leahy.SPEED += leahy_speed_per_notebook
 			
 			if personal:
-				info_text(player_name + " collected a book!")
+				Game.info_text(player_name + " collected a book!")
 			else:
-				info_text("A book was collected!")
+				Game.info_text("A book was collected!")
 			fox_notebooks_left -= 1
 			if fox_notebooks_left <= 0:
 				fox_follow = false
@@ -650,7 +652,7 @@ func on_collect_book(id,book_name,personal):
 				evil_darel.health -= 5
 			
 		else:
-			info_text(player_name + " slipped")
+			Game.info_text(player_name + " slipped")
 			var spawnpoint = $School/LandMineSpawns.get_children().pick_random()
 			spawnpoint = spawnpoint.global_position
 			spawnpoint.y = 0.143
@@ -852,7 +854,7 @@ func set_player_dead(id,is_dead,do_deaths):
 				total_deaths += players[pl_id].deaths
 			
 			if !Allsingleton.is_bossfight:
-				info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(max_deaths + (deaths_per_player * players_in_lobby)))
+				Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(max_deaths + (deaths_per_player * players_in_lobby)))
 			if is_pacer:
 				stop_pacer.rpc()
 			
@@ -989,7 +991,7 @@ func appease_leahy(username,sec):
 		
 		$Appeasment.start(sec)
 		leahy_appeased = true
-		info_text(username + " appeased Leahy for "+str(sec)+" seconds.")
+		Game.info_text(username + " appeased Leahy for "+str(sec)+" seconds.")
 
 
 func _on_appeasment_timeout():
@@ -1010,7 +1012,7 @@ func mr_fox_collect(is_sunkist):
 					fox_notebooks_left = 1
 			else:
 				fox_notebooks_left += 1
-			info_text("Follow Mr.Fox to find " + str(fox_notebooks_left) + " notebooks!")
+			Game.info_text("Follow Mr.Fox to find " + str(fox_notebooks_left) + " notebooks!")
 
 
 func _on_button_5_pressed():
@@ -1029,14 +1031,14 @@ func _on_absences_timeout():
 		set_absent.rpc(true)
 		absent = true
 		hide_approaching_label.rpc()
-		info_text("Ms.Leahy is gone???")
+		Game.info_text("Ms.Leahy is gone???")
 		music_pitch_target = 0.5
 		TipManager.show_tip_once.rpc("absences","[color=green]Absences[/color]\n\"Sometimes\", Ms.Leahy is absent. She is gone!!!!! Have fun, go nuts!")
 	else:
 		if absent == true:
 			absent = false
 			set_absent.rpc(false)
-			info_text("Ms.Leahy is here nvm")
+			Game.info_text("Ms.Leahy is here nvm")
 			music_pitch_target = 1
 	
 	$Absences.start(absence_interval)
@@ -1056,7 +1058,7 @@ func azzu_steal(launcher):
 	if multiplayer.is_server() && canPlayersMove:
 		if !do_azzu_steal: return
 		
-		info_text(get_node(str(launcher)).steam_name + " angered Mr.Azzu")
+		Game.info_text(get_node(str(launcher)).steam_name + " angered Mr.Azzu")
 		mr_azzu.server_target = true
 		mr_azzu.update_target_location(get_node(str(launcher)).global_position)
 		
@@ -1136,7 +1138,7 @@ func run_pacer_test() -> void:
 			current_level += 1
 			current_shuttle = 1
 			play_pacer_level_sound.rpc()
-			info_text("Level " + str(current_level))
+			Game.info_text("Level " + str(current_level))
 		
 		if total_laps % 10 == 0:
 			on_collect_book(-1,"",false)
@@ -1171,9 +1173,9 @@ func start_da_pacer(id = -1):
 		
 		if id != -1:
 			var username = get_node(str(id)).steam_name
-			info_text(username + " angered Mr.Fox...")
+			Game.info_text(username + " angered Mr.Fox...")
 		else:
-			info_text("Mr.Fox is angry...")
+			Game.info_text("Mr.Fox is angry...")
 		leahy_appeased = true
 		$FakeFox/PacerTest/PacerStartTimer.start()
 		canPlayersMove = false
@@ -1186,7 +1188,7 @@ func start_da_pacer(id = -1):
 func _on_pacer_start_timer_timeout():
 	canPlayersMove = true
 	is_pacer = true
-	info_text("Pacer test started!")
+	Game.info_text("Pacer test started!")
 	$FakeFox/PacerTest/PacerStartTimer2.start()
 	is_pacer_intro = false
 	
@@ -1330,7 +1332,7 @@ func gainy_attack_func():
 	
 	gainy_target = just_some_random_guy
 	
-	info_text("Ms.Gainy is angry at " + just_some_random_guy.steam_name)
+	Game.info_text("Ms.Gainy is angry at " + just_some_random_guy.steam_name)
 
 @rpc("any_peer","call_local")
 func stop_gainy(id):
@@ -1367,7 +1369,7 @@ func boost_leahy(pl):
 		evil_leahy.SPEED *= 1.5
 		book_boost += 0.5
 		music_pitch_boost += 0.25
-		info_text(pl + " gave Ms.Leahy Redbull...")
+		Game.info_text(pl + " gave Ms.Leahy Redbull...")
 
 @rpc("any_peer","call_local")
 func spawn_puddle(pos):
@@ -1395,7 +1397,7 @@ func do_bet(pl_name,books,time,loss,reward,item_name):
 	bet_loss = loss
 	bet_reward = reward
 	
-	info_text(pl_name + " started a bet. Win to get a " + item_name)
+	Game.info_text(pl_name + " started a bet. Win to get a " + item_name)
 
 var is_dp = false
 
@@ -1406,9 +1408,9 @@ func depression_ending():
 	dp.show()
 	
 	$Music2.volume_db = -80
-	environment.background_energy_multiplier = 0.25
+	Game.environment.background_energy_multiplier = 0.25
 	await get_tree().create_timer(9).timeout
-	environment.background_energy_multiplier = 1
+	Game.environment.background_energy_multiplier = 1
 	await get_tree().create_timer(2).timeout
 	if multiplayer.is_server():
 		canPlayersMove = false
@@ -1433,7 +1435,7 @@ func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 	if !multiplayer.is_server(): return
 	is_bet = false
 	if bet_books_left > 0 or (overwrite and won == false):
-		info_text("You lost the bet")
+		Game.info_text("You lost the bet")
 		loose_notebooks(bet_loss)
 		bet_books_left = -1
 		$"Bet timer".stop()
@@ -1442,7 +1444,7 @@ func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 		
 		
 	elif bet_books_left <= 0 or (overwrite and won == true):
-		info_text("You won the bet")
+		Game.info_text("You won the bet")
 		
 		for p in players.keys():
 			get_node(str(p)).choose_item.rpc_id(p,bet_reward)
@@ -1495,7 +1497,7 @@ func add_noise_point(pos):
 func do_baja(steam_name):
 	if multiplayer.is_server():
 		is_leahy_baja_blast = true
-		info_text(steam_name + " gave Ms.Leahy baja blast...")
+		Game.info_text(steam_name + " gave Ms.Leahy baja blast...")
 
 @rpc("any_peer","call_local")
 func set_door_state(door_path,open):

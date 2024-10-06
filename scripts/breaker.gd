@@ -1,15 +1,12 @@
 extends StaticBody3D
 @onready var light = $OmniLight3D
 
-@export var game : Node3D
 @export var yellow_light : Color
 @export var red_light : Color
 
-
-
 func _process(_delta):
 	light.light_energy = randf_range(0.8,1.2)
-	if game.is_powered_off:
+	if Game.powered_off:
 		light.light_color = red_light
 	else:
 		light.light_color = yellow_light
@@ -17,7 +14,7 @@ func _process(_delta):
 
 
 func _on_timer_timeout():
-	if game.is_powered_off:
+	if Game.powered_off:
 		light.visible = !light.visible
 
 func audio(play_or_nah):
@@ -41,7 +38,7 @@ func toggle_power(do_ov = false, ov = false):
 		
 		$Music2.play()
 		
-		info_text("Power was fixed")
+		Game.info_text("Power was fixed")
 		$Breaker.audio(true)
 		$Breaker/AudioStreamPlayer.stop()
 		$BreakerRoomClosedDoor.set_collision_layer_value(2,false)
@@ -52,7 +49,7 @@ func toggle_power(do_ov = false, ov = false):
 		Game.sun.light_energy = 0
 		$Music2.stop()
 		
-		info_text("Power got broken")
+		Game.info_text("Power got broken")
 		$Breaker.audio(false)
 		$Breaker/AudioStreamPlayer.play()
 		$BreakerRoomClosedDoor.set_collision_layer_value(2,true)

@@ -322,7 +322,7 @@ func _on_area_3d_area_entered(area):
 		Achievements.save_all()
 	elif area.get_parent().is_in_group("enemies") and Game.game_started == true:
 		if parent.absent == false:
-			if parent.is_powered_off == false:
+			if Game.powered_off == false:
 				if parent.leahy_appeased == false:
 					if parent.is_leahy_baja_blast == false:
 						die("leahy")

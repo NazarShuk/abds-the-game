@@ -1247,46 +1247,6 @@ size = Vector3(1, 4.0097, 2.53809)
 
 [node name="Game" type="Node3D" node_paths=PackedStringArray("shop", "school", "controls_text")]
 script = ExtResource("1_y4eyb")
-players_in_lobby = null
-canPlayersMove = null
-leahy_appeased = null
-leahy_speed = null
-books_to_collect = null
-total_books = null
-leahy_look = null
-is_pacer = null
-pacer_deadly = null
-azzu_angered = null
-do_azzu_steal = null
-do_fox_help = null
-do_leahy_appease = null
-do_gainy_spawn = null
-do_absences = null
-do_silent_lunch = null
-landmine_death = null
-do_vertical_camera = null
-enable_breaker = null
-enable_shop = null
-enable_coffee = null
-notebooks_per_player = null
-max_deaths = null
-deaths_per_player = null
-leahy_start_speed = null
-leahy_speed_per_notebook = null
-absence_chance = null
-absence_interval = null
-gainy_attack_chance = null
-gainy_attack_interval = null
-death_timeout = null
-silent_lunch_duration = null
-shop_timeout = null
-breaker_timeout = null
-coffee_timeout = null
-do_achievements = null
-is_in_lobby = null
-is_leahy_baja_blast = null
-absent = null
-noise_points = null
 shop = NodePath("shop")
 school = NodePath("School")
 controls_text = NodePath("CanvasLayer/Main/ControlsText")
@@ -3013,9 +2973,8 @@ transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 
 stream = ExtResource("35_ir6cm")
 bus = &"Dialogs"
 
-[node name="Breaker" parent="." node_paths=PackedStringArray("game") instance=ExtResource("36_j44h3")]
+[node name="Breaker" parent="." instance=ExtResource("36_j44h3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 50.7154, 1.2029, -1.13751)
-game = NodePath("..")
 yellow_light = Color(1, 1, 0.447059, 1)
 red_light = Color(0.999748, 0.245733, 0.188282, 1)
 
@@ -3050,8 +3009,6 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 90.5943, 0.545469, -139
 
 [node name="Mr_Misuraca" parent="." instance=ExtResource("43_t45wj")]
 transform = Transform3D(1.165, 0, -2.01784, 0, 2.33, 0, 2.01784, 0, 1.165, -67.4405, 1.24283, -168.649)
-server_target = null
-is_angry = null
 
 [node name="Videoplayer" parent="." instance=ExtResource("44_jjv51")]
 transform = Transform3D(12.342, 0, 0, 0, 5.42195, 0, 0, 0, 1, -25.9642, 4.66635, -194.005)

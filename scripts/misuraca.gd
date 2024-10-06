@@ -41,7 +41,7 @@ func _physics_process(_delta):
 		if distance < 5:
 			if multiplayer.is_server():
 				angerer = get_parent().get_node(NodePath(str(clorox.launcher)))
-				info_text("Mr.Misuraca is angry")
+				Game.info_text("Mr.Misuraca is angry")
 	
 	if multiplayer.is_server():
 		for index in range(get_slide_collision_count()):
