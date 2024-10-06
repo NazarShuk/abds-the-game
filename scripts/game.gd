@@ -11,8 +11,6 @@ var players_ids = []
 
 var lobby_id
 
-@export var game_started = false
-
 @export var canPlayersMove = true
 @onready var evil_leahy = $EvilLeahy
 @export var leahy_appeased = false
@@ -81,7 +79,6 @@ var players_spawned = false
 
 var pacer_times = []
 
-@export var pre_started_game = false
 @export var is_in_lobby = false
 
 @export var school : Node3D
@@ -90,16 +87,16 @@ var enable_live_split = true
 
 @export var controls_text : Label
 
-@onready var world_environment : WorldEnvironment = $"Lighting and stuff/WorldEnvironment"
-@onready var environment = world_environment.environment
-@onready var sun = $"Lighting and stuff/DirectionalLight3D"
-
 var do_vertical_camera_normal = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	Allsingleton.is_bossfight = true
+	Game.world_environment = $"Lighting and stuff/WorldEnvironment"
+	Game.environment = Game.world_environment.environment
+	Game.sun = $"Lighting and stuff/DirectionalLight3D"
+	Game.on_info_text.connect(_on_info_text)
+	
 	
 	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -118,7 +115,7 @@ func _ready():
 	peer.lobby_kicked.connect(_on_disconnect_from_server)
 	
 	if Settings.better_lighting != null:
-		sun.visible = Settings.better_lighting
+		Game.sun.visible = Settings.better_lighting
 	
 	
 	if Allsingleton.is_bossfight:
@@ -145,16 +142,13 @@ func _ready():
 		$CanvasLayer/Lobby/Label3.hide()
 		$CanvasLayer/Lobby/playerListText.hide()
 		
-		sun.visible = false
-
-
+		Game.sun.visible = false
 
 var leahy_power_fix_num = 0
 var music_pitch_target = 1
 var music_pitch_boost = 1
 
 
-var expired_items = []
 
 @export var is_leahy_baja_blast = false
 var leahy_baja_timer = 0
@@ -181,7 +175,7 @@ func _process(delta):
 			if Input.is_action_just_pressed("debug"):
 				evil_darel.health -= 5
 			
-			if game_started:
+			if Game.game_started:
 				boss_bar.value = lerp(boss_bar.value,float(evil_darel.health),0.1)
 				evil_darel.look_at(get_tree().get_first_node_in_group("player").global_position)
 				
@@ -230,24 +224,6 @@ func _process(delta):
 					else:
 						broken_vending_machines.append(vm)
 		
-		if expired_items.size() > 0:
-			
-			var closest_item = null
-			var closetst_distance = INF
-			
-			for item in expired_items:
-				var dst = mr_azzu.global_position.distance_to(get_node(item).global_position) 
-				if dst < closetst_distance:
-					closetst_distance = dst
-					closest_item = item
-			
-			mr_azzu.server_target = true
-			var exp_item = get_node(closest_item)
-			mr_azzu.update_target_location(exp_item.global_position)
-			if mr_azzu.global_position.distance_to(exp_item.global_position) < 1:
-				
-				exp_item.queue_free()
-		
 		if !is_misuraca_disabled:
 			if broken_vending_machines.size() > 0:
 				$Mr_Misuraca.update_target_location(broken_vending_machines[0].global_position)
@@ -274,7 +250,7 @@ func _process(delta):
 	
 		players_in_lobby = players_ids.size()
 		
-		if game_started:
+		if Game.game_started:
 			if !Allsingleton.is_bossfight:
 				if !is_pacer:
 					collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
@@ -312,9 +288,9 @@ func _process(delta):
 			ms_gainy.go_back()
 
 	if !Allsingleton.is_bossfight:
-		if game_started and multiplayer.is_server() and !absent:
+		if Game.game_started and multiplayer.is_server() and !absent:
 			if !leahy_appeased:
-				if !is_powered_off:
+				if !Game.powered_off:
 					if !is_leahy_baja_blast:
 						var closest = null
 						var closest_distance = INF
@@ -381,7 +357,7 @@ func _process(delta):
 			else:
 				evil_leahy.update_target_location(evil_leahy.global_position)
 	
-	if multiplayer.has_multiplayer_peer() and !game_started and multiplayer.is_server():
+	if multiplayer.has_multiplayer_peer() and !Game.game_started and multiplayer.is_server():
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
 		
 		var initial_nodes = 0
@@ -539,7 +515,7 @@ func pre_start_game_btn():
 			set_fog_density.rpc(0.025)
 		
 		
-		pre_started_game = true
+		Game.set_pre_game_started.rpc()
 
 func spawn_players():
 	
@@ -620,7 +596,7 @@ func on_collect_book(id,book_name,personal):
 				TipManager.show_tip_once.rpc("gambling","[color=green]Gambling!!![/color]\n The fence around the item wheel is removed when you collect [b]3 notebooks[/b]. Go gamble.")
 			
 			if total == 1:
-				if !game_started:
+				if !Game.game_started:
 					start_da_game.rpc()
 					canPlayersMove = false
 			elif total >= books_to_collect:
@@ -702,7 +678,7 @@ func use_vending_machine(id,machine_name,item_weights):
 	var vending_machine = get_node("School/Navigation").get_node(NodePath(machine_name))
 	if !vending_machine: return
 	
-	if game_started:
+	if Game.game_started:
 		for child in get_children():
 			if child.name == str(id):
 				if vending_machine.uses_left >= 0:
@@ -791,11 +767,11 @@ func _on_host_local_pressed():
 
 func _on_timer_timeout():
 	$Music2.play()
-
+	
 	$CanvasLayer/Main/LeahyAngeredLabel.hide()
 	if multiplayer.is_server():
 		canPlayersMove = true
-		game_started = true
+		Game.set_game_started.rpc()
 		leahy_look = false
 		$FakeFox/AnimationPlayer.play("new_animation")
 		evil_leahy.SPEED = leahy_start_speed
@@ -1002,7 +978,7 @@ func _on_button_2_pressed():
 func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
 
-func info_text(info):
+func _on_info_text(info):
 	if Allsingleton.is_bossfight: return
 	$CanvasLayer2/SomeoneDid.text = info
 	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
@@ -1056,9 +1032,9 @@ func _on_button_5_pressed():
 
 func _on_absences_timeout():
 	if !multiplayer.is_server() : return
-	if !game_started : return
+	if !Game.game_started : return
 	if !do_absences: return
-	if is_powered_off: return
+	if Game.powered_off: return
 	if Allsingleton.is_bossfight: return
 	
 	if randi_range(0,absence_chance) == 1: 
@@ -1279,7 +1255,7 @@ var last_poses = {
 func _on_leahy_pos_diff_timeout():
 	if !multiplayer.has_multiplayer_peer(): return
 	if !multiplayer.is_server(): return
-	if !game_started: return
+	if !Game.game_started: return
 	
 	for teacher in penalties:
 		var diff = last_poses[teacher].distance_to(get_node(teacher).global_position)
@@ -1394,41 +1370,9 @@ func _on_leahy_cool_timer_timeout():
 
 @rpc("any_peer","call_local")
 func play_coffee():
-	$CoffeMachine/coffee.play()	
+	$CoffeMachine/coffee.play()
 
-@export var is_powered_off = false
 
-@rpc("any_peer","call_local")
-func toggle_power(do_ov = false, ov = false):
-	
-	if !do_ov:
-		is_powered_off = !is_powered_off
-	else:
-		is_powered_off = ov
-	
-	if !is_powered_off:
-		environment.background_energy_multiplier = 1
-		sun.light_energy = 1
-		
-		$Music2.play()
-		
-		info_text("Power was fixed")
-		$Breaker.audio(true)
-		$Breaker/AudioStreamPlayer.stop()
-		$BreakerRoomClosedDoor.set_collision_layer_value(2,false)
-		
-		is_powered_off = false
-	else:
-		environment.background_energy_multiplier = 0
-		sun.light_energy = 0
-		$Music2.stop()
-		
-		info_text("Power got broken")
-		$Breaker.audio(false)
-		$Breaker/AudioStreamPlayer.play()
-		$BreakerRoomClosedDoor.set_collision_layer_value(2,true)
-		
-		is_powered_off = true
 @rpc("any_peer","call_local")
 func boost_leahy(pl):
 	if multiplayer.is_server():
@@ -1638,7 +1582,7 @@ func _notification(what):
 		
 		if not is_quitting:
 			is_quitting = true
-			if multiplayer.has_multiplayer_peer() and multiplayer.is_server() and pre_started_game:
+			if multiplayer.has_multiplayer_peer() and multiplayer.is_server() and Game.pre_game_started:
 				end_game.rpc("none")
 			else:
 				get_tree().quit()

@@ -188,7 +188,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("debug"):
 			parent.on_collect_book.rpc(name.to_int(), "book1",true)
 
-		if parent.game_started:
+		if Game.game_started:
 			if (10 - leahy_dst) > 0:
 				var strength = 1/leahy_dst+0.01
 				camera_3d.h_offset = randf_range(-strength,strength) / 5
@@ -198,7 +198,7 @@ func _physics_process(delta):
 				camera_3d.v_offset = 0
 		
 		if global_position.z > 15 && !is_freaky:
-			if !parent.game_started:
+			if !Game.game_started:
 				is_freaky = true
 				parent.skibidi.rpc()
 			else:
@@ -320,14 +320,14 @@ func _on_area_3d_area_entered(area):
 		parent.on_collect_book.rpc(name.to_int(), area.get_parent().name,true)
 		Achievements.books_collected += 1
 		Achievements.save_all()
-	elif area.get_parent().is_in_group("enemies") and parent.game_started == true:
+	elif area.get_parent().is_in_group("enemies") and Game.game_started == true:
 		if parent.absent == false:
 			if parent.is_powered_off == false:
 				if parent.leahy_appeased == false:
 					if parent.is_leahy_baja_blast == false:
 						die("leahy")
 
-	elif area.name == "Landmine" and parent.game_started == true:
+	elif area.name == "Landmine" and Game.game_started == true:
 		die("mine")
 		parent.on_collect_book.rpc(name.to_int(), area.name,true)
 		
@@ -980,7 +980,7 @@ func movement(delta):
 			is_on_top = false
 	
 	if Allsingleton.is_bossfight:
-		if parent.game_started:
+		if Game.game_started:
 			if is_on_floor() and not is_dead:
 				if Input.is_action_just_pressed("jump"):
 					velocity.y += 5
@@ -1051,7 +1051,7 @@ func movement(delta):
 						if ray.get_collider().is_in_group("vending_machine"):
 							parent.use_vending_machine.rpc(name.to_int(),ray.get_collider().name,item_weights)
 						
-					if ray.get_collider() != null and parent.game_started:
+					if ray.get_collider() != null and Game.game_started:
 						print(ray.get_collider().name)
 						if ray.get_collider().is_in_group("shop"):
 							if !parent.enable_shop: return

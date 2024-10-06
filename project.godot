@@ -38,6 +38,7 @@ Leaderboard="*res://scripts/Leaderboard.gd"
 TipManager="*res://scripts/tips_controller.gd"
 ctrlcombintation="*res://scripts/idk.gd"
 SubtitleManager="*res://scripts/subtitlemanager.gd"
+Game="*res://scripts/game_singleton.gd"
 
 [debug]
 

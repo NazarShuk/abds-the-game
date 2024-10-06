@@ -11,7 +11,7 @@ func _ready():
 func prepare_leaderboard():
 	http_request.request(Leaderboard.api_url,["User-Agent: insomnia/9.3.2","Accept: /*/","Content-Length: 0"],HTTPClient.METHOD_GET)
 
-func on_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+func _on_http_request_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray):
 	if result == 0:
 		var leaderboard = JSON.parse_string(body.get_string_from_utf8())
 		if !leaderboard: return

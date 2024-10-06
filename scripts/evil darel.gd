@@ -45,7 +45,7 @@ func _ready():
 
 func _process(delta):
 	
-	if game.game_started == false:
+	if Game.game_started == false:
 		return
 	
 	if Allsingleton.is_bossfight == false:
@@ -200,7 +200,7 @@ func _on_lil_darel_timeout_timeout():
 var force_magnitude: float = 100.0
 
 func _on_darel_ball_timeout():
-	if game.game_started == false:
+	if Game.game_started == false:
 		return
 	if Allsingleton.is_bossfight == false:
 		return
@@ -234,7 +234,7 @@ func ray_attack():
 	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
 	if !player: return
 	
-	if game.game_started == false:
+	if Game.game_started == false:
 		return
 	if Allsingleton.is_bossfight == false:
 		return

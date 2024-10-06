@@ -62,3 +62,5 @@ visible = false
 mesh = SubResource("TextMesh_w6kao")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
