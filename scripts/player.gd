@@ -251,9 +251,11 @@ func punch():
 func parry_pause(collider):
 	await get_tree().create_timer(0.25).timeout
 	get_tree().paused = false
-	if collider:
-		if collider.is_in_group("lil_darel") or collider.is_in_group("evil_wipes"):
+	
+	if is_instance_valid(collider):
+		if collider.is_in_group("lil darel") or collider.is_in_group("evil_wipes"):
 			collider.is_stopped = false
+	
 	$CanvasLayer/Control/parry.hide()
 	
 

@@ -9,6 +9,13 @@ const EXPLOSION = preload("res://explosion.tscn")
 const BIGGER_EXPLOSION = preload("res://bigger_explosion.tscn")
 const SHOCKWAVE = preload("res://shockwave.tscn")
 
+const FULL_AUTO = preload("res://dariel/full auto.mp3")
+const FULLER = preload("res://dariel/fuller.mp3")
+const GETOVER = preload("res://dariel/getover.mp3")
+const HOLD_ON = preload("res://dariel/hold on.mp3")
+const MAGIC = preload("res://dariel/magic.mp3")
+
+
 @export var screams : Array[AudioStreamMP3]
 
 @onready var nav_agent = $NavigationAgent3D
@@ -18,6 +25,8 @@ var SPEED = 10
 @onready var mouth = $Mouth
 @onready var right_eye : RayCast3D = $"Right eye"
 @onready var left_eye : RayCast3D = $"Left eye"
+@onready var hand = $Hand
+
 
 var can_do_lil_darel = true
 
@@ -29,6 +38,10 @@ var is_phase_2 = false
 var is_actual_phase_2 = false
 
 var stunned = false
+@onready var transition_dialog = $transition_dialog
+
+func _ready():
+	transition_dialog.playback_finished.connect(start_phase_2)
 
 func _process(delta):
 	
@@ -124,7 +137,7 @@ func transition_to_phase_2():
 	$AudioStreamPlayer.stop()
 	game.darel_phase2_transition()
 	
-	shake(5, 100, 5)
+	shake(3, 100, 5)
 	
 	for lil_darel in get_tree().get_nodes_in_group("lil darel"):
 		lil_darel.queue_free()
@@ -148,14 +161,14 @@ func transition_to_phase_2():
 	global_position.y = 2
 	
 
-	$transition_dialog.play()
-	$transition_timer.start($transition_dialog.stream.get_length() / $transition_dialog.pitch_scale)
+	$transition_dialog.play_streams()
+	#$transition_timer.start($transition_dialog.stream.get_length() / $transition_dialog.pitch_scale)
 	
 	var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
 	
 	player.global_position = global_position
 	player.global_position.x = global_position.x + 5
-	
+
 
 func start_phase_2():
 	health = 100
@@ -295,17 +308,20 @@ func _on_phase_2_attack_timeout():
 	if attack == "clorox":
 		var clorox = load("res://Clorox Wipes.tscn").instantiate()
 		
-		get_parent().add_child(clorox)
-		
-		clorox.global_position = player.global_position + Vector3(randf_range(10,20),randf_range(10,20),randf_range(10,20))
-		clorox.look_at(global_position)
-		clorox.is_evil = true
-		clorox.start_timer(3)
 		clorox.auto_aim = true
 		clorox.auto_aim_node = self
 		clorox.auto_aim_capture_node = player
 		clorox.stop_timer = true
+		clorox.is_evil = true
+		clorox.SPEED = 20
+		
+		get_parent().add_child(clorox)
+		
+		clorox.global_position = player.global_position + Vector3(randf_range(10,20),randf_range(10,20),randf_range(10,20))
+		clorox.look_at(global_position)
 		clorox.add_to_group("evil_wipes")
+		
+		play_sound_with_subtitle(GETOVER,"GET OVER HERE")
 		
 	elif attack == "lildarel":
 		for i in range(0,5):
@@ -316,8 +332,25 @@ func _on_phase_2_attack_timeout():
 			get_parent().add_child(darel)
 			
 			darel.global_position = global_position + Vector3(randf_range(-5,5),10,randf_range(-5,5))
-			
 		
+		play_sound_with_subtitle(FULLER,"Fuller auto")
+
+func play_sound_with_subtitle(stream,subtitle):
+	var audio := AudioStreamPlayer3D.new()
+	audio.stream = stream
+	
+	add_child(audio)
+	audio.play()
+	SubtitleManager.show_subtitle(subtitle,stream)
+	
+	var timer := Timer.new()
+	add_child(timer)
+	timer.one_shot = true
+	timer.start(stream.get_length())
+	await timer.timeout
+	audio.queue_free()
+	timer.queue_free()
+
 func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	# Calculate the total weight
 	var total_weight = 0.0

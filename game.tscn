@@ -1,4 +1,4 @@
-[gd_scene load_steps=159 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=153 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
@@ -20,8 +20,8 @@
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
-[ext_resource type="Texture2D" uid="uid://vvklw85x26dt" path="res://models/blackboard/blackboard-_0009_Layer-1.png" id="16_7uv2o"]
 [ext_resource type="PackedScene" uid="uid://xxyguo1ps1gc" path="res://school.tscn" id="17_3oefh"]
+[ext_resource type="PackedScene" uid="uid://45erl4lj8ygx" path="res://scenens/leader_board.tscn" id="17_625id"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://3u3ef1rrt1c0" path="res://pop.mp3" id="17_fndpl"]
 [ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="17_thbsf"]
@@ -563,35 +563,6 @@ _data = {
 "RESET": SubResource("Animation_jn2c6"),
 "start": SubResource("Animation_iyet2")
 }
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vl53x"]
-transparency = 1
-albedo_texture = ExtResource("16_7uv2o")
-
-[sub_resource type="QuadMesh" id="QuadMesh_2h50m"]
-
-[sub_resource type="TextMesh" id="TextMesh_gxe37"]
-text = "WARRIORS OF THE GAME"
-font = ExtResource("7_1xl1k")
-font_size = 36
-
-[sub_resource type="TextMesh" id="TextMesh_0f466"]
-text = "Warrior 1
-123 books"
-font = ExtResource("7_1xl1k")
-font_size = 32
-
-[sub_resource type="TextMesh" id="TextMesh_wut4u"]
-text = "Warrior 1
-123 books"
-font = ExtResource("7_1xl1k")
-font_size = 32
-
-[sub_resource type="TextMesh" id="TextMesh_w6kao"]
-text = "Warrior 1
-123 books"
-font = ExtResource("7_1xl1k")
-font_size = 32
 
 [sub_resource type="SphereMesh" id="SphereMesh_2pqsq"]
 
@@ -2432,34 +2403,7 @@ size = 15.0
 near = 0.001
 far = 20.0
 
-[node name="LeaderBoard" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.0521, 1.46694, -132.968)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LeaderBoard"]
-transform = Transform3D(8.75648, 0, 0, 0, 2.76064, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_vl53x")
-mesh = SubResource("QuadMesh_2h50m")
-
-[node name="title" type="MeshInstance3D" parent="LeaderBoard"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.170549, 0.889932, 0)
-mesh = SubResource("TextMesh_gxe37")
-
-[node name="w1" type="MeshInstance3D" parent="LeaderBoard"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5202, 0.0768692, 0)
-visible = false
-mesh = SubResource("TextMesh_0f466")
-
-[node name="w2" type="MeshInstance3D" parent="LeaderBoard"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.264769, 0.0768692, 0)
-visible = false
-mesh = SubResource("TextMesh_wut4u")
-
-[node name="w3" type="MeshInstance3D" parent="LeaderBoard"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82804, 0.0768692, 0)
-visible = false
-mesh = SubResource("TextMesh_w6kao")
-
-[node name="HTTPRequest" type="HTTPRequest" parent="LeaderBoard"]
+[node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
 
 [node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3.494, 1.07576, -23.905)
@@ -2531,32 +2475,6 @@ stream = ExtResource("5_x5ors")
 autoplay = true
 max_distance = 10.0
 bus = &"Dialogs"
-
-[node name="Pacer" type="Node3D" parent="."]
-
-[node name="Pacer target" type="Area3D" parent="Pacer" groups=["pacer target"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8435, 0, -177.237)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Pacer/Pacer target"]
-shape = SubResource("BoxShape3D_1eh6s")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Pacer/Pacer target"]
-transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
-mesh = SubResource("BoxMesh_kas3n")
-surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
-
-[node name="Pacer target2" type="Area3D" parent="Pacer" groups=["pacer target"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.7666, 0, -177.237)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Pacer/Pacer target2"]
-shape = SubResource("BoxShape3D_1eh6s")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Pacer/Pacer target2"]
-transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
-mesh = SubResource("BoxMesh_kas3n")
-surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
 
 [node name="School" parent="." instance=ExtResource("17_3oefh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 24.5635, 0, -137.18)
@@ -2960,6 +2878,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -40.3144)
 [node name="Bathroom spawn4" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -49.0816)
 
+[node name="Pacer" type="Node3D" parent="School"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
+
+[node name="Pacer target" type="Area3D" parent="School/Pacer" groups=["pacer target"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8435, 0, -177.237)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="School/Pacer/Pacer target"]
+shape = SubResource("BoxShape3D_1eh6s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="School/Pacer/Pacer target"]
+transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
+mesh = SubResource("BoxMesh_kas3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
+
+[node name="Pacer target2" type="Area3D" parent="School/Pacer" groups=["pacer target"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.7666, 0, -177.237)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="School/Pacer/Pacer target2"]
+shape = SubResource("BoxShape3D_1eh6s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="School/Pacer/Pacer target2"]
+transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
+mesh = SubResource("BoxMesh_kas3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
+
 [node name="Mr Fox" parent="." instance=ExtResource("20_kw6s4")]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 1.24168, -174.032)
 
@@ -3286,7 +3231,6 @@ one_shot = true
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
-[connection signal="request_completed" from="LeaderBoard/HTTPRequest" to="." method="on_request_completed"]
 [connection signal="timeout" from="EvilLeahy/LeahyCoolTimer" to="." method="_on_leahy_cool_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]

@@ -1,13 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://di8aki6p3dw1q"]
+[gd_scene load_steps=12 format=3 uid="uid://di8aki6p3dw1q"]
 
 [ext_resource type="Script" path="res://scripts/Clorox Wipes.gd" id="1_nsv1d"]
 [ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="1_xus1o"]
 [ext_resource type="AudioStream" uid="uid://byyn5831b132x" path="res://clorox.mp3" id="3_7imtg"]
+[ext_resource type="Texture2D" uid="uid://b87kxq485sc1x" path="res://8ql00u.jpg" id="3_ens5w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kekv5"]
+cull_mode = 2
 albedo_texture = ExtResource("1_xus1o")
 
 [sub_resource type="QuadMesh" id="QuadMesh_qmkcc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqjc8"]
+cull_mode = 2
+albedo_texture = ExtResource("3_ens5w")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ad21e"]
 size = Vector3(2.44141, 2.29492, 0.31665)
@@ -28,14 +34,15 @@ albedo_texture = ExtResource("1_xus1o")
 [node name="CloroxWipes" type="StaticBody3D"]
 script = ExtResource("1_nsv1d")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="wipe" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.43, 0, 0, 0, 2.43, 0, 0, 0, 2.43, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_kekv5")
 mesh = SubResource("QuadMesh_qmkcc")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(-2.43, 0, 2.12437e-07, 0, 2.43, 0, -2.12437e-07, 0, -2.43, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_kekv5")
+[node name="hand" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.43, 0, 0, 0, 2.43, 0, 0, 0, 2.43, 0, 0, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_uqjc8")
 mesh = SubResource("QuadMesh_qmkcc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

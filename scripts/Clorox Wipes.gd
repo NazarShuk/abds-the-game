@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-const SPEED = 10
+var SPEED = 10
 @export var initial_pos : Vector3
 @export var launcher : int
 
@@ -18,11 +18,15 @@ var is_stopped = false
 
 func _ready():
 	global_position = initial_pos
-	if !stop_timer:
-		if !Allsingleton.is_bossfight:
-			$Timer.start(3)
-		else:
+	if !Allsingleton.is_bossfight:
+		$Timer.start(3)
+	else:
+		if !stop_timer:
 			$Timer.start(15)
+	
+	if is_evil:
+		$hand.show()
+		$wipe.hide()
 
 func _process(delta):
 	if !is_stopped:
@@ -36,7 +40,7 @@ func _process(delta):
 		if player.is_dead:
 			queue_free()
 		
-		if global_position.distance_to(player.global_position) < 3:
+		if global_position.distance_to(player.global_position) < 2:
 			player.global_position = global_position
 		
 		$AudioStreamPlayer3D.pitch_scale = 3

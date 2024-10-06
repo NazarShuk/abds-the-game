@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://45erl4lj8ygx"]
+
+[ext_resource type="Texture2D" uid="uid://vvklw85x26dt" path="res://models/blackboard/blackboard-_0009_Layer-1.png" id="1_fhofv"]
+[ext_resource type="Script" path="res://scripts/leader_board.gd" id="1_tybfo"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_qf2ae"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vl53x"]
+transparency = 1
+albedo_texture = ExtResource("1_fhofv")
+
+[sub_resource type="QuadMesh" id="QuadMesh_2h50m"]
+
+[sub_resource type="TextMesh" id="TextMesh_gxe37"]
+text = "WARRIORS OF THE GAME"
+font = ExtResource("2_qf2ae")
+font_size = 36
+
+[sub_resource type="TextMesh" id="TextMesh_0f466"]
+text = "Warrior 1
+123 books"
+font = ExtResource("2_qf2ae")
+font_size = 32
+
+[sub_resource type="TextMesh" id="TextMesh_wut4u"]
+text = "Warrior 1
+123 books"
+font = ExtResource("2_qf2ae")
+font_size = 32
+
+[sub_resource type="TextMesh" id="TextMesh_w6kao"]
+text = "Warrior 1
+123 books"
+font = ExtResource("2_qf2ae")
+font_size = 32
+
+[node name="LeaderBoard" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.0521, 1.46694, -132.968)
+script = ExtResource("1_tybfo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(8.75648, 0, 0, 0, 2.76064, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_vl53x")
+mesh = SubResource("QuadMesh_2h50m")
+
+[node name="title" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.170549, 0.889932, 0)
+mesh = SubResource("TextMesh_gxe37")
+
+[node name="w1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5202, 0.0768692, 0)
+visible = false
+mesh = SubResource("TextMesh_0f466")
+
+[node name="w2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.264769, 0.0768692, 0)
+visible = false
+mesh = SubResource("TextMesh_wut4u")
+
+[node name="w3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82804, 0.0768692, 0)
+visible = false
+mesh = SubResource("TextMesh_w6kao")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

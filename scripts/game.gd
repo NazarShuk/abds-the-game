@@ -99,7 +99,7 @@ var do_vertical_camera_normal = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	#Allsingleton.is_bossfight = true
+	Allsingleton.is_bossfight = true
 	
 	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -119,7 +119,6 @@ func _ready():
 	
 	if Settings.better_lighting != null:
 		sun.visible = Settings.better_lighting
-	prepare_leaderboard()
 	
 	
 	if Allsingleton.is_bossfight:
@@ -149,37 +148,6 @@ func _ready():
 		sun.visible = false
 
 
-func prepare_leaderboard():
-	var http = $LeaderBoard/HTTPRequest
-	http.request(Leaderboard.api_url,["User-Agent: insomnia/9.3.2","Accept: /*/","Content-Length: 0"],HTTPClient.METHOD_GET)
-
-func on_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray):
-	if result == 0:
-		var leaderboard = JSON.parse_string(body.get_string_from_utf8())
-		if !leaderboard: return
-		print(leaderboard)
-		
-		var keys : Array = leaderboard.keys()
-		keys.reverse()
-		
-		for key in range(keys.size()):
-			if key == 0:
-				$LeaderBoard/w1.show()
-				
-				var mesh : TextMesh = $LeaderBoard/w1.mesh
-				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
-			if key == 1:
-				$LeaderBoard/w2.show()
-				
-				var mesh : TextMesh = $LeaderBoard/w2.mesh
-				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
-			if key == 2:
-				$LeaderBoard/w3.show()
-				var mesh : TextMesh = $LeaderBoard/w3.mesh
-				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
-	else:
-		print("error while getting leaderboard")
-		$LeaderBoard.hide()
 
 var leahy_power_fix_num = 0
 var music_pitch_target = 1
@@ -971,13 +939,14 @@ func ping_set_singleton():
 @rpc("any_peer","call_local")
 func pong_set_singleton(id):
 	if multiplayer.is_server():
-		players_singleton_ready += 1
 		set_singleton.rpc_id(id,players[id].deaths,players[id].books_collected,end_game_ending)
+		players_singleton_ready += 1
 
 @rpc("authority","call_local")
 func set_singleton(deaths,books,ending):
 	EndGameSingleton.deaths = deaths
 	EndGameSingleton.books_collected = books
+	
 	
 	#peer.close()
 	if ending == "normal":
@@ -998,7 +967,7 @@ func set_singleton(deaths,books,ending):
 					if Achievements.check_achievement("disoriented_ending"):
 						if Achievements.check_achievement("good_ending"):
 							if Achievements.check_achievement("bad_ending"):
-								#can_bossfight = true
+								can_bossfight = true
 								pass
 		
 		if !can_bossfight:
@@ -1034,6 +1003,7 @@ func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
 
 func info_text(info):
+	if Allsingleton.is_bossfight: return
 	$CanvasLayer2/SomeoneDid.text = info
 	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_color",Color.BLACK)
 	$CanvasLayer2/SomeoneDid.set("theme_override_colors/font_outline_color",Color.WHITE)

@@ -32,12 +32,12 @@ driver/mix_rate=8000
 EndGameSingleton="*res://scripts/end_game_singleton.gd"
 Allsingleton="*res://scripts/allsingleton.gd"
 Settings="*res://scripts/AudioVolume.gd"
-Networking="*res://scripts/networking.gd"
 Achievements="*res://scripts/Achievements.gd"
 LiveSplit="*res://scripts/LiveSplit.gd"
-Idk="*res://scripts/idk.gd"
 Leaderboard="*res://scripts/Leaderboard.gd"
 TipManager="*res://scripts/tips_controller.gd"
+ctrlcombintation="*res://scripts/idk.gd"
+SubtitleManager="*res://scripts/subtitlemanager.gd"
 
 [debug]
 

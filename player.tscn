@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=131 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -54,6 +54,7 @@
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="45_ndhl0"]
 [ext_resource type="AudioStream" uid="uid://10f2ypovtuab" path="res://sounds/whoosh.mp3" id="46_6m3r2"]
 [ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="47_f82oh"]
+[ext_resource type="Script" path="res://Subtitle.gd" id="47_m8xrv"]
 [ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
 [ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="50_ulo8b"]
@@ -616,6 +617,13 @@ _data = {
 "popup": SubResource("Animation_nsk8q")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiy5l"]
+bg_color = Color(0, 0, 0, 0.584314)
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_tk2de"]
 viewport_path = NodePath("Minimap")
 
@@ -1124,6 +1132,7 @@ one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
+visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -2213,6 +2222,27 @@ one_shot = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Tip"]
 stream = ExtResource("46_6m3r2")
 bus = &"Dialogs"
+
+[node name="Subtitle" type="Label" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -102.0
+offset_right = 39.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_wiy5l")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("47_m8xrv")
 
 [node name="Minimap" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
