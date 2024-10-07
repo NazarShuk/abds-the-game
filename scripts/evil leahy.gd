@@ -75,4 +75,7 @@ func _on_evil_leahy_area_entered(area):
 		await Game.sleep(5)
 		overwrite_speed = false
 		$CPUParticles3D.hide()
-		
+
+
+func _on_pitch_timer_timeout():
+	$AudioStreamPlayer3D.pitch_scale = randf_range(0.5,1.5)

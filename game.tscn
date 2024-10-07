@@ -1,4 +1,4 @@
-[gd_scene load_steps=153 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=152 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://45erl4lj8ygx" path="res://scenes/leader_board.tscn" id="17_625id"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://3u3ef1rrt1c0" path="res://pop.mp3" id="17_fndpl"]
-[ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="17_thbsf"]
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
 [ext_resource type="Script" path="res://scripts/skibidiCamera.gd" id="18_kau7v"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
@@ -1463,10 +1462,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 419.0
-offset_top = 152.0
-offset_right = 769.0
-offset_bottom = 502.0
+offset_left = -175.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_wpkks")
@@ -2341,16 +2340,6 @@ script = ExtResource("18_kau7v")
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3.494, 1.07576, -23.905)
 visible = false
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="EvilLeahy"]
-stream = ExtResource("17_thbsf")
-pitch_scale = 0.78
-max_distance = 50.0
-bus = &"Dialogs"
-
-[node name="LeahyCoolTimer" type="Timer" parent="EvilLeahy"]
-wait_time = 0.1
-autostart = true
-
 [node name="FakeFox" type="MeshInstance3D" parent="." groups=["localface"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 51.7988, 1.45983, -190.962)
 visible = false
@@ -3160,7 +3149,6 @@ one_shot = true
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="EvilLeahy/LeahyCoolTimer" to="." method="_on_leahy_cool_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]
 [connection signal="timeout" from="EvilDarel/darel_timer" to="." method="_on_darel_timer_timeout"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bylupyln8p7m8"]
+[gd_scene load_steps=15 format=3 uid="uid://bylupyln8p7m8"]
 
 [ext_resource type="Script" path="res://scripts/evil leahy.gd" id="1_o0g30"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_ameqv"]
+[ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="4_t4c4j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmd6h"]
 albedo_texture = ExtResource("1_xr5qm")
@@ -81,4 +82,15 @@ gravity = Vector3(0, -3.045, 0)
 
 [node name="Unstucker" parent="." instance=ExtResource("3_ameqv")]
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_t4c4j")
+pitch_scale = 0.78
+max_distance = 50.0
+bus = &"Dialogs"
+
+[node name="pitch_timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
 [connection signal="area_entered" from="EvilLeahy" to="." method="_on_evil_leahy_area_entered"]
+[connection signal="timeout" from="pitch_timer" to="." method="_on_pitch_timer_timeout"]

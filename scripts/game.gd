@@ -390,7 +390,6 @@ func receive_steam_usr(id,username):
 		players[id].username = username
 
 func disconenct_btn():
-	
 	multiplayer.multiplayer_peer.close()
 	get_tree().change_scene_to_file("res://game.tscn")
 
@@ -1178,9 +1177,6 @@ func _on_item_list_item_clicked(index, _at_position, mouse_button_index):
 func _on_auto_refresh_timeout():
 	get_friends_lobbies()
 
-
-func _on_leahy_cool_timer_timeout():
-	$EvilLeahy/AudioStreamPlayer3D.pitch_scale = randf_range(0.75,1.75)
 
 @rpc("any_peer","call_local")
 func play_coffee():
