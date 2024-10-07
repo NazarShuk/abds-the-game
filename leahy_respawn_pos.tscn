@@ -8,7 +8,7 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lt5oy"]
 albedo_texture = ExtResource("1_ovtpm")
 
-[node name="LeahyRespawnPos" type="Node3D"]
+[node name="LeahyRespawnPos" type="Node3D" groups=["respawn_pos"]]
 script = ExtResource("1_2i5as")
 node_to_hide = NodePath("MeshInstance3D")
 

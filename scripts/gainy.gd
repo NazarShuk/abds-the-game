@@ -2,12 +2,14 @@ extends CharacterBody3D
 
 @onready var nav_agent = $NavigationAgent3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+@onready var unstucker = $Unstucker
 
 var SPEED = 20
 
-@export var server_target = false
-
 var init_pos : Vector3
+
+var current_player_target = null
+@export var angered = false
 
 func _ready():
 	init_pos = global_position
@@ -24,6 +26,15 @@ func _physics_process(_delta):
 		rotation_degrees.x = 0
 		rotation_degrees.z = 0
 		move_and_slide()
+	
+	if multiplayer.is_server():
+		angered = current_player_target != null
+		unstucker.do_penalties = angered
+		
+		if current_player_target:
+			update_target_location(current_player_target.global_position)
+		else:
+			go_back()
 		
 
 func update_target_location(target_location):
@@ -32,3 +43,22 @@ func update_target_location(target_location):
 
 func go_back():
 	update_target_location(init_pos)
+
+
+func _on_timer_timeout():
+	if multiplayer.is_server():
+		if Game.game_started:
+			if randi_range(0,20) != 1: return
+			
+			var just_a_chill_guy = get_tree().get_nodes_in_group("player").pick_random()
+			
+			if just_a_chill_guy:
+				current_player_target = just_a_chill_guy
+				Game.info_text("Ms.Gainy is angry at " + just_a_chill_guy.steam_name)
+
+
+func _on_area_entered(area):
+	if area.name == "PlayerArea":
+		if current_player_target:
+			if area.get_parent().name == current_player_target.name:
+				current_player_target = null

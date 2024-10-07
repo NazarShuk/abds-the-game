@@ -1,6 +1,8 @@
 extends StaticBody3D
 
-@export var uses_left = 20
+const MAX_USES = 20
+
+@export var uses_left = MAX_USES
 @export var override_drops = false
 @export var overriden_drops = {}
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpyou6w048r5m"]
+[gd_scene load_steps=10 format=3 uid="uid://dpyou6w048r5m"]
 
 [ext_resource type="Script" path="res://scripts/azzu.gd" id="1_s00pa"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="2_q42rl"]
 [ext_resource type="AudioStream" uid="uid://bwlexvmpwptwm" path="res://download_01.mp3" id="3_r52kj"]
+[ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="4_tv4dh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5qd5"]
 transparency = 1
@@ -16,7 +17,18 @@ size = Vector3(0.163818, 1, 0.0349121)
 [sub_resource type="BoxShape3D" id="BoxShape3D_tveud"]
 size = Vector3(1, 1, 0.389648)
 
-[node name="Mr_Azzu" type="CharacterBody3D" groups=["fox"]]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_d7hf2"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:angered")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+
+[node name="Mr_Azzu" type="CharacterBody3D"]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 script = ExtResource("1_s00pa")
 
@@ -53,4 +65,10 @@ autostart = true
 [node name="azzu" type="CollisionShape3D" parent="azzu"]
 shape = SubResource("BoxShape3D_tveud")
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_d7hf2")
+
+[node name="Unstucker" parent="." instance=ExtResource("4_tv4dh")]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="azzu" to="." method="_on_azzu_area_entered"]

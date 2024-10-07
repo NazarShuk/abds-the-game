@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bylupyln8p7m8"]
+[gd_scene load_steps=14 format=3 uid="uid://bylupyln8p7m8"]
 
 [ext_resource type="Script" path="res://scripts/evil leahy.gd" id="1_o0g30"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
+[ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_ameqv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmd6h"]
 albedo_texture = ExtResource("1_xr5qm")
@@ -35,7 +36,7 @@ albedo_color = Color(0, 0.572549, 1, 1)
 radius = 0.125
 height = 0.25
 
-[node name="EvilLeahy" type="CharacterBody3D" groups=["enemies"]]
+[node name="EvilLeahy" type="CharacterBody3D" groups=["enemies", "evil_leahy"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_o0g30")
 
@@ -77,5 +78,7 @@ mesh = SubResource("CapsuleMesh_xrylo")
 emission_shape = 3
 emission_box_extents = Vector3(0.75, 0.75, 0.75)
 gravity = Vector3(0, -3.045, 0)
+
+[node name="Unstucker" parent="." instance=ExtResource("3_ameqv")]
 
 [connection signal="area_entered" from="EvilLeahy" to="." method="_on_evil_leahy_area_entered"]

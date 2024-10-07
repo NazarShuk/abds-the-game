@@ -5,12 +5,15 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var SPEED = 15
 
-@export var server_target = false
-
 const push_force = 1.0
+
+var current_player_target = null
+@export var angered = false
 
 func _physics_process(_delta):
 	if !multiplayer.is_server(): return
+	
+	anger_issues()
 	
 	pick_up_expired_items()
 	
@@ -20,7 +23,15 @@ func _physics_process(_delta):
 	
 	push_items()
 
+func anger_issues():
+	angered = current_player_target != null
+	
+	if current_player_target:
+		update_target_location(current_player_target.global_position)
+
 func pick_up_expired_items():
+	if current_player_target: return
+	
 	var expired_items = get_tree().get_nodes_in_group("expired_item")
 	
 	if expired_items.size() > 0:
@@ -58,7 +69,13 @@ func cloroxes():
 		
 		if distance < 5:
 			if multiplayer.is_server():
-				get_parent().azzu_steal.rpc(clorox.launcher)
+				var player = Game.get_player_by_id(clorox.launcher)
+				if !player: return
+				
+				current_player_target = player
+				Game.info_text("Mr.Azzu is angry")
+			
+			break
 
 func push_items():
 	if multiplayer.is_server():
@@ -68,8 +85,7 @@ func push_items():
 			
 			if collider is RigidBody3D:
 				var push_direction = collision.get_normal()
-				
-				get_parent().push_item.rpc(collider.get_path(),push_direction,push_force)
+				collider.push_item.rpc(push_direction,push_force)
 
 
 func update_target_location(target_location):
@@ -80,8 +96,11 @@ func update_target_location(target_location):
 func _on_timer_timeout():
 	if !multiplayer.is_server(): return
 	
-	var points = get_parent().get_node("School/BookSpawns").get_children()
-	
+	var points = get_tree().get_nodes_in_group("book_spawn")
 	update_target_location(points.pick_random().global_position)
 
-
+func _on_azzu_area_entered(area):
+	if area.name == "PlayerArea":
+		if current_player_target:
+			if area.get_parent().name == current_player_target.name:
+				current_player_target = null

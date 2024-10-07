@@ -1,4 +1,4 @@
-[gd_scene load_steps=131 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=132 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -59,6 +59,7 @@
 [ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="50_ulo8b"]
 [ext_resource type="PackedScene" uid="uid://byaexesg86uo0" path="res://sonicgummies.tscn" id="51_b4gs7"]
+[ext_resource type="Script" path="res://scripts/SomeoneDid.gd" id="51_vep60"]
 [ext_resource type="Texture2D" uid="uid://b2r7lba4oyrdr" path="res://player_hand.png" id="53_0cocr"]
 [ext_resource type="AudioStream" uid="uid://gf4ovd7mf66p" path="res://parry-ultrakill.mp3" id="54_hj1a3"]
 
@@ -1052,9 +1053,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ndfqc")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8c5nr")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="PlayerArea" type="Area3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
 shape = SubResource("CapsuleShape3D_tu1hv")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
@@ -2295,6 +2296,27 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.501961)
 
+[node name="SomeoneDid" type="Label" parent="CanvasLayer/Control"]
+top_level = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -123.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("6_l1x2u")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("51_vep60")
+
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
 process_mode = 3
 visible = false
@@ -2529,8 +2551,8 @@ process_mode = 3
 stream = ExtResource("54_hj1a3")
 bus = &"Dialogs"
 
-[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
-[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
+[connection signal="area_entered" from="PlayerArea" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="PlayerArea" to="." method="_on_area_3d_area_exited"]
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Stamina_timeout" to="." method="_on_stamina_timeout_timeout"]
 [connection signal="timeout" from="ReviveTimer" to="." method="_on_revive_timer_timeout"]

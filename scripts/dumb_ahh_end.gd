@@ -75,25 +75,25 @@ func _on_http_request_request_completed(result, response_code, headers, body):
 		else:
 			prompt_idx = 0
 			$AnimationPlayer.play("main")
-			await get_tree().create_timer(2).timeout
+			await Game.sleep(2)
 			play_da_dialog()
 	else:
 		print("idk error ",result)
 		$AnimationPlayer.play("main")
-		await get_tree().create_timer(2).timeout
+		await Game.sleep(2)
 		
 		var audio = AudioStreamPlayer.new()
 		audio.stream = load("res://18001818_uhm._there_was_s.mp3")
 		add_child(audio)
 		audio.play()
 		audio.bus = "Dialogs"
-		await get_tree().create_timer(10).timeout
+		await Game.sleep(10)
 		get_tree().change_scene_to_file("res://game.tscn")
 		
 
 func play_da_dialog():
 	if prompt_idx == 3:
-		await get_tree().create_timer(5).timeout
+		await Game.sleep(5)
 	if prompt_idx < 4:
 		var audio : AudioStreamPlayer = AudioStreamPlayer.new()
 		add_child(audio)
@@ -120,9 +120,9 @@ func play_da_dialog():
 		audio.bus = "Dialogs"
 		
 		dialog_stream.remove_at(0)
-		await get_tree().create_timer(audio.stream.get_length()).timeout
+		await Game.sleep(audio.stream.get_length())
 		if prompt_idx == 4:
-			await get_tree().create_timer(2).timeout
+			await Game.sleep(2)
 			get_tree().change_scene_to_file("res://game.tscn")
 		else:
 			play_da_dialog()

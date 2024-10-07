@@ -21,7 +21,7 @@ func _ready():
 			$CanvasLayer/ScrollContainer/VBoxContainer.add_child(label)
 
 	
-	for tooltip in TipManager.saved_tips.values():
+	for tooltip in GuiManager.saved_tips.values():
 		var tui : RichTextLabel = tooltip_ui.instantiate()
 		tui.text = tooltip
 		$CanvasLayer/Tooltips/VBoxContainer.add_child(tui)

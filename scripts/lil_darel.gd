@@ -11,7 +11,7 @@ var is_stopped = false
 
 func _ready():
 	if Allsingleton.did_show_parry_tip == false:
-		TipManager.show_tip("[color=green]Parrying[/color]\nWhen a Darel head is close to you, [b]press F[/b] while looking at it to deflect it back at [color=yeloow]Darel.png[/color]", 7)
+		GuiManager.show_tip("[color=green]Parrying[/color]\nWhen a Darel head is close to you, [b]press F[/b] while looking at it to deflect it back at [color=yeloow]Darel.png[/color]", 7)
 		Allsingleton.did_show_parry_tip = true
 
 func _physics_process(delta):

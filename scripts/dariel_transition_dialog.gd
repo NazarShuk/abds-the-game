@@ -10,7 +10,7 @@ func play_streams():
 		stream = str.stream
 		play()
 		timer.start(str.stream.get_length())
-		SubtitleManager.show_subtitle(str.txt,str.stream)
+		GuiManager.show_subtitle(str.txt,str.stream)
 		await timer.timeout
 	
 	playback_finished.emit()

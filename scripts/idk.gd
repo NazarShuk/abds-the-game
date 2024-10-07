@@ -13,5 +13,5 @@ func _process(_delta):
 
 func reset_timer():
 	count = 0
-	await get_tree().create_timer(1).timeout
+	await Game.sleep(1)
 	reset_timer()

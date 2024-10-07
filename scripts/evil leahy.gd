@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+@onready var unstucker = $Unstucker
 
 var SPEED = 6.0
 var speed = SPEED
@@ -56,11 +57,7 @@ func _physics_process(_delta):
 				var push_direction = collision.get_normal()
 				
 				# Apply the force to the RigidBody
-				get_parent().push_item.rpc(collider.get_path(),push_direction,push_force)
-				#collider.apply_central_impulse(-push_direction * push_force)
-		
-		
-		
+				collider.push_item.rpc(push_direction,push_force)
 		
 	move_and_slide()
 
@@ -75,7 +72,7 @@ func _on_evil_leahy_area_entered(area):
 		overwrite_speed = true
 		speed = SPEED / 2
 		$CPUParticles3D.show()
-		await get_tree().create_timer(5).timeout
+		await Game.sleep(5)
 		overwrite_speed = false
 		$CPUParticles3D.hide()
 		

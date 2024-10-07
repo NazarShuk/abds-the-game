@@ -107,7 +107,7 @@ func _ready():
 		if Settings.render_distance:
 			camera_3d.far = Settings.render_distance
 		
-		TipManager.show_tip_once("movement_controls","[color=green]Movement[/color]\nWASD to move, LeftShift to run (consumes stamina), Space to look behind, M to open the minimap")
+		GuiManager.show_tip_once("movement_controls","[color=green]Movement[/color]\nWASD to move, LeftShift to run (consumes stamina), Space to look behind, M to open the minimap")
 
 var is_freaky = false
 var can_use_breaker = true
@@ -145,8 +145,7 @@ func _physics_process(delta):
 				var push_direction = collision.get_normal()
 				
 				# Apply the force to the RigidBody
-				parent.push_item.rpc(collider.get_path(),push_direction,push_force)
-				#collider.apply_central_impulse(-push_direction * push_force)
+				collider.push_item.rpc(push_direction,push_force)
 				
 		control_text_setters()
 		
@@ -225,7 +224,7 @@ func punch():
 				$VisualHand/AnimationPlayer.play("parry")
 				collider.inverse = true
 				collider.is_stopped = true
-				await get_tree().create_timer(0.15).timeout
+				await Game.sleep(0.15)
 				$"Parry sound".play()
 				
 				parry_pause(collider)
@@ -236,7 +235,7 @@ func punch():
 				collider.reversed = true
 				collider.is_evil = false
 				collider.is_stopped = true
-				await get_tree().create_timer(0.15).timeout
+				await Game.sleep(0.15)
 				$"Parry sound".play()
 				
 				parry_pause(collider)
@@ -249,7 +248,7 @@ func punch():
 		$VisualHand/AnimationPlayer.play("punch")
 
 func parry_pause(collider):
-	await get_tree().create_timer(0.25).timeout
+	await Game.sleep(0.25)
 	get_tree().paused = false
 	
 	if is_instance_valid(collider):
@@ -281,30 +280,41 @@ func _input(event):
 	
 					# Set the new rotation by using Euler angles
 					rotation.x = deg_to_rad(vertical_angle)
+	
+	if event is InputEventKey:
+		if OS.has_feature("debug"):
+			if event.pressed:
+				var regex = RegEx.new() # Create a new RegEx object
+				var pattern = "^[0-9]+$" # Pattern to allow only numbers from 0-9
+				regex.compile(pattern) # Compile the pattern
+				
+				if regex.search(event.as_text_keycode()):
+					pick_item(event.as_text_keycode().to_int())
+	
 
 func coffee_timeout():
-	await get_tree().create_timer(6).timeout
+	await Game.sleep(6)
 	boosts["coffee"] -= 1
 
 func redbull_timeout():
-	await get_tree().create_timer(3).timeout
+	await Game.sleep(3)
 	boosts["redbull"] -= 2
 
 func toilet_tp_timeout():
-	await get_tree().create_timer(60).timeout
+	await Game.sleep(60)
 	can_toilet_tp = true
 
 func baja_timeout():
-	await get_tree().create_timer(7.5).timeout
+	await Game.sleep(7.5)
 	boosts["baja"] -= 4.5
 	baja_slow_timeout()
 	
 func sonic_timeout():
-	await get_tree().create_timer(5).timeout
+	await Game.sleep(5)
 	boosts["sonic"] -= 3
 
 func baja_slow_timeout():
-	await get_tree().create_timer(15).timeout
+	await Game.sleep(15)
 	boosts["baja"] += 0.5
 
 var is_in_leahy = false
@@ -331,11 +341,12 @@ func _on_area_3d_area_entered(area):
 		die("mine")
 		parent.on_collect_book.rpc(name.to_int(), area.name,true)
 		
-	elif area.name == "azzu" and parent.azzu_angered == true:
-		die("azzu")
-		parent.azzu_dont_steal.rpc()
+	elif area.name == "azzu":
+		if area.get_parent().angered:
+			die("azzu")
 	elif area.name == "gainy":
-		parent.stop_gainy.rpc(name.to_int())
+		if area.get_parent().angered:
+			die("gainy")
 	elif area.name == "puddle":
 		if !area.get_parent().can_slowdown: return
 		if boosts.has("puddle"):
@@ -346,7 +357,6 @@ func _on_area_3d_area_entered(area):
 	elif area.name == "misuraca":
 		if area.get_parent().is_angry == true:
 			die("misuraca")
-			parent.stop_misuraca.rpc()
 	elif area.name == "Door":
 		parent.set_door_state.rpc(area.get_parent().get_path(),true)
 		play_sound("res://door_open.mp3")
@@ -380,7 +390,7 @@ func _on_timer_timeout():
 			is_running = false
 			can_run = false
 			$Stamina_timeout.start()
-			TipManager.show_tip_once("stamina_timeout","[color=green]Stamina[/color]\nIf stamina [b]reaches 0[/b], you will not be able to run for a few seconds.")
+			GuiManager.show_tip_once("stamina_timeout","[color=green]Stamina[/color]\nIf stamina [b]reaches 0[/b], you will not be able to run for a few seconds.")
 			
 	else:
 		boosts["run"] = 0
@@ -418,16 +428,14 @@ func _on_revive_timer_timeout():
 	is_dead_of_dariel = false
 	$"CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".stop()
 	
-	if death_cause == "gainy":
-		TipManager.show_tip_once("avoiding_gainy","[color=green]Avoiding Ms.Gainey[/color]\nCollect a notebook [color=orange]//[/color] Open the shop [color=orange]//[/color] Get in a freezer [color=orange]//[/color] Talk to Mr.Misuraca [color=orange]//[/color] Slip on a banana",10)
-	elif death_cause == "mine":
-		TipManager.show_tip_once("landmine","[color=green]Bananas[/color]\nDo [b]NOT[/b] add to the death counter in a normal game. Be careful!")
+	if death_cause == "mine":
+		GuiManager.show_tip_once("landmine","[color=green]Bananas[/color]\nDo [b]NOT[/b] add to the death counter in a normal game. Be careful!")
 	elif death_cause == "azzu" or death_cause == "misuraca":
-		TipManager.show_tip_once("clorox_teachers","[color=green]Teachers and Clorox[/color]\nSome people just don't like to get pushed i guess, just [b]don't use a clorox wipe[/b] near or on them.")
+		GuiManager.show_tip_once("clorox_teachers","[color=green]Teachers and Clorox[/color]\nSome people just don't like to get pushed i guess, just [b]don't use a clorox wipe[/b] near or on them.")
 	elif death_cause == "wall":
-		TipManager.show_tip_once("wall_death","[color=green]Walking on walls[/color]\nDo [b]NOT[/b] do that.")
+		GuiManager.show_tip_once("wall_death","[color=green]Walking on walls[/color]\nDo [b]NOT[/b] do that.")
 	elif death_cause == "freezer":
-		TipManager.show_tip_once("freezer_death","[color=green]Freezer[/color]\n Don't stay in the freezer for too long! You will freeze to [color=red]death[/color].")
+		GuiManager.show_tip_once("freezer_death","[color=green]Freezer[/color]\n Don't stay in the freezer for too long! You will freeze to [color=red]death[/color].")
 func pick_item(item: int):
 	
 	for i in $Hand.get_children().size():
@@ -436,7 +444,7 @@ func pick_item(item: int):
 	if item != -1:
 		set_item_vis.rpc(item,true)
 		hand_target_y = 0.3
-		TipManager.show_tip_once("items","[color=green]Items[/color]\nEvery item can be used by clicking [b]either right or left[/b] mouse button. [b]Press Q[/b] to throw the item out.")
+		GuiManager.show_tip_once("items","[color=green]Items[/color]\nEvery item can be used by clicking [b]either right or left[/b] mouse button. [b]Press Q[/b] to throw the item out.")
 	else:
 		hand_target_y = -0.5
 		pass
@@ -504,7 +512,7 @@ func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	return items_chances.keys()[-1]
 
 func fruit_snacks_timeout():
-	await get_tree().create_timer(3).timeout
+	await Game.sleep(3)
 	boosts["fruit snacks"] -= 1
 
 @rpc("any_peer", "call_local")
@@ -872,40 +880,40 @@ func control_text_setters():
 	
 	if cur_item == 0:
 		final_text += "Fruit Snacks\nRight Click - Eat"
-		TipManager.show_tip_once("fruit_snacks","[color=green]Fruit Snacks[/color]\nWhen eaten, will give you a [b]2x speed boost[/b] for a few seconds.")
+		GuiManager.show_tip_once("fruit_snacks","[color=green]Fruit Snacks[/color]\nWhen eaten, will give you a [b]2x speed boost[/b] for a few seconds.")
 	elif cur_item == 1:
 		final_text += "Clorox Wipes\nRight Click - Launch"
-		TipManager.show_tip_once("clorox_wipes","[color=green]Clorox wipes[/color]\nWhen used, will [b]launch a clorox wipe[/b] in the direction you are looking at. It will [b]push everything[/b] along the way.",10)
+		GuiManager.show_tip_once("clorox_wipes","[color=green]Clorox wipes[/color]\nWhen used, will [b]launch a clorox wipe[/b] in the direction you are looking at. It will [b]push everything[/b] along the way.",10)
 	elif cur_item == 2:
 		final_text += "Square Pizza\nRight Click - Eat"
-		TipManager.show_tip_once("pizza","[color=green]Square pizza[/color]\nWhen eaten, you shart and jump. That's it.")
+		GuiManager.show_tip_once("pizza","[color=green]Square pizza[/color]\nWhen eaten, you shart and jump. That's it.")
 	elif cur_item == 3:
 		final_text += "Mtn Dew\nLeft Click - Give to a teacher"
-		TipManager.show_tip_once("mtn_dew","[color=green]Mtn Dew[/color]\nWhen given to Ms.Leahy, she [b]gets stunned[/b] for 5 secodns. When given to Mr.Fox, he will [b]go to the notebook.[/b]",10)
+		GuiManager.show_tip_once("mtn_dew","[color=green]Mtn Dew[/color]\nWhen given to Ms.Leahy, she [b]gets stunned[/b] for 5 secodns. When given to Mr.Fox, he will [b]go to the notebook.[/b]",10)
 	elif cur_item == 4:
 		final_text += "Duck\nRight Click - Squeak"
-		TipManager.show_tip_once("duck_item","[color=green]Duck[/color]\n\nno.")
+		GuiManager.show_tip_once("duck_item","[color=green]Duck[/color]\n\nno.")
 	elif cur_item == 5:
 		final_text += "Sunkist Orange\nLeft Click - Give to a teacher"
-		TipManager.show_tip_once("sunkist","[color=green]Sunkist Orange[/color]\nWhen given to Ms.Leahy, she [b]gets stunned[/b] for 15 secodns. When given to Mr.Fox, he will [b]go to 2 notebooks.[/b]",10)
+		GuiManager.show_tip_once("sunkist","[color=green]Sunkist Orange[/color]\nWhen given to Ms.Leahy, she [b]gets stunned[/b] for 15 secodns. When given to Mr.Fox, he will [b]go to 2 notebooks.[/b]",10)
 	elif cur_item == 6:
 		final_text += "Redbull\nLeft Click - Give to Ms.Leahy\nRight Click - Drink"
-		TipManager.show_tip_once("redbull","[color=green]Redbull[/color]\nJust [b]don't[/b] give it to Ms.Leahy please.")
+		GuiManager.show_tip_once("redbull","[color=green]Redbull[/color]\nJust [b]don't[/b] give it to Ms.Leahy please.")
 	elif cur_item == 7:
 		if $"Hand/Bucket 7/Bucket/water".visible:
 			final_text += "Bucket\nRight Click - Pour water out"
 		else:
 			final_text += "Bucket\nFill the bucket to use it"
-		TipManager.show_tip_once("bucket_item","[color=green]Bucket[/color]\nCan be filled up using a [b]water fountain[/b]. When it's full, can be used to make a [b]puddle[/b] that will [b]slow Ms.Leahy[/b] down",10)
+		GuiManager.show_tip_once("bucket_item","[color=green]Bucket[/color]\nCan be filled up using a [b]water fountain[/b]. When it's full, can be used to make a [b]puddle[/b] that will [b]slow Ms.Leahy[/b] down",10)
 	elif cur_item == 8:
 		final_text += "Baja Blast\nRight Click - Drink\nLeft Click - Give to Ms.Leahy"
-		TipManager.show_tip_once("baja_blast","[color=green]Baja Blast[/color]\nWhen drinked, gives you a huge speedboost for a few seconds, but you get [b]withdrawals[/b]. Same with [b]Ms.Leahy[/b]")
+		GuiManager.show_tip_once("baja_blast","[color=green]Baja Blast[/color]\nWhen drinked, gives you a huge speedboost for a few seconds, but you get [b]withdrawals[/b]. Same with [b]Ms.Leahy[/b]")
 	elif cur_item == 9:
 		final_text += "Fire Extinguisher\n Right Click - Use"
-		TipManager.show_tip_once("fire_ext","[color=green]Fire Extinguisher[/color]\nWhen used, will make a little [b]smoke cloud[/b], that [b]no one can pass through[/b]")
+		GuiManager.show_tip_once("fire_ext","[color=green]Fire Extinguisher[/color]\nWhen used, will make a little [b]smoke cloud[/b], that [b]no one can pass through[/b]")
 	elif cur_item == 10:
 		final_text += "Sonic Gummies\n Right Click - Eat"
-		TipManager.show_tip_once("sonic_gummies","[color=green]Sonnic gummies[/color]\nWhen eaten, will give you a [b]speed boost[/b] for a few seconds.")
+		GuiManager.show_tip_once("sonic_gummies","[color=green]Sonnic gummies[/color]\nWhen eaten, will give you a [b]speed boost[/b] for a few seconds.")
 		
 	controls_text.text = final_text
 
@@ -1048,7 +1056,7 @@ func movement(delta):
 				
 				if Input.is_action_just_pressed("interact"):
 					if ray.get_collider() != null and get_cur_item() == -1:
-						if ray.get_collider().is_in_group("vending_machine"):
+						if ray.get_collider().is_in_group("vending_machines"):
 							parent.use_vending_machine.rpc(name.to_int(),ray.get_collider().name,item_weights)
 						
 					if ray.get_collider() != null and Game.game_started:
@@ -1119,9 +1127,9 @@ func movement(delta):
 							$ToiletTimeout.start()
 							$"CanvasLayer/Control/cool transition".show()
 							$"CanvasLayer/Control/cool transition".play()
-							await get_tree().create_timer(0.7).timeout
+							await Game.sleep(0.7)
 							global_position = farthest_obj.global_position
-							await  get_tree().create_timer(0.7).timeout
+							await Game.sleep(0.7)
 							$"CanvasLayer/Control/cool transition".hide()
 							play_sound("res://flush.mp3",5)
 						
@@ -1140,10 +1148,11 @@ func movement(delta):
 						var evil_leahy = get_tree().get_first_node_in_group("enemies")
 						var distance = global_position.distance_to(evil_leahy.global_position)
 						
-						var fox = get_tree().get_first_node_in_group("fox")
+						var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
 						var dist = global_position.distance_to(fox.global_position)
 						if dist < 20:
 							pick_item(-1)
+							
 							parent.mr_fox_collect.rpc(false)
 						elif distance < 15:
 							pick_item(-1)
@@ -1152,14 +1161,15 @@ func movement(delta):
 						var evil_leahy = get_tree().get_first_node_in_group("enemies")
 						var distance = global_position.distance_to(evil_leahy.global_position)
 						
-						var fox = get_tree().get_first_node_in_group("fox")
+						var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
 						var dist = global_position.distance_to(fox.global_position)
 						if dist < 30:
 							pick_item(-1)
 							parent.mr_fox_collect.rpc(true)
 						elif distance < 30:
 							pick_item(-1)
-							parent.appease_leahy.rpc(steam_name,15)
+							parent.appease_leahy.rpc(steam_name,5)
+						
 					elif get_cur_item() == 6:
 						var evil_leahy = get_tree().get_first_node_in_group("enemies")
 						var distance = global_position.distance_to(evil_leahy.global_position)

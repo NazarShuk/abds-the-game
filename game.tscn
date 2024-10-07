@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=153 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
 [ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="5_grswa"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="5_jibb3"]
-[ext_resource type="Script" path="res://scripts/SomeoneDid.gd" id="5_pfett"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
 [ext_resource type="Shader" path="res://black squares.gdshader" id="5_xgi1f"]
@@ -22,11 +21,12 @@
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
 [ext_resource type="PackedScene" uid="uid://xxyguo1ps1gc" path="res://school.tscn" id="17_3oefh"]
-[ext_resource type="PackedScene" uid="uid://45erl4lj8ygx" path="res://scenens/leader_board.tscn" id="17_625id"]
+[ext_resource type="PackedScene" uid="uid://45erl4lj8ygx" path="res://scenes/leader_board.tscn" id="17_625id"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://3u3ef1rrt1c0" path="res://pop.mp3" id="17_fndpl"]
 [ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="17_thbsf"]
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
+[ext_resource type="Script" path="res://scripts/skibidiCamera.gd" id="18_kau7v"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
 [ext_resource type="PackedScene" uid="uid://bd6avbb065m7b" path="res://leahy_respawn_pos.tscn" id="20_rxfji"]
@@ -104,101 +104,72 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath(".:leahy_look")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("Mr Fox:position")
+properties/4/path = NodePath(".:absent")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath(".:absent")
+properties/5/path = NodePath(".:is_pacer")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath(".:is_pacer")
+properties/6/path = NodePath(".:pacer_deadly")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath(".:pacer_deadly")
+properties/7/path = NodePath("FakeFox:position")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath("FakeFox:position")
+properties/8/path = NodePath(".:do_silent_lunch")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath(".:azzu_angered")
+properties/9/path = NodePath(".:do_vertical_camera")
 properties/9/spawn = true
 properties/9/replication_mode = 1
-properties/10/path = NodePath(".:do_silent_lunch")
+properties/10/path = NodePath(".:death_timeout")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath(".:do_vertical_camera")
+properties/11/path = NodePath(".:silent_lunch_duration")
 properties/11/spawn = true
 properties/11/replication_mode = 1
-properties/12/path = NodePath(".:death_timeout")
+properties/12/path = NodePath(".:landmine_death")
 properties/12/spawn = true
 properties/12/replication_mode = 1
-properties/13/path = NodePath(".:silent_lunch_duration")
+properties/13/path = NodePath(".:shop_timeout")
 properties/13/spawn = true
 properties/13/replication_mode = 1
-properties/14/path = NodePath(".:landmine_death")
+properties/14/path = NodePath(".:players_in_lobby")
 properties/14/spawn = true
 properties/14/replication_mode = 1
-properties/15/path = NodePath("Mr_Azzu:position")
+properties/15/path = NodePath(".:is_in_lobby")
 properties/15/spawn = true
 properties/15/replication_mode = 1
-properties/16/path = NodePath("Mr_Azzu:rotation")
+properties/16/path = NodePath(".:deaths_per_player")
 properties/16/spawn = true
-properties/16/replication_mode = 1
-properties/17/path = NodePath("Ms_Gainy:position")
+properties/16/replication_mode = 2
+properties/17/path = NodePath(".:breaker_timeout")
 properties/17/spawn = true
-properties/17/replication_mode = 1
-properties/18/path = NodePath("Ms_Gainy:rotation")
+properties/17/replication_mode = 2
+properties/18/path = NodePath(".:enable_breaker")
 properties/18/spawn = true
-properties/18/replication_mode = 1
-properties/19/path = NodePath(".:shop_timeout")
+properties/18/replication_mode = 2
+properties/19/path = NodePath(".:enable_shop")
 properties/19/spawn = true
-properties/19/replication_mode = 1
-properties/20/path = NodePath(".:players_in_lobby")
+properties/19/replication_mode = 2
+properties/20/path = NodePath(".:enable_coffee")
 properties/20/spawn = true
-properties/20/replication_mode = 1
-properties/21/path = NodePath(".:is_in_lobby")
+properties/20/replication_mode = 2
+properties/21/path = NodePath(".:coffee_timeout")
 properties/21/spawn = true
-properties/21/replication_mode = 1
-properties/22/path = NodePath(".:deaths_per_player")
+properties/21/replication_mode = 2
+properties/22/path = NodePath("Music2:pitch_scale")
 properties/22/spawn = true
-properties/22/replication_mode = 2
-properties/23/path = NodePath(".:breaker_timeout")
+properties/22/replication_mode = 1
+properties/23/path = NodePath(".:leahy_appeased")
 properties/23/spawn = true
 properties/23/replication_mode = 2
-properties/24/path = NodePath(".:enable_breaker")
+properties/24/path = NodePath("SubViewport/skibidiCamera:position")
 properties/24/spawn = true
-properties/24/replication_mode = 2
-properties/25/path = NodePath(".:enable_shop")
+properties/24/replication_mode = 1
+properties/25/path = NodePath(".:is_leahy_baja_blast")
 properties/25/spawn = true
 properties/25/replication_mode = 2
-properties/26/path = NodePath(".:enable_coffee")
-properties/26/spawn = true
-properties/26/replication_mode = 2
-properties/27/path = NodePath(".:coffee_timeout")
-properties/27/spawn = true
-properties/27/replication_mode = 2
-properties/28/path = NodePath("Music2:pitch_scale")
-properties/28/spawn = true
-properties/28/replication_mode = 1
-properties/29/path = NodePath(".:leahy_appeased")
-properties/29/spawn = true
-properties/29/replication_mode = 2
-properties/30/path = NodePath("SubViewport/skibidiCamera:position")
-properties/30/spawn = true
-properties/30/replication_mode = 1
-properties/31/path = NodePath(".:is_leahy_baja_blast")
-properties/31/spawn = true
-properties/31/replication_mode = 2
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dw4kk"]
-properties/0/path = NodePath("SomeoneDid:text")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("SomeoneDid:theme_override_colors/font_color")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("SomeoneDid:theme_override_colors/font_outline_color")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_8oj72"]
 length = 0.001
@@ -1282,45 +1253,12 @@ one_shot = true
 [node name="Absences" type="Timer" parent="."]
 wait_time = 15.0
 
-[node name="LeahyPosDiff" type="Timer" parent="."]
-autostart = true
-
-[node name="GainyTimer" type="Timer" parent="."]
-wait_time = 30.0
-one_shot = true
-
 [node name="Discord" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
 [node name="Bet timer" type="Timer" parent="."]
 one_shot = true
-
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-layer = 11
-
-[node name="SomeoneDid" type="Label" parent="CanvasLayer2"]
-top_level = true
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -123.0
-offset_bottom = -75.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 3
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-script = ExtResource("5_pfett")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer2"]
-replication_config = SubResource("SceneReplicationConfig_dw4kk")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 6
@@ -1525,10 +1463,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -175.0
-offset_right = 175.0
-offset_bottom = 175.0
+offset_left = 419.0
+offset_top = 152.0
+offset_right = 769.0
+offset_bottom = 502.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_wpkks")
@@ -2395,6 +2333,7 @@ projection = 1
 size = 15.0
 near = 0.001
 far = 20.0
+script = ExtResource("18_kau7v")
 
 [node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
 
@@ -3204,8 +3143,6 @@ one_shot = true
 
 [connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
 [connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
-[connection signal="timeout" from="LeahyPosDiff" to="." method="_on_leahy_pos_diff_timeout"]
-[connection signal="timeout" from="GainyTimer" to="." method="_on_gainy_timer_timeout"]
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/connect local" to="." method="_on_connect_pressed"]

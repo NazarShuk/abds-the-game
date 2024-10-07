@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var nav_agent = $NavigationAgent3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+@onready var unstucker = $Unstucker
 
 
 var SPEED = 10
@@ -14,6 +15,8 @@ var init_pos : Vector3
 var angerer
 
 const push_force = 1.0
+
+var broken_machines = []
 
 func _ready():
 	init_pos = global_position
@@ -31,8 +34,6 @@ func _physics_process(_delta):
 		rotation_degrees.z = 0
 		move_and_slide()
 	
-
-	
 	var cloroxes = get_tree().get_nodes_in_group("clorox_wipes")
 	
 	for clorox in cloroxes:
@@ -40,10 +41,15 @@ func _physics_process(_delta):
 		
 		if distance < 5:
 			if multiplayer.is_server():
-				angerer = get_parent().get_node(NodePath(str(clorox.launcher)))
+				angerer = Game.get_player_by_id(clorox.launcher)
 				Game.info_text("Mr.Misuraca is angry")
 	
 	if multiplayer.is_server():
+		unstucker.do_penalties = ((angerer != null) and broken_machines.size() > 0)
+		
+		go_back()
+		fix_vending_machines()
+		
 		for index in range(get_slide_collision_count()):
 			var collision = get_slide_collision(index)
 			var collider = collision.get_collider()
@@ -54,8 +60,7 @@ func _physics_process(_delta):
 				var push_direction = collision.get_normal()
 				
 				# Apply the force to the RigidBody
-				get_parent().push_item.rpc(collider.get_path(),push_direction,push_force)
-				#collider.apply_central_impulse(-push_direction * push_force)
+				collider.push_item.rpc(push_direction,push_force)
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:
@@ -63,9 +68,31 @@ func update_target_location(target_location):
 
 func go_back():
 	if angerer:
-		
 		update_target_location(angerer.global_position)
 		is_angry = true
 	else:
 		update_target_location(init_pos)
 		is_angry = false
+
+
+func fix_vending_machines():
+	if !multiplayer.is_server(): return
+	var vending_machines = get_tree().get_nodes_in_group("vending_machines")
+	
+	broken_machines = []
+	
+	for machine in vending_machines:
+		if machine.uses_left <= 0:
+			broken_machines.append(machine)
+			var dst = global_position.distance_to(machine.global_position)
+			if dst < 2:
+				machine.uses_left = machine.MAX_USES
+	
+	if !angerer and broken_machines.size() > 0:
+		update_target_location(broken_machines[0].global_position)
+
+func _on_misuraca_area_entered(area):
+	if area.name == "PlayerArea":
+		if angerer:
+			if area.get_parent().name == angerer.name:
+				angerer = null

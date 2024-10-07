@@ -95,7 +95,7 @@ func spin():
 	var target_rotation = randf_range(target_reward.from,target_reward.to)
 	rotate_speed = 20
 	can_spin = false
-	await get_tree().create_timer(5).timeout
+	await Game.sleep(5)
 	
 	rotate_speed = 0
 	rotate_speed = 0
@@ -106,7 +106,7 @@ func spin():
 	print(target_reward.name)
 	give_reward(target_reward.name)
 	
-	await get_tree().create_timer(60).timeout
+	await Game.sleep(60)
 	rotate_speed = 1
 	is_idle = true
 	can_spin = true

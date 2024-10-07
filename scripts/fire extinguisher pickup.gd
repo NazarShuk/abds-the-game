@@ -38,7 +38,7 @@ func break_glass():
 			can_pickup = false
 			can_break = false
 			$Timer.stop()
-			await get_tree().create_timer(20).timeout
+			await Game.sleep(20)
 			$MeshInstance3D6.show()
 			$"Fire Extinguisher".show()
 			strength_left = 10

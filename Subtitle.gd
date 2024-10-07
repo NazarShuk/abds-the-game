@@ -3,7 +3,7 @@ extends Label
 var subtitles_queue = {}
 
 func _ready():
-	SubtitleManager.on_subtitle.connect(_on_subtitle)
+	GuiManager.on_subtitle.connect(_on_subtitle)
 	text = ""
 
 func _process(delta):

@@ -4,7 +4,7 @@ extends ColorRect
 @onready var audio = $AudioStreamPlayer
 
 func _ready():
-	TipManager.tip_created.connect(_on_tip)
+	GuiManager.tip_created.connect(_on_tip)
 
 func _on_tip(text : String, duration : float):
 	label.text = text

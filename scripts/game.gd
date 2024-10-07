@@ -24,9 +24,6 @@ var book_boost = 0
 
 @export var leahy_look : bool
 
-@onready var FOX_OG_POS = $"Mr Fox".global_position
-@onready var mr_fox = $"Mr Fox"
-var fox_follow = false
 
 @export var is_pacer = false
 @export var pacer_deadly = false
@@ -34,12 +31,7 @@ var is_pacer_intro = false
 
 var debug_host = false
 
-var leahy_diff = 9999
-var leahy_last_pos = Vector3(0,0,0)
-var leahy_diff_penalty = 0
-
 @onready var mr_azzu = $Mr_Azzu
-@export var azzu_angered = false
 
 # Customization
 @export var do_azzu_steal = true # DONE
@@ -88,6 +80,9 @@ var enable_live_split = true
 @export var controls_text : Label
 
 var do_vertical_camera_normal = false
+
+func _enter_tree():
+	Game.reset_values()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -142,6 +137,7 @@ func _ready():
 		$CanvasLayer/Lobby/playerListText.hide()
 		
 		Game.sun.visible = false
+	
 
 var leahy_power_fix_num = 0
 var music_pitch_target = 1
@@ -151,9 +147,6 @@ var music_pitch_boost = 1
 
 @export var is_leahy_baja_blast = false
 var leahy_baja_timer = 0
-
-var is_misuraca_fixing = false
-var is_misuraca_disabled = false
 
 @onready var boss_bar = $CanvasLayer/Main/Bossbar/ProgressBar
 @onready var evil_darel = $EvilDarel
@@ -212,29 +205,6 @@ func _process(delta):
 			total += players[idd].books_collected
 		total_books = total
 		
-		var vending_machines = get_tree().get_nodes_in_group("vending_machine")
-		var broken_vending_machines = []
-		 
-		for vm in vending_machines:
-			if vm is StaticBody3D:
-				if vm.uses_left <= 0:
-					if $Mr_Misuraca.global_position.distance_to(vm.global_position) < 2:
-						vm.uses_left = 20
-					else:
-						broken_vending_machines.append(vm)
-		
-		if !is_misuraca_disabled:
-			if broken_vending_machines.size() > 0:
-				$Mr_Misuraca.update_target_location(broken_vending_machines[0].global_position)
-				is_misuraca_fixing = true
-			else:
-				$Mr_Misuraca.go_back()
-				is_misuraca_fixing = false
-		else:
-			$Mr_Misuraca.go_back()
-			is_misuraca_fixing = false
-		
-		
 		
 		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target * music_pitch_boost),0.05)
 		
@@ -260,27 +230,6 @@ func _process(delta):
 		else:
 			collected_books_label.text = "Find a ELA book!"
 		leahy_speed = evil_leahy.SPEED
-		
-		$SubViewport/skibidiCamera.global_position = evil_leahy.global_position + Vector3(0,7,0)
-		$SubViewport/skibidiCamera.global_rotation_degrees.x = -90
-		$SubViewport/skibidiCamera.set_orthogonal(15,0.001,1000)
-		
-
-		
-		if fox_follow && do_fox_help:
-			mr_fox.update_target_location(book_pos)
-		else:
-			mr_fox.update_target_location(FOX_OG_POS)
-			
-		if gainy_attack:
-			if gainy_target:
-				ms_gainy.update_target_location(gainy_target.global_position)
-				if players[gainy_target.name.to_int()].is_dead:
-					gainy_attack = false
-					gainy_target = null
-					
-		else:
-			ms_gainy.go_back()
 
 	if !Allsingleton.is_bossfight:
 		if Game.game_started and multiplayer.is_server() and !absent:
@@ -479,9 +428,7 @@ func _on_peer_connected(id = 1):
 	
 	update_player_text()
 	
-	
-	
-	await get_tree().create_timer(1).timeout
+	await Game.sleep(1)
 	request_steam_usr.rpc_id(id)
 	
 	if Allsingleton.is_bossfight:
@@ -517,7 +464,7 @@ func pre_start_game_btn():
 func spawn_players():
 	
 	if !OS.has_feature("debug"):
-		await get_tree().create_timer(8).timeout
+		await Game.sleep(8)
 	for pl_id in players_ids:
 		var packed_player = preload("res://player.tscn")
 		var player = packed_player.instantiate()
@@ -532,7 +479,7 @@ func spawn_players():
 		
 	players_spawned = true
 	if do_vertical_camera:
-		TipManager.show_tip_once.rpc("vertical_camera","[color=green][b]Super[/b] advanced camera[/color]\nSince you enabled it, suffer. To rotate the camera on the z axis, look north/south. To rotate the camera on the x axis, look east/west.",10)
+		GuiManager.show_tip_once.rpc("vertical_camera","[color=green][b]Super[/b] advanced camera[/color]\nSince you enabled it, suffer. To rotate the camera on the z axis, look north/south. To rotate the camera on the x axis, look east/west.",10)
 
 
 @rpc("authority","call_local")
@@ -590,7 +537,7 @@ func on_collect_book(id,book_name,personal):
 			
 			if total >= 3:
 				remove_fence.rpc()
-				TipManager.show_tip_once.rpc("gambling","[color=green]Gambling!!![/color]\n The fence around the item wheel is removed when you collect [b]3 notebooks[/b]. Go gamble.")
+				GuiManager.show_tip_once.rpc("gambling","[color=green]Gambling!!![/color]\n The fence around the item wheel is removed when you collect [b]3 notebooks[/b]. Go gamble.")
 			
 			if total == 1:
 				if !Game.game_started:
@@ -633,14 +580,9 @@ func on_collect_book(id,book_name,personal):
 				Game.info_text(player_name + " collected a book!")
 			else:
 				Game.info_text("A book was collected!")
-			fox_notebooks_left -= 1
-			if fox_notebooks_left <= 0:
-				fox_follow = false
-				fox_notebooks_left = 0
-				
 			
-			gainy_attack = false
-			gainy_target = null
+			if Game.fox_notebooks_left >= 1:
+				Game.fox_notebooks_left -= 1
 			split_for_everyone.rpc()
 			
 			if is_bet:
@@ -748,7 +690,6 @@ func start_da_game():
 			Steam.setLobbyJoinable(lobby_id,false)
 		if !Allsingleton.is_bossfight:
 			leahy_look = true
-			$GainyTimer.start(gainy_attack_interval)
 
 func _on_host_local_pressed():
 	peer = ENetMultiplayerPeer.new()
@@ -781,7 +722,7 @@ func _on_timer_timeout():
 			$EvilDarel.show()
 			$CanvasLayer/Main/Bossbar.show()
 			$CanvasLayer/ColorRect/AnimationPlayer.play("bomboklatz")
-			TipManager.show_tip("[color=green]Movement[/color]\nPress [b]space[/b] to jump [color=orange]//[/color] press [b]F key[/b] to punch [color=orange]//[/color] look up and down with [b]mouse[/b]",7)
+			GuiManager.show_tip("[color=green]Movement[/color]\nPress [b]space[/b] to jump [color=orange]//[/color] press [b]F key[/b] to punch [color=orange]//[/color] look up and down with [b]mouse[/b]",7)
 			
 			var timer = Timer.new()
 			add_child(timer)
@@ -789,7 +730,7 @@ func _on_timer_timeout():
 			await timer.timeout
 			timer.queue_free()
 			
-			TipManager.show_tip("[color=green]Darel.png[/color]\nDamage [b]Darel.png[/b] with clorox wipes [color=orange]//[/color] by collecting books", 7)
+			GuiManager.show_tip("[color=green]Darel.png[/color]\nDamage [b]Darel.png[/b] with clorox wipes [color=orange]//[/color] by collecting books", 7)
 
 @rpc("authority","call_local")
 func update_approching_label(meters):
@@ -894,7 +835,7 @@ func end_game(ending : String):
 		
 		if players_in_lobby > 1:
 			while players_singleton_ready != players_singleton_required:
-				await get_tree().create_timer(0.1).timeout
+				await Game.sleep(0.1)
 				print("waiting for players to disconnect")
 			
 			print("all players disconnected")
@@ -998,21 +939,17 @@ func _on_appeasment_timeout():
 	if !is_pacer_intro:
 		leahy_appeased = false
 
-var fox_notebooks_left = 0
 
 @rpc("any_peer","call_local")
 func mr_fox_collect(is_sunkist):
 	if multiplayer.is_server():
 		if do_fox_help:
-			if !fox_follow:
-				fox_follow = true
-				if is_sunkist:
-					fox_notebooks_left = 2
-				else:
-					fox_notebooks_left = 1
+			if is_sunkist:
+				Game.fox_notebooks_left += 2
 			else:
-				fox_notebooks_left += 1
-			Game.info_text("Follow Mr.Fox to find " + str(fox_notebooks_left) + " notebooks!")
+				Game.fox_notebooks_left += 1
+			
+			Game.info_text("Follow Mr.Fox to find " + str(Game.fox_notebooks_left) + " notebooks!")
 
 
 func _on_button_5_pressed():
@@ -1033,7 +970,7 @@ func _on_absences_timeout():
 		hide_approaching_label.rpc()
 		Game.info_text("Ms.Leahy is gone???")
 		music_pitch_target = 0.5
-		TipManager.show_tip_once.rpc("absences","[color=green]Absences[/color]\n\"Sometimes\", Ms.Leahy is absent. She is gone!!!!! Have fun, go nuts!")
+		GuiManager.show_tip_once.rpc("absences","[color=green]Absences[/color]\n\"Sometimes\", Ms.Leahy is absent. She is gone!!!!! Have fun, go nuts!")
 	else:
 		if absent == true:
 			absent = false
@@ -1051,26 +988,6 @@ func set_absent(is_absent : bool):
 	else:
 		evil_leahy.visible = true
 		$EvilLeahy/AudioStreamPlayer3D.play()
-
-@rpc("any_peer","call_local")
-func azzu_steal(launcher):
-	
-	if multiplayer.is_server() && canPlayersMove:
-		if !do_azzu_steal: return
-		
-		Game.info_text(get_node(str(launcher)).steam_name + " angered Mr.Azzu")
-		mr_azzu.server_target = true
-		mr_azzu.update_target_location(get_node(str(launcher)).global_position)
-		
-		azzu_angered = true
-
-@rpc("any_peer","call_local")
-func azzu_dont_steal():
-	if multiplayer.is_server():
-		canPlayersMove = true
-		azzu_angered = false
-		mr_azzu.server_target = false
-		mr_azzu._on_timer_timeout()
 
 
 
@@ -1128,7 +1045,7 @@ func run_pacer_test() -> void:
 			
 			pl.finished_pacer = false
 		
-		await get_tree().create_timer(time_for_shuttle).timeout
+		await Game.sleep(time_for_shuttle)
 
 		total_laps += 1
 		current_shuttle += 1
@@ -1183,7 +1100,7 @@ func start_da_pacer(id = -1):
 		$"Bet timer".paused = true
 		hide_approaching_label.rpc()
 		
-		TipManager.show_tip_once.rpc("pacer_test","[color=green]Pacer test[/color]\nEvery lap go to the [b]blue targets[/b]. You will get a notebook [b]every 10 laps.[/b] If [b]any[/b] player fails, the test is over.", 10)
+		GuiManager.show_tip_once.rpc("pacer_test","[color=green]Pacer test[/color]\nEvery lap go to the [b]blue targets[/b]. You will get a notebook [b]every 10 laps.[/b] If [b]any[/b] player fails, the test is over.", 10)
 
 func _on_pacer_start_timer_timeout():
 	canPlayersMove = true
@@ -1227,62 +1144,6 @@ func stop_pacer():
 		set_pacer_target_visibility.rpc($"School/Pacer/Pacer target".get_path(),false)
 		set_pacer_target_visibility.rpc($"School/Pacer/Pacer target2".get_path(),false)
 
-var penalties = {
-	"EvilLeahy": 0,
-	"Mr_Azzu": 0,
-	"Mr Fox": 0,
-	"Ms_Gainy": 0,
-	"Mr_Misuraca": 0
-}
-var last_poses = {
-	"EvilLeahy": Vector3(),
-	"Mr_Azzu": Vector3(),
-	"Mr Fox": Vector3(),
-	"Ms_Gainy": Vector3(),
-	"Mr_Misuraca": Vector3()
-}
-
-func _on_leahy_pos_diff_timeout():
-	if !multiplayer.has_multiplayer_peer(): return
-	if !multiplayer.is_server(): return
-	if !Game.game_started: return
-	
-	for teacher in penalties:
-		var diff = last_poses[teacher].distance_to(get_node(teacher).global_position)
-		last_poses[teacher] = get_node(teacher).global_position
-		if diff > 1:
-			penalties[teacher] = 0
-		else:
-			if teacher == "Ms_Gainy":
-				if gainy_target:
-					penalties[teacher] += 1
-			elif teacher == "Mr Fox":
-				if fox_notebooks_left > 0:
-					penalties[teacher] += 1
-			elif teacher == "EvilLeahy":
-				if !is_leahy_baja_blast:
-					if !leahy_appeased:
-						if !absent:
-							penalties[teacher] += 1
-			elif teacher == "Mr_Misuraca":
-				if $Mr_Misuraca.angerer or is_misuraca_fixing:
-					penalties[teacher] += 1
-			else:
-				penalties[teacher] += 1
-		
-		if penalties[teacher] > 7:
-			var min_dst = 99999
-			var cls_pos = Vector3(0,0,0)
-			for respawn_pos : Node3D in $School/LeahyPenaltyPos.get_children():
-				var dst = get_node(teacher).global_position.distance_to(respawn_pos.global_position)
-				if dst < min_dst:
-					cls_pos = respawn_pos.global_position
-					min_dst = dst
-		
-			get_node(teacher).global_position = cls_pos
-			penalties[teacher] = 0
-
-
 func _on_open_config_pressed():
 	$CanvasLayer/MultiPlayer/ConfigPanel.visible = !$CanvasLayer/MultiPlayer/ConfigPanel.visible
 
@@ -1306,43 +1167,6 @@ func update_player_text():
 			final_text += str(pl_id) + "\n"
 	player_list_text.text = final_text
 
-var gainy_attack = false
-@onready var ms_gainy = $Ms_Gainy
-var gainy_target
-
-
-func _on_gainy_timer_timeout():
-	if Allsingleton.is_bossfight: return
-	if multiplayer.is_server():
-		$GainyTimer.start(gainy_attack_interval)
-		if (!do_gainy_spawn): return
-		if (is_pacer_intro): return
-		
-		
-		if randi_range(0,gainy_attack_chance) == 1:
-			gainy_attack_func()
-
-func gainy_attack_func():
-	gainy_attack = true
-	var pls = get_tree().get_nodes_in_group("player")
-	
-	var just_some_random_guy = pls.pick_random()
-	
-	ms_gainy.update_target_location(just_some_random_guy.global_position)
-	
-	gainy_target = just_some_random_guy
-	
-	Game.info_text("Ms.Gainy is angry at " + just_some_random_guy.steam_name)
-
-@rpc("any_peer","call_local")
-func stop_gainy(id):
-	if multiplayer.is_server():
-		if gainy_target:
-			if gainy_target.name.to_int() == id:
-				gainy_target.die.rpc_id(gainy_target.name.to_int(),"gainy")
-				
-				gainy_attack = false
-				gainy_target = null
 
 
 func _on_item_list_item_clicked(index, _at_position, mouse_button_index):
@@ -1377,10 +1201,6 @@ func spawn_puddle(pos):
 	add_child(puddle,true)
 	puddle.global_position = pos
 
-@rpc("any_peer","call_local")
-func stop_misuraca():
-	if multiplayer.is_server():
-		$Mr_Misuraca.angerer = null
 
 var is_bet = false
 var bet_books_left = -1
@@ -1409,9 +1229,9 @@ func depression_ending():
 	
 	$Music2.volume_db = -80
 	Game.environment.background_energy_multiplier = 0.25
-	await get_tree().create_timer(9).timeout
+	await Game.sleep(9)
 	Game.environment.background_energy_multiplier = 1
-	await get_tree().create_timer(2).timeout
+	await Game.sleep(2)
 	if multiplayer.is_server():
 		canPlayersMove = false
 		is_dp = true
@@ -1428,7 +1248,6 @@ func loose_notebooks(books_loss):
 		total += players[p].books_collected
 	
 	if total < 0:
-		#end_game.rpc("br")
 		depression_ending.rpc()
 
 func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
@@ -1439,9 +1258,6 @@ func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 		loose_notebooks(bet_loss)
 		bet_books_left = -1
 		$"Bet timer".stop()
-		
-
-		
 		
 	elif bet_books_left <= 0 or (overwrite and won == true):
 		Game.info_text("You won the bet")
@@ -1479,20 +1295,6 @@ func remove_dropped_item(path):
 		if get_node(path):
 			get_node(path).queue_free()
 
-
-@rpc("any_peer","call_local")
-func push_item(collider,push_direction,push_force):
-	if multiplayer.is_server():
-		if get_node(collider):
-			get_node(collider).apply_central_impulse(-push_direction * push_force)
-
-@export var noise_points = []
-
-@rpc("any_peer","call_local")
-func add_noise_point(pos):
-	if multiplayer.is_server():
-		noise_points.append(pos)
-
 @rpc("any_peer","call_local")
 func do_baja(steam_name):
 	if multiplayer.is_server():
@@ -1521,7 +1323,7 @@ func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dial
 	
 	actually_play_sound.rpc(a.get_path(),stream_path,volume_db,bus,max_distance,pos)
 	
-	await get_tree().create_timer(audio_stream.get_length()).timeout
+	await Game.sleep(audio_stream.get_length())
 	a.queue_free()
 
 @rpc("authority","call_local")

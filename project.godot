@@ -35,10 +35,8 @@ Settings="*res://scripts/AudioVolume.gd"
 Achievements="*res://scripts/Achievements.gd"
 LiveSplit="*res://scripts/LiveSplit.gd"
 Leaderboard="*res://scripts/Leaderboard.gd"
-TipManager="*res://scripts/tips_controller.gd"
-ctrlcombintation="*res://scripts/idk.gd"
-SubtitleManager="*res://scripts/subtitlemanager.gd"
 Game="*res://scripts/game_singleton.gd"
+GuiManager="*res://scripts/GUIManager.gd"
 
 [debug]
 

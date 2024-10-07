@@ -151,11 +151,11 @@ func transition_to_phase_2():
 		var big_explosion = BIGGER_EXPLOSION.instantiate()
 		get_parent().add_child(big_explosion)
 		big_explosion.global_position = global_position + Vector3(randf_range(-30,30),randf_range(-30,30),randf_range(-30,30))
-		await get_tree().create_timer(0.5).timeout
+		await Game.sleep(0.5)
 	
 	
 	
-	await get_tree().create_timer(3).timeout
+	await Game.sleep(3)
 	$transition_music.play()
 	scale = Vector3(4,4,4)
 	global_position.y = 2
@@ -178,7 +178,7 @@ func start_phase_2():
 	$transition_music.stop()
 	$"phase 2 attack".start()
 	
-	TipManager.show_tip("[color=green]Dariel 2nd phase[/color]\nAnother way to damage [b]Dariel[/b] is to [b]throw any item[/b] to him.", 7)
+	GuiManager.show_tip("[color=green]Dariel 2nd phase[/color]\nAnother way to damage [b]Dariel[/b] is to [b]throw any item[/b] to him.", 7)
 
 func lil_darel_attack(amount = 1):
 	if !can_do_lil_darel: return
@@ -278,13 +278,13 @@ func ray_attack():
 	explosion1.global_position = right_point
 	explosion2.global_position = left_point
 	
-	await get_tree().create_timer(0.25).timeout
+	await Game.sleep(0.25)
 	if right_point.distance_to(player.global_position) < 4:
 		player.die("darel")
 	elif left_point.distance_to(player.global_position) < 4:
 		player.die("darel")
 	
-	await get_tree().create_timer(5).timeout
+	await Game.sleep(5)
 	
 	explosion1.queue_free()
 	explosion2.queue_free()
@@ -325,7 +325,7 @@ func _on_phase_2_attack_timeout():
 		
 	elif attack == "lildarel":
 		for i in range(0,5):
-			await get_tree().create_timer(0.1).timeout
+			await Game.sleep(0.1)
 			
 			var darel = LIL_DAREL.instantiate()
 			darel.SPEED = 5
@@ -341,7 +341,7 @@ func play_sound_with_subtitle(stream,subtitle):
 	
 	add_child(audio)
 	audio.play()
-	SubtitleManager.show_subtitle(subtitle,stream)
+	GuiManager.show_subtitle(subtitle,stream)
 	
 	var timer := Timer.new()
 	add_child(timer)
@@ -383,7 +383,7 @@ func shake(time_sec = 1.0, speed = 10.0, strength = 5.0, do_static = true):
 			global_position += Vector3(randf_range(-strength, strength), randf_range(-strength, strength), randf_range(-strength, strength))
 		else:
 			global_position = initial_pos + Vector3(randf_range(-strength, strength), randf_range(-strength, strength), randf_range(-strength, strength))
-		await get_tree().create_timer(1.0 / speed).timeout
+		await Game.sleep(1.0 / speed)
 		timer += 1.0 / speed
 	if do_static:
 		global_position = initial_pos
