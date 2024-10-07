@@ -31,7 +31,7 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Mr_Misuraca" type="CharacterBody3D" groups=["fox"]]
+[node name="Mr_Misuraca" type="CharacterBody3D" groups=["mr_misuraca"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 script = ExtResource("1_il38w")
 

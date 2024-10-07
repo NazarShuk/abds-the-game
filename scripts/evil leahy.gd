@@ -71,7 +71,7 @@ func ai(delta):
 								update_target_location(mr_azzu.global_position)
 					else:
 						# baja blast
-						var bathrooms = $"School/Bathroom spawns".get_children()
+						var bathrooms = get_tree().get_nodes_in_group("bathroom_spawn")
 						
 						var clst_dist = INF
 						var clst_bathroom = null

@@ -865,7 +865,7 @@ func control_text_setters():
 					final_text += "Water fountain\nE - fill the bucket"
 				else:
 					final_text += "Water fountain\nBucket is full"
-		elif looking_at.name == "Mr_Misuraca":
+		elif looking_at.is_in_group("mr_misuraca"):
 			final_text += "Mr.Misuraca\nE - Make a bet"
 		elif looking_at.name == "thej":
 			final_text += "Projector\n E - play"
@@ -1086,7 +1086,7 @@ func movement_function(delta):
 							parent.toggle_power.rpc()
 							can_use_breaker = false
 							$BreakerTimeout.start(parent.breaker_timeout)
-						if ray.get_collider().name == "Mr_Misuraca":
+						if ray.get_collider().is_in_group("mr_misuraca"):
 							open_gambling()
 						
 						if ray.get_collider().name.begins_with("DroppedItem"):
