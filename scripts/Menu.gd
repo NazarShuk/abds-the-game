@@ -67,4 +67,4 @@ func _on_disconnect_btn_pressed():
 
 func _on_enable_live_split_toggled(toggled_on):
 	enable_livesplit = toggled_on
-	player.get_parent().enable_live_split = toggled_on
+	LiveSplit.enable_live_split = toggled_on

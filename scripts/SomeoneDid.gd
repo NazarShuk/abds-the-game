@@ -4,7 +4,7 @@ extends Label
 func _ready():
 	Game.on_info_text.connect(_on_info_text)
 
-func _process(delta):
+func _process(_delta):
 	var clr:Color = get("theme_override_colors/font_color")
 	set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.01))
 	

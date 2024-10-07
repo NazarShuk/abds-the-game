@@ -6,11 +6,11 @@ extends AudioStreamPlayer
 signal playback_finished
 
 func play_streams():
-	for str in streams:
-		stream = str.stream
+	for st in streams:
+		stream = st.stream
 		play()
-		timer.start(str.stream.get_length())
-		GuiManager.show_subtitle(str.txt,str.stream)
+		timer.start(st.stream.get_length())
+		GuiManager.show_subtitle(st.txt,st.stream)
 		await timer.timeout
 	
 	playback_finished.emit()

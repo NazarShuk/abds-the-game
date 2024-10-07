@@ -5,25 +5,21 @@ var peer = SteamMultiplayerPeer.new()
 @onready var book_spawns = $School/BookSpawns
 @onready var collected_books_label = $CanvasLayer/Main/CollectedBooksLabel
 
-var players = {}
-var players_ids = []
 @export var players_in_lobby = 0
 
 var lobby_id
 
 @export var canPlayersMove = true
 @onready var evil_leahy = $EvilLeahy
-@export var leahy_appeased = false
 
 @export var leahy_speed : float
- 
+
 @export var books_to_collect = 9
 @export var total_books = 0
 var book_pos = Vector3()
 var book_boost = 0
 
 @export var leahy_look : bool
-
 
 @export var is_pacer = false
 @export var pacer_deadly = false
@@ -63,7 +59,6 @@ var debug_host = false
 
 @export var do_achievements = true
 
-
 @export var shop : StaticBody3D
 
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
@@ -75,7 +70,6 @@ var pacer_times = []
 
 @export var school : Node3D
 
-var enable_live_split = true
 
 @export var controls_text : Label
 
@@ -139,14 +133,8 @@ func _ready():
 		Game.sun.visible = false
 	
 
-var leahy_power_fix_num = 0
 var music_pitch_target = 1
 var music_pitch_boost = 1
-
-
-
-@export var is_leahy_baja_blast = false
-var leahy_baja_timer = 0
 
 @onready var boss_bar = $CanvasLayer/Main/Bossbar/ProgressBar
 @onready var evil_darel = $EvilDarel
@@ -155,7 +143,7 @@ var leahy_baja_timer = 0
 var leahy_p_timeout = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	
 	
 	if Input.is_anything_pressed():
@@ -201,23 +189,17 @@ func _process(delta):
 		
 		var total = 0
 			
-		for idd in players_ids:
-			total += players[idd].books_collected
+		for idd in Game.players.keys():
+			total += Game.players[idd].books_collected
 		total_books = total
 		
 		
 		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target * music_pitch_boost),0.05)
 		
-		if total_books == books_to_collect - 1:
-			if !absent:
-				music_pitch_target = 1.5
-		else:
-			if !absent:
-				music_pitch_target = 1
 		
 		update_player_text()
 	
-		players_in_lobby = players_ids.size()
+		players_in_lobby = Game.players.keys().size()
 		
 		if Game.game_started:
 			if !Allsingleton.is_bossfight:
@@ -232,76 +214,7 @@ func _process(delta):
 		leahy_speed = evil_leahy.SPEED
 
 	if !Allsingleton.is_bossfight:
-		if Game.game_started and multiplayer.is_server() and !absent:
-			if !leahy_appeased:
-				if !Game.powered_off:
-					if !is_leahy_baja_blast:
-						var closest = null
-						var closest_distance = INF
-						
-						for p in players_ids:
-							if !players[p].is_dead:
-								var distance = evil_leahy.global_position.distance_to(get_node(str(p)).global_position)
-								var showed_distance = evil_leahy.distance_to_target
-								update_approching_label.rpc_id(p,showed_distance)
-							
-								if distance < closest_distance:
-									closest = get_node(str(p)).global_position
-									closest_distance = distance
-									show_approaching_label.rpc_id(p)
-								else:
-									hide_approaching_label.rpc_id(p)
-							else:
-								hide_approaching_label.rpc_id(p)
-						
-						if closest:
-							evil_leahy.update_target_location(closest)
-							leahy_p_timeout = 0
-						else:
-							
-							leahy_p_timeout += delta
-							if leahy_p_timeout < 5:
-								evil_leahy.update_target_location(evil_leahy.global_position)
-							else:
-								evil_leahy.update_target_location(mr_azzu.global_position)
-					else:
-						# baja blast
-						
-						var bathrooms = $"School/Bathroom spawns".get_children()
-						
-						var clst_dist = INF
-						var clst_bathroom = null
-						
-						for bathroom : Node3D in bathrooms:
-							var dst = evil_leahy.global_position.distance_to(bathroom.global_position)
-							if dst < clst_dist:
-								clst_dist = dst
-								clst_bathroom = bathroom
-						
-						evil_leahy.update_target_location(clst_bathroom.global_position)
-						
-						if clst_dist < 5 && leahy_baja_timer <= 15:
-							leahy_baja_timer += delta
-							print(leahy_baja_timer)
-						
-						if leahy_baja_timer >= 15:
-							is_leahy_baja_blast = false
-							leahy_baja_timer = 0
-						
-				else:
-					var breaker = get_tree().get_first_node_in_group("breaker")
-					
-					evil_leahy.update_target_location(breaker.global_position)
-					hide_approaching_label.rpc()
-					var breaker_dst = evil_leahy.global_position.distance_to(breaker.global_position)
-					if breaker_dst < 2:
-						leahy_power_fix_num += delta
-						if leahy_power_fix_num >= 3:
-							breaker.toggle_power.rpc(true,false)
-							leahy_power_fix_num = 0
-						
-			else:
-				evil_leahy.update_target_location(evil_leahy.global_position)
+		pass
 	
 	if multiplayer.has_multiplayer_peer() and !Game.game_started and multiplayer.is_server():
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
@@ -386,8 +299,8 @@ func _on_connected_to_server():
 @rpc("any_peer","call_local")
 func receive_steam_usr(id,username):
 	if !multiplayer.is_server(): return
-	if players.has(id):
-		players[id].username = username
+	if Game.players.has(id):
+		Game.players[id].username = username
 
 func disconenct_btn():
 	multiplayer.multiplayer_peer.close()
@@ -413,7 +326,7 @@ func _on_peer_connected(id = 1):
 		peer.disconnect_peer(id)
 	
 	
-	players[id] = {
+	Game.players[id] = {
 		"id":id,
 		#"username":str(id),
 		"books_collected":0,
@@ -422,7 +335,6 @@ func _on_peer_connected(id = 1):
 		"team":0,
 		"finished_pacer":true
 	}
-	players_ids.append(id)
 	books_to_collect += notebooks_per_player
 	
 	update_player_text()
@@ -464,7 +376,7 @@ func spawn_players():
 	
 	if !OS.has_feature("debug"):
 		await Game.sleep(8)
-	for pl_id in players_ids:
+	for pl_id in Game.players.keys():
 		var packed_player = preload("res://player.tscn")
 		var player = packed_player.instantiate()
 
@@ -498,8 +410,7 @@ func _on_peer_disconnect(id):
 	if get_node_or_null(str(id)):
 		get_node(str(id)).queue_free()
 	
-	players.erase(id)
-	players_ids.erase(id)
+	Game.players.erase(id)
 	
 	books_to_collect -= notebooks_per_player
 	
@@ -520,13 +431,13 @@ func on_collect_book(id,book_name,personal):
 			player_name = get_node(str(id)).steam_name
 		if book_name != "Landmine":
 			if personal:
-				players[id].books_collected += 1 + book_boost
+				Game.players[id].books_collected += 1 + book_boost
 			else:
-				players[players.keys().pick_random()].books_collected += 1 + book_boost
+				Game.players[Game.players.keys().pick_random()].books_collected += 1 + book_boost
 			var total = 0
 			
-			for idd in players_ids:
-				total += players[idd].books_collected
+			for idd in Game.players.keys():
+				total += Game.players[idd].books_collected
 			
 			if personal:
 				var spawnpoint = book_spawns.get_children().pick_random()
@@ -545,8 +456,8 @@ func on_collect_book(id,book_name,personal):
 			elif total >= books_to_collect:
 				if !Allsingleton.is_bossfight:
 					var total_deaths = 0
-					for idd in players_ids:
-						total_deaths += players[idd].deaths
+					for idd in Game.players.keys():
+						total_deaths += Game.players[idd].deaths
 					
 					if do_achievements:
 						if total_deaths == 0:
@@ -606,64 +517,8 @@ func remove_fence():
 
 @rpc("any_peer","call_local")
 func split_for_everyone():
-	if enable_live_split:
-		LiveSplit.start_or_split()
+	LiveSplit.start_or_split()
 
-
-@rpc("any_peer","call_local")
-func use_vending_machine(id,machine_name,item_weights):
-	if !multiplayer.is_server(): return
-	var vending_machine = get_node("School/Navigation").get_node(NodePath(machine_name))
-	if !vending_machine: return
-	
-	if Game.game_started:
-		for child in get_children():
-			if child.name == str(id):
-				if vending_machine.uses_left >= 0:
-					if vending_machine.override_drops:
-						
-						var vending_machine_weights : Dictionary = vending_machine.overriden_drops
-						var new_weights = item_weights
-						
-						for key in vending_machine_weights.keys():
-							if new_weights[str(key)] != vending_machine_weights[str(key)]:
-								new_weights[str(key)] = vending_machine_weights[str(key)]
-						
-						var item = pick_random_weighted(new_weights)
-						
-						child.choose_item.rpc_id(id,int(item),true)
-						vending_machine.uses_left -= 1
-					else:
-						child.choose_item.rpc_id(id,-1,true)
-						vending_machine.uses_left -= 1
-					break
-	
-	else:
-		for child in get_children():
-			if child.name == str(id):
-				if vending_machine.uses_left >= 0:
-					child.choose_item.rpc_id(id,2,true)
-					vending_machine.uses_left -= 1
-					break
-
-func pick_random_weighted(items_chances: Dictionary) -> Variant:
-	# Calculate the total weight
-	var total_weight = 0.0
-	for weight in items_chances.values():
-		total_weight += weight
-	
-	# Pick a random value within the range of total_weight
-	var random_value = randf() * total_weight
-	var cumulative_weight = 0.0
-	
-	# Iterate through the dictionary to find the item
-	for item in items_chances.keys():
-		cumulative_weight += items_chances[item]
-		if random_value <= cumulative_weight:
-			return item
-	
-	# Fallback in case of rounding errors
-	return items_chances.keys()[-1]
 
 @rpc("authority","call_local")
 func start_da_game():
@@ -712,8 +567,6 @@ func _on_timer_timeout():
 		leahy_look = false
 		$FakeFox/AnimationPlayer.play("new_animation")
 		evil_leahy.SPEED = leahy_start_speed
-		if !Allsingleton.is_bossfight:
-			$Absences.start(absence_interval)
 		
 		if Allsingleton.is_bossfight:
 			$School.toggle_ceiling(false)
@@ -762,20 +615,14 @@ func get_friends_lobbies():
 		if !game_played.is_empty():
 			if game_played.id == OS.get_environment("SteamAppID").to_int():
 				if game_played.lobby:
-					#var btn = Button.new()
-					#btn.text = "Join " + friend_name
-					#btn.connect("pressed",Callable(self,"join_lobby").bind(game_played.lobby))
 					
 					var idx = item_list.add_item("Join " + friend_name)
 					friends_lobbies[idx] = game_played.lobby
 					
-					#$CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.add_child(btn)
 					total_playing += 1
 				
 	if total_playing == 0:
 		item_list.add_item("No friends are playing :(")
-		
-		#$CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.add_child(label)
 
 
 func _on_button_pressed():
@@ -784,14 +631,14 @@ func _on_button_pressed():
 @rpc("any_peer","call_local")
 func set_player_dead(id,is_dead,do_deaths):
 	if multiplayer.is_server():
-		players[id].is_dead = is_dead
+		Game.players[id].is_dead = is_dead
 		if is_dead and do_deaths:
 			
 			if !Allsingleton.is_bossfight:
-				players[id].deaths += 1
+				Game.players[id].deaths += 1
 			var total_deaths = 0
-			for pl_id in players_ids:
-				total_deaths += players[pl_id].deaths
+			for pl_id in Game.players.keys():
+				total_deaths += Game.players[pl_id].deaths
 			
 			if !Allsingleton.is_bossfight:
 				Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(max_deaths + (deaths_per_player * players_in_lobby)))
@@ -825,10 +672,10 @@ var players_singleton_required = -1
 func end_game(ending : String):
 	if multiplayer.is_server():
 		end_game_ending = ending
-		players_singleton_required = players.size() - 1
+		players_singleton_required = Game.players.size() - 1
 		players_singleton_ready = 0
 		
-		for id in players_ids:
+		for id in Game.players.keys():
 			if id != 1:
 				ping_set_singleton.rpc_id(id)
 		
@@ -841,8 +688,8 @@ func end_game(ending : String):
 
 		if is_quitting:
 			get_tree().quit()
-		if players.has(1):
-			set_singleton(players[1].deaths,players[1].books_collected,ending)
+		if Game.players.has(1):
+			set_singleton(Game.players[1].deaths,Game.players[1].books_collected,ending)
 		
 
 @rpc("authority","call_remote")
@@ -852,7 +699,7 @@ func ping_set_singleton():
 @rpc("any_peer","call_local")
 func pong_set_singleton(id):
 	if multiplayer.is_server():
-		set_singleton.rpc_id(id,players[id].deaths,players[id].books_collected,end_game_ending)
+		set_singleton.rpc_id(id,Game.players[id].deaths,Game.players[id].books_collected,end_game_ending)
 		players_singleton_ready += 1
 
 @rpc("authority","call_local")
@@ -924,19 +771,6 @@ func hide_menu():
 func _on_button_4_pressed():
 	get_tree().change_scene_to_file("res://angy_azzu.tscn")
 
-@rpc("any_peer","call_local")
-func appease_leahy(username,sec):
-	if multiplayer.is_server():
-		if !do_leahy_appease: return
-		
-		$Appeasment.start(sec)
-		leahy_appeased = true
-		Game.info_text(username + " appeased Leahy for "+str(sec)+" seconds.")
-
-
-func _on_appeasment_timeout():
-	if !is_pacer_intro:
-		leahy_appeased = false
 
 
 @rpc("any_peer","call_local")
@@ -954,39 +788,6 @@ func mr_fox_collect(is_sunkist):
 func _on_button_5_pressed():
 	get_tree().change_scene_to_file("res://achievements.tscn")
 
-@export var absent = false
-
-func _on_absences_timeout():
-	if !multiplayer.is_server() : return
-	if !Game.game_started : return
-	if !do_absences: return
-	if Game.powered_off: return
-	if Allsingleton.is_bossfight: return
-	
-	if randi_range(0,absence_chance) == 1: 
-		set_absent.rpc(true)
-		absent = true
-		hide_approaching_label.rpc()
-		Game.info_text("Ms.Leahy is gone???")
-		music_pitch_target = 0.5
-		GuiManager.show_tip_once.rpc("absences","[color=green]Absences[/color]\n\"Sometimes\", Ms.Leahy is absent. She is gone!!!!! Have fun, go nuts!")
-	else:
-		if absent == true:
-			absent = false
-			set_absent.rpc(false)
-			Game.info_text("Ms.Leahy is here nvm")
-			music_pitch_target = 1
-	
-	$Absences.start(absence_interval)
-
-@rpc("authority","call_local")
-func set_absent(is_absent : bool):
-	if is_absent:
-		evil_leahy.visible = false
-		$EvilLeahy/AudioStreamPlayer3D.stop()
-	else:
-		evil_leahy.visible = true
-		$EvilLeahy/AudioStreamPlayer3D.play()
 
 
 
@@ -1003,9 +804,8 @@ func check_if_finished_pacer_lap(id,target_path):
 	if multiplayer.is_server():
 		print(target_path,current_pacer_target.get_path())
 		if target_path == current_pacer_target.get_path():
-			players[id.to_int()].finished_pacer = true
+			Game.players[id.to_int()].finished_pacer = true
 			print(id, "finished the pacer lap")
-			
 			
 			set_pacer_target_visibility.rpc_id(id.to_int(),target_path,false)
 
@@ -1039,8 +839,8 @@ func run_pacer_test() -> void:
 		play_pacer_lap_sound.rpc()
 		collected_books_label.text = "Level " + str(current_level) + "\nLap " + str(total_laps)
 		
-		for p in players.keys():
-			var pl = players[p]
+		for p in Game.players.keys():
+			var pl = Game.players[p]
 			
 			pl.finished_pacer = false
 		
@@ -1059,8 +859,8 @@ func run_pacer_test() -> void:
 		if total_laps % 10 == 0:
 			on_collect_book(-1,"",false)
 		
-		for p in players.keys():
-			var pl = players[p]
+		for p in Game.players.keys():
+			var pl = Game.players[p]
 			
 			if pl.finished_pacer == false:
 				get_node(str(p)).die.rpc_id(p,"fox")
@@ -1084,7 +884,7 @@ func start_da_pacer(id = -1):
 	
 	# Server only
 	if multiplayer.is_server():
-		for pl in players_ids:
+		for pl in Game.players.keys():
 			get_node(str(pl)).server_pos.rpc_id(pl,$PacerPos.global_position + Vector3(randf_range(-10,10),0,randf_range(-10,10)))
 		
 		if id != -1:
@@ -1092,7 +892,10 @@ func start_da_pacer(id = -1):
 			Game.info_text(username + " angered Mr.Fox...")
 		else:
 			Game.info_text("Mr.Fox is angry...")
-		leahy_appeased = true
+		
+		for el in get_tree().get_nodes_in_group("evil_leahy"):
+			el.appeased = true
+		
 		$FakeFox/PacerTest/PacerStartTimer.start()
 		canPlayersMove = false
 		is_pacer_intro = true
@@ -1134,7 +937,10 @@ func stop_pacer():
 		is_pacer = false
 		is_pacer_intro = false
 		pacer_deadly = false
-		leahy_appeased = false
+		
+		for el in get_tree().get_nodes_in_group("evil_leahy"):
+			el.appeased = false
+		
 		is_test_active = false
 		
 		$"Bet timer".paused = false
@@ -1159,9 +965,9 @@ func _on_button_6_pressed():
 
 func update_player_text():
 	var final_text = ""
-	for pl_id in players_ids:
-		if players[pl_id].has("username"):
-			final_text += players[pl_id].username + "\n"
+	for pl_id in Game.players.keys():
+		if Game.players[pl_id].has("username"):
+			final_text += Game.players[pl_id].username + "\n"
 		else:
 			final_text += str(pl_id) + "\n"
 	player_list_text.text = final_text
@@ -1235,13 +1041,13 @@ func depression_ending():
 	
 
 func loose_notebooks(books_loss):
-	for p in players.keys():
-		print(players[p])
-		players[p].books_collected -= books_loss / players_in_lobby
+	for p in Game.players.keys():
+		print(Game.players[p])
+		Game.players[p].books_collected -= books_loss / players_in_lobby
 	
 	var total = 0
-	for p in players.keys():
-		total += players[p].books_collected
+	for p in Game.players.keys():
+		total += Game.players[p].books_collected
 	
 	if total < 0:
 		depression_ending.rpc()
@@ -1258,7 +1064,7 @@ func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 	elif bet_books_left <= 0 or (overwrite and won == true):
 		Game.info_text("You won the bet")
 		
-		for p in players.keys():
+		for p in Game.players.keys():
 			get_node(str(p)).choose_item.rpc_id(p,bet_reward)
 		
 		$"Bet timer".stop()
@@ -1291,18 +1097,7 @@ func remove_dropped_item(path):
 		if get_node(path):
 			get_node(path).queue_free()
 
-@rpc("any_peer","call_local")
-func do_baja(steam_name):
-	if multiplayer.is_server():
-		is_leahy_baja_blast = true
-		Game.info_text(steam_name + " gave Ms.Leahy baja blast...")
 
-@rpc("any_peer","call_local")
-func set_door_state(door_path,open):
-	if multiplayer.is_server():
-		if get_node(door_path):
-			get_node(door_path).set_open.rpc(open)
-			
 @rpc("any_peer","call_local")
 func play_the_j():
 	$Videoplayer.play()
@@ -1344,7 +1139,7 @@ func spawn_smoke(pos):
 
 
 func give_item_to_everyone(item_id):
-	for pl in players.keys():
+	for pl in Game.players.keys():
 		get_node(str(pl)).choose_item.rpc_id(pl,item_id,true)
 
 func reload_game():
@@ -1374,4 +1169,3 @@ func _notification(what):
 				end_game.rpc("none")
 			else:
 				get_tree().quit()
-		

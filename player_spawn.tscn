@@ -8,7 +8,7 @@ albedo_texture = ExtResource("1_wdr2h")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_r502t"]
 
-[node name="PlayerSpawn" type="Node3D"]
+[node name="PlayerSpawn" type="Node3D" groups=["player_spawn"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78315, 0, -37.0128)
 script = ExtResource("1_aw6wm")
 node_to_hide = NodePath("MeshInstance3D")

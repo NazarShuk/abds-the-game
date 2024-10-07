@@ -19,7 +19,7 @@ func _physics_process(_delta):
 	
 	navigation()
 	
-	cloroxes()
+	cloroxes_anger()
 	
 	push_items()
 
@@ -61,7 +61,7 @@ func navigation():
 		rotation_degrees.z = 0
 		move_and_slide()
 
-func cloroxes():
+func cloroxes_anger():
 	var cloroxes = get_tree().get_nodes_in_group("clorox_wipes")
 	
 	for clorox in cloroxes:

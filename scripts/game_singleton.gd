@@ -15,12 +15,14 @@ signal on_info_text(text : String)
 
 # server only
 var fox_notebooks_left = 0
+var players = {}
 
 func reset_values():
 	game_started = false
 	pre_game_started = false
 	powered_off = false
 	fox_notebooks_left = 0
+	players = {}
 
 func _ready():
 	on_game_started.connect(_on_game_started)
@@ -41,7 +43,7 @@ func set_game_started():
 
 @rpc("authority","call_local")
 func set_pre_game_started():
-	pre_game_started
+	pre_game_started = true
 	on_pre_game_started.emit()
 
 @rpc("any_peer","call_local")
@@ -66,9 +68,9 @@ func sleep(seconds):
 	timer.queue_free()
 
 func get_player_by_id(id : int):
-	var players = get_tree().get_nodes_in_group("player")
+	var pls = get_tree().get_nodes_in_group("player")
 	
-	for player in players:
+	for player in pls:
 		if player.name == str(id):
 			return player
 

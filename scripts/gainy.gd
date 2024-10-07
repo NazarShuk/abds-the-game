@@ -32,6 +32,12 @@ func _physics_process(_delta):
 		unstucker.do_penalties = angered
 		
 		if current_player_target:
+			
+			if Game.players.has(current_player_target.name.to_int()):
+				var player = Game.players[current_player_target.name.to_int()]
+				if player.is_dead:
+					current_player_target = null
+			
 			update_target_location(current_player_target.global_position)
 		else:
 			go_back()

@@ -9,7 +9,7 @@ func _ready():
 	set_open(false)
 	$MeshInstance3D2.hide()
 
-@rpc("authority","call_local")
+@rpc("any_peer","call_local")
 func set_open(open):
 	is_open = open
 	if !is_open:

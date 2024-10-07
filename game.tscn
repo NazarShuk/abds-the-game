@@ -103,72 +103,63 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath(".:leahy_look")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:absent")
+properties/4/path = NodePath(".:is_pacer")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath(".:is_pacer")
+properties/5/path = NodePath(".:pacer_deadly")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath(".:pacer_deadly")
+properties/6/path = NodePath("FakeFox:position")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath("FakeFox:position")
+properties/7/path = NodePath(".:do_silent_lunch")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath(".:do_silent_lunch")
+properties/8/path = NodePath(".:do_vertical_camera")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath(".:do_vertical_camera")
+properties/9/path = NodePath(".:death_timeout")
 properties/9/spawn = true
 properties/9/replication_mode = 1
-properties/10/path = NodePath(".:death_timeout")
+properties/10/path = NodePath(".:silent_lunch_duration")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath(".:silent_lunch_duration")
+properties/11/path = NodePath(".:landmine_death")
 properties/11/spawn = true
 properties/11/replication_mode = 1
-properties/12/path = NodePath(".:landmine_death")
+properties/12/path = NodePath(".:shop_timeout")
 properties/12/spawn = true
 properties/12/replication_mode = 1
-properties/13/path = NodePath(".:shop_timeout")
+properties/13/path = NodePath(".:players_in_lobby")
 properties/13/spawn = true
 properties/13/replication_mode = 1
-properties/14/path = NodePath(".:players_in_lobby")
+properties/14/path = NodePath(".:is_in_lobby")
 properties/14/spawn = true
 properties/14/replication_mode = 1
-properties/15/path = NodePath(".:is_in_lobby")
+properties/15/path = NodePath(".:deaths_per_player")
 properties/15/spawn = true
-properties/15/replication_mode = 1
-properties/16/path = NodePath(".:deaths_per_player")
+properties/15/replication_mode = 2
+properties/16/path = NodePath(".:breaker_timeout")
 properties/16/spawn = true
 properties/16/replication_mode = 2
-properties/17/path = NodePath(".:breaker_timeout")
+properties/17/path = NodePath(".:enable_breaker")
 properties/17/spawn = true
 properties/17/replication_mode = 2
-properties/18/path = NodePath(".:enable_breaker")
+properties/18/path = NodePath(".:enable_shop")
 properties/18/spawn = true
 properties/18/replication_mode = 2
-properties/19/path = NodePath(".:enable_shop")
+properties/19/path = NodePath(".:enable_coffee")
 properties/19/spawn = true
 properties/19/replication_mode = 2
-properties/20/path = NodePath(".:enable_coffee")
+properties/20/path = NodePath(".:coffee_timeout")
 properties/20/spawn = true
 properties/20/replication_mode = 2
-properties/21/path = NodePath(".:coffee_timeout")
+properties/21/path = NodePath("Music2:pitch_scale")
 properties/21/spawn = true
-properties/21/replication_mode = 2
-properties/22/path = NodePath("Music2:pitch_scale")
+properties/21/replication_mode = 1
+properties/22/path = NodePath("SubViewport/skibidiCamera:position")
 properties/22/spawn = true
 properties/22/replication_mode = 1
-properties/23/path = NodePath(".:leahy_appeased")
-properties/23/spawn = true
-properties/23/replication_mode = 2
-properties/24/path = NodePath("SubViewport/skibidiCamera:position")
-properties/24/spawn = true
-properties/24/replication_mode = 1
-properties/25/path = NodePath(".:is_leahy_baja_blast")
-properties/25/spawn = true
-properties/25/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_8oj72"]
 length = 0.001
@@ -1244,17 +1235,6 @@ spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_3nj22")
-
-[node name="Appeasment" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
-[node name="Absences" type="Timer" parent="."]
-wait_time = 15.0
-
-[node name="Discord" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
 
 [node name="Bet timer" type="Timer" parent="."]
 one_shot = true
@@ -3130,8 +3110,6 @@ visible = false
 wait_time = 80.0
 one_shot = true
 
-[connection signal="timeout" from="Appeasment" to="." method="_on_appeasment_timeout"]
-[connection signal="timeout" from="Absences" to="." method="_on_absences_timeout"]
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/connect local" to="." method="_on_connect_pressed"]

@@ -1,7 +1,7 @@
 extends Camera3D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	
 	var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 	

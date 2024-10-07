@@ -11,3 +11,8 @@ func _on_timer_timeout():
 		$OmniLight3D.visible = !$OmniLight3D.visible
 	else:
 		$OmniLight3D.visible = false
+
+@rpc("any_peer","call_local")
+func use_vending_machine():
+	if multiplayer.is_server():
+		uses_left -= 1

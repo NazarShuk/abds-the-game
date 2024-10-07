@@ -60,14 +60,13 @@ func _enter_tree():
 		$nametag.text = Steam.getPersonaName()
 		steam_name = Steam.getPersonaName()
 	else:
-		$nametag.text =OS.get_environment("USERNAME")
+		$nametag.text = OS.get_environment("USERNAME")
 		steam_name = OS.get_environment("USERNAME")
 	parent = get_parent()
 	
 	if is_multiplayer_authority():
 		$CanvasLayer.show()
 		parent.hide_menu()
-		#$Local.stream_mix_rate = float(current_sample_rate)
 		
 
 func _ready():
@@ -182,7 +181,7 @@ func _physics_process(delta):
 		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
 		
-		leahy_dst = global_position.distance_to(parent.get_node("EvilLeahy").global_position)
+		leahy_dst = global_position.distance_to(Game.get_closest_node_in_group(global_position,"evil_leahy").global_position)
 		
 		if Input.is_action_just_pressed("debug"):
 			parent.on_collect_book.rpc(name.to_int(), "book1",true)
@@ -203,7 +202,7 @@ func _physics_process(delta):
 			else:
 				global_position.z = 0
 		
-		movement(delta)
+		movement_function(delta)
 		
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
 		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
@@ -330,11 +329,13 @@ func _on_area_3d_area_entered(area):
 		parent.on_collect_book.rpc(name.to_int(), area.get_parent().name,true)
 		Achievements.books_collected += 1
 		Achievements.save_all()
-	elif area.get_parent().is_in_group("enemies") and Game.game_started == true:
-		if parent.absent == false:
+	elif area.get_parent().is_in_group("evil_leahy") and Game.game_started == true:
+		var evil_leahy = area.get_parent()
+		
+		if evil_leahy.absent == false:
 			if Game.powered_off == false:
-				if parent.leahy_appeased == false:
-					if parent.is_leahy_baja_blast == false:
+				if evil_leahy.appeased == false:
+					if evil_leahy.baja_blasted == false:
 						die("leahy")
 
 	elif area.name == "Landmine" and Game.game_started == true:
@@ -358,8 +359,9 @@ func _on_area_3d_area_entered(area):
 		if area.get_parent().is_angry == true:
 			die("misuraca")
 	elif area.name == "Door":
-		parent.set_door_state.rpc(area.get_parent().get_path(),true)
+		area.get_parent().set_open.rpc(true)
 		play_sound("res://door_open.mp3")
+		
 	elif area.is_in_group("pacer target"):
 		parent.check_if_finished_pacer_lap.rpc(name,area.get_path())
 	elif area.name == "darel ball":
@@ -372,7 +374,7 @@ func _on_area_3d_area_exited(area):
 	if is_shop_open: return
 	
 	if area.name == "Door":
-		parent.set_door_state.rpc(area.get_parent().get_path(),false)
+		area.get_parent().set_open.rpc(false)
 		play_sound("res://door_close.mp3")
 
 
@@ -409,7 +411,7 @@ func _on_stamina_timeout_timeout():
 func _on_revive_timer_timeout():
 	if !is_multiplayer_authority(): return
 	if not is_suspended:
-		global_position = parent.get_node("School/PlayerSpawns").get_children().pick_random().global_position
+		global_position = get_tree().get_nodes_in_group("player_spawn").pick_random().global_position
 		parent.set_player_dead.rpc(name.to_int(), false,false)
 	else:
 		global_position = Vector3(45, 1.2, -43)
@@ -976,11 +978,13 @@ func _on_gamblebtn_3_pressed():
 	parent.do_bet.rpc(steam_name,gamble[2].books,gamble[2].time,gamble[2].loss,gamble[2].reward,$Hand.get_child(gamble[2].reward).name)
 	close_gambling()
 
+
+
 # MOVEMENT
 
 var is_in_freezer = false
 
-func movement(delta):
+func movement_function(delta):
 	
 	if global_position.y >= 3.727:
 			is_on_top = true
@@ -1057,7 +1061,8 @@ func movement(delta):
 				if Input.is_action_just_pressed("interact"):
 					if ray.get_collider() != null and get_cur_item() == -1:
 						if ray.get_collider().is_in_group("vending_machines"):
-							parent.use_vending_machine.rpc(name.to_int(),ray.get_collider().name,item_weights)
+							choose_item(-1)
+							ray.get_collider().use_vending_machine.rpc()
 						
 					if ray.get_collider() != null and Game.game_started:
 						print(ray.get_collider().name)
@@ -1145,7 +1150,7 @@ func movement(delta):
 				
 				if Input.is_action_just_pressed("give"):
 					if get_cur_item() == 3:
-						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 						var distance = global_position.distance_to(evil_leahy.global_position)
 						
 						var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
@@ -1156,9 +1161,10 @@ func movement(delta):
 							parent.mr_fox_collect.rpc(false)
 						elif distance < 15:
 							pick_item(-1)
-							parent.appease_leahy.rpc(steam_name,5)
+							
+							evil_leahy.appease.rpc(steam_name,5)
 					elif get_cur_item() == 5:
-						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 						var distance = global_position.distance_to(evil_leahy.global_position)
 						
 						var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
@@ -1168,22 +1174,22 @@ func movement(delta):
 							parent.mr_fox_collect.rpc(true)
 						elif distance < 30:
 							pick_item(-1)
-							parent.appease_leahy.rpc(steam_name,5)
+							evil_leahy.appease.rpc(steam_name,15)
 						
 					elif get_cur_item() == 6:
-						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 						var distance = global_position.distance_to(evil_leahy.global_position)
 						
 						if distance < 10:
 							pick_item(-1)
 							parent.boost_leahy.rpc(steam_name)
 					elif get_cur_item() == 8:
-						var evil_leahy = get_tree().get_first_node_in_group("enemies")
+						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 						var distance = global_position.distance_to(evil_leahy.global_position)
 						
 						if distance < 10:
 							pick_item(-1)
-							parent.do_baja.rpc(steam_name)
+							evil_leahy.baja_blast_her.rpc(steam_name)
 				
 				if Input.is_action_just_pressed("use_item"):
 					if get_cur_item() == 0:

@@ -6,7 +6,7 @@ func _ready():
 	GuiManager.on_subtitle.connect(_on_subtitle)
 	text = ""
 
-func _process(delta):
+func _process(_delta):
 	text = ""
 	for txt in subtitles_queue.keys():
 		text += txt + "\n"

@@ -28,7 +28,7 @@ properties/2/path = NodePath(".:angered")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
-[node name="Mr_Azzu" type="CharacterBody3D"]
+[node name="Mr_Azzu" type="CharacterBody3D" groups=["mr_azzu"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 script = ExtResource("1_s00pa")
 

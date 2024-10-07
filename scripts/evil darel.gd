@@ -43,7 +43,7 @@ var stunned = false
 func _ready():
 	transition_dialog.playback_finished.connect(start_phase_2)
 
-func _process(delta):
+func _process(_delta):
 	
 	if Game.game_started == false:
 		return
