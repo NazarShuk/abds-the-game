@@ -20,6 +20,8 @@ var p_timeout = 0
 var baja_timer = 0
 var power_fix_progress = 0
 
+var current_player_target = null
+
 func _physics_process(delta):
 	
 	if multiplayer.is_server():
@@ -48,6 +50,7 @@ func ai(delta):
 					if !baja_blasted:
 						var closest = null
 						var closest_distance = INF
+						var closest_player = null
 						
 						for p in Game.players.keys():
 							if !Game.players[p].is_dead:
@@ -57,12 +60,14 @@ func ai(delta):
 								if distance < closest_distance:
 									closest = player.global_position
 									closest_distance = distance
+									closest_player = player
 						
 						if closest:
 							update_target_location(closest)
 							p_timeout = 0
+							current_player_target = closest_player
 						else:
-							
+							current_player_target = null
 							p_timeout += delta
 							if p_timeout < 5:
 								update_target_location(global_position)
@@ -179,10 +184,12 @@ func _on_absences_timeout():
 		absent = true
 		Game.info_text("Ms.Leahy is gone???")
 		GuiManager.show_tip_once.rpc("absences","[color=green]Absences[/color]\n\"Sometimes\", Ms.Leahy is absent. She is gone!!!!! Have fun, go nuts!")
+		hide()
 	else:
 		if absent == true:
 			absent = false
 			Game.info_text("Ms.Leahy is here nvm")
+			show()
 
 func _on_appeasement_timeout():
 	if !multiplayer.is_server(): return
@@ -195,7 +202,7 @@ func appease(who, seconds):
 	
 	appeased = true
 	$appeasement.start(seconds)
-	Game.info_text(who + " appeased Ms.Leahy for " + str(seconds))
+	Game.info_text(who + " appeased Ms.Leahy for " + str(seconds) + " seconds")
 
 @rpc("any_peer","call_local")
 func baja_blast_her(steam_name):

@@ -54,6 +54,9 @@ var can_use_shop = true
 
 var parent = null
 
+@onready var leahy_approaching = $CanvasLayer/Control/LeahyApproaching
+
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	if !Allsingleton.non_steam:
@@ -63,6 +66,8 @@ func _enter_tree():
 		$nametag.text = OS.get_environment("USERNAME")
 		steam_name = OS.get_environment("USERNAME")
 	parent = get_parent()
+	
+	$CanvasLayer.hide()
 	
 	if is_multiplayer_authority():
 		$CanvasLayer.show()
@@ -180,8 +185,8 @@ func _physics_process(delta):
 		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor($"CanvasLayer/Control/Shop/shop timer".time_left)) + "s left"
 		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
-		
-		leahy_dst = global_position.distance_to(Game.get_closest_node_in_group(global_position,"evil_leahy").global_position)
+		var closest_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
+		leahy_dst = global_position.distance_to(closest_leahy.global_position)
 		
 		if Input.is_action_just_pressed("debug"):
 			parent.on_collect_book.rpc(name.to_int(), "book1",true)
@@ -194,6 +199,18 @@ func _physics_process(delta):
 			else:
 				camera_3d.h_offset = 0
 				camera_3d.v_offset = 0
+			
+			if closest_leahy.current_player_target:
+				if closest_leahy.current_player_target.steam_name == steam_name:
+					if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
+						leahy_approaching.is_shown = true
+						leahy_approaching.distance = leahy_dst
+					else:
+						leahy_approaching.is_shown = false
+				else:
+					leahy_approaching.is_shown = false
+			else:
+				leahy_approaching.is_shown = false
 		
 		if global_position.z > 15 && !is_freaky:
 			if !Game.game_started:
@@ -210,6 +227,8 @@ func _physics_process(delta):
 		
 		camera_3d.current = true
 		camera_3d.global_transform = $"Camera target".global_transform
+		
+		
 
 func punch():
 	
@@ -867,8 +886,8 @@ func control_text_setters():
 					final_text += "Water fountain\nBucket is full"
 		elif looking_at.is_in_group("mr_misuraca"):
 			final_text += "Mr.Misuraca\nE - Make a bet"
-		elif looking_at.name == "thej":
-			final_text += "Projector\n E - play"
+		elif looking_at.is_in_group("video_player"):
+			final_text += "Video player\n E - play"
 		elif looking_at.name == "wheel":
 			final_text += "Wheel\n E - Spin"
 		elif looking_at.is_in_group("fence"):
@@ -1069,14 +1088,14 @@ func movement_function(delta):
 						if ray.get_collider().is_in_group("shop"):
 							if !parent.enable_shop: return
 							open_shop()
-						if ray.get_collider().name == "CoffeMachine":
+						if ray.get_collider().is_in_group("coffee_machine"):
 							if !parent.enable_coffee: return
 							if !can_use_coffee: return
 							if boosts.has("coffee"):
 								boosts["coffee"] += 1
 							else:
 								boosts["coffee"] = 1
-							parent.play_coffee.rpc()
+							ray.get_collider().play_sound.rpc()
 							coffee_timeout()
 							can_use_coffee = false
 							$"Coffee timeout".start(parent.coffee_timeout)
@@ -1095,14 +1114,17 @@ func movement_function(delta):
 								pick_item(dropped_item)
 								parent.remove_dropped_item.rpc(ray.get_collider().get_path())
 						
-						if ray.get_collider().name == "thej":
-							parent.play_the_j.rpc()
+						if ray.get_collider().is_in_group("video_player"):
+							ray.get_collider().play.rpc()
+						
 						if ray.get_collider().name == "fire":
 							ray.get_collider().get_parent().break_glass.rpc()
 							if ray.get_collider().get_parent().can_pickup:
 								pick_item(9)
+							
 						if ray.get_collider().name == "wheel":
 							ray.get_collider().get_parent().spin.rpc()
+							
 						if ray.get_collider().is_in_group("freezer"):
 							global_position.x = ray.get_collider().global_position.x
 							global_position.z = ray.get_collider().global_position.z

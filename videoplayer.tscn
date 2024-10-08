@@ -13,21 +13,17 @@ viewport_path = NodePath("SubViewport")
 resource_local_to_scene = true
 cull_mode = 2
 albedo_texture = SubResource("ViewportTexture_rbc13")
+emission = Color(1, 1, 1, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bd6ah"]
 data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0)
 
-[node name="Videoplayer" type="Node3D"]
+[node name="Videoplayer" type="StaticBody3D" groups=["video_player"]]
 script = ExtResource("1_06eul")
 
-[node name="thej" type="MeshInstance3D" parent="."]
+[node name="thej" type="MeshInstance3D" parent="." groups=["video_player"]]
 mesh = SubResource("QuadMesh_lh7j4")
 surface_material_override/0 = SubResource("StandardMaterial3D_okpvk")
-
-[node name="thej" type="StaticBody3D" parent="thej"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="thej/thej"]
-shape = SubResource("ConcavePolygonShape3D_bd6ah")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 
@@ -46,3 +42,6 @@ stream = ExtResource("2_dskrk")
 volume_db = 12.0
 max_distance = 250.0
 bus = &"Music"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_bd6ah")

@@ -13,6 +13,11 @@ var sun
 
 signal on_info_text(text : String)
 
+var books_to_collect = 9
+var collected_books = 0
+
+signal on_book_collected
+
 # server only
 var fox_notebooks_left = 0
 var players = {}
@@ -46,9 +51,21 @@ func set_pre_game_started():
 	pre_game_started = true
 	on_pre_game_started.emit()
 
+@rpc("authority","call_local")
+func add_collected_books(amount : float):
+	var did_collect = collected_books < (collected_books + amount)
+	collected_books += amount
+	
+	if did_collect:
+		on_book_collected.emit()
+
+@rpc("authority","call_local")
+func set_books_to_collect(amount : float):
+	books_to_collect = amount
+
 @rpc("any_peer","call_local")
-func set_param(param_name : String, val):
-	set(param_name,val)
+func set_powered_off(val : bool):
+	powered_off = val
 
 func info_text(text : String):
 	rpc_info_text(text)
@@ -88,6 +105,6 @@ func get_closest_node_in_group(position : Vector3, group : String):
 			closest_node = node
 	
 	return closest_node
-	
-	
+
+
 

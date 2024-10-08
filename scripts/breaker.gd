@@ -28,9 +28,9 @@ func audio(play_or_nah):
 func toggle_power(do_ov = false, ov = false):
 	
 	if !do_ov:
-		Game.set_param("powered_off",!Game.powered_off)
+		Game.set_powered_off.rpc(!Game.powered_off)
 	else:
-		Game.set_param("powered_off",ov)
+		Game.set_powered_off.rpc(!Game.ov)
 	
 	if !Game.powered_off:
 		Game.environment.background_energy_multiplier = 1
@@ -43,7 +43,7 @@ func toggle_power(do_ov = false, ov = false):
 		$Breaker/AudioStreamPlayer.stop()
 		$BreakerRoomClosedDoor.set_collision_layer_value(2,false)
 		
-		Game.set_param("powered_off", false)
+		Game.set_powered_off.rpc(false)
 	else:
 		Game.environment.background_energy_multiplier = 0
 		Game.sun.light_energy = 0
@@ -54,4 +54,4 @@ func toggle_power(do_ov = false, ov = false):
 		$Breaker/AudioStreamPlayer.play()
 		$BreakerRoomClosedDoor.set_collision_layer_value(2,true)
 		
-		Game.set_param("powered_off", true)
+		Game.set_powered_off.rpc(true)

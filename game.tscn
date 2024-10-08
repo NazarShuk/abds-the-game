@@ -1,11 +1,10 @@
-[gd_scene load_steps=152 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=147 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
 [ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
 [ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
-[ext_resource type="Script" path="res://scripts/LeahyApproaching.gd" id="4_ba12c"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
 [ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="5_grswa"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="5_jibb3"]
@@ -25,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://3u3ef1rrt1c0" path="res://pop.mp3" id="17_fndpl"]
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
-[ext_resource type="Script" path="res://scripts/skibidiCamera.gd" id="18_kau7v"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
 [ext_resource type="PackedScene" uid="uid://bd6avbb065m7b" path="res://leahy_respawn_pos.tscn" id="20_rxfji"]
@@ -40,7 +38,6 @@
 [ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
 [ext_resource type="Texture2D" uid="uid://ce1wqx8rpkmv0" path="res://McCollum_crop.jpg" id="33_o0kd1"]
 [ext_resource type="PackedScene" uid="uid://ccge33gvh1ojc" path="res://Coffe Machine.tscn" id="34_m1kl1"]
-[ext_resource type="AudioStream" uid="uid://gorr13qobjv7" path="res://cofee.mp3" id="35_ir6cm"]
 [ext_resource type="PackedScene" uid="uid://cx7itjqsyc1xu" path="res://breaker.tscn" id="36_j44h3"]
 [ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="38_ahlvj"]
 [ext_resource type="ArrayOccluder3D" uid="uid://dj2vhfp47eps5" path="res://game.occ" id="40_ba0mq"]
@@ -304,12 +301,6 @@ bg_color = Color(0.358229, 0.229203, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v8ix"]
 bg_color = Color(1, 0.670588, 0, 1)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q58lb"]
-load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_lpe5m"]
-viewport_path = NodePath("SubViewport")
 
 [sub_resource type="Theme" id="Theme_ciuim"]
 Label/constants/outline_size = 7
@@ -1371,35 +1362,6 @@ theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main"]
-layout_mode = 1
-offset_top = 91.0
-offset_right = 276.0
-offset_bottom = 232.0
-texture = SubResource("CompressedTexture2D_q58lb")
-script = ExtResource("4_ba12c")
-
-[node name="Label" type="Label" parent="CanvasLayer/Main/TextureRect"]
-layout_mode = 0
-offset_left = 172.0
-offset_top = 14.0
-offset_right = 207.0
-offset_bottom = 41.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main/TextureRect"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 15.0
-offset_right = 114.0
-offset_bottom = 127.0
-texture = SubResource("ViewportTexture_lpe5m")
-expand_mode = 1
-
 [node name="LeahyAngeredLabel" type="Label" parent="CanvasLayer/Main"]
 visible = false
 layout_mode = 1
@@ -2300,20 +2262,6 @@ bus = &"Dialogs"
 stream = ExtResource("17_fndpl")
 bus = &"Dialogs"
 
-[node name="SubViewport" type="SubViewport" parent="."]
-use_occlusion_culling = true
-gui_disable_input = true
-canvas_cull_mask = 4294967289
-
-[node name="skibidiCamera" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, -0.385, 2.304, 1.865)
-cull_mask = 1048569
-projection = 1
-size = 15.0
-near = 0.001
-far = 20.0
-script = ExtResource("18_kau7v")
-
 [node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
 
 [node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
@@ -2877,10 +2825,6 @@ autoplay = "spin"
 [node name="CoffeMachine" parent="." instance=ExtResource("34_m1kl1")]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 24.4491, 1.31584, -55.4625)
 
-[node name="coffee" type="AudioStreamPlayer3D" parent="CoffeMachine"]
-stream = ExtResource("35_ir6cm")
-bus = &"Dialogs"
-
 [node name="Breaker" parent="." instance=ExtResource("36_j44h3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 50.7154, 1.2029, -1.13751)
 yellow_light = Color(1, 1, 0.447059, 1)
@@ -2919,15 +2863,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 90.5943, 0.545469, -139
 transform = Transform3D(1.165, 0, -2.01784, 0, 2.33, 0, 2.01784, 0, 1.165, -67.4405, 1.24283, -168.649)
 
 [node name="Videoplayer" parent="." instance=ExtResource("44_jjv51")]
-transform = Transform3D(12.342, 0, 0, 0, 5.42195, 0, 0, 0, 1, -25.9642, 4.66635, -194.005)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Videoplayer"]
-transform = Transform3D(0.0980292, 0.0137796, 0.0359875, 0, 0.172241, -0.065951, -0.36585, 0.332793, 0.869139, 0.406778, -0.498037, 2.07259)
-spot_range = 16.9131
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="Videoplayer"]
-transform = Transform3D(0.0406763, 0.0857199, -0.0457409, -0.168368, 0.0497307, -0.0565288, -0.132338, 0.514787, 0.847042, -0.420394, -0.498037, 2.07259)
-spot_range = 16.9131
+transform = Transform3D(12.3627, 0, 0, 0, 5.688, 0, 0, 0, 1, -25.9642, 4.66635, -194.005)
 
 [node name="pre_start_game_anim" type="Node3D" parent="."]
 

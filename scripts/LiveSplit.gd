@@ -22,6 +22,9 @@ func pause():
 func resume():
 	send_msg("resume")
 
+@rpc("any_peer","call_local")
+func split_for_everyone():
+	LiveSplit.start_or_split()
 
 func send_msg(message : String):
 	if !enable_live_split: return

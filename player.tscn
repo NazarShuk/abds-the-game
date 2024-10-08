@@ -1,4 +1,4 @@
-[gd_scene load_steps=132 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=136 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -60,8 +60,10 @@
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="50_ulo8b"]
 [ext_resource type="PackedScene" uid="uid://byaexesg86uo0" path="res://sonicgummies.tscn" id="51_b4gs7"]
 [ext_resource type="Script" path="res://scripts/SomeoneDid.gd" id="51_vep60"]
+[ext_resource type="Script" path="res://scripts/LeahyApproaching.gd" id="52_cn57o"]
 [ext_resource type="Texture2D" uid="uid://b2r7lba4oyrdr" path="res://player_hand.png" id="53_0cocr"]
 [ext_resource type="AudioStream" uid="uid://gf4ovd7mf66p" path="res://parry-ultrakill.mp3" id="54_hj1a3"]
+[ext_resource type="Script" path="res://scripts/skibidiCamera.gd" id="64_5sp6g"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
 
@@ -418,6 +420,12 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4sv6d"]
 bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xxveq"]
+load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bgiyt"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="Animation" id="Animation_w14s4"]
 length = 0.001
@@ -1133,7 +1141,6 @@ one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
-visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -1962,6 +1969,34 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 26
 text = "TAKE THE BET"
 
+[node name="LeahyApproaching" type="TextureRect" parent="CanvasLayer/Control"]
+offset_top = 91.0
+offset_right = 276.0
+offset_bottom = 232.0
+texture = SubResource("CompressedTexture2D_xxveq")
+script = ExtResource("52_cn57o")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/LeahyApproaching"]
+layout_mode = 0
+offset_left = 172.0
+offset_top = 14.0
+offset_right = 207.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/LeahyApproaching"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 15.0
+offset_right = 114.0
+offset_bottom = 127.0
+texture = SubResource("ViewportTexture_bgiyt")
+expand_mode = 1
+
 [node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -2550,6 +2585,22 @@ libraries = {
 process_mode = 3
 stream = ExtResource("54_hj1a3")
 bus = &"Dialogs"
+
+[node name="SubViewport" type="SubViewport" parent="."]
+use_occlusion_culling = true
+scaling_3d_scale = 0.25
+fsr_sharpness = 2.0
+gui_disable_input = true
+canvas_cull_mask = 4294967289
+
+[node name="skibidiCamera" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 15, 0)
+cull_mask = 1048569
+projection = 1
+size = 15.0
+near = 0.001
+far = 20.0
+script = ExtResource("64_5sp6g")
 
 [connection signal="area_entered" from="PlayerArea" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="PlayerArea" to="." method="_on_area_3d_area_exited"]

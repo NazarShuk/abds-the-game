@@ -9,5 +9,5 @@ func _on_timer_timeout():
 		multiplayer.multiplayer_peer.close()
 		get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())
 	
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://game.tscn")
 

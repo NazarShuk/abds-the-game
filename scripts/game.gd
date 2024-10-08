@@ -16,7 +16,6 @@ var lobby_id
 
 @export var books_to_collect = 9
 @export var total_books = 0
-var book_pos = Vector3()
 var book_boost = 0
 
 @export var leahy_look : bool
@@ -26,8 +25,6 @@ var book_boost = 0
 var is_pacer_intro = false
 
 var debug_host = false
-
-@onready var mr_azzu = $Mr_Azzu
 
 # Customization
 @export var do_azzu_steal = true # DONE
@@ -64,12 +61,9 @@ var debug_host = false
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
 var players_spawned = false
 
-var pacer_times = []
-
 @export var is_in_lobby = false
 
 @export var school : Node3D
-
 
 @export var controls_text : Label
 
@@ -99,8 +93,6 @@ func _ready():
 	peer.lobby_created.connect(_on_lobby_connected)
 	peer.lobby_joined.connect(_on_lobby_joined)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
-	multiplayer.server_disconnected.connect(_on_disconnect_from_server)
-	peer.lobby_kicked.connect(_on_disconnect_from_server)
 	
 	if Settings.better_lighting != null:
 		Game.sun.visible = Settings.better_lighting
@@ -140,7 +132,6 @@ var music_pitch_boost = 1
 @onready var evil_darel = $EvilDarel
 @onready var previous_darel_health = evil_darel.health
 
-var leahy_p_timeout = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -305,9 +296,6 @@ func receive_steam_usr(id,username):
 func disconenct_btn():
 	multiplayer.multiplayer_peer.close()
 	get_tree().change_scene_to_file("res://game.tscn")
-
-func _on_disconnect_from_server():
-	pass
 	
 func go_back():
 	get_tree().change_scene_to_file("res://game.tscn")
@@ -441,9 +429,7 @@ func on_collect_book(id,book_name,personal):
 			
 			if personal:
 				var spawnpoint = book_spawns.get_children().pick_random()
-				spawnpoint = spawnpoint.global_position
-				book_pos = spawnpoint
-				get_node(NodePath(book_name)).global_position = book_pos
+				get_node(NodePath(book_name)).global_position = spawnpoint.global_position
 			
 			if total >= 3:
 				remove_fence.rpc()
@@ -493,7 +479,7 @@ func on_collect_book(id,book_name,personal):
 			
 			if Game.fox_notebooks_left >= 1:
 				Game.fox_notebooks_left -= 1
-			split_for_everyone.rpc()
+			LiveSplit.split_for_everyone.rpc()
 			
 			if is_bet:
 				bet_books_left -= 1
@@ -515,9 +501,7 @@ func remove_fence():
 	if get_node_or_null("wheel/Fence"):
 		$wheel/Fence.queue_free()
 
-@rpc("any_peer","call_local")
-func split_for_everyone():
-	LiveSplit.start_or_split()
+
 
 
 @rpc("authority","call_local")
@@ -531,7 +515,6 @@ func start_da_game():
 	$WelcomeLeahy.hide()
 	if !Allsingleton.is_bossfight:
 		$WelcomeLeahy/AudioStreamPlayer3D.stop()
-		$CanvasLayer/Main/LeahyAngeredLabel.show()
 		evil_leahy.show()
 		$grrrrrr.play()
 		$EvilLeahy/AudioStreamPlayer3D.play()
@@ -560,7 +543,6 @@ func _on_host_local_pressed():
 func _on_timer_timeout():
 	$Music2.play()
 	
-	$CanvasLayer/Main/LeahyAngeredLabel.hide()
 	if multiplayer.is_server():
 		canPlayersMove = true
 		Game.set_game_started.rpc()
@@ -583,10 +565,6 @@ func _on_timer_timeout():
 			timer.queue_free()
 			
 			GuiManager.show_tip("[color=green]Darel.png[/color]\nDamage [b]Darel.png[/b] with clorox wipes [color=orange]//[/color] by collecting books", 7)
-
-@rpc("authority","call_local")
-func update_approching_label(meters):
-	$CanvasLayer/Main/TextureRect/Label.text = str(round(meters))
 
 var friends_lobbies = {}
 
@@ -661,7 +639,6 @@ func set_player_dead(id,is_dead,do_deaths):
 @rpc("any_peer","call_local")
 func skibidi():
 	if multiplayer.is_server():
-		
 		end_game.rpc("freaky")
 
 var end_game_ending = ""
@@ -745,14 +722,6 @@ func set_singleton(deaths,books,ending):
 	else:
 		get_tree().change_scene_to_file("res://logos.tscn")
 	peer.close()
-
-@rpc("authority","call_local")
-func show_approaching_label():
-	$CanvasLayer/Main/TextureRect.is_shown = true
-
-@rpc("authority","call_local")
-func hide_approaching_label():
-	$CanvasLayer/Main/TextureRect.is_shown = false
 
 
 func _on_button_2_pressed():
@@ -900,7 +869,6 @@ func start_da_pacer(id = -1):
 		canPlayersMove = false
 		is_pacer_intro = true
 		$"Bet timer".paused = true
-		hide_approaching_label.rpc()
 		
 		GuiManager.show_tip_once.rpc("pacer_test","[color=green]Pacer test[/color]\nEvery lap go to the [b]blue targets[/b]. You will get a notebook [b]every 10 laps.[/b] If [b]any[/b] player fails, the test is over.", 10)
 
@@ -972,8 +940,6 @@ func update_player_text():
 			final_text += str(pl_id) + "\n"
 	player_list_text.text = final_text
 
-
-
 func _on_item_list_item_clicked(index, _at_position, mouse_button_index):
 	if mouse_button_index != 1: return
 	if friends_lobbies.has(index):
@@ -982,11 +948,6 @@ func _on_item_list_item_clicked(index, _at_position, mouse_button_index):
 
 func _on_auto_refresh_timeout():
 	get_friends_lobbies()
-
-
-@rpc("any_peer","call_local")
-func play_coffee():
-	$CoffeMachine/coffee.play()
 
 
 @rpc("any_peer","call_local")
@@ -1097,10 +1058,6 @@ func remove_dropped_item(path):
 		if get_node(path):
 			get_node(path).queue_free()
 
-
-@rpc("any_peer","call_local")
-func play_the_j():
-	$Videoplayer.play()
 
 @rpc("any_peer","call_local")
 func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
