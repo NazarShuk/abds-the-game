@@ -6,6 +6,13 @@ extends StaticBody3D
 @onready var audio = $AudioStreamPlayer3D
 @onready var power_outage = $power_outage
 
+func _ready():
+	Game.on_pre_game_started.connect(_on_pregame_started)
+
+func _on_pregame_started():
+	if !Game.game_params.get_param("breaker"):
+		queue_free()
+
 func _process(_delta):
 	light.light_energy = randf_range(0.8,1.2)
 	if Game.powered_off:

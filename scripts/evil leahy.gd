@@ -21,6 +21,7 @@ var baja_timer = 0
 var power_fix_progress = 0
 
 var current_player_target = null
+@export var current_player_target_name : String
 
 var leahy_speed_per_notebook = 0.5
 var leahy_start_speed = 6.0
@@ -28,10 +29,25 @@ var leahy_start_speed = 6.0
 func _ready():
 	Game.on_game_started.connect(_game_started)
 	Game.on_book_collected.connect(_on_book_collected)
+	Game.on_pre_game_started.connect(_on_pregame_started)
+
+func _on_pregame_started():
+	if !Game.game_params.get_param("ms_leahy"):
+		queue_free()
+	
+	if !Game.game_params.get_param("absences"):
+		$absences.stop()
+	
+	if multiplayer.is_server():
+		leahy_speed_per_notebook = Game.game_params.get_param("leahy_speed_per_notebook")
+		leahy_start_speed = Game.game_params.get_param("leahy_starting_speed")
+	
+
 
 func _game_started():
 	$AudioStreamPlayer3D.play()
 	show()
+	$grrrrrr.play()
 
 func _on_book_collected(amount):
 	if Game.collected_books == 1 and not Game.game_started:
@@ -51,6 +67,11 @@ func _physics_process(delta):
 	if multiplayer.is_server():
 		if !overwrite_speed:
 			speed = SPEED
+		
+		if current_player_target:
+			current_player_target_name = current_player_target.steam_name
+		else:
+			current_player_target_name = ""
 		
 		unstucker_constraints()
 		
@@ -90,6 +111,7 @@ func ai(delta):
 							update_target_location(closest)
 							p_timeout = 0
 							current_player_target = closest_player
+							
 						else:
 							current_player_target = null
 							p_timeout += delta

@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bylupyln8p7m8"]
+[gd_scene load_steps=16 format=3 uid="uid://bylupyln8p7m8"]
 
 [ext_resource type="Script" path="res://scripts/evil leahy.gd" id="1_o0g30"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_ameqv"]
 [ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="4_t4c4j"]
+[ext_resource type="AudioStream" uid="uid://csfubc70y8sea" path="res://models/ggrrrrrrrr.mp3" id="5_i0ioo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmd6h"]
 albedo_texture = ExtResource("1_xr5qm")
@@ -27,10 +28,19 @@ properties/2/spawn = true
 properties/2/replication_mode = 2
 properties/3/path = NodePath(".:appeased")
 properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/3/replication_mode = 2
 properties/4/path = NodePath(".:baja_blasted")
 properties/4/spawn = true
-properties/4/replication_mode = 1
+properties/4/replication_mode = 2
+properties/5/path = NodePath(".:current_player_target_name")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath(".:visible")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+properties/7/path = NodePath("AudioStreamPlayer3D:volume_db")
+properties/7/spawn = true
+properties/7/replication_mode = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rkeq3"]
 
@@ -108,6 +118,10 @@ autostart = true
 [node name="appeasement" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="grrrrrr" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_i0ioo")
+bus = &"Dialogs"
 
 [connection signal="area_entered" from="EvilLeahy" to="." method="_on_evil_leahy_area_entered"]
 [connection signal="timeout" from="pitch_timer" to="." method="_on_pitch_timer_timeout"]

@@ -17,8 +17,18 @@ func _process(delta):
 	pitch_scale = lerp(pitch_scale,pitch_target,0.05)
 	
 	if Allsingleton.is_bossfight == false:
+		
+		
+		var final_pitch = 1.0
+		
 		if Game.collected_books == Game.books_to_collect - 1:
-			pitch_target += 0.5
+			final_pitch += 0.5
 		
 		var evil_leahy = get_tree().get_first_node_in_group("evil_leahy")
+		if evil_leahy:
+			if evil_leahy.absent:
+				final_pitch -= 0.5
 		
+		final_pitch += Game.book_boost
+		
+		pitch_target = final_pitch

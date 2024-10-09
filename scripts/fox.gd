@@ -18,6 +18,11 @@ var notebooks_left = 0
 func _ready():
 	initial_pos = global_position
 	Game.on_book_collected.connect(_on_book_collected)
+	Game.on_pre_game_started.connect(_on_pregame_started)
+
+func _on_pregame_started():
+	if !Game.game_params.get_param("mr_fox"):
+		queue_free()
 
 func _on_book_collected(amount):
 	if !multiplayer.is_server(): return

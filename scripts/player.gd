@@ -124,9 +124,14 @@ const push_force = 1.0
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
+		if !get_tree(): return
 		
-		if global_position.distance_to(get_tree().get_first_node_in_group("evil darel").global_position) < 1:
-			die("darel")
+		if Input.is_action_just_pressed("debug"):
+			buy_book_rpc.rpc(steam_name)
+		
+		if Allsingleton.is_bossfight:
+			if global_position.distance_to(get_tree().get_first_node_in_group("evil darel").global_position) < 1:
+				die("darel")
 		
 		if Input.is_action_just_pressed("revive"):
 			if is_dead_of_dariel:
@@ -191,26 +196,27 @@ func _physics_process(delta):
 		else:
 			leahy_dst = -1
 		
-		if Game.game_started:
-			if (10 - leahy_dst) > 0:
-				var strength = 1/leahy_dst+0.01
-				camera_3d.h_offset = randf_range(-strength,strength) / 5
-				camera_3d.v_offset = randf_range(-strength,strength) / 5
-			else:
-				camera_3d.h_offset = 0
-				camera_3d.v_offset = 0
-			
-			if closest_leahy.current_player_target:
-				if closest_leahy.current_player_target.steam_name == steam_name:
-					if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
-						leahy_approaching.is_shown = true
-						leahy_approaching.distance = leahy_dst
+		if closest_leahy:
+			if Game.game_started:
+				if (10 - leahy_dst) > 0:
+					var strength = 1/leahy_dst+0.01
+					camera_3d.h_offset = randf_range(-strength,strength) / 5
+					camera_3d.v_offset = randf_range(-strength,strength) / 5
+				else:
+					camera_3d.h_offset = 0
+					camera_3d.v_offset = 0
+				
+				if closest_leahy.current_player_target:
+					if closest_leahy.current_player_target_name == steam_name:
+						if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
+							leahy_approaching.is_shown = true
+							leahy_approaching.distance = leahy_dst
+						else:
+							leahy_approaching.is_shown = false
 					else:
 						leahy_approaching.is_shown = false
 				else:
 					leahy_approaching.is_shown = false
-			else:
-				leahy_approaching.is_shown = false
 		
 		if global_position.z > 15 && !is_freaky:
 			if !Game.game_started:
@@ -286,9 +292,9 @@ func _input(event):
 		if can_move:
 			if can_cam_move:
 				rotate_y(deg_to_rad(event.relative.x * -0.3))
-				#if parent.do_vertical_camera:
-				#	# funni
-				#	rotate_x(deg_to_rad(event.relative.y * -0.3))
+				if Game.game_params.get_param("vertical_camera"):
+					# funni
+					rotate_x(deg_to_rad(event.relative.y * -0.3))
 				
 				if parent.do_vertical_camera_normal:
 					# Calculate new vertical angle
@@ -587,12 +593,13 @@ func die(cause):
 	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
-		var chance = randi_range(0, 2)
-		if chance == 0:
-			$CanvasLayer/Control/silentLunch.show()
-			$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
-			is_suspended = true
-			$"Silent Lunch".start(15)
+		if Game.game_params.get_param("silent_lunch"):
+			var chance = randi_range(0, 2)
+			if chance == 0:
+				$CanvasLayer/Control/silentLunch.show()
+				$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
+				is_suspended = true
+				$"Silent Lunch".start(15)
 
 	elif cause == "mine":
 		$"CanvasLayer/Control/Died thing/jumpscare2".play()
@@ -760,12 +767,11 @@ func set_mouth(mouth_id):
 func _on_buy_book_pressed():
 	if credits >= 20:
 		credits -= 20
-		close_shop()
 		buy_book_rpc.rpc(steam_name)
 		Achievements.books_collected += 1
 		Achievements.save_all()
 		
-		play_sound("res://money.mp3")
+		play_sound("res://money.mp3",0,"shop")
 
 @rpc("any_peer","call_local")
 func buy_book_rpc(pname):
@@ -779,18 +785,16 @@ func buy_book_rpc(pname):
 func _on_buy_duck_pressed():
 	if credits >= 10:
 		credits -= 10
-		close_shop()
 		pick_item(4)
 		
-		play_sound("res://money.mp3")
+		play_sound("res://money.mp3",0,"shop")
 
 func _on_buy_baja_pressed():
 	if credits >= 15:
 		credits -= 15
-		close_shop()
 		pick_item(8)
 		
-		play_sound("res://money.mp3")
+		play_sound("res://money.mp3",0,"shop")
 
 
 func _on_breaker_timeout_timeout():

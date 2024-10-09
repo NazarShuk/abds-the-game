@@ -1,6 +1,5 @@
 extends ColorRect
 
-@export var game : Node3D
 @export var param_name : String
 @export var label_text : String
 @export var is_disabled : bool
@@ -8,21 +7,13 @@ extends ColorRect
 @export var max_val : float
 @export var min_val : float
 
-@export var is_neutral : bool
-
-var initial_state
-
 func _ready():
 	$Label.text = " " + label_text
-	$LineEdit.text = str(game.get(param_name))
-	initial_state = $LineEdit.text
-	
-func _process(_delta):
-	$LineEdit.editable = !is_disabled
+	$LineEdit.text = str(Game.game_params.get_param(param_name))
+	Game.on_customization_reset.connect(_on_reset)
 
-func go_to_inital():
-	$LineEdit.text = initial_state
-
+func _on_reset():
+	$LineEdit.text = str(Game.game_params.get_param(param_name))
 
 func _on_line_edit_text_changed(new_text):
 	var val = new_text.to_float()
@@ -34,7 +25,5 @@ func _on_line_edit_text_changed(new_text):
 		$LineEdit.text = str(min_val)
 		val = min_val
 	$LineEdit.caret_column = caret_column
-	game.set(param_name, val)
-
-func get_da_val():
-	return $LineEdit.text.to_float()
+	
+	Game.set_customization.rpc(param_name,$LineEdit.text.to_float())

@@ -75,6 +75,11 @@ var rewards = [
 ]
 func _ready():
 	Game.on_book_collected.connect(remove_fence)
+	Game.on_pre_game_started.connect(_on_pregame_started)
+
+func _on_pregame_started():
+	if !Game.game_params.get_param("wheel"):
+		queue_free()
 
 func _process(delta):
 	if multiplayer.is_server():

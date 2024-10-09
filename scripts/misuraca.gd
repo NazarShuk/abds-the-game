@@ -20,6 +20,11 @@ var broken_machines = []
 
 func _ready():
 	init_pos = global_position
+	Game.on_pre_game_started.connect(_on_pregame_started)
+
+func _on_pregame_started():
+	if !Game.game_params.get_param("mr_misuraca"):
+		queue_free()
 
 func _physics_process(_delta):
 	if nav_agent.target_position:

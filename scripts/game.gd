@@ -19,11 +19,6 @@ var is_pacer_intro = false
 
 var debug_host = false
 
-# Customization
-
-var max_deaths = 9 # TODO
-var deaths_per_player = 1 # TODO
-
 @export var do_achievements = true
 
 @export var shop : StaticBody3D
@@ -106,31 +101,39 @@ func _on_book_collected(amount):
 	
 	if Game.collected_books == 1:
 		if !Game.game_started:
-				start_da_game.rpc()
-				canPlayersMove = false
-		elif Game.collected_books >= Game.books_to_collect:
-			if !Allsingleton.is_bossfight:
-				var total_deaths = 0
-				for idd in Game.players.keys():
-					total_deaths += Game.players[idd].deaths
-				
-				if do_achievements:
-					if total_deaths == 0:
-						# impossible ending
-						end_game.rpc("imp")
-					elif total_deaths <= 3:
-						# perfect run
-						end_game.rpc("perfect")
-					elif total_deaths > 3:
-						#if !do_vertical_camera:
-						#	end_game.rpc("normal")
-						#else:
-							end_game.rpc("disoriented")
-				else:
-					#if !do_vertical_camera:
-					#	end_game.rpc("normal")
-					#else:
+			start_da_game.rpc()
+			canPlayersMove = false
+	elif Game.collected_books >= Game.books_to_collect:
+		if !Allsingleton.is_bossfight:
+			var total_deaths = 0
+			for idd in Game.players.keys():
+				total_deaths += Game.players[idd].deaths
+			
+			var default_params = GameParams.new()
+			
+			for property in default_params.get_property_list():
+				if property.name.begins_with("param_"):
+					if default_params.get(property.name) != Game.game_params.get(property.name) and not default_params.neutral_parameters.has(property.name):
+						do_achievements = false
+						break
+			
+			if do_achievements:
+				if total_deaths == 0:
+					# impossible ending
+					end_game.rpc("imp")
+				elif total_deaths <= 3:
+					# perfect run
+					end_game.rpc("perfect")
+				elif total_deaths > 3:
+					if !Game.game_params.get_param("vertical_camera"):
+						end_game.rpc("normal")
+					else:
 						end_game.rpc("disoriented")
+			else:
+				if !Game.game_params.get_param("vertical_camera"):
+					end_game.rpc("normal")
+				else:
+					end_game.rpc("disoriented")
 
 var music_pitch_target = 1
 var music_pitch_boost = 1
@@ -142,7 +145,6 @@ var music_pitch_boost = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	
 	
 	if Input.is_anything_pressed():
 		$CanvasLayer/handelr.hide()
@@ -177,7 +179,7 @@ func _process(_delta):
 						$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = false
 				else:
 					$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = false
-					
+			
 			
 			
 		if Input.is_action_just_pressed("jump"):
@@ -203,42 +205,6 @@ func _process(_delta):
 		else:
 			collected_books_label.text = "Find a ELA book!"
 	
-	if multiplayer.has_multiplayer_peer() and !Game.game_started and multiplayer.is_server():
-		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
-		
-		var initial_nodes = 0
-		var game_config_client = $CanvasLayer/Lobby/Label4/gameConfigClient
-		game_config_client.text = ""
-		
-		for setting in setting_nodes:
-			if typeof(setting.initial_state) == TYPE_STRING:
-				if !setting.is_neutral:
-					if setting.initial_state.to_float() == setting.get_da_val():
-						initial_nodes += 1
-				else:
-					initial_nodes += 1
-				if setting.initial_state.to_float() != setting.get_da_val():
-					game_config_client.text += setting.label_text + ": " + str(setting.get_da_val()) + "\n"
-			else:
-				if !setting.is_neutral:
-					if setting.initial_state == setting.get_da_val():
-						initial_nodes += 1
-				else:
-					initial_nodes += 1
-				
-				if setting.initial_state != setting.get_da_val():
-					game_config_client.text += setting.label_text + ": " + str(setting.get_da_val()) + "\n"
-		
-		
-		if initial_nodes == setting_nodes.size():
-			do_achievements = true
-		else:
-			do_achievements = false
-		
-		if game_config_client.text == "":
-			game_config_client.text = "Config wasn't changed"
-		
-		$CanvasLayer/Lobby/achievement.visible = !do_achievements
 
 func _input(event):
 	if event.is_action_type():
@@ -318,13 +284,11 @@ func _on_peer_connected(id = 1):
 		"finished_pacer":true
 	}
 	
-	
-	
 	update_player_text()
 	
 	await Game.sleep(1)
 	request_steam_usr.rpc_id(id)
-	Game.set_books_to_collect.rpc(9 + Game.players.keys().size())
+	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
 	if Allsingleton.is_bossfight:
 		pre_start_game_btn()
 	
@@ -355,7 +319,7 @@ func pre_start_game_btn():
 		
 		Game.set_pre_game_started.rpc()
 		
-		Game.set_books_to_collect.rpc(9 + Game.players.keys().size())
+		Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
 
 func spawn_players():
 	if !OS.has_feature("debug"):
@@ -393,7 +357,7 @@ func _on_peer_disconnect(id):
 	
 	Game.players.erase(id)
 	
-	Game.set_books_to_collect.rpc(9 + Game.players.keys().size())
+	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
 	
 	update_player_text()
 
@@ -415,11 +379,10 @@ func start_da_game():
 	$WelcomeLeahy.hide()
 	if !Allsingleton.is_bossfight:
 		$WelcomeLeahy/AudioStreamPlayer3D.stop()
-		$grrrrrr.play()
 	else:
 		$CanvasLayer/Glitch.hide()
 
-	
+
 	if multiplayer.is_server():
 		if !debug_host or !Allsingleton.non_steam:
 			Steam.setLobbyJoinable(lobby_id,false)
@@ -515,13 +478,11 @@ func set_player_dead(id,is_dead,do_deaths):
 				total_deaths += Game.players[pl_id].deaths
 			
 			if !Allsingleton.is_bossfight:
-				Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(max_deaths + (deaths_per_player * players_in_lobby)))
+				Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)))
 			if is_pacer:
 				stop_pacer.rpc()
-			
 			if !is_dp:
-				if total_deaths >= (max_deaths + (deaths_per_player * players_in_lobby)):
-					
+				if total_deaths >= (Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)):
 					if Game.collected_books == 1:
 						end_game.rpc("you suck")
 					elif Game.collected_books > 1:
@@ -636,16 +597,8 @@ func hide_menu():
 func _on_button_4_pressed():
 	get_tree().change_scene_to_file("res://angy_azzu.tscn")
 
-
-
-
-
-
 func _on_button_5_pressed():
 	get_tree().change_scene_to_file("res://achievements.tscn")
-
-
-
 
 @onready var current_pacer_target = $"School/Pacer/Pacer target"
 
@@ -810,14 +763,6 @@ func stop_pacer():
 
 func _on_open_config_pressed():
 	$CanvasLayer/MultiPlayer/ConfigPanel.visible = !$CanvasLayer/MultiPlayer/ConfigPanel.visible
-
-
-func _on_reset_to_default_pressed():
-	var checkboxes = get_tree().get_nodes_in_group("checkbox")
-	
-	for checkbox in checkboxes:
-		checkbox.go_to_inital()
-
 
 func _on_button_6_pressed():
 	get_tree().quit()

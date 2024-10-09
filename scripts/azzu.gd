@@ -10,6 +10,13 @@ const push_force = 1.0
 var current_player_target = null
 @export var angered = false
 
+func _ready():
+	Game.on_pre_game_started.connect(_on_pregame_started)
+
+func _on_pregame_started():
+	if !Game.game_params.get_param("mr_azzu"):
+		queue_free()
+
 func _physics_process(_delta):
 	if !multiplayer.is_server(): return
 	

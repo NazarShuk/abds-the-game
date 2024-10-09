@@ -13,6 +13,11 @@ var current_player_target = null
 
 func _ready():
 	init_pos = global_position
+	Game.on_pre_game_started.connect(_on_pregame_started)
+
+func _on_pregame_started():
+	if !Game.game_params.get_param("ms_gainy"):
+		queue_free()
 
 func _physics_process(_delta):
 	if nav_agent.target_position:
@@ -38,7 +43,8 @@ func _physics_process(_delta):
 				if player.is_dead:
 					current_player_target = null
 			
-			update_target_location(current_player_target.global_position)
+			if current_player_target:
+				update_target_location(current_player_target.global_position)
 		else:
 			go_back()
 		

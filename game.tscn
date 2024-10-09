@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=112 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
@@ -11,10 +11,11 @@
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
 [ext_resource type="Shader" path="res://black squares.gdshader" id="5_xgi1f"]
 [ext_resource type="AudioStream" uid="uid://cvwobq8jsn8xc" path="res://failedme.mp3" id="6_8cxyt"]
-[ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="6_roq42"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
+[ext_resource type="Script" path="res://scripts/Lobby.gd" id="8_mqq2e"]
+[ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="9_gld5r"]
+[ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="9_pvk13"]
 [ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="10_5h2pt"]
-[ext_resource type="AudioStream" uid="uid://csfubc70y8sea" path="res://models/ggrrrrrrrr.mp3" id="10_o5q8n"]
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="Script" path="res://scripts/Music2.gd" id="13_il7ji"]
@@ -32,12 +33,12 @@
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
 [ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
 [ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
-[ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="25_pddg1"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
 [ext_resource type="PackedScene" uid="uid://ksynis5kuf5a" path="res://bathroom_spawn.tscn" id="29_kjme3"]
 [ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
 [ext_resource type="Texture2D" uid="uid://ce1wqx8rpkmv0" path="res://McCollum_crop.jpg" id="33_o0kd1"]
 [ext_resource type="PackedScene" uid="uid://ccge33gvh1ojc" path="res://Coffe Machine.tscn" id="34_m1kl1"]
+[ext_resource type="PackedScene" uid="uid://bnid1ktqxhfa7" path="res://shop.tscn" id="35_ynn12"]
 [ext_resource type="PackedScene" uid="uid://cx7itjqsyc1xu" path="res://breaker.tscn" id="36_j44h3"]
 [ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="38_ahlvj"]
 [ext_resource type="ArrayOccluder3D" uid="uid://dj2vhfp47eps5" path="res://game.occ" id="40_ba0mq"]
@@ -98,18 +99,9 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath(".:is_in_lobby")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath(".:deaths_per_player")
+properties/7/path = NodePath("Music2:pitch_scale")
 properties/7/spawn = true
-properties/7/replication_mode = 2
-properties/8/path = NodePath(".:enable_coffee")
-properties/8/spawn = true
-properties/8/replication_mode = 2
-properties/9/path = NodePath("Music2:pitch_scale")
-properties/9/spawn = true
-properties/9/replication_mode = 1
-properties/10/path = NodePath("SubViewport/skibidiCamera:position")
-properties/10/spawn = true
-properties/10/replication_mode = 1
+properties/7/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_8oj72"]
 length = 0.001
@@ -369,12 +361,9 @@ border_color = Color(0, 0, 0, 1)
 properties/0/path = NodePath("playerListText:text")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("achievement:visible")
+properties/1/path = NodePath("Label4/gameConfigClient:text")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("Label4/gameConfigClient:text")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_jn2c6"]
 length = 0.001
@@ -517,14 +506,6 @@ size = Vector3(3.34937, 8.0752, 59.4199)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqqde"]
 transparency = 1
 albedo_color = Color(0.345098, 0.52549, 1, 0.705882)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3nmsg"]
-size = Vector3(1.01855, 1.13477, 0.827148)
-
-[sub_resource type="QuadMesh" id="QuadMesh_6c27w"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tmmj"]
-albedo_texture = ExtResource("25_pddg1")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_y2xjx"]
 
@@ -895,9 +876,8 @@ _data = {
 "carpool": SubResource("Animation_rpmyj")
 }
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("shop", "school", "controls_text")]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("school", "controls_text")]
 script = ExtResource("1_y4eyb")
-shop = NodePath("shop")
 school = NodePath("School")
 controls_text = NodePath("CanvasLayer/Main/ControlsText")
 
@@ -1453,6 +1433,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("8_mqq2e")
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Lobby"]
@@ -1693,20 +1674,114 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="NumBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox5" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
 layout_mode = 2
-game = NodePath("../../../../../..")
-param_name = "max_deaths"
-label_text = "Max Deaths"
+param_name = "starting_notebooks"
+label_text = "Starting notebooks"
 max_val = 999.0
 min_val = 1.0
 
-[node name="NumBox13" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" node_paths=PackedStringArray("game") instance=ExtResource("6_roq42")]
+[node name="NumBox6" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
 layout_mode = 2
-game = NodePath("../../../../../..")
-param_name = "deaths_per_player"
-label_text = "Deaths Per Player"
+param_name = "notebooks_per_player"
+label_text = "Notebooks per player"
 max_val = 999.0
+
+[node name="NumBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
+layout_mode = 2
+param_name = "max_deaths"
+label_text = "Max dissapearences"
+max_val = 999.0
+
+[node name="NumBox3" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
+layout_mode = 2
+param_name = "deaths_per_player"
+label_text = "Dissapearences per player"
+max_val = 999.0
+
+[node name="NumBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
+layout_mode = 2
+param_name = "leahy_starting_speed"
+label_text = "Ms.Leahy starting speed"
+max_val = 999.0
+min_val = -999.0
+
+[node name="NumBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
+layout_mode = 2
+param_name = "leahy_speed_per_notebook"
+label_text = "Ms.Leahy speed per notebook"
+max_val = 999.0
+min_val = -999.0
+
+[node name="CheckBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "mr_azzu"
+label_text = "Mr.Azzu"
+
+[node name="CheckBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "ms_gainy"
+label_text = "Ms.Gainy"
+
+[node name="CheckBox3" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "mr_misuraca"
+label_text = "Mr.Misuraca"
+
+[node name="CheckBox4" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "ms_leahy"
+label_text = "Ms.Leahy"
+
+[node name="CheckBox5" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "vending_machines"
+label_text = "Vending Machine"
+
+[node name="CheckBox6" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "bananas"
+label_text = "Bananas"
+
+[node name="CheckBox7" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "coffee_machine"
+label_text = "Coffee Machine"
+
+[node name="CheckBox8" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "breaker"
+label_text = "Breaker"
+
+[node name="CheckBox9" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "wheel"
+label_text = "The wheel"
+
+[node name="CheckBox10" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "the_shop"
+label_text = "The shop"
+
+[node name="CheckBox11" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "pacer"
+label_text = "The Pacer test"
+
+[node name="CheckBox12" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "absences"
+label_text = "Ms.Leahy absences"
+
+[node name="CheckBox13" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "silent_lunch"
+label_text = "Silent Lunches"
+
+[node name="CheckBox14" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "vertical_camera"
+label_text = "*SUPER* advanced camera"
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer"]
 layout_mode = 2
@@ -1784,10 +1859,6 @@ one_shot = true
 
 [node name="bum" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_2rhtw")
-bus = &"Dialogs"
-
-[node name="grrrrrr" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_o5q8n")
 bus = &"Dialogs"
 
 [node name="pop" type="AudioStreamPlayer" parent="."]
@@ -2290,7 +2361,28 @@ surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 1.24168, -174.032)
 
 [node name="Landmine" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.14661, 0, -92.9061)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1777, 0, -120.484)
+
+[node name="Landmine2" parent="." instance=ExtResource("28_dmjcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.7999, -7.62939e-06, -125.011)
+
+[node name="Landmine3" parent="." instance=ExtResource("28_dmjcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.8029, -1.52588e-05, -127.897)
+
+[node name="Landmine5" parent="." instance=ExtResource("28_dmjcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.3327, -7.62939e-06, -154.186)
+
+[node name="Landmine6" parent="." instance=ExtResource("28_dmjcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.28461, -7.62939e-06, -170.247)
+
+[node name="Landmine7" parent="." instance=ExtResource("28_dmjcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.1374, -7.62939e-06, -95.5261)
+
+[node name="Landmine8" parent="." instance=ExtResource("28_dmjcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.335, 0, -35.876)
+
+[node name="Landmine9" parent="." instance=ExtResource("28_dmjcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.3436, 7.62939e-06, -54.0333)
 
 [node name="Mr_Azzu" parent="." instance=ExtResource("22_xuer2")]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 23.5605, 1.20217, -66.461)
@@ -2298,17 +2390,7 @@ transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 23.5605, 1.20217, -6
 [node name="PacerPos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.2904, 1.13443, -166.413)
 
-[node name="shop" type="StaticBody3D" parent="." groups=["shop"]]
-transform = Transform3D(-7.58123, 0, -8.74228e-08, 0, 1.84917, 0, 6.62773e-07, 0, -1, 52.2065, 1.48291, -122.379)
-
-[node name="shop_collider" type="CollisionShape3D" parent="shop" groups=["shop"]]
-transform = Transform3D(0.999997, 0, -8.88178e-15, 0, 0.999994, 0, -7.95808e-13, 0, 0.999995, 0, 0, 0)
-shape = SubResource("BoxShape3D_3nmsg")
-
-[node name="shop" type="MeshInstance3D" parent="shop" groups=["shop"]]
-mesh = SubResource("QuadMesh_6c27w")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_1tmmj")
+[node name="shop" parent="." instance=ExtResource("35_ynn12")]
 
 [node name="Border" type="StaticBody3D" parent="."]
 
@@ -2496,7 +2578,7 @@ one_shot = true
 [connection signal="item_clicked" from="CanvasLayer/MultiPlayer/ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="timeout" from="CanvasLayer/MultiPlayer/ItemList/Auto Refresh" to="." method="_on_auto_refresh_timeout"]
 [connection signal="pressed" from="CanvasLayer/MultiPlayer/LoadingRect/Button" to="." method="reload_game"]
-[connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="." method="_on_reset_to_default_pressed"]
+[connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]

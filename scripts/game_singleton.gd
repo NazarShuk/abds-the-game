@@ -21,6 +21,9 @@ var book_boost = 0
 
 signal on_book_collected(amount)
 
+var game_params := GameParams.new()
+signal on_customization_reset
+
 # server only
 var players = {}
 
@@ -36,10 +39,20 @@ func reset_values():
 	books_to_collect =     9
 	collected_books =      0
 	book_boost =           0
+	game_params =  GameParams.new()
 
 func _ready():
 	on_game_started.connect(_on_game_started)
 	on_pre_game_started.connect(_on_pre_game_started)
+
+@rpc("authority","call_local")
+func set_customization(key, value):
+	game_params.set_param(key,value)
+
+@rpc("authority","call_local")
+func clear_customization():
+	game_params = GameParams.new()
+	on_customization_reset.emit()
 
 @rpc("authority","call_local")
 func set_book_boost(val : float):
