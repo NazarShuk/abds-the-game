@@ -49,4 +49,3 @@ func load_tips():
 	if file:
 		saved_tips = file.get_var()
 		file.close()
-		print("Loaded saved tips")

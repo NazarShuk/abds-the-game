@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfj2dgr8c3bpt"]
+[gd_scene load_steps=7 format=3 uid="uid://dfj2dgr8c3bpt"]
 
+[ext_resource type="Script" path="res://scripts/landmine.gd" id="1_q1mws"]
 [ext_resource type="Texture2D" uid="uid://sq46qgcbi57w" path="res://banana.png" id="1_xojxt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2g3b"]
@@ -16,7 +17,8 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="Landmine" type="Area3D"]
+[node name="Landmine" type="Area3D" groups=["landmine"]]
+script = ExtResource("1_q1mws")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0232404, 0)
@@ -28,3 +30,5 @@ shape = SubResource("BoxShape3D_psole")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_olxoe")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

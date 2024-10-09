@@ -29,6 +29,5 @@ func split_for_everyone():
 func send_msg(message : String):
 	if !enable_live_split: return
 	
-	print(message)
 	var output = []
 	OS.execute("cmd.exe", ["/C", "echo " + message + " > " + pipe_path], output, true)

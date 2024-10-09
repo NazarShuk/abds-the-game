@@ -91,6 +91,7 @@ autoplay = "spin"
 shape = SubResource("BoxShape3D_8gy6y")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_1e64h")

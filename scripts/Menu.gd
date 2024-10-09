@@ -29,7 +29,7 @@ func toggle_menu():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		if player.get_parent().players_in_lobby == 1:
 			get_tree().paused = true
-			if player.get_parent().total_books >= 1:
+			if Game.collected_books >= 1:
 				if enable_livesplit:
 					LiveSplit.pause()
 	else:
@@ -48,7 +48,7 @@ func toggle_menu():
 			player.can_cam_move = true
 		
 		get_tree().paused = false
-		if player.get_parent().total_books >= 1:
+		if Game.collected_books >= 1:
 			if enable_livesplit:
 				LiveSplit.resume()
 

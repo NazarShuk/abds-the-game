@@ -15,7 +15,6 @@ func _on_http_request_request_completed(result: int, _response_code: int, _heade
 	if result == 0:
 		var leaderboard = JSON.parse_string(body.get_string_from_utf8())
 		if !leaderboard: return
-		print(leaderboard)
 		
 		var keys : Array = leaderboard.keys()
 		keys.reverse()
@@ -36,5 +35,4 @@ func _on_http_request_request_completed(result: int, _response_code: int, _heade
 				var mesh : TextMesh = w3.mesh
 				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
 	else:
-		print("error while getting leaderboard")
 		hide()

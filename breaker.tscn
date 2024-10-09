@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cx7itjqsyc1xu"]
+[gd_scene load_steps=6 format=3 uid="uid://cx7itjqsyc1xu"]
 
 [ext_resource type="Script" path="res://scripts/breaker.gd" id="1_m5dcq"]
 [ext_resource type="AudioStream" uid="uid://i2dkw33jamoi" path="res://breaker.mp3" id="2_blw3u"]
 [ext_resource type="PackedScene" uid="uid://dpwcylt8vvrkv" path="res://models/3d/Fuse Box.glb" id="3_knyfq"]
+[ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="4_c6xd0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5libq"]
 size = Vector3(1.22998, 0.818846, 0.191406)
@@ -32,5 +33,9 @@ autostart = true
 
 [node name="Fuse Box" parent="." instance=ExtResource("3_knyfq")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0032116, 0.355725, 0)
+
+[node name="power_outage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_c6xd0")
+bus = &"Dialogs"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

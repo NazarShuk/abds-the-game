@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=141 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
@@ -20,7 +20,6 @@
 [ext_resource type="Texture2D" uid="uid://cl8p5wgm14xp7" path="res://Mouth/mouth_5.png" id="12_t0eun"]
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://shop.mp3" id="12_u07an"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="12_xfb3j"]
-[ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="12_xl65f"]
 [ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://impossibleend_back.png" id="14_b3bg4"]
 [ext_resource type="VideoStream" path="res://dum.ogv" id="14_b58yc"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
@@ -31,7 +30,9 @@
 [ext_resource type="VideoStream" path="res://models/azzu_jumpscare.ogv" id="17_co3v2"]
 [ext_resource type="Texture2D" uid="uid://upa52bysxlmx" path="res://thing.svg" id="18_c15q6"]
 [ext_resource type="VideoStream" path="res://gainy.ogv" id="19_vcsq8"]
+[ext_resource type="Texture2D" uid="uid://cilpn5pgdsjbk" path="res://models/3d/book.png" id="24_ufc4v"]
 [ext_resource type="AudioStream" uid="uid://ctyuoy5tau7hv" path="res://incorrct.mp3" id="24_yj6h8"]
+[ext_resource type="ArrayMesh" uid="uid://cbs8b83a63gka" path="res://models/3d/book.obj" id="25_mph3v"]
 [ext_resource type="Texture2D" uid="uid://byu0k4uhhrlcn" path="res://models/golden_ticket.png" id="26_bhd5m"]
 [ext_resource type="AudioStream" uid="uid://bkdgbgtv4tcoy" path="res://sounds/correct_new.mp3" id="27_xfgq1"]
 [ext_resource type="Texture2D" uid="uid://cb10q13033mpt" path="res://0b41253a4041ddb57004d633e4979430.jpg" id="28_k1c3m"]
@@ -288,6 +289,47 @@ _data = {
 
 [sub_resource type="World3D" id="World3D_jha5s"]
 environment = SubResource("Environment_i6cs0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvl5x"]
+albedo_texture = ExtResource("24_ufc4v")
+
+[sub_resource type="Animation" id="Animation_ftl0y"]
+resource_name = "spin"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kfnju"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x1ff7"]
+_data = {
+"RESET": SubResource("Animation_kfnju"),
+"spin": SubResource("Animation_ftl0y")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6dj7"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -1061,7 +1103,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ndfqc")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8c5nr")
 
-[node name="PlayerArea" type="Area3D" parent="."]
+[node name="PlayerArea" type="Area3D" parent="." groups=["player_area"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
 shape = SubResource("CapsuleShape3D_tu1hv")
@@ -1378,10 +1420,23 @@ render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
 
-[node name="Book" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport" instance=ExtResource("12_xl65f")]
-transform = Transform3D(0.62388, 0, 0.78152, 0, 1, 0, -0.78152, 0, 0.62388, 0, 0, -0.87)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
+
+[node name="Meshes" type="Node3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.87)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport/Meshes"]
+transform = Transform3D(0.04, 0, 0, 0, -1.74846e-09, -0.04, 0, 0.04, -1.74846e-09, 0, 0, 0)
+layers = 512
+material_override = SubResource("StandardMaterial3D_gvl5x")
+mesh = ExtResource("25_mph3v")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport/Meshes"]
+libraries = {
+"": SubResource("AnimationLibrary_x1ff7")
+}
+autoplay = "spin"
 
 [node name="booklabel" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 1
@@ -1569,10 +1624,22 @@ render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
 
-[node name="Book" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport" instance=ExtResource("12_xl65f")]
-transform = Transform3D(0.62388, 0, 0.78152, 0, 1, 0, -0.78152, 0, 0.62388, 0, 0, -0.87)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
+
+[node name="Meshes" type="Node3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.87)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport/Meshes"]
+transform = Transform3D(0.04, 0, 0, 0, -1.74846e-09, -0.04, 0, 0.04, -1.74846e-09, 0, 0, 0)
+layers = 512
+material_override = SubResource("StandardMaterial3D_gvl5x")
+mesh = ExtResource("25_mph3v")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport/Meshes"]
+libraries = {
+"": SubResource("AnimationLibrary_x1ff7")
+}
 
 [node name="Label3" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
@@ -1970,6 +2037,7 @@ theme_override_font_sizes/font_size = 26
 text = "TAKE THE BET"
 
 [node name="LeahyApproaching" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 0
 offset_top = 91.0
 offset_right = 276.0
 offset_bottom = 232.0

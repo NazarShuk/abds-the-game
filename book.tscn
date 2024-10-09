@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://v2iinasnnnjg"]
+[gd_scene load_steps=10 format=3 uid="uid://v2iinasnnnjg"]
 
+[ext_resource type="Script" path="res://scripts/book.gd" id="1_v570l"]
 [ext_resource type="Texture2D" uid="uid://cilpn5pgdsjbk" path="res://models/3d/book.png" id="2_kekwu"]
 [ext_resource type="ArrayMesh" uid="uid://cbs8b83a63gka" path="res://models/3d/book.obj" id="2_t20i5"]
 
@@ -74,9 +75,10 @@ albedo_texture = ExtResource("2_kekwu")
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jdh3v"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 1
+properties/0/replication_mode = 2
 
 [node name="Book" type="StaticBody3D" groups=["Book"]]
+script = ExtResource("1_v570l")
 
 [node name="Book" type="Area3D" parent="."]
 
@@ -106,3 +108,5 @@ replication_config = SubResource("SceneReplicationConfig_jdh3v")
 layers = 4
 light_color = Color(0.0431373, 0.635294, 0.188235, 1)
 light_cull_mask = 4294967284
+
+[connection signal="area_entered" from="Book" to="." method="_on_book_area_entered"]

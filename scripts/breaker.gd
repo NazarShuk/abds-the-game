@@ -3,6 +3,8 @@ extends StaticBody3D
 
 @export var yellow_light : Color
 @export var red_light : Color
+@onready var audio = $AudioStreamPlayer3D
+@onready var power_outage = $power_outage
 
 func _process(_delta):
 	light.light_energy = randf_range(0.8,1.2)
@@ -17,41 +19,35 @@ func _on_timer_timeout():
 	if Game.powered_off:
 		light.visible = !light.visible
 
-func audio(play_or_nah):
-	if play_or_nah:
-		$AudioStreamPlayer3D.play()
-	else:
-		$AudioStreamPlayer3D.stop()
-
 
 @rpc("any_peer","call_local")
 func toggle_power(do_ov = false, ov = false):
+	if !multiplayer.is_server(): return
 	
 	if !do_ov:
 		Game.set_powered_off.rpc(!Game.powered_off)
 	else:
-		Game.set_powered_off.rpc(!Game.ov)
+		Game.set_powered_off.rpc(ov)
 	
 	if !Game.powered_off:
-		Game.environment.background_energy_multiplier = 1
-		Game.sun.light_energy = 1
-		
-		$Music2.play()
-		
+		turn_power_on.rpc()
 		Game.info_text("Power was fixed")
-		$Breaker.audio(true)
-		$Breaker/AudioStreamPlayer.stop()
-		$BreakerRoomClosedDoor.set_collision_layer_value(2,false)
-		
 		Game.set_powered_off.rpc(false)
 	else:
-		Game.environment.background_energy_multiplier = 0
-		Game.sun.light_energy = 0
-		$Music2.stop()
-		
+		turn_power_off.rpc()
 		Game.info_text("Power got broken")
-		$Breaker.audio(false)
-		$Breaker/AudioStreamPlayer.play()
-		$BreakerRoomClosedDoor.set_collision_layer_value(2,true)
-		
 		Game.set_powered_off.rpc(true)
+
+@rpc("authority","call_local")
+func turn_power_on():
+	Game.environment.background_energy_multiplier = 1
+	Game.sun.light_energy = 1
+	audio.play()
+	power_outage.stop()
+
+@rpc("authority","call_local")
+func turn_power_off():
+	Game.environment.background_energy_multiplier = 0
+	Game.sun.light_energy = 0
+	audio.stop()
+	power_outage.play()

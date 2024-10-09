@@ -9,7 +9,7 @@ albedo_texture = ExtResource("1_64ax1")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_kpset"]
 
-[node name="LandMine Spawn" type="Node3D"]
+[node name="LandMine Spawn" type="Node3D" groups=["landmine_spawn"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.978123, 1.27832, -23.876)
 script = ExtResource("1_lxjq5")
 node_to_hide = NodePath("MeshInstance3D")

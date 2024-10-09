@@ -22,6 +22,30 @@ var power_fix_progress = 0
 
 var current_player_target = null
 
+var leahy_speed_per_notebook = 0.5
+var leahy_start_speed = 6.0
+
+func _ready():
+	Game.on_game_started.connect(_game_started)
+	Game.on_book_collected.connect(_on_book_collected)
+
+func _game_started():
+	$AudioStreamPlayer3D.play()
+	show()
+
+func _on_book_collected(amount):
+	if Game.collected_books == 1 and not Game.game_started:
+		show()
+		SPEED = leahy_start_speed
+	
+	if multiplayer.is_server():
+		var players_in_lobby = Game.players.keys().size()
+		if players_in_lobby > 1:
+			SPEED += (leahy_speed_per_notebook * (players_in_lobby / 2.0)) * amount
+		else:
+			SPEED += leahy_speed_per_notebook * amount
+	
+
 func _physics_process(delta):
 	
 	if multiplayer.is_server():
@@ -91,12 +115,10 @@ func ai(delta):
 						
 						if clst_dist < 5 && baja_timer <= 15:
 							baja_timer += delta
-							print(baja_timer)
 						
 						if baja_timer >= 15:
 							baja_blasted = false
 							baja_timer = 0
-						
 				else:
 					var breaker = get_tree().get_first_node_in_group("breaker")
 					
@@ -171,7 +193,7 @@ func _on_evil_leahy_area_entered(area):
 		$CPUParticles3D.hide()
 
 func _on_pitch_timer_timeout():
-	$AudioStreamPlayer3D.pitch_scale = randf_range(0.5,1.5)
+	$AudioStreamPlayer3D.pitch_scale = randf_range(0.75,1.25)
 
 
 func _on_absences_timeout():
@@ -185,11 +207,13 @@ func _on_absences_timeout():
 		Game.info_text("Ms.Leahy is gone???")
 		GuiManager.show_tip_once.rpc("absences","[color=green]Absences[/color]\n\"Sometimes\", Ms.Leahy is absent. She is gone!!!!! Have fun, go nuts!")
 		hide()
+		$AudioStreamPlayer3D.volume_db = -80
 	else:
 		if absent == true:
 			absent = false
 			Game.info_text("Ms.Leahy is here nvm")
 			show()
+			$AudioStreamPlayer3D.volume_db = 0
 
 func _on_appeasement_timeout():
 	if !multiplayer.is_server(): return
@@ -210,3 +234,10 @@ func baja_blast_her(steam_name):
 	
 	baja_blasted = true
 	Game.info_text(steam_name + " gave Ms.Leahy baja blast")
+
+@rpc("any_peer","call_local")
+func boost_leahy(pl):
+	if multiplayer.is_server():
+		SPEED *= 1.5
+		Game.add_book_boost.rpc(0.5)
+		Game.info_text(pl + " gave Ms.Leahy Redbull...")

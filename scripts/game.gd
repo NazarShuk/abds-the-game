@@ -10,13 +10,6 @@ var peer = SteamMultiplayerPeer.new()
 var lobby_id
 
 @export var canPlayersMove = true
-@onready var evil_leahy = $EvilLeahy
-
-@export var leahy_speed : float
-
-@export var books_to_collect = 9
-@export var total_books = 0
-var book_boost = 0
 
 @export var leahy_look : bool
 
@@ -27,32 +20,9 @@ var is_pacer_intro = false
 var debug_host = false
 
 # Customization
-@export var do_azzu_steal = true # DONE
-@export var do_fox_help = true # DONE
-@export var do_leahy_appease = true # DONE
-@export var do_gainy_spawn = true # DONE
-@export var do_absences = true # DONE
-@export var do_silent_lunch = true # DONE
-@export var landmine_death = false # DONE
-@export var do_vertical_camera = false # DONE
-@export var enable_breaker = true  # DONE
-@export var enable_shop = true # DONE
-@export var enable_coffee = true # DONE
 
-@export var notebooks_per_player = 1 # DONE
-@export var max_deaths = 9 # DONE
-@export var deaths_per_player = 1 # DONE
-@export var leahy_start_speed = 6.0 # DONE
-@export var leahy_speed_per_notebook = 0.5 # DONE
-@export var absence_chance = 15 # DONE
-@export var absence_interval = 15 # DONE
-@export var gainy_attack_chance = 20 # DONE
-@export var gainy_attack_interval = 30
-@export var death_timeout = 5 # DONE
-@export var silent_lunch_duration = 15 # DONE
-@export var shop_timeout = 60 # DONE
-@export var breaker_timeout = 60 # DONE
-@export var coffee_timeout = 20  # DONE
+var max_deaths = 9 # TODO
+var deaths_per_player = 1 # TODO
 
 @export var do_achievements = true
 
@@ -78,7 +48,7 @@ func _ready():
 	Game.world_environment = $"Lighting and stuff/WorldEnvironment"
 	Game.environment = Game.world_environment.environment
 	Game.sun = $"Lighting and stuff/DirectionalLight3D"
-	
+	Game.on_book_collected.connect(_on_book_collected)
 	
 	AudioServer.set_bus_solo(6,false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -91,7 +61,6 @@ func _ready():
 	
 	get_friends_lobbies()
 	peer.lobby_created.connect(_on_lobby_connected)
-	peer.lobby_joined.connect(_on_lobby_joined)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	
 	if Settings.better_lighting != null:
@@ -123,7 +92,45 @@ func _ready():
 		$CanvasLayer/Lobby/playerListText.hide()
 		
 		Game.sun.visible = false
+
+func _on_book_collected(amount):
+	if !multiplayer.is_server(): return
 	
+	if Allsingleton.is_bossfight:
+		evil_darel.health -= 5
+	
+	if is_bet:
+		bet_books_left -= 1
+		if bet_books_left <= 0:
+			_on_bet_timer_timeout(true,true)
+	
+	if Game.collected_books == 1:
+		if !Game.game_started:
+				start_da_game.rpc()
+				canPlayersMove = false
+		elif Game.collected_books >= Game.books_to_collect:
+			if !Allsingleton.is_bossfight:
+				var total_deaths = 0
+				for idd in Game.players.keys():
+					total_deaths += Game.players[idd].deaths
+				
+				if do_achievements:
+					if total_deaths == 0:
+						# impossible ending
+						end_game.rpc("imp")
+					elif total_deaths <= 3:
+						# perfect run
+						end_game.rpc("perfect")
+					elif total_deaths > 3:
+						#if !do_vertical_camera:
+						#	end_game.rpc("normal")
+						#else:
+							end_game.rpc("disoriented")
+				else:
+					#if !do_vertical_camera:
+					#	end_game.rpc("normal")
+					#else:
+						end_game.rpc("disoriented")
 
 var music_pitch_target = 1
 var music_pitch_boost = 1
@@ -178,16 +185,9 @@ func _process(_delta):
 				$FakeFox/PacerTest/PacerStartTimer.stop()
 				_on_pacer_start_timer_timeout()
 		
-		var total = 0
-			
-		for idd in Game.players.keys():
-			total += Game.players[idd].books_collected
-		total_books = total
-		
+		Game.calculate_total_books()
 		
 		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target * music_pitch_boost),0.05)
-		
-		
 		update_player_text()
 	
 		players_in_lobby = Game.players.keys().size()
@@ -195,17 +195,13 @@ func _process(_delta):
 		if Game.game_started:
 			if !Allsingleton.is_bossfight:
 				if !is_pacer:
-					collected_books_label.text = str(total_books) + " books collected out of " + str(books_to_collect)
+					collected_books_label.text = str(Game.collected_books) + " books collected out of " + str(Game.books_to_collect)
 					if is_bet:
 						collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
 			else:
 				collected_books_label.text = ""
 		else:
 			collected_books_label.text = "Find a ELA book!"
-		leahy_speed = evil_leahy.SPEED
-
-	if !Allsingleton.is_bossfight:
-		pass
 	
 	if multiplayer.has_multiplayer_peer() and !Game.game_started and multiplayer.is_server():
 		var setting_nodes = get_tree().get_nodes_in_group("checkbox")
@@ -270,9 +266,7 @@ func _on_lobby_connected(_connected,id):
 		lobby_id = id
 		Steam.setLobbyData(lobby_id,"name",str(Steam.getPersonaName()) + "'s lobby")
 		Steam.setLobbyJoinable(lobby_id,true)
-
-func _on_lobby_joined():
-	pass
+		print("lobby was made: ", lobby_id)
 
 func join_lobby(id):
 	peer.connect_lobby(id)
@@ -323,13 +317,14 @@ func _on_peer_connected(id = 1):
 		"team":0,
 		"finished_pacer":true
 	}
-	books_to_collect += notebooks_per_player
+	
+	
 	
 	update_player_text()
 	
 	await Game.sleep(1)
 	request_steam_usr.rpc_id(id)
-	
+	Game.set_books_to_collect.rpc(9 + Game.players.keys().size())
 	if Allsingleton.is_bossfight:
 		pre_start_game_btn()
 	
@@ -359,9 +354,10 @@ func pre_start_game_btn():
 		
 		
 		Game.set_pre_game_started.rpc()
+		
+		Game.set_books_to_collect.rpc(9 + Game.players.keys().size())
 
 func spawn_players():
-	
 	if !OS.has_feature("debug"):
 		await Game.sleep(8)
 	for pl_id in Game.players.keys():
@@ -377,8 +373,6 @@ func spawn_players():
 			player.global_position = $"pre_start_game_anim/SCHOOL BUS/pl spawn".global_position + Vector3(randf_range(-3,3),0,randf_range(-3,3))
 		
 	players_spawned = true
-	if do_vertical_camera:
-		GuiManager.show_tip_once.rpc("vertical_camera","[color=green][b]Super[/b] advanced camera[/color]\nSince you enabled it, suffer. To rotate the camera on the z axis, look north/south. To rotate the camera on the x axis, look east/west.",10)
 
 
 @rpc("authority","call_local")
@@ -391,117 +385,23 @@ func pre_start_game():
 	$CanvasLayer/MultiPlayer.hide()
 	$CanvasLayer/Main.show()
 	$pre_start_game_anim/AnimationPlayer.play("pre")
-	
-	
-	
+
+
 func _on_peer_disconnect(id):
 	if get_node_or_null(str(id)):
 		get_node(str(id)).queue_free()
 	
 	Game.players.erase(id)
 	
-	books_to_collect -= notebooks_per_player
+	Game.set_books_to_collect.rpc(9 + Game.players.keys().size())
 	
 	update_player_text()
-	
 
 
 func _on_connect_pressed():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client("localhost",7777)
 	multiplayer.multiplayer_peer = peer
-
-@rpc("any_peer","call_local")
-func on_collect_book(id,book_name,personal):
-	if multiplayer.is_server():
-		var player_name
-		if personal:
-			player_name = get_node(str(id)).steam_name
-		if book_name != "Landmine":
-			if personal:
-				Game.players[id].books_collected += 1 + book_boost
-			else:
-				Game.players[Game.players.keys().pick_random()].books_collected += 1 + book_boost
-			var total = 0
-			
-			for idd in Game.players.keys():
-				total += Game.players[idd].books_collected
-			
-			if personal:
-				var spawnpoint = book_spawns.get_children().pick_random()
-				get_node(NodePath(book_name)).global_position = spawnpoint.global_position
-			
-			if total >= 3:
-				remove_fence.rpc()
-				GuiManager.show_tip_once.rpc("gambling","[color=green]Gambling!!![/color]\n The fence around the item wheel is removed when you collect [b]3 notebooks[/b]. Go gamble.")
-			
-			if total == 1:
-				if !Game.game_started:
-					start_da_game.rpc()
-					canPlayersMove = false
-			elif total >= books_to_collect:
-				if !Allsingleton.is_bossfight:
-					var total_deaths = 0
-					for idd in Game.players.keys():
-						total_deaths += Game.players[idd].deaths
-					
-					if do_achievements:
-						if total_deaths == 0:
-							# impossible ending
-							end_game.rpc("imp")
-						elif total_deaths <= 3:
-							# perfect run
-							end_game.rpc("perfect")
-						elif total_deaths > 3:
-							if !do_vertical_camera:
-								end_game.rpc("normal")
-							else:
-								end_game.rpc("disoriented")
-					else:
-						if !do_vertical_camera:
-							end_game.rpc("normal")
-						else:
-							end_game.rpc("disoriented")
-				
-			
-			total_books = total
-			
-			if players_in_lobby > 1:
-				@warning_ignore("integer_division")
-				evil_leahy.SPEED += (leahy_speed_per_notebook * (players_in_lobby / 2))
-			else:
-				evil_leahy.SPEED += leahy_speed_per_notebook
-			
-			if personal:
-				Game.info_text(player_name + " collected a book!")
-			else:
-				Game.info_text("A book was collected!")
-			
-			if Game.fox_notebooks_left >= 1:
-				Game.fox_notebooks_left -= 1
-			LiveSplit.split_for_everyone.rpc()
-			
-			if is_bet:
-				bet_books_left -= 1
-				if bet_books_left <= 0:
-					_on_bet_timer_timeout(true,true)
-			
-			if Allsingleton.is_bossfight:
-				evil_darel.health -= 5
-			
-		else:
-			Game.info_text(player_name + " slipped")
-			var spawnpoint = $School/LandMineSpawns.get_children().pick_random()
-			spawnpoint = spawnpoint.global_position
-			spawnpoint.y = 0.143
-			$Landmine.position = spawnpoint
-
-@rpc("authority","call_local")
-func remove_fence():
-	if get_node_or_null("wheel/Fence"):
-		$wheel/Fence.queue_free()
-
-
 
 
 @rpc("authority","call_local")
@@ -515,9 +415,7 @@ func start_da_game():
 	$WelcomeLeahy.hide()
 	if !Allsingleton.is_bossfight:
 		$WelcomeLeahy/AudioStreamPlayer3D.stop()
-		evil_leahy.show()
 		$grrrrrr.play()
-		$EvilLeahy/AudioStreamPlayer3D.play()
 	else:
 		$CanvasLayer/Glitch.hide()
 
@@ -548,7 +446,6 @@ func _on_timer_timeout():
 		Game.set_game_started.rpc()
 		leahy_look = false
 		$FakeFox/AnimationPlayer.play("new_animation")
-		evil_leahy.SPEED = leahy_start_speed
 		
 		if Allsingleton.is_bossfight:
 			$School.toggle_ceiling(false)
@@ -602,7 +499,6 @@ func get_friends_lobbies():
 	if total_playing == 0:
 		item_list.add_item("No friends are playing :(")
 
-
 func _on_button_pressed():
 	get_friends_lobbies()
 
@@ -626,11 +522,11 @@ func set_player_dead(id,is_dead,do_deaths):
 			if !is_dp:
 				if total_deaths >= (max_deaths + (deaths_per_player * players_in_lobby)):
 					
-					if total_books == 1:
+					if Game.collected_books == 1:
 						end_game.rpc("you suck")
-					elif total_books > 1:
+					elif Game.collected_books > 1:
 						end_game.rpc("worst")
-					elif total_books == 0:
+					elif Game.collected_books == 0:
 						end_game("dumb")
 			else:
 				end_game.rpc("none")
@@ -742,16 +638,7 @@ func _on_button_4_pressed():
 
 
 
-@rpc("any_peer","call_local")
-func mr_fox_collect(is_sunkist):
-	if multiplayer.is_server():
-		if do_fox_help:
-			if is_sunkist:
-				Game.fox_notebooks_left += 2
-			else:
-				Game.fox_notebooks_left += 1
-			
-			Game.info_text("Follow Mr.Fox to find " + str(Game.fox_notebooks_left) + " notebooks!")
+
 
 
 func _on_button_5_pressed():
@@ -826,7 +713,11 @@ func run_pacer_test() -> void:
 			Game.info_text("Level " + str(current_level))
 		
 		if total_laps % 10 == 0:
-			on_collect_book(-1,"",false)
+			var id = Game.players.keys().pick_random()
+			
+			Game.players[id].books_collected += 1 + Game.book_boost
+			Game.calculate_total_books()
+			Game.info_text("A book was collected")
 		
 		for p in Game.players.keys():
 			var pl = Game.players[p]
@@ -951,14 +842,6 @@ func _on_auto_refresh_timeout():
 
 
 @rpc("any_peer","call_local")
-func boost_leahy(pl):
-	if multiplayer.is_server():
-		evil_leahy.SPEED *= 1.5
-		book_boost += 0.5
-		music_pitch_boost += 0.25
-		Game.info_text(pl + " gave Ms.Leahy Redbull...")
-
-@rpc("any_peer","call_local")
 func spawn_puddle(pos):
 	var puddle = load("res://puddle.tscn").instantiate()
 	add_child(puddle,true)
@@ -998,8 +881,9 @@ func depression_ending():
 	if multiplayer.is_server():
 		canPlayersMove = false
 		is_dp = true
-		evil_leahy.SPEED += 30
-	
+		for el in get_tree().get_nodes_in_group("evil_leahy"):
+			el.SPEED += 30
+
 
 func loose_notebooks(books_loss):
 	for p in Game.players.keys():

@@ -92,7 +92,7 @@ func fix_vending_machines():
 		update_target_location(broken_machines[0].global_position)
 
 func _on_misuraca_area_entered(area):
-	if area.name == "PlayerArea":
+	if area.is_in_group("player_area"):
 		if angerer:
 			if area.get_parent().name == angerer.name:
 				angerer = null

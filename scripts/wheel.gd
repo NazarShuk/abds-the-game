@@ -73,7 +73,8 @@ var rewards = [
 		"to": 360
 	}
 ]
-
+func _ready():
+	Game.on_book_collected.connect(remove_fence)
 
 func _process(delta):
 	if multiplayer.is_server():
@@ -103,7 +104,6 @@ func spin():
 	is_idle = false
 	
 	cylinder.rotation_degrees.x = target_rotation
-	print(target_reward.name)
 	give_reward(target_reward.name)
 	
 	await Game.sleep(60)
@@ -144,3 +144,10 @@ func give_reward(what_name):
 @rpc("authority","call_local")
 func play_cool_sound():
 	$AudioStreamPlayer.play()
+
+func remove_fence(_amount):
+	print(_amount)
+	if Game.collected_books >= 3:
+		if get_node_or_null("Fence"):
+			GuiManager.show_tip_once("gambling","[color=green]Gambling!!![/color]\n The fence around the item wheel is removed when you collect [b]3 notebooks[/b]. Go gamble.")
+			get_node("Fence").queue_free()

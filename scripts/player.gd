@@ -186,11 +186,11 @@ func _physics_process(delta):
 		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
 		var closest_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
-		leahy_dst = global_position.distance_to(closest_leahy.global_position)
+		if closest_leahy:
+			leahy_dst = global_position.distance_to(closest_leahy.global_position)
+		else:
+			leahy_dst = -1
 		
-		if Input.is_action_just_pressed("debug"):
-			parent.on_collect_book.rpc(name.to_int(), "book1",true)
-
 		if Game.game_started:
 			if (10 - leahy_dst) > 0:
 				var strength = 1/leahy_dst+0.01
@@ -234,7 +234,6 @@ func punch():
 	
 	if ray.get_collider():
 		var collider = ray.get_collider()
-		print("PARRY:",collider.name)
 		
 		if Allsingleton.is_bossfight:
 			if collider.is_in_group("lil darel"):
@@ -287,9 +286,9 @@ func _input(event):
 		if can_move:
 			if can_cam_move:
 				rotate_y(deg_to_rad(event.relative.x * -0.3))
-				if parent.do_vertical_camera:
-					# funni
-					rotate_x(deg_to_rad(event.relative.y * -0.3))
+				#if parent.do_vertical_camera:
+				#	# funni
+				#	rotate_x(deg_to_rad(event.relative.y * -0.3))
 				
 				if parent.do_vertical_camera_normal:
 					# Calculate new vertical angle
@@ -343,9 +342,7 @@ func _on_area_3d_area_entered(area):
 	if is_dead:
 		return
 	if is_shop_open: return
-	print(area.name)
 	if area.get_parent().is_in_group("Book"):
-		parent.on_collect_book.rpc(name.to_int(), area.get_parent().name,true)
 		Achievements.books_collected += 1
 		Achievements.save_all()
 	elif area.get_parent().is_in_group("evil_leahy") and Game.game_started == true:
@@ -357,9 +354,8 @@ func _on_area_3d_area_entered(area):
 					if evil_leahy.baja_blasted == false:
 						die("leahy")
 
-	elif area.name == "Landmine" and Game.game_started == true:
+	elif area.is_in_group("landmine") and Game.game_started == true:
 		die("mine")
-		parent.on_collect_book.rpc(name.to_int(), area.name,true)
 		
 	elif area.name == "azzu":
 		if area.get_parent().angered:
@@ -486,7 +482,7 @@ func get_cur_item():
 var item_weights = {}
 
 func update_item_weights():
-	var book_multiplier = (parent.total_books / parent.books_to_collect) * 3
+	var book_multiplier = (Game.collected_books / Game.books_to_collect) * 3
 	item_weights = {
 		"0":25, # Fruit Snacks
 		"1":20, # Clorox
@@ -571,15 +567,12 @@ func die(cause):
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
 	if cause == "mine":
-		if parent.landmine_death:
-			parent.set_player_dead.rpc(name.to_int(), true,true)
-		else:
-			parent.set_player_dead.rpc(name.to_int(), true,false)
+		parent.set_player_dead.rpc(name.to_int(), true,false)
 	else:
 		parent.set_player_dead.rpc(name.to_int(), true,true)
 	$"CanvasLayer/Control/Died thing".show()
 	if cause != "darel":
-		$ReviveTimer.start(parent.death_timeout)
+		$ReviveTimer.start(5)
 	is_dead = true
 	AudioServer.set_bus_mute(1, true)
 	AudioServer.set_bus_mute(2, true)
@@ -594,13 +587,12 @@ func die(cause):
 	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
-		if parent.do_silent_lunch:
-			var chance = randi_range(0, 2)
-			if chance == 0:
-				$CanvasLayer/Control/silentLunch.show()
-				$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in " + str(parent.silent_lunch_duration)
-				is_suspended = true
-				$"Silent Lunch".start(parent.silent_lunch_duration)
+		var chance = randi_range(0, 2)
+		if chance == 0:
+			$CanvasLayer/Control/silentLunch.show()
+			$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
+			is_suspended = true
+			$"Silent Lunch".start(15)
 
 	elif cause == "mine":
 		$"CanvasLayer/Control/Died thing/jumpscare2".play()
@@ -671,7 +663,7 @@ func open_shop():
 		AudioServer.set_bus_solo(6,true)
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 		can_use_shop = false
-		$ShopTimeout.start(parent.shop_timeout)
+		$ShopTimeout.start(60)
 		parent.shop.hide()
 		$"CanvasLayer/Control/Shop/shop timer".start()
 		$CanvasLayer/Control/Shop/ColorRect/MainPanel.show()
@@ -739,7 +731,6 @@ func generate_show_question():
 	
 	
 	if is_right_there == false:
-		print("answer not here. skipping")
 		generate_show_question()
 
 func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
@@ -770,11 +761,20 @@ func _on_buy_book_pressed():
 	if credits >= 20:
 		credits -= 20
 		close_shop()
-		parent.on_collect_book.rpc(name.to_int(), "book1",true)
+		buy_book_rpc.rpc(steam_name)
 		Achievements.books_collected += 1
 		Achievements.save_all()
 		
 		play_sound("res://money.mp3")
+
+@rpc("any_peer","call_local")
+func buy_book_rpc(pname):
+	if multiplayer.is_server():
+		var id = Game.players.keys().pick_random()
+		
+		Game.players[id].books_collected += 1 + Game.book_boost
+		Game.calculate_total_books()
+		Game.info_text(pname + " bought a book")
 
 func _on_buy_duck_pressed():
 	if credits >= 10:
@@ -1080,13 +1080,14 @@ func movement_function(delta):
 				if Input.is_action_just_pressed("interact"):
 					if ray.get_collider() != null and get_cur_item() == -1:
 						if ray.get_collider().is_in_group("vending_machines"):
-							choose_item(-1)
+							if Game.game_started:
+								choose_item(-1)
+							else:
+								pick_item(2)
 							ray.get_collider().use_vending_machine.rpc()
 						
 					if ray.get_collider() != null and Game.game_started:
-						print(ray.get_collider().name)
 						if ray.get_collider().is_in_group("shop"):
-							if !parent.enable_shop: return
 							open_shop()
 						if ray.get_collider().is_in_group("coffee_machine"):
 							if !parent.enable_coffee: return
@@ -1098,13 +1099,15 @@ func movement_function(delta):
 							ray.get_collider().play_sound.rpc()
 							coffee_timeout()
 							can_use_coffee = false
-							$"Coffee timeout".start(parent.coffee_timeout)
+							$"Coffee timeout".start(20)
 						if ray.get_collider().name == "Breaker":
 							if !can_use_breaker: return
-							if !parent.enable_breaker: return
-							parent.toggle_power.rpc()
+							
+							
+							ray.get_collider().toggle_power.rpc()
+							
 							can_use_breaker = false
-							$BreakerTimeout.start(parent.breaker_timeout)
+							$BreakerTimeout.start(60)
 						if ray.get_collider().is_in_group("mr_misuraca"):
 							open_gambling()
 						
@@ -1180,7 +1183,7 @@ func movement_function(delta):
 						if dist < 20:
 							pick_item(-1)
 							
-							parent.mr_fox_collect.rpc(false)
+							fox.mr_fox_collect.rpc(1)
 						elif distance < 15:
 							pick_item(-1)
 							
@@ -1193,7 +1196,7 @@ func movement_function(delta):
 						var dist = global_position.distance_to(fox.global_position)
 						if dist < 30:
 							pick_item(-1)
-							parent.mr_fox_collect.rpc(true)
+							fox.mr_fox_collect.rpc(2)
 						elif distance < 30:
 							pick_item(-1)
 							evil_leahy.appease.rpc(steam_name,15)
@@ -1204,7 +1207,7 @@ func movement_function(delta):
 						
 						if distance < 10:
 							pick_item(-1)
-							parent.boost_leahy.rpc(steam_name)
+							evil_leahy.boost_leahy.rpc(steam_name)
 					elif get_cur_item() == 8:
 						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 						var distance = global_position.distance_to(evil_leahy.global_position)
@@ -1278,12 +1281,14 @@ func movement_function(delta):
 		
 		pick_item(-1)
 	if parent.leahy_look:
-		var target = get_tree().get_nodes_in_group("enemies")[0].global_position
-		look_at(target)
-		global_rotation_degrees.x = 0
-		global_rotation_degrees.z = 0
+		var target = Game.get_closest_node_in_group(global_position,"enemies")
 		
-		cam_fov = 10
+		if target:
+			look_at(target.global_position)
+			global_rotation_degrees.x = 0
+			global_rotation_degrees.z = 0
+			
+			cam_fov = 10
 
 
 func _on_button_pressed():

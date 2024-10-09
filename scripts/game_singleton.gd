@@ -7,6 +7,8 @@ signal on_pre_game_started
 
 var powered_off = false
 
+signal on_power_changed(power_on)
+
 var world_environment : WorldEnvironment
 var environment
 var sun
@@ -15,23 +17,37 @@ signal on_info_text(text : String)
 
 var books_to_collect = 9
 var collected_books = 0
+var book_boost = 0
 
-signal on_book_collected
+signal on_book_collected(amount)
 
 # server only
-var fox_notebooks_left = 0
 var players = {}
 
+
 func reset_values():
-	game_started = false
-	pre_game_started = false
-	powered_off = false
-	fox_notebooks_left = 0
-	players = {}
+	game_started =         false
+	pre_game_started =     false
+	powered_off =          false
+	players =              {}
+	world_environment =    null
+	environment =          null
+	sun =                  null
+	books_to_collect =     9
+	collected_books =      0
+	book_boost =           0
 
 func _ready():
 	on_game_started.connect(_on_game_started)
 	on_pre_game_started.connect(_on_pre_game_started)
+
+@rpc("authority","call_local")
+func set_book_boost(val : float):
+	book_boost = val
+
+@rpc("authority","call_local")
+func add_book_boost(val : float):
+	book_boost += val
 
 func _on_game_started():
 	print_rich("[color=orange]GAME STARTED[/color]")
@@ -57,7 +73,26 @@ func add_collected_books(amount : float):
 	collected_books += amount
 	
 	if did_collect:
-		on_book_collected.emit()
+		on_book_collected.emit(amount)
+
+
+@rpc("authority","call_local")
+func set_collected_books(amount : float):
+	var difference = amount - collected_books
+	var did_collect = collected_books < amount
+	collected_books = amount
+	
+	if did_collect:
+		on_book_collected.emit(difference)
+
+func calculate_total_books():
+	if !multiplayer.is_server(): return
+	var total = 0
+	for player_id in Game.players.keys():
+		total += Game.players[player_id].books_collected
+	
+	Game.set_collected_books.rpc(total)
+
 
 @rpc("authority","call_local")
 func set_books_to_collect(amount : float):
@@ -66,6 +101,7 @@ func set_books_to_collect(amount : float):
 @rpc("any_peer","call_local")
 func set_powered_off(val : bool):
 	powered_off = val
+	on_power_changed.emit(!val)
 
 func info_text(text : String):
 	rpc_info_text(text)
