@@ -22,7 +22,6 @@ class_name GameParams
 @export var param_breaker: bool = true
 @export var param_wheel: bool = true
 @export var param_the_shop: bool = true
-@export var param_pacer: bool = true
 @export var param_absences: bool = true
 @export var param_silent_lunch: bool = true
 
