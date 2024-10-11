@@ -85,8 +85,11 @@ func _ready():
 		$CanvasLayer/Lobby/playerListText.hide()
 		
 		Game.sun.visible = false
+	
+	#if OS.has_feature("dedicated_server"):
+	#	_on_host_local_pressed()
 
-func _on_book_collected(amount):
+func _on_book_collected(_amount):
 	if !multiplayer.is_server(): return
 	
 	if Allsingleton.is_bossfight:
@@ -145,7 +148,8 @@ var music_pitch_boost = 1
 func _process(_delta):
 	
 	if Input.is_anything_pressed():
-		$CanvasLayer/handelr.hide()
+		if get_node_or_null("CanvasLayer/handelr"):
+			get_node_or_null("CanvasLayer/handelr").queue_free()
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
 		if Allsingleton.is_bossfight:
@@ -253,10 +257,10 @@ func receive_steam_usr(id,username):
 
 func disconenct_btn():
 	multiplayer.multiplayer_peer.close()
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://logos.tscn")
 	
 func go_back():
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://logos.tscn")
 
 func _on_peer_connected(id = 1):
 	#$CanvasLayer/MultiPlayer/LoadingRect.show()
@@ -287,9 +291,10 @@ func _on_peer_connected(id = 1):
 	await Game.sleep(1)
 	request_steam_usr.rpc_id(id)
 	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
+	
 	if Allsingleton.is_bossfight:
 		pre_start_game_btn()
-	
+
 
 @rpc("any_peer","call_local")
 func request_steam_usr():
@@ -395,6 +400,10 @@ func _on_host_local_pressed():
 	
 	debug_host = true
 	
+	print("started hosting locally")
+	
+	#if !OS.has_feature("dedicated_server"):
+	#	_on_peer_connected()
 	_on_peer_connected()
 
 
@@ -881,34 +890,6 @@ func remove_dropped_item(path):
 	if multiplayer.is_server():
 		if get_node(path):
 			get_node(path).queue_free()
-
-
-@rpc("any_peer","call_local")
-func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
-	if !multiplayer.is_server(): return
-	
-	var a = load("res://player_sound.tscn").instantiate()
-	add_child(a,true)
-	
-	var audio_stream : AudioStream = load(stream_path)
-	
-	
-	actually_play_sound.rpc(a.get_path(),stream_path,volume_db,bus,max_distance,pos)
-	
-	await Game.sleep(audio_stream.get_length())
-	a.queue_free()
-
-@rpc("authority","call_local")
-func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
-	var sound = get_node(sound_path)
-	if sound:
-		sound.stream = load(stream_path)
-		sound.bus = bus
-		sound.max_distance = max_distance
-		sound.volume_db = volume_db
-		sound.global_position = pos
-		sound.play()
-
 
 @rpc("any_peer","call_local")
 func spawn_smoke(pos):

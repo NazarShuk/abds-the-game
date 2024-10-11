@@ -808,7 +808,32 @@ func _on_coffee_timeout_timeout():
 	can_use_coffee = true
 
 func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20):
-	parent.play_sound.rpc(stream_path,volume_db,bus,max_distance,global_position)
+	play_sound_rpc.rpc(stream_path,volume_db,bus,max_distance,global_position)
+
+@rpc("any_peer","call_local")
+func play_sound_rpc(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
+	if !multiplayer.is_server(): return
+	
+	var a = load("res://player_sound.tscn").instantiate()
+	get_parent().add_child(a,true)
+	
+	var audio_stream : AudioStream = load(stream_path)
+	
+	actually_play_sound.rpc(a.get_path(),stream_path,volume_db,bus,max_distance,pos)
+	
+	await Game.sleep(audio_stream.get_length())
+	a.queue_free()
+
+@rpc("authority","call_local")
+func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
+	var sound = get_node(sound_path)
+	if sound:
+		sound.stream = load(stream_path)
+		sound.bus = bus
+		sound.max_distance = max_distance
+		sound.volume_db = volume_db
+		sound.global_position = pos
+		sound.play()
 
 
 var is_minimap_open = false

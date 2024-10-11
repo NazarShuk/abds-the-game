@@ -5,7 +5,7 @@ var default_params = GameParams.new()
 var changed_params = false
 @onready var game_config_client = $Label4/gameConfigClient
 
-func _process(delta):
+func _process(_delta):
 	if !Game.pre_game_started:
 		var changed = 0
 		

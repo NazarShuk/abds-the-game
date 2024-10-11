@@ -57,7 +57,7 @@ func _ready():
 		default.show()
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://logos.tscn")
 
 func _on_item_list_item_selected(index):
 	var children = $Player.get_children()

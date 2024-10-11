@@ -50,10 +50,6 @@ window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/csgtomeshinstance/plugin.cfg", "res://addons/gdscript_formatter/plugin.cfg")
-
 [filesystem]
 
 import/fbx/enabled=false

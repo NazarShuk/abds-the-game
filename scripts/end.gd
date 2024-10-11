@@ -22,8 +22,8 @@ func _ready():
 	Leaderboard.set_values()
 	
 func _on_timer_timeout():
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://logos.tscn")
 
 func _input(event):
 	if Input.is_action_just_pressed("escape"):
-		get_tree().change_scene_to_file("res://game.tscn")
+		get_tree().change_scene_to_file("res://logos.tscn")

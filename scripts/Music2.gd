@@ -12,7 +12,7 @@ func _power_changed(power_on):
 	else:
 		stop()
 
-func _process(delta):
+func _process(_delta):
 	
 	pitch_scale = lerp(pitch_scale,pitch_target,0.05)
 	

@@ -13,8 +13,6 @@ func _on_area_entered(area):
 	if !multiplayer.is_server(): return
 	
 	if area.is_in_group("player_area") and Game.game_started:
-		var player = area.get_parent()
-		
 		play_skibidi_sound.rpc()
 		
 		var spawnpoint = get_tree().get_nodes_in_group("landmine_spawn").pick_random().global_position
