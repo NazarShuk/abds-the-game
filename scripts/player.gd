@@ -11,11 +11,14 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var books_collected = 0
 
+@export var hand : Node3D
+
 var is_running = false
 var stamina = 100
 var can_run = true
 var is_moving = false
 var can_move = true
+var slipped = false
 
 @onready var progress_bar: ProgressBar = $"CanvasLayer/Control/Progress bar handler/ProgressBar"
 @onready var progress_bar_handler = $"CanvasLayer/Control/Progress bar handler"
@@ -38,6 +41,7 @@ var on_top_counter = 0
 @onready var perfect = $visual_body/Perfect
 @onready var impossible = $visual_body/Impossible
 @onready var freaky = $visual_body/Freaky
+@onready var disoriented = $visual_body/Disoriented
 
 var can_get_item = true
 
@@ -46,16 +50,16 @@ var can_get_item = true
 
 var leahy_dst = 0
 
-
 var credits = 0
 var can_use_shop = true
 
-@onready var controls_text = get_parent().controls_text
+@export var controls_text : Label
 
 var parent = null
 
 @onready var leahy_approaching = $CanvasLayer/Control/LeahyApproaching
 
+@onready var shop_timer = $"CanvasLayer/Control/Shop/shop timer"
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -68,21 +72,19 @@ func _enter_tree():
 	parent = get_parent()
 	
 	$CanvasLayer.hide()
-	
 	if is_multiplayer_authority():
 		$CanvasLayer.show()
 		parent.hide_menu()
-		
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 	if is_multiplayer_authority():
-		
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		if Allsingleton.is_bossfight:
 			$"CanvasLayer/Control/Progress bar handler/ProgressBar".hide()
 		
 		# Store the original position and rotation of the hand
-		original_rotation = $Hand.rotation_degrees
+		original_rotation = hand.rotation_degrees
 		
 		$visual_body.hide()
 		
@@ -104,10 +106,14 @@ func _ready():
 			if Achievements.picked_skin == 1:
 				freaky.show()
 				picked_skin = true
+		if Achievements.check_achievement("disoriented_ending"):
+			if Achievements.picked_skin == 4:
+				disoriented.show()
+				picked_skin = true
 		
 		if picked_skin == false:
 			default.show()
-	
+		
 		if Settings.render_distance:
 			camera_3d.far = Settings.render_distance
 		
@@ -126,7 +132,10 @@ func _physics_process(delta):
 	if is_multiplayer_authority():
 		if !get_tree(): return
 		
-		if Input.is_action_just_pressed("debug"):
+		if Input.is_action_just_pressed("submit") and is_shop_open:
+			_on_submit_button_pressed() 
+		
+		if Input.is_action_just_pressed("debug") and OS.has_feature("debug"):
 			buy_book_rpc.rpc(steam_name)
 		
 		if Allsingleton.is_bossfight:
@@ -185,11 +194,11 @@ func _physics_process(delta):
 				cam_fov = 75 + final_multiplier * 15
 			else:
 				cam_fov = 75
-		$Hand.position.y = lerp($Hand.position.y,hand_target_y,0.25)
+		hand.position.y = lerp(hand.position.y,hand_target_y,0.25)
 		
-		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor($"CanvasLayer/Control/Shop/shop timer".time_left)) + "s left"
+		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor(shop_timer.time_left)) + "s left"
 		
-		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits) + " credits"
+		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits)
 		var closest_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 		if closest_leahy:
 			leahy_dst = global_position.distance_to(closest_leahy.global_position)
@@ -300,7 +309,7 @@ func _input(event):
 					# Calculate new vertical angle
 					vertical_angle -= event.relative.y * 0.3
 					vertical_angle = clamp(vertical_angle, -max_vertical_angle, max_vertical_angle)
-	
+					
 					# Set the new rotation by using Euler angles
 					rotation.x = deg_to_rad(vertical_angle)
 	
@@ -361,8 +370,7 @@ func _on_area_3d_area_entered(area):
 						die("leahy")
 
 	elif area.is_in_group("landmine") and Game.game_started == true:
-		die("mine")
-		
+		landmine_slip()
 	elif area.name == "azzu":
 		if area.get_parent().angered:
 			die("azzu")
@@ -388,6 +396,21 @@ func _on_area_3d_area_entered(area):
 	elif area.name == "darel ball":
 		die("darel")
 		area.get_parent().queue_free()
+
+func landmine_slip():
+	velocity.y += 5
+	
+	for i in range(0,100):
+		
+		if global_rotation_degrees.x < 90:
+			global_rotation_degrees.x += 5
+		if global_rotation_degrees.x < -90:
+			global_rotation_degrees.x -= 5
+		
+		await Game.sleep(0.01)
+	await Game.sleep(1)
+	global_rotation_degrees.x = 0
+	global_rotation_degrees.z = 0
 
 func _on_area_3d_area_exited(area):
 	if !is_multiplayer_authority(): return
@@ -440,7 +463,7 @@ func _on_revive_timer_timeout():
 	$"CanvasLayer/Control/Died thing".hide()
 	AudioServer.set_bus_mute(1, false)
 	AudioServer.set_bus_mute(2, false)
-	is_dead = false
+	
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = true
 	$CollisionShape3D.disabled = false
@@ -459,9 +482,13 @@ func _on_revive_timer_timeout():
 		GuiManager.show_tip_once("wall_death","[color=green]Walking on walls[/color]\nDo [b]NOT[/b] do that.")
 	elif death_cause == "freezer":
 		GuiManager.show_tip_once("freezer_death","[color=green]Freezer[/color]\n Don't stay in the freezer for too long! You will freeze to [color=red]death[/color].")
+	
+	await Game.sleep(3)
+	is_dead = false
+
 func pick_item(item: int):
 	
-	for i in $Hand.get_children().size():
+	for i in hand.get_children().size():
 		set_item_vis.rpc(i,false)
 	
 	if item != -1:
@@ -474,12 +501,12 @@ func pick_item(item: int):
 
 @rpc("any_peer","call_local")
 func set_item_vis(item : int,vis : bool):
-	$Hand.get_child(item).visible = vis
+	hand.get_child(item).visible = vis
 
 func get_cur_item():
 	var id = -1
-	for i in range(0, $Hand.get_children().size()):
-		if $Hand.get_children()[i].visible == true:
+	for i in range(0, hand.get_children().size()):
+		if hand.get_children()[i].visible == true:
 			id = i
 			break
 
@@ -572,10 +599,7 @@ func die(cause):
 	
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
-	if cause == "mine":
-		parent.set_player_dead.rpc(name.to_int(), true,false)
-	else:
-		parent.set_player_dead.rpc(name.to_int(), true,true)
+	parent.set_player_dead.rpc(name.to_int(), true,true)
 	$"CanvasLayer/Control/Died thing".show()
 	if cause != "darel":
 		$ReviveTimer.start(5)
@@ -586,7 +610,6 @@ func die(cause):
 	#TODO: make this work $CollisionShape3D.disabled = true
 	Achievements.deaths += 1
 	Achievements.save_all()
-	$CanvasLayer/Control/Control.hide()
 	close_shop(false)
 	
 	death_cause = cause
@@ -600,9 +623,6 @@ func die(cause):
 				$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
 				is_suspended = true
 				$"Silent Lunch".start(15)
-
-	elif cause == "mine":
-		$"CanvasLayer/Control/Died thing/jumpscare2".play()
 	elif cause == "wall":
 		$"CanvasLayer/Control/Died thing/jumpscare3".play()
 	elif cause == "fox":
@@ -670,9 +690,8 @@ func open_shop():
 		AudioServer.set_bus_solo(6,true)
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 		can_use_shop = false
-		$ShopTimeout.start(60)
-		parent.shop.hide()
-		$"CanvasLayer/Control/Shop/shop timer".start()
+		Game.get_closest_node_in_group(global_position,"shop").hide()
+		shop_timer.start()
 		$CanvasLayer/Control/Shop/ColorRect/MainPanel.show()
 		$"CanvasLayer/Control/Shop/ColorRect/question panel".hide()
 		$"CanvasLayer/Control/Shop/ColorRect/rewards panel".hide()
@@ -686,13 +705,16 @@ func close_shop(set_death = true):
 	AudioServer.set_bus_solo(6,false)
 	if set_death:
 		parent.set_player_dead.rpc(name.to_int(), false,false)
-	$"CanvasLayer/Control/Shop/shop timer".stop()
+	shop_timer.stop()
 	is_shop_open = false
-	
+	if $ShopTimeout.is_stopped():
+		$ShopTimeout.start(60)
 
 func _on_shop_timeout_timeout():
 	can_use_shop = true
-	parent.shop.show()
+	var closest_shop = Game.get_closest_node_in_group(global_position,"shop")
+	if closest_shop:
+		closest_shop.show()
 
 func _on_credits_btn_pressed():
 	$"CanvasLayer/Control/Shop/ColorRect/question panel".show()
@@ -707,45 +729,26 @@ func _on_rewards_btn_pressed():
 	$CanvasLayer/Control/Shop/ColorRect/MainPanel.hide()
 	$"CanvasLayer/Control/Shop/ColorRect/rewards panel".show()
 
-@onready var item_list : ItemList = $"CanvasLayer/Control/Shop/ColorRect/question panel/ItemList"
-var right_ans_index 
+var right_ans
+
+@onready var line_edit = $"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/LineEdit"
+
 
 func generate_show_question():
-	var num1 = randi_range(33,99)
-	var num2 = randi_range(33,99)
-	var ans = num1 + num2
+	var num1 = randi_range(1,55)
+	var num2 = randi_range(1,55)
+	right_ans = num1 + num2
 	
-	var right_choice = randi_range(0,4)
-	
-	$"CanvasLayer/Control/Shop/ColorRect/question panel/Label2".text = str(num1) + " + " + str(num2)
-	item_list.clear()
-	var is_right_there = false
-	
-	for i in range(0,4):
-		if i != right_choice:
-			var rand_change = null
-			
-			if randi_range(0,1) == 0:
-				rand_change = randi_range(-10,-1)
-			else:
-				rand_change = randi_range(10,1)
-			
-			item_list.add_item(str(ans + rand_change))
-		else:
-			right_ans_index = item_list.add_item(str(ans))
-			is_right_there = true
-	
-	
-	
-	if is_right_there == false:
-		generate_show_question()
+	line_edit.text = ""
+	$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Label2".text = str(num1) + " + " + str(num2) + " ="
 
-func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
-
-	if index == right_ans_index:
+func _on_submit_button_pressed():
+	if line_edit.text.to_int() == right_ans:
 		credits += 5
 		generate_show_question()
 		$CanvasLayer/Control/Shop/correct.play()
+		$"CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation".show()
+		shop_timer.start(shop_timer.time_left + 2.5)
 	else:
 		$CanvasLayer/Control/Shop/incorrect.play()
 		close_shop()
@@ -884,7 +887,7 @@ func control_text_setters():
 			if get_cur_item() != 7:
 				final_text += "Water fountain\nGet a bucket to fill it"
 			else:
-				if !$"Hand/Bucket 7/Bucket/water".visible:
+				if !hand.get_node("Bucket 7/Bucket/water").visible:
 					final_text += "Water fountain\nE - fill the bucket"
 				else:
 					final_text += "Water fountain\nBucket is full"
@@ -925,7 +928,7 @@ func control_text_setters():
 		final_text += "Redbull\nLeft Click - Give to Ms.Leahy\nRight Click - Drink"
 		GuiManager.show_tip_once("redbull","[color=green]Redbull[/color]\nJust [b]don't[/b] give it to Ms.Leahy please.")
 	elif cur_item == 7:
-		if $"Hand/Bucket 7/Bucket/water".visible:
+		if hand.get_node("Bucket 7/Bucket/water").visible:
 			final_text += "Bucket\nRight Click - Pour water out"
 		else:
 			final_text += "Bucket\nFill the bucket to use it"
@@ -976,7 +979,7 @@ func open_gambling():
 		}
 		gamble.append(g)
 		
-		$CanvasLayer/Control/paper.get_node(NodePath("gamble" + str(i + 1))).text = "if you get %s notebooks in %s seconds, i will give everyone a %s. If you don't, i will take %s books." % [g.books,g.time,$Hand.get_child(g.reward).name,g.loss]
+		$CanvasLayer/Control/paper.get_node(NodePath("gamble" + str(i + 1))).text = "if you get %s notebooks in %s seconds, i will give everyone a %s. If you don't, i will take %s books." % [g.books,g.time,hand.get_child(g.reward).name,g.loss]
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 
 func close_gambling(do_deaths = true):
@@ -988,17 +991,17 @@ func close_gambling(do_deaths = true):
 
 
 func _on_gamblebtn_1_pressed():
-	parent.do_bet.rpc(steam_name,gamble[0].books,gamble[0].time,gamble[0].loss,gamble[0].reward,$Hand.get_child(gamble[0].reward).name)
+	parent.do_bet.rpc(steam_name,gamble[0].books,gamble[0].time,gamble[0].loss,gamble[0].reward,hand.get_child(gamble[0].reward).name)
 	close_gambling()
 
 
 func _on_gamblebtn_2_pressed():
-	parent.do_bet.rpc(steam_name,gamble[1].books,gamble[1].time,gamble[1].loss,gamble[1].reward,$Hand.get_child(gamble[1].reward).name)
+	parent.do_bet.rpc(steam_name,gamble[1].books,gamble[1].time,gamble[1].loss,gamble[1].reward,hand.get_child(gamble[1].reward).name)
 	close_gambling()
 
 
 func _on_gamblebtn_3_pressed():
-	parent.do_bet.rpc(steam_name,gamble[2].books,gamble[2].time,gamble[2].loss,gamble[2].reward,$Hand.get_child(gamble[2].reward).name)
+	parent.do_bet.rpc(steam_name,gamble[2].books,gamble[2].time,gamble[2].loss,gamble[2].reward,hand.get_child(gamble[2].reward).name)
 	close_gambling()
 
 
@@ -1009,10 +1012,13 @@ var is_in_freezer = false
 
 func movement_function(delta):
 	
-	if global_position.y >= 3.727:
-			is_on_top = true
+	if not is_on_floor() and not is_dead:
+		velocity.y -= gravity * delta
+	
+	if global_position.y >= 3.727 and is_on_floor():
+		is_on_top = true
 	else:
-			is_on_top = false
+		is_on_top = false
 	
 	if Allsingleton.is_bossfight:
 		if Game.game_started:
@@ -1025,10 +1031,7 @@ func movement_function(delta):
 		else:
 			$"Camera target".rotation_degrees.y = 0
 	
-	if not is_on_floor() and not is_dead:
-		velocity.y -= gravity * delta
-		
-		
+	
 	if Input.is_action_just_pressed("sprint"):
 		is_running = true
 	elif Input.is_action_just_released("sprint"):
@@ -1094,7 +1097,6 @@ func movement_function(delta):
 						if ray.get_collider().is_in_group("shop"):
 							open_shop()
 						if ray.get_collider().is_in_group("coffee_machine"):
-							if !parent.enable_coffee: return
 							if !can_use_coffee: return
 							if boosts.has("coffee"):
 								boosts["coffee"] += 1
@@ -1148,7 +1150,7 @@ func movement_function(delta):
 						
 						if ray.get_collider().is_in_group("toilet"):
 							if !can_toilet_tp : return
-							var spawns = parent.get_node("School/Bathroom spawns").get_children()
+							var spawns = get_tree().get_nodes_in_group("bathroom_spawn")
 							
 							var farthest_dst = -1
 							var farthest_obj
@@ -1159,18 +1161,15 @@ func movement_function(delta):
 									farthest_obj = spawn
 							can_toilet_tp = false
 							$ToiletTimeout.start()
-							$"CanvasLayer/Control/cool transition".show()
-							$"CanvasLayer/Control/cool transition".play()
-							await Game.sleep(0.7)
+							$CanvasLayer/Control/toilet.show()
 							global_position = farthest_obj.global_position
-							await Game.sleep(0.7)
-							$"CanvasLayer/Control/cool transition".hide()
+							await Game.sleep(2)
 							play_sound("res://flush.mp3",5)
 						
 						if ray.get_collider():
 							if ray.get_collider().is_in_group("water fountain"):
 								if get_cur_item() == 7:
-									$"Hand/Bucket 7/Bucket/water".show()
+									hand.get_node("Bucket 7/Bucket/water").show()
 						if ray.get_collider():
 							if ray.get_collider().is_in_group("bucket"):
 								if get_cur_item() == -1:
@@ -1250,8 +1249,9 @@ func movement_function(delta):
 						redbull_timeout()
 						play_sound("res://redbull.mp3")
 					elif get_cur_item() == 7:
-						if $"Hand/Bucket 7/Bucket/water".visible:
-							$"Hand/Bucket 7/Bucket/water".visible = false
+						
+						if hand.get_node("Bucket 7/Bucket/water").visible:
+							hand.get_node("Bucket 7/Bucket/water").visible = false
 							pick_item(-1)
 							play_sound("res://water.mp3")
 							parent.spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
@@ -1280,8 +1280,8 @@ func movement_function(delta):
 
 	if Input.is_action_just_pressed("throw"):
 		if get_cur_item() != -1:
-			var cloned_item = $Hand.get_child(get_cur_item()).get_child(0).get_path()
-			parent.spawn_dropped_item.rpc($Hand.global_position,cloned_item,get_cur_item())
+			var cloned_item = hand.get_child(get_cur_item()).get_child(0).get_path()
+			parent.spawn_dropped_item.rpc(hand.global_position,cloned_item,get_cur_item())
 		
 		pick_item(-1)
 	if parent.leahy_look:
@@ -1333,7 +1333,7 @@ func arm_sway(delta):
 
 	# Smooth the rotation and return to the original orientation
 	var new_rotation = original_rotation + sway_rotation
-	$Hand.rotation_degrees = lerp($Hand.rotation_degrees, new_rotation, delta * sway_smoothness)
+	hand.rotation_degrees = lerp(hand.rotation_degrees, new_rotation, delta * sway_smoothness)
 
 
 func _on_voice_chat_toggled(toggled_on):

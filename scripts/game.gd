@@ -30,16 +30,16 @@ var players_spawned = false
 
 @export var school : Node3D
 
-@export var controls_text : Label
 
 var do_vertical_camera_normal = false
 
 func _enter_tree():
 	Game.reset_values()
+	name = "MainGameScene"
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	Game.world_environment = $"Lighting and stuff/WorldEnvironment"
 	Game.environment = Game.world_environment.environment
 	Game.sun = $"Lighting and stuff/DirectionalLight3D"
@@ -64,8 +64,6 @@ func _ready():
 	
 	if Allsingleton.is_bossfight:
 		$CanvasLayer/Glitch.show()
-		$WelcomeLeahy.hide()
-		$WelcomeLeahy/AudioStreamPlayer3D.stop()
 		$Music1.stream = load("res://pre_boss.mp3")
 		$Music2.stream = load("res://dariel/placeholders/Glory [kzbbO_lyZ94].mp3")
 		$Music0.stream = load("res://noise.mp3")
@@ -372,14 +370,13 @@ func _on_connect_pressed():
 func start_da_game():
 	$bum.play()
 	$Music1.stop()
-	if !Allsingleton.is_bossfight:
-		$Music2/Timer.start()
-	else:
+	
+	if Allsingleton.is_bossfight || OS.has_feature("debug"):
 		$Music2/Timer.start(0.01)
-	$WelcomeLeahy.hide()
-	if !Allsingleton.is_bossfight:
-		$WelcomeLeahy/AudioStreamPlayer3D.stop()
 	else:
+		$Music2/Timer.start()
+	
+	if !Allsingleton.is_bossfight:
 		$CanvasLayer/Glitch.hide()
 
 
@@ -572,8 +569,6 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_file("res://worst_end.tscn")
 	elif ending == "dumb":
 		get_tree().change_scene_to_file("res://dumb_ahh_end.tscn")
-	elif ending == "br":
-		get_tree().change_scene_to_file("res://sadge.tscn")
 	elif ending == "disoriented":
 		get_tree().change_scene_to_file("res://disoriented_end.tscn")
 	else:

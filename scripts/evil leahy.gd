@@ -47,12 +47,12 @@ func _on_pregame_started():
 func _game_started():
 	$AudioStreamPlayer3D.play()
 	show()
-	$grrrrrr.play()
 
 func _on_book_collected(amount):
 	if Game.collected_books == 1 and not Game.game_started:
 		show()
 		SPEED = leahy_start_speed
+		$grrrrrr.play()
 	
 	if multiplayer.is_server():
 		var players_in_lobby = Game.players.keys().size()

@@ -3,7 +3,6 @@ extends Control
 var dialog_stream = []
 @onready var http = $HTTPRequest
 var audio_player : AudioStreamPlayer
-var initial_y
 
 var prompt_idx = 0
 
@@ -17,7 +16,6 @@ func _ready():
 	AudioServer.set_bus_mute(2,false)
 	AudioServer.set_bus_solo(6,false)
 	
-	initial_y = $AzzuHandle.position.y
 	
 	var body = JSON.stringify({
 		"text":get_the_prompt(prompt_idx),
@@ -43,7 +41,8 @@ func _process(delta):
 			maxAmplitude = max(value,maxAmplitude)
 			data[i] = value
 		
-		$AzzuHandle.position.y = initial_y - maxAmplitude * 50
+		$AzzuHandle/TextureRect.scale.x = 1 - (maxAmplitude / 5)
+		$AzzuHandle/TextureRect.scale.y = 1 + (maxAmplitude / 5)
 	
 	$ColorRect.color = lerp($ColorRect.color,target_bg_color,0.01)
 	$bg.pitch_scale = lerp($bg.pitch_scale,float(target_bg_pitch),0.005)

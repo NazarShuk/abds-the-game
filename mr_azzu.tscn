@@ -30,6 +30,8 @@ properties/2/replication_mode = 2
 
 [node name="Mr_Azzu" type="CharacterBody3D" groups=["mr_azzu"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
+collision_layer = 17
+collision_mask = 17
 script = ExtResource("1_s00pa")
 
 [node name="Mr Fox2" type="MeshInstance3D" parent="."]

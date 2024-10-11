@@ -6,3 +6,6 @@
 albedo_texture = ExtResource("1_g2i1f")
 uv1_triplanar = true
 uv1_world_triplanar = true
+billboard_keep_scale = true
+proximity_fade_distance = 3.35
+distance_fade_max_distance = 3.0

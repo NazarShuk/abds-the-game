@@ -117,7 +117,7 @@ func set_powered_off(val : bool):
 	on_power_changed.emit(!val)
 
 func info_text(text : String):
-	rpc_info_text(text)
+	rpc_info_text.rpc(text)
 
 @rpc("any_peer","call_local")
 func rpc_info_text(text):

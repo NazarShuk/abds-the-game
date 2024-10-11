@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
 [ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
 [ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
+[ext_resource type="Script" path="res://scripts/WelcomeLeahy.gd" id="26_0x6dq"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
 [ext_resource type="PackedScene" uid="uid://ksynis5kuf5a" path="res://bathroom_spawn.tscn" id="29_kjme3"]
 [ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
@@ -247,16 +248,10 @@ bg_color = Color(0.358229, 0.229203, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v8ix"]
 bg_color = Color(1, 0.670588, 0, 1)
 
-[sub_resource type="Theme" id="Theme_ciuim"]
-Label/constants/outline_size = 7
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rb4lo"]
 properties/0/path = NodePath("CollectedBooksLabel:text")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("LeahyAngeredLabel:visible")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_c7x6i"]
 length = 0.001
@@ -876,10 +871,9 @@ _data = {
 "carpool": SubResource("Animation_rpmyj")
 }
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("school", "controls_text")]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("school")]
 script = ExtResource("1_y4eyb")
 school = NodePath("School")
-controls_text = NodePath("CanvasLayer/Main/ControlsText")
 
 [node name="Lighting and stuff" type="Node" parent="."]
 script = ExtResource("2_uakk8")
@@ -1026,37 +1020,6 @@ theme_override_font_sizes/font_size = 32
 text = "find a ela book!
 "
 metadata/_edit_use_anchors_ = true
-
-[node name="ControlsText" type="Label" parent="CanvasLayer/Main"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -574.0
-offset_bottom = 640.0
-grow_horizontal = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 32
-horizontal_alignment = 2
-
-[node name="LeahyAngeredLabel" type="Label" parent="CanvasLayer/Main"]
-visible = false
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -125.0
-offset_bottom = -65.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_ciuim")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 50
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Main"]
 replication_config = SubResource("SceneReplicationConfig_rb4lo")
@@ -1733,6 +1696,11 @@ layout_mode = 2
 param_name = "ms_leahy"
 label_text = "Ms.Leahy"
 
+[node name="CheckBox11" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
+layout_mode = 2
+param_name = "mr_fox"
+label_text = "Mr.Fox"
+
 [node name="CheckBox5" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
 layout_mode = 2
 param_name = "vending_machines"
@@ -1762,11 +1730,6 @@ label_text = "The wheel"
 layout_mode = 2
 param_name = "the_shop"
 label_text = "The shop"
-
-[node name="CheckBox11" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
-layout_mode = 2
-param_name = "pacer"
-label_text = "The Pacer test"
 
 [node name="CheckBox12" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
 layout_mode = 2
@@ -1921,6 +1884,7 @@ transform = Transform3D(2.53895, 0, -1.74614, 0, 3.08144, 0, 1.74614, 0, 2.53895
 material_override = SubResource("StandardMaterial3D_5h8sj")
 mesh = SubResource("QuadMesh_pjpdc")
 skeleton = NodePath("AudioStreamPlayer3D")
+script = ExtResource("26_0x6dq")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="WelcomeLeahy"]
 stream = ExtResource("5_x5ors")
@@ -2069,18 +2033,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13273, 1.27832, -33.4708)
 [node name="LandMine Spawn2" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39368, 1.27832, -61.3339)
 
-[node name="LandMine Spawn3" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1611, 1.27832, -95.5918)
-
-[node name="LandMine Spawn4" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.9247, 1.27832, -108.686)
-
-[node name="LandMine Spawn5" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8436, 1.27832, -111.122)
-
-[node name="LandMine Spawn6" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.9622, 1.27832, -87.0654)
-
 [node name="LandMine Spawn7" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.2306, 1.27832, -126.932)
 
@@ -2161,6 +2113,72 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.858, 1.27832, -223.606)
 
 [node name="LandMine Spawn33" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.1733, 1.27832, -170.21)
+
+[node name="LandMine Spawn34" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.1733, 1.27832, -203.054)
+
+[node name="LandMine Spawn35" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.3899, 1.27832, -128.985)
+
+[node name="LandMine Spawn36" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.7032, 1.27832, -126.041)
+
+[node name="LandMine Spawn37" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.4699, 1.27832, -47.2158)
+
+[node name="LandMine Spawn38" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.56982, 1.27832, -27.0565)
+
+[node name="LandMine Spawn39" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.655, 1.27832, -34.3048)
+
+[node name="LandMine Spawn40" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.183, 1.27832, -44.0447)
+
+[node name="LandMine Spawn41" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 147.817, 1.27832, -60.8063)
+
+[node name="LandMine Spawn42" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.366, 1.27832, -127.173)
+
+[node name="LandMine Spawn43" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.6382, 1.27832, -124.002)
+
+[node name="LandMine Spawn44" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.6233, 1.27832, -222.534)
+
+[node name="LandMine Spawn45" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.60842, 1.27832, -234.085)
+
+[node name="LandMine Spawn46" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4787, 1.27832, -180.176)
+
+[node name="LandMine Spawn47" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.0019, 1.27832, -163.641)
+
+[node name="LandMine Spawn48" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.2636, 1.27832, -152.813)
+
+[node name="LandMine Spawn49" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.0822, 1.27832, -143.992)
+
+[node name="LandMine Spawn50" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.0735, 1.27832, -143.537)
+
+[node name="LandMine Spawn51" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.42976, 1.27832, -143.901)
+
+[node name="LandMine Spawn52" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.95766, 1.27832, -128.298)
+
+[node name="LandMine Spawn53" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57758, 1.27832, -91.7855)
+
+[node name="LandMine Spawn54" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01054, 1.27832, -110.691)
+
+[node name="LandMine Spawn55" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.413, 1.27832, -68.5873)
 
 [node name="PlayerSpawns" type="Node3D" parent="School"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
@@ -2357,32 +2375,44 @@ transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
 mesh = SubResource("BoxMesh_kas3n")
 surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
 
+[node name="Landmine" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 14.3858, 0, -16.696)
+
+[node name="Landmine2" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -44.2364, -7.62939e-06, -12.169)
+
+[node name="Landmine3" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 61.3664, -1.52588e-05, -9.28299)
+
+[node name="Landmine5" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 114.896, -7.62939e-06, 17.006)
+
+[node name="Landmine6" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 18.2789, -7.62939e-06, 33.067)
+
+[node name="Landmine7" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -42.5739, -7.62939e-06, -41.6539)
+
+[node name="Landmine8" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -87.7715, 0, -101.304)
+
+[node name="Landmine9" parent="School" instance=ExtResource("28_dmjcx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 102.907, 7.62939e-06, -83.1467)
+
+[node name="Bucket" parent="School" instance=ExtResource("42_8jmcj")]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 95.2963, 0.545469, -3.71399)
+
+[node name="Bucket2" parent="School" instance=ExtResource("42_8jmcj")]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 82.9779, 0.545469, -3.71399)
+
+[node name="Bucket3" parent="School" instance=ExtResource("42_8jmcj")]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 12.6996, 0.545469, 2.60501)
+
+[node name="Bucket4" parent="School" instance=ExtResource("42_8jmcj")]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -66.0308, 0.545469, 2.60503)
+
 [node name="Mr Fox" parent="." instance=ExtResource("20_kw6s4")]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 1.24168, -174.032)
-
-[node name="Landmine" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1777, 0, -120.484)
-
-[node name="Landmine2" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.7999, -7.62939e-06, -125.011)
-
-[node name="Landmine3" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.8029, -1.52588e-05, -127.897)
-
-[node name="Landmine5" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.3327, -7.62939e-06, -154.186)
-
-[node name="Landmine6" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.28461, -7.62939e-06, -170.247)
-
-[node name="Landmine7" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.1374, -7.62939e-06, -95.5261)
-
-[node name="Landmine8" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.335, 0, -35.876)
-
-[node name="Landmine9" parent="." instance=ExtResource("28_dmjcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.3436, 7.62939e-06, -54.0333)
 
 [node name="Mr_Azzu" parent="." instance=ExtResource("22_xuer2")]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 23.5605, 1.20217, -66.461)
@@ -2460,18 +2490,6 @@ shape = SubResource("BoxShape3D_ekwb2")
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
 occluder = ExtResource("40_ba0mq")
 bake_mask = 4294442495
-
-[node name="Bucket" parent="." instance=ExtResource("42_8jmcj")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -70.7328, 0.545469, -133.466)
-
-[node name="Bucket2" parent="." instance=ExtResource("42_8jmcj")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -58.4144, 0.545469, -133.466)
-
-[node name="Bucket3" parent="." instance=ExtResource("42_8jmcj")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 11.8639, 0.545469, -139.785)
-
-[node name="Bucket4" parent="." instance=ExtResource("42_8jmcj")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 90.5943, 0.545469, -139.785)
 
 [node name="Mr_Misuraca" parent="." instance=ExtResource("43_t45wj")]
 transform = Transform3D(1.165, 0, -2.01784, 0, 2.33, 0, 2.01784, 0, 1.165, -67.4405, 1.24283, -168.649)

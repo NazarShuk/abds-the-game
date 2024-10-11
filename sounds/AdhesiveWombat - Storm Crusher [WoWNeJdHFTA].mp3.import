@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ck1s4rpwaeb4g"
+path="res://.godot/imported/AdhesiveWombat - Storm Crusher [WoWNeJdHFTA].mp3-ee6ef78ec46e01a4c7e264da5e5ce198.mp3str"
+
+[deps]
+
+source_file="res://sounds/AdhesiveWombat - Storm Crusher [WoWNeJdHFTA].mp3"
+dest_files=["res://.godot/imported/AdhesiveWombat - Storm Crusher [WoWNeJdHFTA].mp3-ee6ef78ec46e01a4c7e264da5e5ce198.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

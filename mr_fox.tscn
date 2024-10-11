@@ -5,7 +5,9 @@
 [ext_resource type="AudioStream" uid="uid://b7pm5d3uiydah" path="res://pacer.mp3" id="3_gj3ac"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="4_u5ux6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5qd5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5irfe"]
+transparency = 1
+cull_mode = 2
 albedo_texture = ExtResource("2_e6wkd")
 
 [sub_resource type="QuadMesh" id="QuadMesh_dmors"]
@@ -58,19 +60,15 @@ properties/0/replication_mode = 1
 
 [node name="Mr Fox" type="CharacterBody3D" groups=["mr_fox"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 2.17448, -174.032)
+collision_layer = 17
+collision_mask = 17
 script = ExtResource("1_7a5un")
 
 [node name="Mr Fox2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 layers = 524288
-material_override = SubResource("StandardMaterial3D_p5qd5")
-mesh = SubResource("QuadMesh_dmors")
-skeleton = NodePath("../..")
-
-[node name="Mr Fox3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, -1.82972e-14, 0, 1, 0, 1.82972e-14, 0, 1, 0, 0, 0)
-layers = 524288
-material_override = SubResource("StandardMaterial3D_p5qd5")
+material_override = SubResource("StandardMaterial3D_5irfe")
+ignore_occlusion_culling = true
 mesh = SubResource("QuadMesh_dmors")
 skeleton = NodePath("../..")
 

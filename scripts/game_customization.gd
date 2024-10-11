@@ -16,6 +16,7 @@ class_name GameParams
 @export var param_ms_gainy: bool = true
 @export var param_mr_misuraca: bool = true
 @export var param_ms_leahy: bool = true
+@export var param_mr_fox: bool = true
 @export var param_vending_machines: bool = true
 @export var param_bananas: bool = true
 @export var param_coffee_machine: bool = true
