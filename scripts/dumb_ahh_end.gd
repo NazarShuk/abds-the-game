@@ -87,7 +87,7 @@ func _on_http_request_request_completed(result, response_code, headers, body):
 		audio.play()
 		audio.bus = "Dialogs"
 		await Game.sleep(10)
-		get_tree().change_scene_to_file("res://logos.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 		
 
 func play_da_dialog():
@@ -122,7 +122,7 @@ func play_da_dialog():
 		await Game.sleep(audio.stream.get_length())
 		if prompt_idx == 4:
 			await Game.sleep(2)
-			get_tree().change_scene_to_file("res://logos.tscn")
+			get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 		else:
 			play_da_dialog()
 

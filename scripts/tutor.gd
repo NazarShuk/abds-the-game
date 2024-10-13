@@ -7,4 +7,4 @@ func _on_video_stream_player_finished():
 
 
 func _on_timer_timeout():
-	get_tree().change_scene_to_file("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")

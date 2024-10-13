@@ -7,10 +7,10 @@ func _ready() -> void:
 	$AudioStreamPlayer.play(Allsingleton.menu_music_duration)
 
 func _on_achievements_pressed():
-	get_tree().change_scene_to_file("res://achievements.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://achievements.tscn")
 
 func _on_settings_pressed():
-	get_tree().change_scene_to_file("res://settings.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://settings.tscn")
 
 func _on_play_pressed():
 	host_lobby()

@@ -230,10 +230,10 @@ func receive_steam_usr(id,username):
 
 func disconenct_btn():
 	multiplayer.multiplayer_peer.close()
-	get_tree().change_scene_to_file("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 	
 func go_back():
-	get_tree().change_scene_to_file("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 
 func _on_peer_connected(id = 1):
 	if !players_spawned:
@@ -479,13 +479,13 @@ func set_singleton(deaths,books,ending):
 	
 	#peer.close()
 	if ending == "normal":
-		get_tree().change_scene_to_file("res://end.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://end.tscn")
 	elif ending == "worst":
-		get_tree().change_scene_to_file("res://bad_end.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://bad_end.tscn")
 	elif ending == "perfect":
-		get_tree().change_scene_to_file("res://perfect_end.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://perfect_end.tscn")
 	elif ending == "imp":
-		get_tree().change_scene_to_file("res://impossible_end.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://impossible_end.tscn")
 	elif ending == "freaky":
 		
 		var can_bossfight = false
@@ -500,33 +500,33 @@ func set_singleton(deaths,books,ending):
 								pass
 		
 		if !can_bossfight:
-			get_tree().change_scene_to_file("res://huh_ending.tscn")
+			get_tree().change_scene_to_file.call_deferred("res://huh_ending.tscn")
 		else:
-			get_tree().change_scene_to_file("res://huh_ending_2.tscn")
+			get_tree().change_scene_to_file.call_deferred("res://huh_ending_2.tscn")
 	elif ending == "you suck":
-		get_tree().change_scene_to_file("res://worst_end.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://worst_end.tscn")
 	elif ending == "dumb":
-		get_tree().change_scene_to_file("res://dumb_ahh_end.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://dumb_ahh_end.tscn")
 	elif ending == "disoriented":
-		get_tree().change_scene_to_file("res://disoriented_end.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://disoriented_end.tscn")
 	else:
-		get_tree().change_scene_to_file("res://logos.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 	peer.close()
 
 
 func _on_button_2_pressed():
-	get_tree().change_scene_to_file("res://tutor.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://tutor.tscn")
 
 
 func _on_button_3_pressed():
-	get_tree().change_scene_to_file("res://settings.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://settings.tscn")
 
 func hide_menu():
 	$Music1.play()
 	$Music0.stop()
 
 func _on_button_5_pressed():
-	get_tree().change_scene_to_file("res://achievements.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://achievements.tscn")
 
 @onready var current_pacer_target = $"School/Pacer/Pacer target"
 
@@ -818,7 +818,7 @@ func give_item_to_everyone(item_id):
 		get_node(str(pl)).choose_item.rpc_id(pl,item_id,true)
 
 func reload_game():
-	get_tree().change_scene_to_file("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 
 func _on_darel_timer_timeout():
 	get_tree().get_first_node_in_group("player").die("darel")

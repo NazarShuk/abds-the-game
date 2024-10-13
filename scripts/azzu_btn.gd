@@ -1,4 +1,4 @@
 extends Button
 
 func _on_pressed():
-	get_tree().change_scene_to_file("res://scenes/angy_azzu.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/angy_azzu.tscn")

@@ -31,7 +31,7 @@ func _ready():
 		skin_list.set_item_disabled(4,true)
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/main_menu.tscn")
 
 func _on_item_list_item_selected(index):
 	Achievements.picked_skin = index

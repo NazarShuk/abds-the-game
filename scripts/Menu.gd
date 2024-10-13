@@ -60,7 +60,7 @@ func _on_disconnect_btn_pressed():
 		if multiplayer.has_multiplayer_peer():
 			multiplayer.multiplayer_peer.close() # whyyy
 		
-		get_tree().change_scene_to_file("res://logos.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 	else:
 		player.get_parent().end_game.rpc("none")
 

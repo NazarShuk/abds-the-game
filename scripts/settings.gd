@@ -46,14 +46,14 @@ func _on_sfx_slider_changed(value):
 		cangoof = false
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/main_menu.tscn")
 
 func _on_goofball_timer_timeout():
 	cangoof = true
 
 
 func _on_button_2_pressed():
-		get_tree().change_scene_to_file("res://noescape.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://noescape.tscn")
 
 func _on_better_lighting_toggle_toggled(toggled_on):
 	Settings.better_lighting = toggled_on
