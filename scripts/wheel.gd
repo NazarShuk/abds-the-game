@@ -137,7 +137,7 @@ func give_reward(what_name):
 	elif what_name == "Rubber ducky":
 		game.give_item_to_everyone(4)
 	elif what_name == "Mr misuraca took a day off":
-		game.is_misuraca_disabled = true
+		remove_mr_misuraca.rpc()
 	elif what_name == "Pee pee":
 		for x in range(-10,10):
 			for y in range(-10,10):
@@ -145,6 +145,14 @@ func give_reward(what_name):
 				game.spawn_puddle.rpc(pos)
 	else:
 		pass
+
+@rpc("authority","call_local")
+func remove_mr_misuraca():
+	var misuracas = get_tree().get_nodes_in_group("mr_misuraca")
+	
+	for misuraca in misuracas:
+		if misuraca:
+			misuraca.queue_free()
 
 @rpc("authority","call_local")
 func play_cool_sound():

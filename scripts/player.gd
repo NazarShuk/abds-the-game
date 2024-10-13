@@ -63,12 +63,8 @@ var parent = null
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
-	if !Game.no_steam:
-		$nametag.text = Steam.getPersonaName()
-		steam_name = Steam.getPersonaName()
-	else:
-		$nametag.text = OS.get_environment("USERNAME")
-		steam_name = OS.get_environment("USERNAME")
+	$nametag.text = SteamManager.steam_name
+	steam_name = SteamManager.steam_name
 	parent = get_parent()
 	
 	$CanvasLayer.hide()
@@ -613,7 +609,7 @@ func die(cause):
 		
 		for lil_darel in get_tree().get_nodes_in_group("lil darel"):
 			lil_darel.queue_free()
-		
+
 
 func _on_silent_lunch_timeout():
 	is_suspended = false

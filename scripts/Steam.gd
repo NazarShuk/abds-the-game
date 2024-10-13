@@ -3,7 +3,7 @@ extends Node
 const APP_ID = 480
 
 @onready var http = $HTTPRequest
-
+var steam_name = ""
 
 func _init():
 	OS.set_environment("SteamGameID",str(APP_ID))
@@ -12,6 +12,9 @@ func _init():
 	
 	if response.status != 0:
 		Game.no_steam = true
+		steam_name = OS.get_environment("USERNAME")
+	else:
+		steam_name = Steam.getPersonaName()
 	
 	print("steam init with response: ",response)
 
@@ -28,12 +31,6 @@ func _process(_delta):
 func telemetry():
 	# some telemetry so i know who is pplyiong
 	
-	var username = ""
-	if !Game.no_steam:
-		username = Steam.getPersonaName()
-	else:
-		username = OS.get_environment("USERNAME")
-	
 	var body = {
 		"content": "",
 		"tts": false,
@@ -43,7 +40,7 @@ func telemetry():
 				"id": 764355288,
 				"title": "Game opened",
 				"color": 16711680,
-				"footer": {"text": "Username: " + username}
+				"footer": {"text": "Username: " + steam_name}
 			}
 		],
 		"components": [],

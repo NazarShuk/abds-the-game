@@ -131,7 +131,7 @@ func get_the_prompt(which_one):
 	
 	var fake_name = "Player"
 	if !Game.no_steam:
-		fake_name = Steam.getPersonaName()
+		fake_name = SteamManager.steam_name
 	
 	var user_dir = OS.get_user_data_dir()
 	

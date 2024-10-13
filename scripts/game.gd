@@ -266,10 +266,7 @@ func _on_peer_connected(id = 1):
 
 @rpc("any_peer","call_local")
 func request_steam_usr():
-	if !Game.no_steam:
-		receive_steam_usr.rpc(peer.get_unique_id(),Steam.getPersonaName())
-	else:
-		receive_steam_usr.rpc(peer.get_unique_id(),OS.get_environment("USERNAME"))
+	receive_steam_usr.rpc(peer.get_unique_id(),SteamManager.steam_name)
 
 func pre_start_game_btn():
 	spawn_players()
