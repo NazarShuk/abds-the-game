@@ -27,6 +27,9 @@ signal on_customization_reset
 # server only
 var players = {}
 
+# steam stuff
+var no_steam = false
+var lobby_id
 
 func reset_values():
 	game_started =         false
@@ -39,7 +42,8 @@ func reset_values():
 	books_to_collect =     9
 	collected_books =      0
 	book_boost =           0
-	game_params =  GameParams.new()
+	game_params =          GameParams.new()
+	lobby_id =             null
 
 func _ready():
 	on_game_started.connect(_on_game_started)
@@ -154,6 +158,3 @@ func get_closest_node_in_group(position : Vector3, group : String):
 			closest_node = node
 	
 	return closest_node
-
-
-

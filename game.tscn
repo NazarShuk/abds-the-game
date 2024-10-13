@@ -1,7 +1,6 @@
-[gd_scene load_steps=112 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=106 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
-[ext_resource type="Script" path="res://scripts/Steam.gd" id="2_0aku0"]
 [ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
 [ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
@@ -16,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="9_gld5r"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="9_pvk13"]
 [ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="10_5h2pt"]
+[ext_resource type="PackedScene" uid="uid://dk72xdfsaj16i" path="res://scenes/loading.tscn" id="10_uw2qm"]
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="Script" path="res://scripts/Music2.gd" id="13_il7ji"]
@@ -335,19 +335,6 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s00na"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6hhxc"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_in5gf"]
-texture = ExtResource("5_wpkks")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivyce"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks86s"]
 bg_color = Color(1, 1, 1, 1)
 border_color = Color(0, 0, 0, 1)
@@ -359,105 +346,6 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Label4/gameConfigClient:text")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-
-[sub_resource type="Animation" id="Animation_jn2c6"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("handelr/Disclaimer/Label:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("handelr/Disclaimer:color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("handelr/Disclaimer:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_iyet2"]
-resource_name = "start"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("handelr/Disclaimer/Label:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 2.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("handelr/Disclaimer:color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(2.5, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("handelr/Disclaimer:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("handelr")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(3),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rx4qs"]
-_data = {
-"RESET": SubResource("Animation_jn2c6"),
-"start": SubResource("Animation_iyet2")
-}
 
 [sub_resource type="SphereMesh" id="SphereMesh_2pqsq"]
 
@@ -901,11 +789,6 @@ shadow_enabled = true
 environment = SubResource("Environment_5hwxw")
 camera_attributes = SubResource("CameraAttributesPractical_u7eo5")
 
-[node name="Steam" type="Node" parent="."]
-script = ExtResource("2_0aku0")
-
-[node name="HTTPRequest" type="HTTPRequest" parent="Steam"]
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn", "res://puddle.tscn", "res://dropped_item.tscn", "res://player_sound.tscn", "res://smoke wall.tscn")
 spawn_path = NodePath("..")
@@ -1059,10 +942,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 419.0
-offset_top = 152.0
-offset_right = 769.0
-offset_bottom = 502.0
+offset_left = -175.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_wpkks")
@@ -1071,339 +954,7 @@ expand_mode = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Main/fake dp ending"]
 bus = &"Dialogs"
 
-[node name="MultiPlayer" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 46.0
-offset_top = 33.0
-offset_right = -46.0
-offset_bottom = -33.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Title" type="Label" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 99.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 7
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-text = "Alostn Bridge Diddle School
-The Game"
-horizontal_alignment = 1
-
-[node name="host" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -148.0
-offset_right = 265.0
-offset_bottom = -91.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
-theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 48
-theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
-text = "Host a game"
-alignment = 0
-
-[node name="connect local" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-offset_right = 19.0
-grow_vertical = 0
-text = "C"
-
-[node name="host_local" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -31.0
-offset_right = 41.0
-grow_vertical = 0
-text = "H"
-
-[node name="settings" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = 20.0
-offset_right = 400.0
-offset_bottom = 57.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 31
-theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
-text = "Settings"
-alignment = 0
-
-[node name="achievements" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = 57.0
-offset_right = 400.0
-offset_bottom = 94.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 31
-theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
-text = "Achievements"
-alignment = 0
-
-[node name="quit" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = 94.0
-offset_right = 282.0
-offset_bottom = 131.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 31
-theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
-text = "Quit"
-alignment = 0
-
-[node name="multiplayer tutorial" type="Button" parent="CanvasLayer/MultiPlayer"]
-visible = false
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_6hhxc")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6hhxc")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_6hhxc")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_6hhxc")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_6hhxc")
-text = "Multiplayer tutorial"
-
-[node name="azzu" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -76.0
-offset_top = -18.9999
-offset_right = 54.0
-offset_bottom = 104.0
-grow_horizontal = 0
-grow_vertical = 0
-rotation = -0.523598
-theme_override_styles/normal = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/hover = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_in5gf")
-theme_override_styles/focus = SubResource("StyleBoxTexture_in5gf")
-
-[node name="Label3" type="Label" parent="CanvasLayer/MultiPlayer"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -49.0
-offset_right = 200.0
-offset_bottom = -18.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 26
-text = "or join a friend"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="refresh btn" type="Button" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -6.0
-offset_right = 400.0
-offset_bottom = 16.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
-theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
-text = "click to refresh"
-alignment = 0
-
-[node name="ItemList" type="ItemList" parent="CanvasLayer/MultiPlayer"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -90.0
-offset_right = 400.0
-offset_bottom = -6.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_color = Color(0.165656, 0.165656, 0.165656, 1)
-theme_override_colors/font_selected_color = Color(0.164706, 0.164706, 0.164706, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/panel = SubResource("StyleBoxFlat_ivyce")
-
-[node name="Auto Refresh" type="Timer" parent="CanvasLayer/MultiPlayer/ItemList"]
-wait_time = 10.0
-autostart = true
-
-[node name="LoadingRect" type="ColorRect" parent="CanvasLayer/MultiPlayer"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -84.0
-offset_top = -63.0
-offset_right = 57.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label4" type="Label" parent="CanvasLayer/MultiPlayer/LoadingRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 40
-text = "Connecting..."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="CanvasLayer/MultiPlayer/LoadingRect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -78.0
-offset_top = 142.5
-offset_right = 78.0
-offset_bottom = 214.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 46
-text = "Cancel"
-
 [node name="Lobby" type="Control" parent="CanvasLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1511,26 +1062,26 @@ offset_right = 1.0
 offset_bottom = 53.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
-theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
+theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 26
-theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_evicu")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_evicu")
-theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_evicu")
 text = "click to reset"
 alignment = 2
 
@@ -1567,26 +1118,26 @@ offset_right = 200.5
 offset_bottom = -144.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 66
-theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
 text = "start da gaem"
 
 [node name="Button8" type="Button" parent="CanvasLayer/Lobby"]
@@ -1602,26 +1153,26 @@ offset_right = 200.5
 offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 66
-theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/hover = SubResource("StyleBoxFlat_s00na")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_s00na")
-theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s00na")
 text = "Disconnect"
 
 [node name="ConfigPanel" type="ColorRect" parent="CanvasLayer/Lobby"]
@@ -1769,54 +1320,11 @@ layout_mode = 2
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Lobby"]
 replication_config = SubResource("SceneReplicationConfig_u6ine")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
-libraries = {
-"": SubResource("AnimationLibrary_rx4qs")
-}
-autoplay = "start"
-
-[node name="handelr" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Disclaimer" type="ColorRect" parent="CanvasLayer/handelr"]
-visible = false
+[node name="Loading" parent="CanvasLayer/Lobby" instance=ExtResource("10_uw2qm")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/handelr/Disclaimer"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 26
-text = "Disclaimer
-This game was NOT made to offend or harrass anyone.
-Do not take this game seriously :)"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Music0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_grswa")
-autoplay = true
 bus = &"Music"
 
 [node name="Music1" type="AudioStreamPlayer" parent="."]
@@ -2598,18 +2106,6 @@ wait_time = 80.0
 one_shot = true
 
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/connect local" to="." method="_on_connect_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/host_local" to="." method="_on_host_local_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/settings" to="." method="_on_button_3_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/achievements" to="." method="_on_button_5_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/quit" to="." method="_on_button_6_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/multiplayer tutorial" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/azzu" to="." method="_on_button_4_pressed"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/refresh btn" to="." method="_on_button_pressed"]
-[connection signal="item_clicked" from="CanvasLayer/MultiPlayer/ItemList" to="." method="_on_item_list_item_clicked"]
-[connection signal="timeout" from="CanvasLayer/MultiPlayer/ItemList/Auto Refresh" to="." method="_on_auto_refresh_timeout"]
-[connection signal="pressed" from="CanvasLayer/MultiPlayer/LoadingRect/Button" to="." method="reload_game"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]

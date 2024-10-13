@@ -63,7 +63,7 @@ var parent = null
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
-	if !Allsingleton.non_steam:
+	if !Game.no_steam:
 		$nametag.text = Steam.getPersonaName()
 		steam_name = Steam.getPersonaName()
 	else:
@@ -77,42 +77,15 @@ func _enter_tree():
 		parent.hide_menu()
 
 func _ready():
-	
 	if is_multiplayer_authority():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		if Allsingleton.is_bossfight:
 			$"CanvasLayer/Control/Progress bar handler/ProgressBar".hide()
 		
-		# Store the original position and rotation of the hand
 		original_rotation = hand.rotation_degrees
 		
 		$visual_body.hide()
-		
-		var skins = $visual_body.get_children()
-		for skin in skins:
-			skin.hide()
-			
-		var picked_skin = false
-		
-		if Achievements.check_achievement("impossible_ending"):
-			if Achievements.picked_skin == 3:
-				impossible.show()
-				picked_skin = true
-		if Achievements.check_achievement("perfect_ending"):
-			if Achievements.picked_skin == 2:
-				perfect.show()
-				picked_skin = true
-		if Achievements.check_achievement("freaky_ending"):
-			if Achievements.picked_skin == 1:
-				freaky.show()
-				picked_skin = true
-		if Achievements.check_achievement("disoriented_ending"):
-			if Achievements.picked_skin == 4:
-				disoriented.show()
-				picked_skin = true
-		
-		if picked_skin == false:
-			default.show()
+		$visual_body.pick_skin()
 		
 		if Settings.render_distance:
 			camera_3d.far = Settings.render_distance
@@ -215,7 +188,7 @@ func _physics_process(delta):
 					camera_3d.h_offset = 0
 					camera_3d.v_offset = 0
 				
-				if closest_leahy.current_player_target:
+				if closest_leahy.current_player_target_name:
 					if closest_leahy.current_player_target_name == steam_name:
 						if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
 							leahy_approaching.is_shown = true
@@ -242,11 +215,8 @@ func _physics_process(delta):
 		
 		camera_3d.current = true
 		camera_3d.global_transform = $"Camera target".global_transform
-		
-		
 
 func punch():
-	
 	if ray.get_collider():
 		var collider = ray.get_collider()
 		
@@ -824,7 +794,7 @@ func play_sound_rpc(stream_path : String,volume_db : float = 0, bus : String = "
 	await Game.sleep(audio_stream.get_length())
 	a.queue_free()
 
-@rpc("authority","call_local")
+@rpc("any_peer","call_local")
 func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
 	var sound = get_node(sound_path)
 	if sound:

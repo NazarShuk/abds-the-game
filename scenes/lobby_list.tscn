@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc61qybxry7q8"]
+
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_e25xo"]
+[ext_resource type="Script" path="res://scripts/lobby_list.gd" id="2_k1f6m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0a7i"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[node name="lobby_list" type="ItemList"]
+offset_right = 400.0
+offset_bottom = 117.0
+theme_override_colors/font_selected_color = Color(0.164706, 0.164706, 0.164706, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0.165656, 0.165656, 0.165656, 1)
+theme_override_fonts/font = ExtResource("1_e25xo")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/panel = SubResource("StyleBoxFlat_a0a7i")
+script = ExtResource("2_k1f6m")
+
+[node name="Auto Refresh" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="item_clicked" from="." to="." method="_on_item_clicked"]
+[connection signal="timeout" from="Auto Refresh" to="." method="_on_auto_refresh_timeout"]

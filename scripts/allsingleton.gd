@@ -10,3 +10,5 @@ var playbacks = []
 var is_bossfight = false
 
 var did_show_parry_tip = false
+
+var menu_music_duration = 0

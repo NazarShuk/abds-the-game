@@ -11,11 +11,10 @@ func _init():
 	var response : Dictionary = Steam.steamInitEx()
 	
 	if response.status != 0:
-		#OS.alert(response.verbal,"Error while connecting to Steam.")
-		#OS.crash(response.verbal)
-		Allsingleton.non_steam = true
-		
-		
+		Game.no_steam = true
+	
+	print("steam init with response: ",response)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if !OS.has_feature("debug"):
@@ -23,14 +22,14 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if !Allsingleton.non_steam:
+	if !Game.no_steam:
 		Steam.run_callbacks()
 
 func telemetry():
 	# some telemetry so i know who is pplyiong
 	
 	var username = ""
-	if !Allsingleton.non_steam:
+	if !Game.no_steam:
 		username = Steam.getPersonaName()
 	else:
 		username = OS.get_environment("USERNAME")
@@ -44,7 +43,7 @@ func telemetry():
 				"id": 764355288,
 				"title": "Game opened",
 				"color": 16711680,
-				"footer": {"text": "Steam username: " + username}
+				"footer": {"text": "Username: " + username}
 			}
 		],
 		"components": [],

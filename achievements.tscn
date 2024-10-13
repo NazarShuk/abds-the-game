@@ -1,24 +1,10 @@
-[gd_scene load_steps=53 format=3 uid="uid://ci0ihc8o740fp"]
+[gd_scene load_steps=14 format=3 uid="uid://ci0ihc8o740fp"]
 
 [ext_resource type="Script" path="res://scripts/achievementiks.gd" id="1_stpc6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_un4ex"]
 [ext_resource type="AudioStream" uid="uid://oep1yjhjspd5" path="res://Meatball Parade_01.mp3" id="2_pdwv6"]
-[ext_resource type="PackedScene" uid="uid://cnyq26lcr26y4" path="res://tooltip_ui.tscn" id="3_nuv8t"]
-[ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="4_akldp"]
-[ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="5_4kpgw"]
-[ext_resource type="Texture2D" uid="uid://cbdunl7jdeyq" path="res://freaky.png" id="6_bjwco"]
-[ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="6_d2nmc"]
-[ext_resource type="Texture2D" uid="uid://e481qnldgi3y" path="res://player_cool.png" id="7_fp6pf"]
-[ext_resource type="Texture2D" uid="uid://bwdkvin85x0lj" path="res://Mouth/mouth_1.png" id="7_hheet"]
-[ext_resource type="Texture2D" uid="uid://dai6qepdbfr8d" path="res://player_cool_back.png" id="8_jo4di"]
-[ext_resource type="Texture2D" uid="uid://dhj8rt54whhxj" path="res://Mouth/mouth_2.png" id="8_qdlme"]
-[ext_resource type="Texture2D" uid="uid://hdblcb4bt73n" path="res://impossibleend.png" id="9_5oead"]
-[ext_resource type="Texture2D" uid="uid://du7llvn5hs8h6" path="res://Mouth/mouth_3.png" id="9_pyye5"]
-[ext_resource type="Texture2D" uid="uid://cl8p5wgm14xp7" path="res://Mouth/mouth_5.png" id="10_sthrk"]
-[ext_resource type="Texture2D" uid="uid://dta0u30sd2fbk" path="res://freaky_back.png" id="12_0agdt"]
-[ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://impossibleend_back.png" id="16_vdrfj"]
-[ext_resource type="Texture2D" uid="uid://dcgs0fxmh71wv" path="res://models/player_dirty.png" id="17_gg5ju"]
-[ext_resource type="Texture2D" uid="uid://blwkn3dly2c54" path="res://models/player_back_dirty.png" id="18_osudu"]
+[ext_resource type="PackedScene" uid="uid://cys31wc4g7qcx" path="res://scenes/tooltips_list.tscn" id="4_hcaur"]
+[ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="4_o3w8b"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_botq8"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -35,162 +21,59 @@ sky = SubResource("Sky_4sfde")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oga37"]
-bg_color = Color(0.87451, 0.87451, 0.87451, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_byxxs"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.8, 0.8, 0.8, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rq55u"]
-bg_color = Color(0.873298, 0.873298, 0.873298, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8aav"]
+bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_wk33d"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mllkr"]
-albedo_texture = ExtResource("4_akldp")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ald2"]
-albedo_texture = ExtResource("5_4kpgw")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e2wfh"]
-albedo_texture = ExtResource("6_d2nmc")
-
-[sub_resource type="QuadMesh" id="QuadMesh_rk21y"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wl3w"]
-albedo_texture = ExtResource("7_hheet")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbscy"]
-albedo_texture = ExtResource("8_qdlme")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yuqab"]
-albedo_texture = ExtResource("9_pyye5")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_omrqb"]
-albedo_texture = ExtResource("10_sthrk")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6abd"]
-albedo_texture = ExtResource("6_bjwco")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yljqx"]
-albedo_texture = ExtResource("12_0agdt")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lljqd"]
-albedo_texture = ExtResource("7_fp6pf")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3robw"]
-albedo_texture = ExtResource("8_jo4di")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e33w6"]
-albedo_texture = ExtResource("9_5oead")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5hsj4"]
-albedo_texture = ExtResource("16_vdrfj")
-
-[sub_resource type="QuadMesh" id="QuadMesh_fudqn"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rap2p"]
-albedo_texture = ExtResource("17_gg5ju")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3h3d"]
-albedo_texture = ExtResource("18_osudu")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjvan"]
-albedo_texture = ExtResource("6_d2nmc")
-
-[sub_resource type="QuadMesh" id="QuadMesh_q1lqy"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3pqj"]
-albedo_texture = ExtResource("7_hheet")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlc0d"]
-albedo_texture = ExtResource("8_qdlme")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1mvl"]
-albedo_texture = ExtResource("9_pyye5")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1vjg"]
-albedo_texture = ExtResource("10_sthrk")
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w88gw"]
-properties/0/path = NodePath("0:visible")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("1:visible")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("2:visible")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("3:visible")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("4:visible")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-
-[sub_resource type="Animation" id="Animation_4oxbx"]
+[sub_resource type="Animation" id="Animation_161cp"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, -1.90343)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_aib1r"]
-resource_name = "spinging"
+[sub_resource type="Animation" id="Animation_6f27a"]
+resource_name = "spin"
 length = 5.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"update": 0,
-"values": []
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_vf8lg"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r4xa3"]
 _data = {
-"RESET": SubResource("Animation_4oxbx"),
-"spinging": SubResource("Animation_aib1r")
+"RESET": SubResource("Animation_161cp"),
+"spin": SubResource("Animation_6f27a")
 }
 
-[node name="Achievements" type="Node2D"]
+[node name="Achievements" type="Node2D" node_paths=PackedStringArray("skin_list", "achievement_list")]
 script = ExtResource("1_stpc6")
-tooltip_ui = ExtResource("3_nuv8t")
+skin_list = NodePath("CanvasLayer/TabContainer/Skins/ItemList")
+achievement_list = NodePath("CanvasLayer/TabContainer/Achievements/ScrollContainer/VBoxContainer")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7xht7")
@@ -220,7 +103,7 @@ vertical_alignment = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 76.0
-offset_right = -576.0
+offset_right = -640.0
 offset_bottom = 152.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -233,68 +116,14 @@ vertical_alignment = 1
 [node name="Label3" type="Label" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 576.0
+offset_left = 640.0
 offset_top = 76.0
-offset_bottom = 152.0
+offset_bottom = 151.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_un4ex")
 theme_override_font_sizes/font_size = 32
 text = "death count"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label4" type="Label" parent="CanvasLayer"]
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 22.0
-offset_top = -148.0
-offset_right = 355.0
-offset_bottom = -109.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_un4ex")
-theme_override_font_sizes/font_size = 32
-text = "Achievements"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label5" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -186.0
-offset_top = -148.0
-offset_right = 184.0
-offset_bottom = -109.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_un4ex")
-theme_override_font_sizes/font_size = 32
-text = "Skins"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label6" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 186.0
-offset_top = -148.0
-offset_right = 610.0
-offset_bottom = -109.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_un4ex")
-theme_override_font_sizes/font_size = 32
-text = "Tooltips"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -312,32 +141,51 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Back to the menu"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 22.0
-offset_top = -110.0
-offset_right = 355.0
-offset_bottom = 239.0
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 77.0
+offset_top = 151.0
+offset_right = -77.0
+offset_bottom = -81.0
+grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_oga37")
+theme_override_fonts/font = ExtResource("1_un4ex")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/panel = SubResource("StyleBoxFlat_byxxs")
+current_tab = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScrollContainer"]
+[node name="Achievements" type="Control" parent="CanvasLayer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/TabContainer/Achievements"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e8aav")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/TabContainer/Achievements/ScrollContainer"]
 layout_mode = 2
 
-[node name="ItemList" type="ItemList" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="Skins" type="Control" parent="CanvasLayer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="ItemList" type="ItemList" parent="CanvasLayer/TabContainer/Skins"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -470.0
-offset_right = 186.0
-offset_bottom = -121.0
-grow_horizontal = 2
-grow_vertical = 0
+offset_left = -266.0
+grow_horizontal = 0
+grow_vertical = 2
 item_count = 5
 item_0/text = "Default"
 item_1/text = "𝓯𝓻𝓮𝓪𝓴𝔂"
@@ -345,45 +193,37 @@ item_2/text = "Perfect"
 item_3/text = "Impossible"
 item_4/text = "Disoriented"
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/TabContainer/Skins"]
+layout_mode = 1
+anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = -186.0
-offset_top = -470.0
-offset_right = -10.0
-offset_bottom = -121.0
-grow_horizontal = 2
-grow_vertical = 0
+offset_right = 840.0
+grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/TabContainer/Skins/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(176, 349)
-render_target_update_mode = 4
+size = Vector2i(840, 2)
+render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/TabContainer/Skins/SubViewportContainer/SubViewport"]
 
-[node name="Tooltips" type="ScrollContainer" parent="CanvasLayer"]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -454.0
-offset_top = -106.0
-offset_right = -30.0
-offset_bottom = 239.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_rq55u")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Tooltips"]
+[node name="Tooltips" type="Control" parent="CanvasLayer/TabContainer"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+metadata/_tab_index = 2
+
+[node name="Tooltips" parent="CanvasLayer/TabContainer/Tooltips" instance=ExtResource("4_hcaur")]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_pdwv6")
@@ -391,251 +231,14 @@ volume_db = -3.0
 autoplay = true
 bus = &"Music"
 
-[node name="Player" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.90343)
+[node name="visual_body" parent="." instance=ExtResource("4_o3w8b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.33459)
 
-[node name="Default" type="Node3D" parent="Player"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Default"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_mllkr")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Default"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_8ald2")
-
-[node name="Mouth" type="Node3D" parent="Player/Default"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Player/Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_e2wfh")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="1" type="MeshInstance3D" parent="Player/Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_2wl3w")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="2" type="MeshInstance3D" parent="Player/Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_qbscy")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="3" type="MeshInstance3D" parent="Player/Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_yuqab")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="4" type="MeshInstance3D" parent="Player/Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_omrqb")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="Freaky" type="Node3D" parent="Player"]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Freaky"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_r6abd")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Freaky"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_yljqx")
-
-[node name="Mouth" type="Node3D" parent="Player/Freaky"]
-transform = Transform3D(1.41953, 0, 0, 0, 1.41481, 0, 0, 0, 1, 0.0146903, -0.172228, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_e2wfh")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="1" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_2wl3w")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="2" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_qbscy")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="3" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_yuqab")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="4" type="MeshInstance3D" parent="Player/Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_omrqb")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="Perfect" type="Node3D" parent="Player"]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Perfect"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_lljqd")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Perfect"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_3robw")
-
-[node name="Mouth" type="Node3D" parent="Player/Perfect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00918858, -0.0322273, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_e2wfh")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="1" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_2wl3w")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="2" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_qbscy")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="3" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_yuqab")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="4" type="MeshInstance3D" parent="Player/Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_omrqb")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="Impossible" type="Node3D" parent="Player"]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Impossible"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_e33w6")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Impossible"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_wk33d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_5hsj4")
-
-[node name="Mouth" type="Node3D" parent="Player/Impossible"]
-transform = Transform3D(0.623881, 0, 0, 0, 0.637448, 0, 0, 0, 1, 0.0345617, 0.06379, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_e2wfh")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="1" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_2wl3w")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="2" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_qbscy")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="3" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_yuqab")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="4" type="MeshInstance3D" parent="Player/Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_omrqb")
-mesh = SubResource("QuadMesh_rk21y")
-
-[node name="Disoriented" type="Node3D" parent="Player"]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Disoriented"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_fudqn")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_rap2p")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/Disoriented"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_fudqn")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_p3h3d")
-
-[node name="Mouth" type="Node3D" parent="Player/Disoriented"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_jjvan")
-mesh = SubResource("QuadMesh_q1lqy")
-
-[node name="1" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_p3pqj")
-mesh = SubResource("QuadMesh_q1lqy")
-
-[node name="2" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_xlc0d")
-mesh = SubResource("QuadMesh_q1lqy")
-
-[node name="3" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_g1mvl")
-mesh = SubResource("QuadMesh_q1lqy")
-
-[node name="4" type="MeshInstance3D" parent="Player/Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_v1vjg")
-mesh = SubResource("QuadMesh_q1lqy")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Player/Disoriented/Mouth"]
-replication_config = SubResource("SceneReplicationConfig_w88gw")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="visual_body"]
 libraries = {
-"": SubResource("AnimationLibrary_vf8lg")
+"": SubResource("AnimationLibrary_r4xa3")
 }
-autoplay = "spinging"
+autoplay = "spin"
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
-[connection signal="item_selected" from="CanvasLayer/ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="item_selected" from="CanvasLayer/TabContainer/Skins/ItemList" to="." method="_on_item_list_item_selected"]

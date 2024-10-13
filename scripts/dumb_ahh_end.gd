@@ -130,7 +130,7 @@ func play_da_dialog():
 func get_the_prompt(which_one):
 	
 	var fake_name = "Player"
-	if !Allsingleton.non_steam:
+	if !Game.no_steam:
 		fake_name = Steam.getPersonaName()
 	
 	var user_dir = OS.get_user_data_dir()

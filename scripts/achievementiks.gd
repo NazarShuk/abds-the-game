@@ -1,11 +1,7 @@
 extends Node2D
 
-@onready var default = $Player/Default
-@onready var freaky = $Player/Freaky
-@onready var perfect = $Player/Perfect
-@onready var impossible = $Player/Impossible
-
-@export var tooltip_ui : PackedScene
+@export var skin_list : ItemList
+@export var achievement_list : VBoxContainer
 
 func _ready():
 	for achievement in Achievements.achievements:
@@ -18,55 +14,27 @@ func _ready():
 			label.add_theme_font_override("font",load("res://Ldfcomicsans-jj7l.ttf"))
 			label.add_theme_font_size_override("font_size",32)
 			
-			$CanvasLayer/ScrollContainer/VBoxContainer.add_child(label)
-
-	
-	for tooltip in GuiManager.saved_tips.values():
-		var tui : RichTextLabel = tooltip_ui.instantiate()
-		tui.text = tooltip
-		$CanvasLayer/Tooltips/VBoxContainer.add_child(tui)
+			achievement_list.add_child(label)
 	
 	$CanvasLayer/Label2.text = str(Achievements.books_collected) + " books collected"
 	$CanvasLayer/Label3.text = str(Achievements.deaths) + " times died" 
 	
-	var skins = $Player.get_children()
-	for skin in skins:
-		if skin is Node3D:
-			skin.hide()
-	
-	
+	$visual_body.pick_skin()
 	
 	if Achievements.achievements["freaky_ending"] == false:
-		$CanvasLayer/ItemList.set_item_disabled(1,true)
+		skin_list.set_item_disabled(1,true)
 	if Achievements.achievements["perfect_ending"] == false:
-		$CanvasLayer/ItemList.set_item_disabled(2,true)
+		skin_list.set_item_disabled(2,true)
 	if Achievements.achievements["impossible_ending"] == false:
-		$CanvasLayer/ItemList.set_item_disabled(3,true)
+		skin_list.set_item_disabled(3,true)
 	if Achievements.achievements["disoriented_ending"] == false:
-		$CanvasLayer/ItemList.set_item_disabled(4,true)
-	
-	if Achievements.picked_skin == 4:
-		$Player/Disoriented.show()
-	if Achievements.picked_skin == 3:
-		impossible.show()
-	if Achievements.picked_skin == 2:
-		perfect.show()
-	if Achievements.picked_skin == 1:
-		freaky.show()
-	else:
-		default.show()
+		skin_list.set_item_disabled(4,true)
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file("res://logos.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func _on_item_list_item_selected(index):
-	var children = $Player.get_children()
-	
 	Achievements.picked_skin = index
 	Achievements.save_all()
 	
-	for child in children:
-		if child is Node3D:
-			child.hide()
-	
-	children[index].show()
+	$visual_body.pick_skin(index)

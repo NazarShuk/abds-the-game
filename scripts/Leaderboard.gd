@@ -11,7 +11,7 @@ func set_values():
 	
 	var username = OS.get_environment("USERNAME")
 	
-	if !Allsingleton.non_steam:
+	if !Game.no_steam:
 		username = Steam.getPersonaName()
 	
 	var books = Achievements.books_collected

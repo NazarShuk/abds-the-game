@@ -1,0 +1,190 @@
+[gd_scene load_steps=12 format=3 uid="uid://ci3ghmr34gc8f"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_g6hs6"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_r45wx"]
+[ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="2_2me7y"]
+[ext_resource type="Script" path="res://scripts/Quit_btn.gd" id="2_375t8"]
+[ext_resource type="Script" path="res://scripts/debug_only.gd" id="2_an0wb"]
+[ext_resource type="Theme" uid="uid://dtcdh6y0ncv0o" path="res://main_theme.tres" id="3_tkbml"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="4_ek1eu"]
+[ext_resource type="Script" path="res://scripts/azzu_btn.gd" id="5_r8edv"]
+[ext_resource type="PackedScene" uid="uid://bc61qybxry7q8" path="res://scenes/lobby_list.tscn" id="6_ubrxb"]
+[ext_resource type="PackedScene" uid="uid://dk72xdfsaj16i" path="res://scenes/loading.tscn" id="8_a8ujo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wa7vu"]
+texture = ExtResource("4_ek1eu")
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_g6hs6")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 51.0
+offset_top = 43.0
+offset_right = -51.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Debug" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_an0wb")
+
+[node name="host local" type="Button" parent="Control/Debug"]
+layout_mode = 0
+offset_left = 977.0
+offset_top = 46.0
+offset_right = 1087.0
+offset_bottom = 77.0
+text = "host local"
+
+[node name="connect local" type="Button" parent="Control/Debug"]
+layout_mode = 0
+offset_left = 977.0
+offset_top = 77.0
+offset_right = 1087.0
+offset_bottom = 108.0
+text = "connect local"
+
+[node name="Title" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 83.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_r45wx")
+theme_override_font_sizes/font_size = 32
+text = "Alostn Bridge Diddle School
+The Game"
+horizontal_alignment = 1
+
+[node name="Play" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -105.0
+offset_right = 255.0
+offset_bottom = -49.0
+grow_vertical = 2
+theme = ExtResource("3_tkbml")
+theme_override_fonts/font = ExtResource("1_r45wx")
+theme_override_font_sizes/font_size = 40
+text = "Play"
+alignment = 0
+
+[node name="Settings" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 94.0
+offset_right = 255.0
+offset_bottom = 150.0
+grow_vertical = 2
+theme = ExtResource("3_tkbml")
+theme_override_fonts/font = ExtResource("1_r45wx")
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+alignment = 0
+
+[node name="Achievements" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 155.0
+offset_right = 255.0
+offset_bottom = 211.0
+grow_vertical = 2
+theme = ExtResource("3_tkbml")
+theme_override_fonts/font = ExtResource("1_r45wx")
+theme_override_font_sizes/font_size = 40
+text = "Achievements"
+alignment = 0
+
+[node name="Quit" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 216.0
+offset_right = 255.0
+offset_bottom = 272.0
+grow_vertical = 2
+theme = ExtResource("3_tkbml")
+theme_override_fonts/font = ExtResource("1_r45wx")
+theme_override_font_sizes/font_size = 40
+text = "Quit"
+alignment = 0
+script = ExtResource("2_375t8")
+
+[node name="azzu" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = -18.9999
+offset_right = 54.0
+offset_bottom = 104.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = -0.523598
+theme_override_styles/focus = SubResource("StyleBoxTexture_wa7vu")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_wa7vu")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wa7vu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wa7vu")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wa7vu")
+script = ExtResource("5_r8edv")
+
+[node name="lobby_list" parent="Control" instance=ExtResource("6_ubrxb")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -49.0
+offset_bottom = 73.0
+grow_vertical = 2
+
+[node name="refresh" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 73.0
+offset_right = 400.0
+offset_bottom = 92.0
+grow_vertical = 2
+theme = ExtResource("3_tkbml")
+theme_override_fonts/font = ExtResource("1_r45wx")
+theme_override_font_sizes/font_size = 15
+text = "Refresh"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_2me7y")
+bus = &"Music"
+
+[node name="Loading" parent="." instance=ExtResource("8_a8ujo")]
+visible = false
+
+[connection signal="pressed" from="Control/Debug/host local" to="." method="_on_host_local_pressed"]
+[connection signal="pressed" from="Control/Debug/connect local" to="." method="_on_connect_local_pressed"]
+[connection signal="pressed" from="Control/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Control/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Control/Achievements" to="." method="_on_achievements_pressed"]
+[connection signal="pressed" from="Control/Quit" to="Control/Quit" method="_on_pressed"]
+[connection signal="pressed" from="Control/azzu" to="Control/azzu" method="_on_pressed"]
+[connection signal="lobby_clicked" from="Control/lobby_list" to="." method="_on_lobby_list_lobby_clicked"]
+[connection signal="pressed" from="Control/refresh" to="." method="_on_refresh_pressed"]

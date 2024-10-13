@@ -14,4 +14,3 @@ func _process(_delta):
 		$Label.text = str(floor(distance))
 	else:
 		position.x = lerp(position.x,-500.0,0.1)
-

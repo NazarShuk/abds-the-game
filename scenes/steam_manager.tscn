@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://buq1dbhmshmnn"]
+
+[ext_resource type="Script" path="res://scripts/Steam.gd" id="1_eirp1"]
+
+[node name="Steam" type="Node"]
+script = ExtResource("1_eirp1")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="@Timer@229099" type="Timer" parent="HTTPRequest"]
+one_shot = true

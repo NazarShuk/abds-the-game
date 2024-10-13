@@ -1,13 +1,11 @@
 extends Node3D
 
-var peer = SteamMultiplayerPeer.new()
+var peer
 
 @onready var book_spawns = $School/BookSpawns
 @onready var collected_books_label = $CanvasLayer/Main/CollectedBooksLabel
 
 @export var players_in_lobby = 0
-
-var lobby_id
 
 @export var canPlayersMove = true
 
@@ -16,8 +14,6 @@ var lobby_id
 @export var is_pacer = false
 @export var pacer_deadly = false
 var is_pacer_intro = false
-
-var debug_host = false
 
 @export var do_achievements = true
 
@@ -30,11 +26,9 @@ var players_spawned = false
 
 @export var school : Node3D
 
-
 var do_vertical_camera_normal = false
 
 func _enter_tree():
-	Game.reset_values()
 	name = "MainGameScene"
 
 
@@ -45,17 +39,9 @@ func _ready():
 	Game.sun = $"Lighting and stuff/DirectionalLight3D"
 	Game.on_book_collected.connect(_on_book_collected)
 	
-	AudioServer.set_bus_solo(6,false)
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	AudioServer.set_bus_mute(1,false)
-	AudioServer.set_bus_mute(2,false)
-	
-	Settings.load_values_and_apply()
 	if Settings.render_distance:
 		$pre_start_game_anim/Camera3D.far = Settings.render_distance
 	
-	get_friends_lobbies()
-	peer.lobby_created.connect(_on_lobby_connected)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	
 	if Settings.better_lighting != null:
@@ -69,12 +55,6 @@ func _ready():
 		$Music0.stream = load("res://noise.mp3")
 		$Music0.play()
 		
-		# Main menu
-		$CanvasLayer/MultiPlayer/Title.hide()
-		$CanvasLayer/MultiPlayer/ItemList.hide()
-		$"CanvasLayer/MultiPlayer/refresh btn".hide()
-		$CanvasLayer/MultiPlayer/azzu.hide()
-		
 		# Lobby
 		$CanvasLayer/Lobby/Button7.hide()
 		$CanvasLayer/Lobby/Button8.hide()
@@ -86,8 +66,17 @@ func _ready():
 		
 		Game.sun.visible = false
 	
-	#if OS.has_feature("dedicated_server"):
-	#	_on_host_local_pressed()
+	prepare_multiplayer()
+	$Music0.play(Allsingleton.menu_music_duration)
+
+
+func prepare_multiplayer():
+	peer = multiplayer.multiplayer_peer
+	multiplayer.peer_connected.connect(_on_peer_connected)
+	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
+	
+	
+	_on_peer_connected()
 
 func _on_book_collected(_amount):
 	if !multiplayer.is_server(): return
@@ -146,10 +135,6 @@ var music_pitch_boost = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	
-	if Input.is_anything_pressed():
-		if get_node_or_null("CanvasLayer/handelr"):
-			get_node_or_null("CanvasLayer/handelr").queue_free()
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
 		if Allsingleton.is_bossfight:
@@ -219,7 +204,7 @@ func _input(event):
 			Allsingleton.is_fullscreen = !Allsingleton.is_fullscreen
 
 func _on_host_pressed():
-	if !Allsingleton.non_steam:
+	if !Game.no_steam:
 		peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(_on_peer_connected)
@@ -228,25 +213,13 @@ func _on_host_pressed():
 	else:
 		_on_host_local_pressed()
 
-
-func _on_lobby_connected(_connected,id):
-	if connect:
-		lobby_id = id
-		Steam.setLobbyData(lobby_id,"name",str(Steam.getPersonaName()) + "'s lobby")
-		Steam.setLobbyJoinable(lobby_id,true)
-		print("lobby was made: ", lobby_id)
-
-func join_lobby(id):
-	peer.connect_lobby(id)
-	multiplayer.multiplayer_peer = peer
-	$CanvasLayer/MultiPlayer/LoadingRect.show()
-
 func _on_connected_to_server():
 	$CanvasLayer/Lobby.show()
-	$CanvasLayer/MultiPlayer.hide()
 	
 	if !multiplayer.is_server():
 		$CanvasLayer/Lobby/ConfigPanel.hide()
+	
+	$CanvasLayer/Lobby/Loading.hide()
 	
 
 @rpc("any_peer","call_local")
@@ -263,15 +236,13 @@ func go_back():
 	get_tree().change_scene_to_file("res://logos.tscn")
 
 func _on_peer_connected(id = 1):
-	#$CanvasLayer/MultiPlayer/LoadingRect.show()
 	if !players_spawned:
-		$CanvasLayer/Lobby.show()
-		$CanvasLayer/MultiPlayer.hide()
 		if multiplayer.is_server():
 			$CanvasLayer/Lobby/Button7.show()
 			$CanvasLayer/Lobby/Label4/reset_to_default.show()
 			$CanvasLayer/Lobby/Label4/gameConfigClient.hide()
 			is_in_lobby = true
+			$CanvasLayer/Lobby/Loading.hide()
 	else:
 		peer.disconnect_peer(id)
 	
@@ -298,7 +269,7 @@ func _on_peer_connected(id = 1):
 
 @rpc("any_peer","call_local")
 func request_steam_usr():
-	if !Allsingleton.non_steam:
+	if !Game.no_steam:
 		receive_steam_usr.rpc(peer.get_unique_id(),Steam.getPersonaName())
 	else:
 		receive_steam_usr.rpc(peer.get_unique_id(),OS.get_environment("USERNAME"))
@@ -307,9 +278,9 @@ func pre_start_game_btn():
 	spawn_players()
 	pre_start_game.rpc()
 	if multiplayer.is_server():
-		if !debug_host or !Allsingleton.non_steam:
-			if lobby_id:
-				Steam.setLobbyJoinable(lobby_id,false)
+		if peer is SteamMultiplayerPeer:
+			if Game.lobby_id:
+				Steam.setLobbyJoinable(Game.lobby_id,false)
 		
 		var weather_chance = randi_range(0,20)
 	
@@ -349,7 +320,6 @@ func set_fog_density(density):
 @rpc("authority","call_local")
 func pre_start_game():
 	$CanvasLayer/Lobby.hide()
-	$CanvasLayer/MultiPlayer.hide()
 	$CanvasLayer/Main.show()
 	$pre_start_game_anim/AnimationPlayer.play("pre")
 
@@ -386,8 +356,8 @@ func start_da_game():
 
 
 	if multiplayer.is_server():
-		if !debug_host or !Allsingleton.non_steam:
-			Steam.setLobbyJoinable(lobby_id,false)
+		if peer is SteamMultiplayerPeer:
+			Steam.setLobbyJoinable(Game.lobby_id,false)
 		if !Allsingleton.is_bossfight:
 			leahy_look = true
 
@@ -397,8 +367,6 @@ func _on_host_local_pressed():
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
-	
-	debug_host = true
 	
 	print("started hosting locally")
 	
@@ -431,45 +399,6 @@ func _on_timer_timeout():
 			timer.queue_free()
 			
 			GuiManager.show_tip("[color=green]Darel.png[/color]\nDamage [b]Darel.png[/b] with clorox wipes [color=orange]//[/color] by collecting books", 7)
-
-var friends_lobbies = {}
-
-func get_friends_lobbies():
-	var item_list : ItemList = $"CanvasLayer/MultiPlayer/ItemList"
-	if Allsingleton.non_steam:
-		item_list.clear()
-		item_list.add_item("Steam was not found.")
-		return
-	friends_lobbies = {}
-	
-	#for child in $CanvasLayer/MultiPlayer/ScrollContainer/VBoxContainer.get_children():
-	#	child.queue_free()
-	item_list.clear()
-	
-	var friend_count = Steam.getFriendCount()
-	
-	var total_playing = 0
-
-	for i in range(0,friend_count):
-		var friend = Steam.getFriendByIndex(i,Steam.FRIEND_FLAG_ALL)
-		var friend_name = Steam.getFriendPersonaName(friend)
-		
-		var game_played = Steam.getFriendGamePlayed(friend)
-		
-		if !game_played.is_empty():
-			if game_played.id == OS.get_environment("SteamAppID").to_int():
-				if game_played.lobby:
-					
-					var idx = item_list.add_item("Join " + friend_name)
-					friends_lobbies[idx] = game_played.lobby
-					
-					total_playing += 1
-				
-	if total_playing == 0:
-		item_list.add_item("No friends are playing :(")
-
-func _on_button_pressed():
-	get_friends_lobbies()
 
 @rpc("any_peer","call_local")
 func set_player_dead(id,is_dead,do_deaths):
@@ -567,7 +496,7 @@ func set_singleton(deaths,books,ending):
 					if Achievements.check_achievement("disoriented_ending"):
 						if Achievements.check_achievement("good_ending"):
 							if Achievements.check_achievement("bad_ending"):
-								can_bossfight = true
+								#can_bossfight = true
 								pass
 		
 		if !can_bossfight:
@@ -593,13 +522,8 @@ func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
 
 func hide_menu():
-	$CanvasLayer/MultiPlayer.hide()
 	$Music1.play()
 	$Music0.stop()
-
-
-func _on_button_4_pressed():
-	get_tree().change_scene_to_file("res://angy_azzu.tscn")
 
 func _on_button_5_pressed():
 	get_tree().change_scene_to_file("res://achievements.tscn")
@@ -765,8 +689,6 @@ func stop_pacer():
 		set_pacer_target_visibility.rpc($"School/Pacer/Pacer target".get_path(),false)
 		set_pacer_target_visibility.rpc($"School/Pacer/Pacer target2".get_path(),false)
 
-func _on_open_config_pressed():
-	$CanvasLayer/MultiPlayer/ConfigPanel.visible = !$CanvasLayer/MultiPlayer/ConfigPanel.visible
 
 func _on_button_6_pressed():
 	get_tree().quit()
@@ -779,15 +701,6 @@ func update_player_text():
 		else:
 			final_text += str(pl_id) + "\n"
 	player_list_text.text = final_text
-
-func _on_item_list_item_clicked(index, _at_position, mouse_button_index):
-	if mouse_button_index != 1: return
-	if friends_lobbies.has(index):
-		join_lobby(friends_lobbies[index])
-
-
-func _on_auto_refresh_timeout():
-	get_friends_lobbies()
 
 
 @rpc("any_peer","call_local")
