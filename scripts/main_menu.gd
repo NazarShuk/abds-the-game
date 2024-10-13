@@ -22,7 +22,7 @@ func _on_lobby_list_lobby_clicked(lobby_id):
 	print_rich("[color=orange]connecting via steam to lobby ", lobby_id)
 	print("connect lobby err: ", err)
 	
-	await Game.sleep(1)
+	await Game.sleep(0.5)
 	
 	if err == OK:
 		Game.lobby_id = lobby_id
@@ -32,18 +32,20 @@ func _on_lobby_list_lobby_clicked(lobby_id):
 		
 
 func host_lobby():
+	loading.show()
+	await Game.sleep(0.5)
+	
 	if !Game.no_steam:
 		peer = SteamMultiplayerPeer.new()
 		peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
 		peer.lobby_created.connect(_on_lobby_created)
 		
 		print_rich("[color=orange]startig to open a lobby...")
-		loading.show()
+		
 	else:
 		peer = OfflineMultiplayerPeer.new()
 		multiplayer.multiplayer_peer = peer
 		print_rich("[color=green]opening game with an offline peer")
-		loading.show()
 		get_tree().change_scene_to_file.call_deferred("res://game.tscn")
 
 func _on_lobby_created(connect, lobby_id):

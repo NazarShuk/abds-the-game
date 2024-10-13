@@ -1,4 +1,4 @@
-[gd_scene load_steps=127 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=126 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
@@ -11,7 +11,6 @@
 [ext_resource type="VideoStream" path="res://models/jumpscare.ogv" id="9_7mdnm"]
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://shop.mp3" id="12_u07an"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="12_xfb3j"]
-[ext_resource type="VideoStream" path="res://dum.ogv" id="14_b58yc"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
 [ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
 [ext_resource type="VideoStream" path="res://fox_jump.ogv" id="16_a751i"]
@@ -932,26 +931,27 @@ _data = {
 "punch": SubResource("Animation_8586j")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hand", "controls_text") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hand", "camera_3d", "controls_text") groups=["player"]]
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("1_la8in")
 hand = NodePath("Hand")
+camera_3d = NodePath("Camera3D")
 controls_text = NodePath("CanvasLayer/Control/ControlsText")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43934, -0.0894957)
 target_position = Vector3(0, 0, -2.5)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-cull_mask = 1048573
-far = 250.0
-
 [node name="Camera target" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="visual_body" parent="." instance=ExtResource("2_0ug05")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+cull_mask = 1048573
+far = 250.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_tu1hv")
@@ -1995,8 +1995,9 @@ text = "TAKE THE BET"
 
 [node name="LeahyApproaching" type="TextureRect" parent="CanvasLayer/Control"]
 layout_mode = 0
+offset_left = 33.0
 offset_top = 91.0
-offset_right = 276.0
+offset_right = 309.0
 offset_bottom = 232.0
 texture = SubResource("CompressedTexture2D_xxveq")
 script = ExtResource("52_cn57o")
@@ -2111,17 +2112,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("9_7mdnm")
-bus = &"Non Mute"
-
-[node name="jumpscare2" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stream = ExtResource("14_b58yc")
-expand = true
 bus = &"Non Mute"
 
 [node name="jumpscare3" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]

@@ -45,7 +45,7 @@ var on_top_counter = 0
 
 var can_get_item = true
 
-@onready var camera_3d = $Camera3D
+@export var camera_3d : Camera3D
 @onready var minimap_cam = $Minimap/Camera3D
 
 var leahy_dst = 0
@@ -453,7 +453,7 @@ func _on_revive_timer_timeout():
 	elif death_cause == "freezer":
 		GuiManager.show_tip_once("freezer_death","[color=green]Freezer[/color]\n Don't stay in the freezer for too long! You will freeze to [color=red]death[/color].")
 	
-	await Game.sleep(3)
+	await Game.sleep(5)
 	is_dead = false
 
 func pick_item(item: int):

@@ -41,14 +41,14 @@ sky = SubResource("Sky_ce7my")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3wcb"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdljo"]
 transparency = 1
 cull_mode = 2
 albedo_color = Color(0, 0, 0, 0.454902)
 emission_enabled = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_i1rtf"]
-material = SubResource("StandardMaterial3D_r3wcb")
+material = SubResource("StandardMaterial3D_gdljo")
 size = Vector2(0.065, 1)
 
 [sub_resource type="Animation" id="Animation_kb86r"]

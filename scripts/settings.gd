@@ -46,7 +46,7 @@ func _on_sfx_slider_changed(value):
 		cangoof = false
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 
 func _on_goofball_timer_timeout():
 	cangoof = true

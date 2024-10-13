@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnvdkagkks0iq"]
+
+[ext_resource type="Script" path="res://scripts/poster.gd" id="1_66gga"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_35ngs"]
+
+[node name="poster" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1.5, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_35ngs")
+script = ExtResource("1_66gga")

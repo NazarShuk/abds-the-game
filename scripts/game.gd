@@ -120,10 +120,7 @@ func _on_book_collected(_amount):
 					else:
 						end_game.rpc("disoriented")
 			else:
-				if !Game.game_params.get_param("vertical_camera"):
-					end_game.rpc("normal")
-				else:
-					end_game.rpc("disoriented")
+				end_game.rpc("normal")
 
 var music_pitch_target = 1
 var music_pitch_boost = 1
@@ -454,7 +451,7 @@ func end_game(ending : String):
 				print("waiting for players to disconnect")
 			
 			print("all players disconnected")
-
+		
 		if is_quitting:
 			get_tree().quit()
 		if Game.players.has(1):
@@ -487,7 +484,6 @@ func set_singleton(deaths,books,ending):
 	elif ending == "imp":
 		get_tree().change_scene_to_file.call_deferred("res://impossible_end.tscn")
 	elif ending == "freaky":
-		
 		var can_bossfight = false
 		
 		if Achievements.check_achievement("impossible_ending"):
