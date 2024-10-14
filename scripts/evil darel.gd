@@ -343,13 +343,8 @@ func play_sound_with_subtitle(stream,subtitle):
 	audio.play()
 	GuiManager.show_subtitle(subtitle,stream)
 	
-	var timer := Timer.new()
-	add_child(timer)
-	timer.one_shot = true
-	timer.start(stream.get_length())
-	await timer.timeout
+	await Game.sleep(stream.get_length())
 	audio.queue_free()
-	timer.queue_free()
 
 func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	# Calculate the total weight

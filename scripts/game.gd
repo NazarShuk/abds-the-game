@@ -200,16 +200,6 @@ func _input(event):
 			
 			Allsingleton.is_fullscreen = !Allsingleton.is_fullscreen
 
-func _on_host_pressed():
-	if !Game.no_steam:
-		peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
-		multiplayer.multiplayer_peer = peer
-		multiplayer.peer_connected.connect(_on_peer_connected)
-		multiplayer.peer_disconnected.connect(_on_peer_disconnect)
-		_on_peer_connected()
-	else:
-		_on_host_local_pressed()
-
 func _on_connected_to_server():
 	$CanvasLayer/Lobby.show()
 	
@@ -227,9 +217,6 @@ func receive_steam_usr(id,username):
 
 func disconenct_btn():
 	multiplayer.multiplayer_peer.close()
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
-	
-func go_back():
 	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 
 func _on_peer_connected(id = 1):
@@ -301,8 +288,7 @@ func spawn_players():
 
 		call_deferred("add_child",player,false)
 		await get_tree().process_frame
-		if !OS.has_feature("debug"):
-			player.global_position = $"pre_start_game_anim/SCHOOL BUS/pl spawn".global_position + Vector3(randf_range(-3,3),0,randf_range(-3,3))
+		player.global_position = $"pre_start_game_anim/SCHOOL BUS/pl spawn".global_position + Vector3(randf_range(-3,3),0,randf_range(-3,3))
 		
 	players_spawned = true
 
@@ -328,13 +314,6 @@ func _on_peer_disconnect(id):
 	
 	update_player_text()
 
-
-func _on_connect_pressed():
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client("localhost",7777)
-	multiplayer.multiplayer_peer = peer
-
-
 @rpc("authority","call_local")
 func start_da_game():
 	$bum.play()
@@ -355,20 +334,6 @@ func start_da_game():
 		if !Allsingleton.is_bossfight:
 			leahy_look = true
 
-func _on_host_local_pressed():
-	peer = ENetMultiplayerPeer.new()
-	peer.create_server(7777)
-	multiplayer.multiplayer_peer = peer
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
-	
-	print("started hosting locally")
-	
-	#if !OS.has_feature("dedicated_server"):
-	#	_on_peer_connected()
-	_on_peer_connected()
-
-
 func _on_timer_timeout():
 	$Music2.play()
 	
@@ -386,11 +351,7 @@ func _on_timer_timeout():
 			$CanvasLayer/ColorRect/AnimationPlayer.play("bomboklatz")
 			GuiManager.show_tip("[color=green]Movement[/color]\nPress [b]space[/b] to jump [color=orange]//[/color] press [b]F key[/b] to punch [color=orange]//[/color] look up and down with [b]mouse[/b]",7)
 			
-			var timer = Timer.new()
-			add_child(timer)
-			timer.start(10)
-			await timer.timeout
-			timer.queue_free()
+			await Game.sleep(10)
 			
 			GuiManager.show_tip("[color=green]Darel.png[/color]\nDamage [b]Darel.png[/b] with clorox wipes [color=orange]//[/color] by collecting books", 7)
 
@@ -506,20 +467,9 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 	peer.close()
 
-
-func _on_button_2_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://tutor.tscn")
-
-
-func _on_button_3_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://settings.tscn")
-
 func hide_menu():
 	$Music1.play()
 	$Music0.stop()
-
-func _on_button_5_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://achievements.tscn")
 
 @onready var current_pacer_target = $"School/Pacer/Pacer target"
 
@@ -681,10 +631,6 @@ func stop_pacer():
 		$FakeFox/PacerTest/PacerStartTimer2.stop()
 		set_pacer_target_visibility.rpc($"School/Pacer/Pacer target".get_path(),false)
 		set_pacer_target_visibility.rpc($"School/Pacer/Pacer target2".get_path(),false)
-
-
-func _on_button_6_pressed():
-	get_tree().quit()
 
 func update_player_text():
 	var final_text = ""
