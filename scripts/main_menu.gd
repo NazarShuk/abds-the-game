@@ -28,7 +28,7 @@ func _on_lobby_list_lobby_clicked(lobby_id):
 		Game.lobby_id = lobby_id
 		print_rich("[color=green]joined lobby with id ",lobby_id, " changing scenes")
 		multiplayer.multiplayer_peer = peer
-		get_tree().change_scene_to_file.call_deferred("res://game.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/main_game_loader.tscn")
 		
 
 func host_lobby():
@@ -46,7 +46,7 @@ func host_lobby():
 		peer = OfflineMultiplayerPeer.new()
 		multiplayer.multiplayer_peer = peer
 		print_rich("[color=green]opening game with an offline peer")
-		get_tree().change_scene_to_file.call_deferred("res://game.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/main_game_loader.tscn")
 
 func _on_lobby_created(connect, lobby_id):
 	if connect:
@@ -56,21 +56,21 @@ func _on_lobby_created(connect, lobby_id):
 		
 		print_rich("[color=green]opening game with steam peer, lobby id: ", lobby_id)
 		multiplayer.multiplayer_peer = peer
-		get_tree().change_scene_to_file.call_deferred("res://game.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/main_game_loader.tscn")
 
 func _on_host_local_pressed():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(7777)
 	multiplayer.multiplayer_peer = peer
 	
-	get_tree().change_scene_to_file.call_deferred("res://game.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/main_game_loader.tscn")
 
 func _on_connect_local_pressed():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client("127.0.0.1",7777)
 	multiplayer.multiplayer_peer = peer
 	
-	get_tree().change_scene_to_file.call_deferred("res://game.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/main_game_loader.tscn")
 
 func _on_refresh_pressed() -> void:
 	$Control/lobby_list.get_friends_lobbies()
