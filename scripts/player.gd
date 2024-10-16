@@ -2,7 +2,9 @@ extends CharacterBody3D
 
 const OG_SPEED = 6.0
 var SPEED = OG_SPEED
-var boosts = {}
+var speed_multiplier = 1
+var run_multiplier = 1
+
 var is_boosted = false
 
 const JUMP_VELOCITY = 4.5
@@ -33,7 +35,6 @@ var can_cam_move = true
 
 var is_suspended = false
 
-
 var is_on_top = false
 var on_top_counter = 0
 
@@ -61,6 +62,17 @@ var parent = null
 
 @onready var shop_timer = $"CanvasLayer/Control/Shop/shop timer"
 
+var is_freaky = false
+var can_use_breaker = true
+var can_use_coffee = true
+
+var can_toilet_tp = true
+
+const push_force = 1.0
+
+var is_baja = false
+var baja_previous_pos = Vector3()
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	$nametag.text = SteamManager.steam_name
@@ -78,7 +90,6 @@ func _ready():
 		if Allsingleton.is_bossfight:
 			$"CanvasLayer/Control/Progress bar handler/ProgressBar".hide()
 		
-		original_rotation = hand.rotation_degrees
 		
 		$visual_body.hide()
 		$visual_body.pick_skin()
@@ -87,15 +98,6 @@ func _ready():
 			camera_3d.far = Settings.render_distance
 		
 		GuiManager.show_tip_once("movement_controls","[color=green]Movement[/color]\nWASD to move, LeftShift to run (consumes stamina), Space to look behind, M to open the minimap")
-
-var is_freaky = false
-var can_use_breaker = true
-var can_use_coffee = true
-
-var hand_target_y = -0.5
-var can_toilet_tp = true
-
-const push_force = 1.0
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
@@ -117,8 +119,6 @@ func _physics_process(delta):
 		
 		if Input.is_action_just_pressed("punch"):
 			punch()
-		
-		arm_sway(delta)
 		
 		update_item_weights()
 		
@@ -152,18 +152,13 @@ func _physics_process(delta):
 		
 		minimap_cam.size = lerp(minimap_cam.size,float(minimap_zoom),0.25)
 		minimap_zoom = clamp(minimap_zoom,5,95)
+
 		
-		var final_multiplier = 1
-		for b in boosts:
-			final_multiplier += boosts[b]
-		
-		SPEED = clamp(OG_SPEED * final_multiplier,0,99999)
+		SPEED = clamp(OG_SPEED * speed_multiplier * run_multiplier,0,99999)
 		if !parent.leahy_look:
-			if final_multiplier != 1:
-				cam_fov = 75 + final_multiplier * 15
-			else:
-				cam_fov = 75
-		hand.position.y = lerp(hand.position.y,hand_target_y,0.25)
+			cam_fov = 75 + (speed_multiplier * run_multiplier) * 15
+		
+		$HandTree.set("parameters/time_scale/scale", run_multiplier * speed_multiplier)
 		
 		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor(shop_timer.time_left)) + "s left"
 		
@@ -202,6 +197,7 @@ func _physics_process(delta):
 				parent.skibidi.rpc()
 			else:
 				global_position.z = 0
+				GuiManager.show_tip("Whoops, sorry about that.", 5)
 		
 		movement_function(delta)
 		
@@ -290,30 +286,9 @@ func _input(event):
 					pick_item(event.as_text_keycode().to_int())
 	
 
-func coffee_timeout():
-	await Game.sleep(6)
-	boosts["coffee"] -= 1
-
-func redbull_timeout():
-	await Game.sleep(3)
-	boosts["redbull"] -= 2
-
 func toilet_tp_timeout():
 	await Game.sleep(60)
 	can_toilet_tp = true
-
-func baja_timeout():
-	await Game.sleep(7.5)
-	boosts["baja"] -= 4.5
-	baja_slow_timeout()
-	
-func sonic_timeout():
-	await Game.sleep(5)
-	boosts["sonic"] -= 3
-
-func baja_slow_timeout():
-	await Game.sleep(15)
-	boosts["baja"] += 0.5
 
 var is_in_leahy = false
 
@@ -345,11 +320,7 @@ func _on_area_3d_area_entered(area):
 			die("gainy")
 	elif area.name == "puddle":
 		if !area.get_parent().can_slowdown: return
-		if boosts.has("puddle"):
-			boosts["puddle"] -= 0.5
-		else:
-			boosts["puddle"] = 0.5
-		$Puddle.start()
+		add_speed_boost(-0.5, 3)
 	elif area.name == "misuraca":
 		if area.get_parent().is_angry == true:
 			die("misuraca")
@@ -397,7 +368,7 @@ func _on_timer_timeout():
 			if can_run:
 				if !Allsingleton.is_bossfight:
 					stamina -= 1
-				boosts["run"] = 1
+				run_multiplier = 2
 		else:
 			is_running = false
 			can_run = false
@@ -405,7 +376,7 @@ func _on_timer_timeout():
 			GuiManager.show_tip_once("stamina_timeout","[color=green]Stamina[/color]\nIf stamina [b]reaches 0[/b], you will not be able to run for a few seconds.")
 			
 	else:
-		boosts["run"] = 0
+		run_multiplier = 1
 		if stamina <= 100:
 			stamina += 1
 	
@@ -459,11 +430,8 @@ func pick_item(item: int):
 	
 	if item != -1:
 		set_item_vis.rpc(item,true)
-		hand_target_y = 0.3
 		GuiManager.show_tip_once("items","[color=green]Items[/color]\nEvery item can be used by clicking [b]either right or left[/b] mouse button. [b]Press Q[/b] to throw the item out.")
-	else:
-		hand_target_y = -0.5
-		pass
+		$HandTree.set("parameters/pickup/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 @rpc("any_peer","call_local")
 func set_item_vis(item : int,vis : bool):
@@ -526,10 +494,6 @@ func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	
 	# Fallback in case of rounding errors
 	return items_chances.keys()[-1]
-
-func fruit_snacks_timeout():
-	await Game.sleep(3)
-	boosts["fruit snacks"] -= 1
 
 @rpc("any_peer", "call_local")
 func spawn_clorox():
@@ -657,7 +621,7 @@ func open_shop():
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 		can_use_shop = false
 		Game.get_closest_node_in_group(global_position,"shop").hide()
-		shop_timer.start()
+		shop_timer.start(30)
 		$CanvasLayer/Control/Shop/ColorRect/MainPanel.show()
 		$"CanvasLayer/Control/Shop/ColorRect/question panel".hide()
 		$"CanvasLayer/Control/Shop/ColorRect/rewards panel".hide()
@@ -764,7 +728,6 @@ func _on_buy_baja_pressed():
 		pick_item(8)
 		
 		play_sound("res://money.mp3",0,"shop")
-
 
 func _on_breaker_timeout_timeout():
 	can_use_breaker = true
@@ -947,10 +910,6 @@ func format_time(timer_path,succes_string):
 func _on_toilet_timeout_timeout():
 	can_toilet_tp = true
 
-
-func _on_puddle_timeout():
-	boosts["puddle"] = 0
-
 # GAMBLING
 
 var gamble = []
@@ -1028,7 +987,7 @@ func movement_function(delta):
 	elif Input.is_action_just_released("sprint"):
 		is_running = false
 	
-	$AudioStreamPlayer3D.volume_db = -80
+	$walking.volume_db = -80
 	
 	if can_run:
 		progress_bar.modulate = Color.WHITE
@@ -1060,7 +1019,7 @@ func movement_function(delta):
 				if movement != Vector3.ZERO:
 					velocity.x = (movement * SPEED).x
 					velocity.z = (movement * SPEED).z
-					$AudioStreamPlayer3D.volume_db = 0
+					$walking.volume_db = 0
 					is_moving = true
 				else:
 					velocity.x = velocity.move_toward(Vector3.ZERO, SPEED).x
@@ -1072,8 +1031,9 @@ func movement_function(delta):
 				# Update is_moving based on actual movement
 				if velocity.length() < 0.1:
 					is_moving = false
-				
-				
+					$HandTree.set("parameters/Transition/transition_request","static")
+				else:
+					$HandTree.set("parameters/Transition/transition_request","swing")
 				
 				if Input.is_action_just_pressed("interact"):
 					if ray.get_collider() != null and get_cur_item() == -1:
@@ -1089,12 +1049,8 @@ func movement_function(delta):
 							open_shop()
 						if ray.get_collider().is_in_group("coffee_machine"):
 							if !can_use_coffee: return
-							if boosts.has("coffee"):
-								boosts["coffee"] += 1
-							else:
-								boosts["coffee"] = 1
+							add_speed_boost(1, 6)
 							ray.get_collider().play_sound.rpc()
-							coffee_timeout()
 							can_use_coffee = false
 							$"Coffee timeout".start(20)
 						if ray.get_collider().name == "Breaker":
@@ -1108,11 +1064,10 @@ func movement_function(delta):
 						if ray.get_collider().is_in_group("mr_misuraca"):
 							open_gambling()
 						
-						if ray.get_collider().name.begins_with("DroppedItem"):
-							var dropped_item = ray.get_collider().item
-							if get_cur_item() == -1:
-								pick_item(dropped_item)
-								parent.remove_dropped_item.rpc(ray.get_collider().get_path())
+						if ray.get_collider().is_in_group("dropped_item"):
+							if ray.get_collider():
+								ray.get_collider().remove_item.rpc()
+								pick_item(ray.get_collider().item)
 						
 						if ray.get_collider().is_in_group("video_player"):
 							ray.get_collider().play.rpc()
@@ -1136,7 +1091,7 @@ func movement_function(delta):
 							
 							$freezerDeath.start()
 							
-								
+							
 							
 						
 						if ray.get_collider().is_in_group("toilet"):
@@ -1213,11 +1168,7 @@ func movement_function(delta):
 				if Input.is_action_just_pressed("use_item"):
 					if get_cur_item() == 0:
 						pick_item(-1)
-						if boosts.has("fruit snacks"):
-							boosts["fruit snacks"] += 1
-						else:
-							boosts["fruit snacks"] = 1
-						fruit_snacks_timeout()
+						add_speed_boost(1, 3)
 					elif get_cur_item() == 1:
 						pick_item(-1)
 						spawn_clorox.rpc()
@@ -1233,11 +1184,7 @@ func movement_function(delta):
 						parent.start_da_pacer.rpc(name.to_int()) # i want to kms because of this
 					elif get_cur_item() == 6:
 						pick_item(-1)
-						if boosts.has("redbull"):
-							boosts["redbull"] += 2
-						else:
-							boosts["redbull"] = 2
-						redbull_timeout()
+						add_speed_boost(2, 3)
 						play_sound("res://redbull.mp3")
 					elif get_cur_item() == 7:
 						
@@ -1245,28 +1192,21 @@ func movement_function(delta):
 							hand.get_node("Bucket 7/Bucket/water").visible = false
 							pick_item(-1)
 							play_sound("res://water.mp3")
-							parent.spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
+							
+							spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 					elif get_cur_item() == 8:
 						pick_item(-1)
 						is_baja = true
 						
-						if boosts.has("baja"):
-							boosts["baja"] += 4
-						else:
-							boosts["baja"] = 4
-						baja_timeout()
+						add_speed_boost(4,7.5)
 						$"baja trail".start()
 					elif get_cur_item() == 9:
 						pick_item(-1)
-						parent.spawn_smoke.rpc(global_position)
+						spawn_smoke.rpc(global_position)
 						play_sound("res://fire extinguisher.mp3")
 					elif get_cur_item() == 10:
 						pick_item(-1)
-						if boosts.has("sonic"):
-							boosts["sonic"] += 3
-						else:
-							boosts["sonic"] = 3
-						sonic_timeout()
+						add_speed_boost(3,5)
 						play_sound("res://models/sonic.mp3",3)
 
 	if Input.is_action_just_pressed("throw"):
@@ -1285,13 +1225,25 @@ func movement_function(delta):
 			
 			cam_fov = 10
 
+@rpc("any_peer","call_local")
+func spawn_smoke(pos):
+	if multiplayer.is_server():
+		var smoke = load("res://smoke wall.tscn").instantiate()
+		get_tree().get_first_node_in_group("school_navigation").add_child(smoke,true)
+		smoke.global_position = pos
+		smoke.navigation_mesh = get_tree().get_first_node_in_group("school_navigation")
+
+@rpc("any_peer","call_local")
+func spawn_puddle(pos):
+	if multiplayer.is_server():
+		var puddle = load("res://puddle.tscn").instantiate()
+		get_parent().add_child(puddle,true)
+		puddle.global_position = pos
 
 func _on_button_pressed():
 	close_gambling()
 
 
-var is_baja = false
-var baja_previous_pos = Vector3()
 
 func _on_pp_timeout_timeout():
 	if is_multiplayer_authority():
@@ -1300,32 +1252,11 @@ func _on_pp_timeout_timeout():
 			pos.y = 0
 			
 			if baja_previous_pos.distance_to(pos) > 0.75:
-						parent.spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
+				spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 			baja_previous_pos = pos
 
 func _on_baja_trail_timeout():
 	is_baja = false
-
-@export var max_sway_rotation: float = 1
-@export var sway_smoothness: float = 10.0
-@export var return_speed: float = 10.0
-
-var sway_rotation: Vector3 = Vector3.ZERO
-var original_rotation: Vector3
-
-func arm_sway(delta):
-	if !is_multiplayer_authority(): return
-	var mouse_delta = Input.get_last_mouse_velocity()
-
-	# Calculate sway rotation based on mouse movement
-	if parent.do_vertical_camera_normal:
-		sway_rotation.x = mouse_delta.y * max_sway_rotation * delta
-	sway_rotation.y = -mouse_delta.x * max_sway_rotation * delta
-
-	# Smooth the rotation and return to the original orientation
-	var new_rotation = original_rotation + sway_rotation
-	hand.rotation_degrees = lerp(hand.rotation_degrees, new_rotation, delta * sway_smoothness)
-
 
 func _on_voice_chat_toggled(toggled_on):
 	AudioServer.set_bus_mute(5,!toggled_on)
@@ -1335,3 +1266,8 @@ func freezer_death():
 		die("freezer")
 		$CanvasLayer/Control/Freezer/AnimationPlayer.play("RESET")
 		$freezerDeath.stop()
+
+func add_speed_boost(multiplier : float, duration : float):
+	speed_multiplier += multiplier
+	await Game.sleep(duration)
+	speed_multiplier -= multiplier

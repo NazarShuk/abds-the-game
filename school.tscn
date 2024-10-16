@@ -2435,7 +2435,7 @@ uv1_world_triplanar = true
 [node name="School" type="Node3D"]
 script = ExtResource("1_ag1mx")
 
-[node name="Navigation" type="NavigationRegion3D" parent="."]
+[node name="Navigation" type="NavigationRegion3D" parent="." groups=["school_navigation"]]
 navigation_mesh = SubResource("NavigationMesh_nerbr")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Navigation"]
@@ -2451,6 +2451,7 @@ skeleton = NodePath("../../..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Navigation/StaticBody3D"]
 transform = Transform3D(150, 0, 0, 0, 150, 0, 0, 0, 150, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_5oe85")
 mesh = SubResource("PlaneMesh_j5tmp")
 skeleton = NodePath("../../..")

@@ -52,6 +52,9 @@ _data = {
 properties/0/path = NodePath(".:can_slowdown")
 properties/0/spawn = true
 properties/0/replication_mode = 2
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [node name="Puddle" type="Node3D"]
 script = ExtResource("1_x4fni")

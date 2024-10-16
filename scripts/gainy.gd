@@ -62,6 +62,11 @@ func _on_timer_timeout():
 		if Game.game_started:
 			if randi_range(0,20) != 1: return
 			
+			attack_someone()
+
+func attack_someone():
+	if multiplayer.is_server():
+		if Game.game_started:
 			var just_a_chill_guy = get_tree().get_nodes_in_group("player").pick_random()
 			
 			if just_a_chill_guy:

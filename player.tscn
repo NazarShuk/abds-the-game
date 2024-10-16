@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=138 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
@@ -75,26 +75,26 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("AudioStreamPlayer3D:volume_db")
+properties/2/path = NodePath("nametag:text")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("nametag:text")
+properties/3/path = NodePath(".:visible")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:visible")
+properties/4/path = NodePath(".:steam_name")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath(".:steam_name")
+properties/5/path = NodePath("walking:volume_db")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath("AudioStreamPlayer3D:pitch_scale")
+properties/6/path = NodePath("walking:pitch_scale")
 properties/6/spawn = true
 properties/6/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofe5t"]
 shader = ExtResource("20_kprs4")
 shader_parameter/outerRadius = 3.448
-shader_parameter/MainAlpha = 0.25
+shader_parameter/MainAlpha = 0.4
 shader_parameter/SecondaryAlpha = 0.0
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4s0wx"]
@@ -103,6 +103,12 @@ shader_parameter/SecondaryAlpha = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oicg1"]
 bg_color = Color(0.2484, 0.2484, 0.2484, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xxveq"]
+load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bgiyt"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="Animation" id="Animation_3kw6p"]
 length = 0.001
@@ -447,12 +453,6 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4sv6d"]
 bg_color = Color(1, 1, 1, 0)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xxveq"]
-load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_bgiyt"]
-viewport_path = NodePath("SubViewport")
-
 [sub_resource type="Animation" id="Animation_rjchn"]
 length = 0.001
 tracks/0/type = "value"
@@ -791,6 +791,169 @@ viewport_path = NodePath("Minimap")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bk8m"]
 albedo_color = Color(0, 0.529412, 1, 1)
 
+[sub_resource type="Animation" id="Animation_3ftyq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.513, 0.3, -0.78)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.44855, -1.12225, 0.280998)]
+}
+
+[sub_resource type="Animation" id="Animation_ulcmt"]
+resource_name = "static"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.513, 0.25, -0.78), Vector3(0.513, 0.25, -0.78)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.44855, -1.12225, 0.280998)]
+}
+
+[sub_resource type="Animation" id="Animation_1hnpm"]
+resource_name = "swing"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.49, 0.3, -0.78), Vector3(0.513, 0.25, -0.78), Vector3(0.536, 0.3, -0.78), Vector3(0.513, 0.25, -0.78), Vector3(0.49, 0.3, -0.78)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.44855, -1.12225, 0.280998)]
+}
+
+[sub_resource type="Animation" id="Animation_xktpx"]
+resource_name = "pickup"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.513, -0.5, -0.78), Vector3(0.513, 0.3, -0.78), Vector3(0.513, 0.3, -0.78)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.44855, -1.12225, 1.12748), Vector3(-0.44855, -1.12225, 0.280998), Vector3(-0.44855, -1.12225, 0.280998)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6yh5v"]
+_data = {
+"RESET": SubResource("Animation_3ftyq"),
+"pickup": SubResource("Animation_xktpx"),
+"static": SubResource("Animation_ulcmt"),
+"swing": SubResource("Animation_1hnpm")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c30ru"]
+animation = &"pickup"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v72pr"]
+animation = &"static"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q0s3x"]
+animation = &"swing"
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_6rlhi"]
+xfade_time = 0.1
+input_0/name = "swing"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "static"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_rfxu8"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_3tsj5"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4knu2"]
+graph_offset = Vector2(-325.17, 120.678)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_c30ru")
+"nodes/Animation 3/position" = Vector2(280, 420)
+nodes/Static/node = SubResource("AnimationNodeAnimation_v72pr")
+nodes/Static/position = Vector2(-280, 300)
+nodes/Swing/node = SubResource("AnimationNodeAnimation_q0s3x")
+nodes/Swing/position = Vector2(-280, 160)
+nodes/Transition/node = SubResource("AnimationNodeTransition_6rlhi")
+nodes/Transition/position = Vector2(-45.1247, 223.542)
+nodes/output/position = Vector2(800, 160)
+nodes/pickup/node = SubResource("AnimationNodeOneShot_rfxu8")
+nodes/pickup/position = Vector2(540, 240)
+nodes/time_scale/node = SubResource("AnimationNodeTimeScale_3tsj5")
+nodes/time_scale/position = Vector2(240, 200)
+node_connections = [&"Transition", 0, &"Swing", &"Transition", 1, &"Static", &"output", 0, &"pickup", &"pickup", 0, &"time_scale", &"pickup", 1, &"Animation 3", &"time_scale", 0, &"Transition"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwpal"]
 albedo_texture = ExtResource("2_q3hoo")
 
@@ -970,7 +1133,7 @@ replication_config = SubResource("SceneReplicationConfig_8c5nr")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
 shape = SubResource("CapsuleShape3D_tu1hv")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="walking" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_muu2l")
 autoplay = true
 bus = &"Dialogs"
@@ -994,10 +1157,6 @@ one_shot = true
 [node name="ReviveTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
-
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
-autostart = true
 
 [node name="Silent Lunch" type="Timer" parent="."]
 wait_time = 10.0
@@ -1025,10 +1184,6 @@ one_shot = true
 
 [node name="ToiletTimeout" type="Timer" parent="."]
 wait_time = 60.0
-one_shot = true
-
-[node name="Puddle" type="Timer" parent="."]
-wait_time = 3.0
 one_shot = true
 
 [node name="Pp timeout" type="Timer" parent="."]
@@ -1139,6 +1294,36 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 51
 text = "You got silent lunch
 you can leave in 15"
+
+[node name="LeahyApproaching" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 131.0
+offset_right = 309.0
+offset_bottom = 272.0
+texture = SubResource("CompressedTexture2D_xxveq")
+script = ExtResource("52_cn57o")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/LeahyApproaching"]
+layout_mode = 0
+offset_left = 172.0
+offset_top = 14.0
+offset_right = 207.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/LeahyApproaching"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 15.0
+offset_right = 114.0
+offset_bottom = 127.0
+texture = SubResource("ViewportTexture_bgiyt")
+expand_mode = 1
 
 [node name="Freezer" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
@@ -1993,36 +2178,6 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 26
 text = "TAKE THE BET"
 
-[node name="LeahyApproaching" type="TextureRect" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 33.0
-offset_top = 91.0
-offset_right = 309.0
-offset_bottom = 232.0
-texture = SubResource("CompressedTexture2D_xxveq")
-script = ExtResource("52_cn57o")
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/LeahyApproaching"]
-layout_mode = 0
-offset_left = 172.0
-offset_top = 14.0
-offset_right = 207.0
-offset_bottom = 41.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/LeahyApproaching"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 15.0
-offset_right = 114.0
-offset_bottom = 127.0
-texture = SubResource("ViewportTexture_bgiyt")
-expand_mode = 1
-
 [node name="toilet" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -2583,6 +2738,25 @@ visible = false
 [node name="sonicgummies" parent="Hand/Sonic Gummies" instance=ExtResource("51_b4gs7")]
 transform = Transform3D(-1.31134e-08, 0.3, 0, -0.3, -1.31134e-08, 0, 0, 0, 0.3, 0, 0, 0)
 
+[node name="HandAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6yh5v")
+}
+playback_auto_capture_transition_type = 6
+playback_auto_capture_ease_type = 2
+playback_default_blend_time = 0.1
+
+[node name="HandTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_4knu2")
+anim_player = NodePath("../HandAnim")
+parameters/Transition/current_state = "swing"
+parameters/Transition/transition_request = ""
+parameters/Transition/current_index = 0
+parameters/pickup/active = false
+parameters/pickup/internal_active = false
+parameters/pickup/request = 0
+parameters/time_scale/scale = 1.0
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 material_override = SubResource("StandardMaterial3D_lwpal")
@@ -2656,7 +2830,6 @@ script = ExtResource("64_5sp6g")
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Stamina_timeout" to="." method="_on_stamina_timeout_timeout"]
 [connection signal="timeout" from="ReviveTimer" to="." method="_on_revive_timer_timeout"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer2_timeout"]
 [connection signal="timeout" from="Silent Lunch" to="." method="_on_silent_lunch_timeout"]
 [connection signal="timeout" from="AntiWallWalk" to="." method="_on_anti_wall_walk_timeout"]
 [connection signal="timeout" from="ItemDelay" to="." method="_on_item_delay_timeout"]
@@ -2664,7 +2837,6 @@ script = ExtResource("64_5sp6g")
 [connection signal="timeout" from="BreakerTimeout" to="." method="_on_breaker_timeout_timeout"]
 [connection signal="timeout" from="Coffee timeout" to="." method="_on_coffee_timeout_timeout"]
 [connection signal="timeout" from="ToiletTimeout" to="." method="_on_toilet_timeout_timeout"]
-[connection signal="timeout" from="Puddle" to="." method="_on_puddle_timeout"]
 [connection signal="timeout" from="Pp timeout" to="." method="_on_pp_timeout_timeout"]
 [connection signal="timeout" from="baja trail" to="." method="_on_baja_trail_timeout"]
 [connection signal="timeout" from="freezerDeath" to="." method="freezer_death"]

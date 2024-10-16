@@ -13,3 +13,8 @@ func _on_timer_timeout():
 func push_item(push_direction,push_force):
 	if multiplayer.is_server():
 		apply_central_impulse(-push_direction * push_force)
+
+@rpc("any_peer","call_local")
+func remove_item():
+	if multiplayer.is_server():
+		queue_free()

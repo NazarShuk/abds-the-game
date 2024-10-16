@@ -131,7 +131,8 @@ func give_reward(what_name):
 	elif what_name == "Sonic Gummy":
 		game.give_item_to_everyone(10)
 	elif what_name == "Ms Gainy attack":
-		game.gainy_attack_func()
+		for gainy in get_tree().get_nodes_in_group("ms_gainy"):
+			gainy.attack_someone()
 	elif what_name == "Loose a notebook":
 		game.loose_notebooks(1)
 	elif what_name == "Rubber ducky":
@@ -142,9 +143,15 @@ func give_reward(what_name):
 		for x in range(-10,10):
 			for y in range(-10,10):
 				var pos = Vector3(global_position.x + x, 0, global_position.z + y)
-				game.spawn_puddle.rpc(pos)
+				spawn_puddle.rpc(pos)
 	else:
 		pass
+
+@rpc("any_peer","call_local")
+func spawn_puddle(pos):
+	var puddle = load("res://puddle.tscn").instantiate()
+	add_child(puddle,true)
+	puddle.global_position = pos
 
 @rpc("authority","call_local")
 func remove_mr_misuraca():

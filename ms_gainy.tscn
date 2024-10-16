@@ -27,7 +27,7 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Ms_Gainy" type="CharacterBody3D" groups=["fox"]]
+[node name="Ms_Gainy" type="CharacterBody3D" groups=["ms_gainy"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17

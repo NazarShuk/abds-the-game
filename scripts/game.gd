@@ -1,5 +1,21 @@
 extends Node3D
 
+const PRE_BOSS = preload("res://pre_boss.mp3")
+const GLORY = preload("res://dariel/placeholders/Glory [kzbbO_lyZ94].mp3")
+const NOISE = preload("res://noise.mp3")
+const PLAYER = preload("res://player.tscn")
+const LOGOS = preload("res://logos.tscn")
+const BAD_END = preload("res://bad_end.tscn")
+const DISORIENTED_END = preload("res://disoriented_end.tscn")
+const DUMB_AHH_END = preload("res://dumb_ahh_end.tscn")
+const END = preload("res://end.tscn")
+const IMPOSSIBLE_END = preload("res://impossible_end.tscn")
+const PERFECT_END = preload("res://perfect_end.tscn")
+const HUH_ENDING = preload("res://huh_ending.tscn")
+const HUH_ENDING_2 = preload("res://huh_ending_2.tscn")
+const WORST_END = preload("res://worst_end.tscn")
+const VERSUS_LOOP = preload("res://dariel/placeholders/versus_loop.mp3")
+
 var peer
 
 @onready var book_spawns = $School/BookSpawns
@@ -50,9 +66,9 @@ func _ready():
 	
 	if Allsingleton.is_bossfight:
 		$CanvasLayer/Glitch.show()
-		$Music1.stream = load("res://pre_boss.mp3")
-		$Music2.stream = load("res://dariel/placeholders/Glory [kzbbO_lyZ94].mp3")
-		$Music0.stream = load("res://noise.mp3")
+		$Music1.stream = PRE_BOSS
+		$Music2.stream = GLORY
+		$Music0.stream = NOISE
 		$Music0.play()
 		
 		# Lobby
@@ -217,7 +233,7 @@ func receive_steam_usr(id,username):
 
 func disconenct_btn():
 	multiplayer.multiplayer_peer.close()
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_packed(LOGOS)
 
 func _on_peer_connected(id = 1):
 	if !players_spawned:
@@ -280,8 +296,7 @@ func spawn_players():
 	if !OS.has_feature("debug"):
 		await Game.sleep(8)
 	for pl_id in Game.players.keys():
-		var packed_player = preload("res://player.tscn")
-		var player = packed_player.instantiate()
+		var player = PLAYER.instantiate()
 
 		player.set_multiplayer_authority(pl_id)
 		player.name = str(pl_id)
@@ -434,13 +449,13 @@ func set_singleton(deaths,books,ending):
 	
 	#peer.close()
 	if ending == "normal":
-		get_tree().change_scene_to_file.call_deferred("res://end.tscn")
+		get_tree().change_scene_to_packed.call_deferred(END)
 	elif ending == "worst":
-		get_tree().change_scene_to_file.call_deferred("res://bad_end.tscn")
+		get_tree().change_scene_to_packed.call_deferred(BAD_END)
 	elif ending == "perfect":
-		get_tree().change_scene_to_file.call_deferred("res://perfect_end.tscn")
+		get_tree().change_scene_to_packed.call_deferred(PERFECT_END)
 	elif ending == "imp":
-		get_tree().change_scene_to_file.call_deferred("res://impossible_end.tscn")
+		get_tree().change_scene_to_packed.call_deferred(IMPOSSIBLE_END)
 	elif ending == "freaky":
 		var can_bossfight = false
 		
@@ -454,17 +469,17 @@ func set_singleton(deaths,books,ending):
 								pass
 		
 		if !can_bossfight:
-			get_tree().change_scene_to_file.call_deferred("res://huh_ending.tscn")
+			get_tree().change_scene_to_packed.call_deferred(HUH_ENDING)
 		else:
-			get_tree().change_scene_to_file.call_deferred("res://huh_ending_2.tscn")
+			get_tree().change_scene_to_packed.call_deferred(HUH_ENDING_2)
 	elif ending == "you suck":
-		get_tree().change_scene_to_file.call_deferred("res://worst_end.tscn")
+		get_tree().change_scene_to_packed.call_deferred(WORST_END)
 	elif ending == "dumb":
-		get_tree().change_scene_to_file.call_deferred("res://dumb_ahh_end.tscn")
+		get_tree().change_scene_to_packed.call_deferred(DUMB_AHH_END)
 	elif ending == "disoriented":
-		get_tree().change_scene_to_file.call_deferred("res://disoriented_end.tscn")
+		get_tree().change_scene_to_packed.call_deferred(DISORIENTED_END)
 	else:
-		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+		get_tree().change_scene_to_packed(LOGOS)
 	peer.close()
 
 func hide_menu():
@@ -641,14 +656,6 @@ func update_player_text():
 			final_text += str(pl_id) + "\n"
 	player_list_text.text = final_text
 
-
-@rpc("any_peer","call_local")
-func spawn_puddle(pos):
-	var puddle = load("res://puddle.tscn").instantiate()
-	add_child(puddle,true)
-	puddle.global_position = pos
-
-
 var is_bet = false
 var bet_books_left = -1
 var bet_loss = -1
@@ -737,27 +744,12 @@ func add_item_to_dropped(dropped_item_path,item_path):
 	
 	clone.position = Vector3(0,0,0)
 
-@rpc("any_peer","call_local")
-func remove_dropped_item(path):
-	if multiplayer.is_server():
-		if get_node(path):
-			get_node(path).queue_free()
-
-@rpc("any_peer","call_local")
-func spawn_smoke(pos):
-	if multiplayer.is_server():
-		var smoke = load("res://smoke wall.tscn").instantiate()
-		$School/Navigation.add_child(smoke,true)
-		smoke.global_position = pos
-		smoke.navigation_mesh = $School/Navigation
-
-
 func give_item_to_everyone(item_id):
 	for pl in Game.players.keys():
 		get_node(str(pl)).choose_item.rpc_id(pl,item_id,true)
 
 func reload_game():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_packed(LOGOS)
 
 func _on_darel_timer_timeout():
 	get_tree().get_first_node_in_group("player").die("darel")
@@ -768,7 +760,7 @@ func darel_phase2_transition():
 	$CanvasLayer/ColorRect/AnimationPlayer.play("bomboklatz")
 
 func darel_phase2_start():
-	$Music2.stream = load("res://dariel/placeholders/versus_loop.mp3")
+	$Music2.stream = VERSUS_LOOP
 	$Music2.play()
 
 var is_quitting = false
