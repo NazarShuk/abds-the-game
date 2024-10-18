@@ -52,8 +52,8 @@ func host_lobby():
 func _on_lobby_created(connect, lobby_id):
 	if connect:
 		Game.lobby_id = lobby_id
-		Steam.setLobbyData(lobby_id,"name",str(Steam.getPersonaName()) + "'s lobby")
-		Steam.setLobbyJoinable(lobby_id,true)
+		SteamManager.steam_api.setLobbyData(lobby_id,"name",str(SteamManager.steam_name) + "'s lobby")
+		SteamManager.steam_api.setLobbyJoinable(lobby_id,true)
 		
 		print_rich("[color=green]opening game with steam peer, lobby id: ", lobby_id)
 		load_main_game()

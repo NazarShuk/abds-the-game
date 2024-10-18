@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=3 uid="uid://wc32kmb27bkl"]
+
+[ext_resource type="AudioStream" uid="uid://6td7mmd5rmwl" path="res://sounds/devious.mp3" id="1_eqamp"]
+
+[sub_resource type="GDScript" id="GDScript_f12sx"]
+resource_name = "test"
+script/source = "extends AudioStreamPlayer
+
+@export var bpm := 100
+@export var measures := 4
+
+var song_position := 0.0
+var song_position_in_beats := 1
+var sec_per_beat := 60.0 / bpm
+var last_reported_beat := 0
+var measure := 1
+
+signal beat(position: int)
+signal measure_changed(position: int)
+
+func _ready() -> void:
+	sec_per_beat = 60.0 / bpm
+
+func _process(delta: float) -> void:
+	if playing:
+		song_position = get_playback_position() + AudioServer.get_time_since_last_mix()
+		song_position -= AudioServer.get_output_latency()
+		song_position_in_beats = int(floor(song_position / sec_per_beat))
+		report_beat()
+
+func report_beat() -> void:
+	if last_reported_beat < song_position_in_beats:
+		if measure > measures:
+			measure = 1
+		beat.emit(song_position_in_beats)
+		if measure == 1:
+			measure_changed.emit(song_position_in_beats)
+		last_reported_beat = song_position_in_beats
+		measure += 1
+
+func play_from_beat(beat: int) -> void:
+	play()
+	seek(beat * sec_per_beat)
+	measure = beat % measures + 1
+
+func closest_beat(nth: int) -> Vector2:
+	var closest := int(round((song_position / sec_per_beat) / nth) * nth) 
+	var time_off_beat = abs(closest * sec_per_beat - song_position)
+	return Vector2(closest, time_off_beat)
+"
+
+[sub_resource type="GDScript" id="GDScript_vejxu"]
+resource_name = "test"
+script/source = "extends ColorRect
+
+var side = false
+
+func _process(delta: float) -> void:
+	rotation_degrees = lerp(rotation_degrees, 0.0, 0.25)
+	scale = lerp(scale, Vector2(1,1), 0.25)
+
+func _on_node_2d_beat(position: Variant) -> void:
+	scale = Vector2(1.25,1.25)
+	if side:
+		rotation_degrees += 15
+	else:
+		rotation_degrees -= 15
+	
+	side = !side
+"
+
+[node name="Node2D" type="AudioStreamPlayer"]
+stream = ExtResource("1_eqamp")
+autoplay = true
+script = SubResource("GDScript_f12sx")
+bpm = 168
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.0
+offset_top = -113.5
+offset_right = 142.0
+offset_bottom = 113.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(142, 113)
+color = Color(0, 0, 0, 1)
+script = SubResource("GDScript_vejxu")
+
+[node name="StartTimer" type="Timer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[connection signal="beat" from="." to="ColorRect" method="_on_node_2d_beat"]

@@ -818,6 +818,35 @@ tracks/1/keys = {
 "values": [Vector3(-0.44855, -1.12225, 0.280998)]
 }
 
+[sub_resource type="Animation" id="Animation_xktpx"]
+resource_name = "pickup"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.513, -0.5, -0.78), Vector3(0.513, 0.3, -0.78), Vector3(0.513, 0.3, -0.78)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.44855, -1.12225, 1.12748), Vector3(-0.44855, -1.12225, 0.280998), Vector3(-0.44855, -1.12225, 0.280998)]
+}
+
 [sub_resource type="Animation" id="Animation_ulcmt"]
 resource_name = "static"
 loop_mode = 1
@@ -874,35 +903,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(-0.44855, -1.12225, 0.280998)]
-}
-
-[sub_resource type="Animation" id="Animation_xktpx"]
-resource_name = "pickup"
-length = 0.3
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0.513, -0.5, -0.78), Vector3(0.513, 0.3, -0.78), Vector3(0.513, 0.3, -0.78)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Hand:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.44855, -1.12225, 1.12748), Vector3(-0.44855, -1.12225, 0.280998), Vector3(-0.44855, -1.12225, 0.280998)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6yh5v"]
@@ -2661,7 +2661,7 @@ wait_time = 0.25
 autostart = true
 
 [node name="Hand" type="Node3D" parent="."]
-transform = Transform3D(0.262507, 0.127587, -0.40597, 0.124941, 0.432868, 0.21683, 0.406792, -0.215283, 0.19538, 0.513, 0.3, -0.78)
+transform = Transform3D(0.262506, 0.127588, -0.405971, 0.124941, 0.432868, 0.21683, 0.406793, -0.215283, 0.195379, 0.513, 0.3, -0.78)
 
 [node name="Fruit Snacks" type="Node3D" parent="Hand"]
 visible = false

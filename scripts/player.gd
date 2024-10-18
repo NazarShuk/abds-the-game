@@ -839,7 +839,7 @@ func control_text_setters():
 			final_text += "Toilet\n" + format_time("ToiletTimeout","E - flush down")
 		elif looking_at.name == "water fountain":
 			if get_cur_item() != 7:
-				final_text += "Water fountain\nGet a bucket to fill it"
+				final_text += "Water fountain\nE - Drink"
 			else:
 				if !hand.get_node("Bucket 7/Bucket/water").visible:
 					final_text += "Water fountain\nE - fill the bucket"
@@ -855,6 +855,8 @@ func control_text_setters():
 			final_text += "Wheel\n You need more notebooks to spin it!"
 		elif looking_at.is_in_group("freezer"):
 			final_text += "Freezer\n E - Get inside"
+		elif looking_at.is_in_group("dropped_item"):
+			final_text += "Dropped item\n E - Pick it up"
 	
 	var cur_item = get_cur_item()
 	if final_text != "":
@@ -1116,6 +1118,8 @@ func movement_function(delta):
 							if ray.get_collider().is_in_group("water fountain"):
 								if get_cur_item() == 7:
 									hand.get_node("Bucket 7/Bucket/water").show()
+								else:
+									stamina = 100
 						if ray.get_collider():
 							if ray.get_collider().is_in_group("bucket"):
 								if get_cur_item() == -1:

@@ -90,9 +90,14 @@ func prepare_multiplayer():
 	peer = multiplayer.multiplayer_peer
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
-	
+	multiplayer.server_disconnected.connect(_on_disconnected_from_server)
 	
 	_on_peer_connected()
+
+func _on_disconnected_from_server():
+	if !EndGameSingleton.did_finish:
+		print_rich("[color=red] disconnected from server with no ending")
+		get_tree().change_scene_to_packed.call_deferred(LOGOS)
 
 func _on_book_collected(_amount):
 	if !multiplayer.is_server(): return
@@ -277,7 +282,7 @@ func pre_start_game_btn():
 	if multiplayer.is_server():
 		if peer is SteamMultiplayerPeer:
 			if Game.lobby_id:
-				Steam.setLobbyJoinable(Game.lobby_id,false)
+				SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
 		
 		var weather_chance = randi_range(0,20)
 	
@@ -345,7 +350,7 @@ func start_da_game():
 
 	if multiplayer.is_server():
 		if peer is SteamMultiplayerPeer:
-			Steam.setLobbyJoinable(Game.lobby_id,false)
+			SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
 		if !Allsingleton.is_bossfight:
 			leahy_look = true
 
@@ -384,8 +389,6 @@ func set_player_dead(id,is_dead,do_deaths):
 			
 			if !Allsingleton.is_bossfight:
 				Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)))
-			if is_pacer:
-				stop_pacer.rpc()
 			if !is_dp:
 				if total_deaths >= (Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)):
 					if Game.collected_books == 1:
@@ -445,7 +448,7 @@ func pong_set_singleton(id):
 func set_singleton(deaths,books,ending):
 	EndGameSingleton.deaths = deaths
 	EndGameSingleton.books_collected = books
-	
+	EndGameSingleton.did_finish = true
 	
 	#peer.close()
 	if ending == "normal":
@@ -558,11 +561,17 @@ func run_pacer_test() -> void:
 			Game.calculate_total_books()
 			Game.info_text("A book was collected")
 		
+		var did_someone_die = false
+		
 		for p in Game.players.keys():
 			var pl = Game.players[p]
 			
 			if pl.finished_pacer == false:
 				get_node(str(p)).die.rpc_id(p,"fox")
+				did_someone_die = true
+		
+		if did_someone_die:
+			stop_pacer.rpc()
 		
 		switch_pacer_target()
 		set_pacer_target_visibility.rpc(current_pacer_target.get_path(),true)
@@ -578,8 +587,6 @@ func start_da_pacer(id = -1):
 	$FakeFox.show()
 	$"Mr Fox".hide()
 	$"Mr Fox".mute = true
-	
-	
 	
 	# Server only
 	if multiplayer.is_server():
@@ -765,13 +772,16 @@ func darel_phase2_start():
 
 var is_quitting = false
 
+
+
 func _notification(what):
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		get_tree().auto_accept_quit = false
-		
-		if not is_quitting:
-			is_quitting = true
-			if multiplayer.has_multiplayer_peer() and multiplayer.is_server() and Game.pre_game_started:
-				end_game.rpc("none")
-			else:
-				get_tree().quit()
+	#if what == NOTIFICATION_WM_CLOSE_REQUEST:
+	#	get_tree().auto_accept_quit = false
+	#	
+	#	if not is_quitting:
+	#		is_quitting = true
+	#		if multiplayer.has_multiplayer_peer() and multiplayer.is_server() and Game.pre_game_started:
+	#			end_game.rpc("none")
+	#		else:
+	#			get_tree().quit()
+	pass

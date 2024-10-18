@@ -10,6 +10,7 @@ func _ready():
 	AudioServer.set_bus_mute(1,false)
 	AudioServer.set_bus_mute(2,false)
 	Allsingleton.menu_music_duration = 0
+	
 
 func _on_timer_timeout():
 	multiplayer.multiplayer_peer = null

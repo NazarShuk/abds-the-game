@@ -56,13 +56,8 @@ func toggle_menu():
 func _on_disconnect_btn_pressed():
 	$Main/DisconnectBtn.disabled = true
 	get_tree().paused = false
-	if !multiplayer.is_server():
-		if multiplayer.has_multiplayer_peer():
-			multiplayer.multiplayer_peer.close() # whyyy
-		
-		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
-	else:
-		player.get_parent().end_game.rpc("none")
+	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+
 
 
 func _on_enable_live_split_toggled(toggled_on):

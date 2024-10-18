@@ -17,14 +17,14 @@ func get_friends_lobbies():
 	
 	clear()
 	
-	var friend_count = Steam.getFriendCount()
+	var friend_count = SteamManager.steam_api.getFriendCount()
 	var total_playing = 0
 	
 	for i in range(0,friend_count):
-		var friend = Steam.getFriendByIndex(i,Steam.FRIEND_FLAG_ALL)
-		var friend_name = Steam.getFriendPersonaName(friend)
+		var friend = SteamManager.steam_api.getFriendByIndex(i,SteamManager.steam_api.FRIEND_FLAG_ALL)
+		var friend_name = SteamManager.steam_api.getFriendPersonaName(friend)
 		
-		var game_played = Steam.getFriendGamePlayed(friend)
+		var game_played = SteamManager.steam_api.getFriendGamePlayed(friend)
 		
 		if !game_played.is_empty():
 			if game_played.id == OS.get_environment("SteamAppID").to_int():
