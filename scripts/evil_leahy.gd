@@ -1,17 +1,7 @@
-extends CharacterBody3D
+extends "res://scripts/teacher.gd"
 
-@onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var unstucker = $Unstucker
-
-var SPEED = 6.0
-var speed = SPEED
-
-var overwrite_speed = false
-
-const push_force = 1.0
-
-var distance_to_target = -1
 
 @export var absent = false
 @export var appeased = false
@@ -20,16 +10,15 @@ var p_timeout = 0
 var baja_timer = 0
 var power_fix_progress = 0
 
-var current_player_target = null
-@export var current_player_target_name : String
-
-var leahy_speed_per_notebook = 0.5
-var leahy_start_speed = 6.0
-
 func _ready():
+	super._ready()
+	
 	Game.on_game_started.connect(_game_started)
 	Game.on_book_collected.connect(_on_book_collected)
 	Game.on_pre_game_started.connect(_on_pregame_started)
+	absent = false
+	appeased = false
+	baja_blasted = false
 
 func _on_pregame_started():
 	if !Game.game_params.get_param("ms_leahy"):
@@ -37,11 +26,6 @@ func _on_pregame_started():
 	
 	if !Game.game_params.get_param("absences"):
 		$absences.stop()
-	
-	if multiplayer.is_server():
-		leahy_speed_per_notebook = Game.game_params.get_param("leahy_speed_per_notebook")
-		leahy_start_speed = Game.game_params.get_param("leahy_starting_speed")
-	
 
 
 func _game_started():
@@ -51,39 +35,23 @@ func _game_started():
 func _on_book_collected(amount):
 	if Game.collected_books == 1 and not Game.game_started:
 		show()
-		SPEED = leahy_start_speed
 		$grrrrrr.play()
 	
 	if multiplayer.is_server():
 		var players_in_lobby = Game.players.keys().size()
 		if players_in_lobby > 1:
-			SPEED += (leahy_speed_per_notebook * (players_in_lobby / 2.0)) * amount
+			DEFAULT_SPEED += (0.5 * (players_in_lobby / 2.0)) * amount
 		else:
-			SPEED += leahy_speed_per_notebook * amount
+			DEFAULT_SPEED += 0.5 * amount
 	
 
 func _physics_process(delta):
-	
+	super._physics_process(delta)
 	if multiplayer.is_server():
-		if !overwrite_speed:
-			speed = SPEED
-		
-		if current_player_target:
-			current_player_target_name = current_player_target.steam_name
-		else:
-			current_player_target_name = ""
 		
 		unstucker_constraints()
 		
 		ai(delta)
-		
-		navigation()
-		
-		stick_to_clorox()
-		
-		push_items()
-	
-	move_and_slide()
 
 func unstucker_constraints():
 	unstucker.do_penalties = (absent == false && appeased == false && baja_blasted == false)
@@ -110,10 +78,10 @@ func ai(delta):
 						if closest:
 							update_target_location(closest)
 							p_timeout = 0
-							current_player_target = closest_player
+							target_player = closest_player
 							
 						else:
-							current_player_target = null
+							target_player = null
 							p_timeout += delta
 							if p_timeout < 5:
 								update_target_location(global_position)
@@ -155,68 +123,8 @@ func ai(delta):
 			else:
 				update_target_location(global_position)
 
-func navigation():
-	var current_location = global_transform.origin
-	var next_location = nav_agent.get_next_path_position()
-	
-	var new_velocity = (next_location - current_location).normalized() * speed
-	
-	distance_to_target = 0
-	
-	var path = nav_agent.get_current_navigation_path()
-	
-	for point in range(path.size()):
-		if path[point - 1]:
-			distance_to_target += path[point - 1].distance_to(path[point])
-		else:
-			distance_to_target += global_position.distance_to(path[point])
-	
-	distance_to_target = distance_to_target / 2
-	
-	velocity = new_velocity
-	if global_transform.origin != next_location:
-		if global_position.distance_to(next_location) > 1.5:
-			look_at(next_location)
-		rotation_degrees.x = 0
-		rotation_degrees.z = 0
-
-func push_items():
-	for index in range(get_slide_collision_count()):
-		var collision = get_slide_collision(index)
-		var collider = collision.get_collider()
-		
-		# If the collider is a RigidBody
-		if collider is RigidBody3D:
-			# Calculate the push direction
-			var push_direction = collision.get_normal()
-			
-			# Apply the force to the RigidBody
-			collider.push_item.rpc(push_direction,push_force)
-
-func stick_to_clorox():
-	var cloroxes = get_tree().get_nodes_in_group("clorox_wipes")
-	for clorox in cloroxes:
-		if global_position.distance_to(clorox.global_position) < 1:
-			velocity = Vector3()
-
-func update_target_location(target_location):
-	if typeof(target_location) == TYPE_VECTOR3:
-		nav_agent.target_position = target_location
-
-func _on_evil_leahy_area_entered(area):
-	if area.name == "puddle":
-		if !area.get_parent().can_slowdown: return
-		
-		overwrite_speed = true
-		speed = SPEED / 2
-		$CPUParticles3D.show()
-		await Game.sleep(5)
-		overwrite_speed = false
-		$CPUParticles3D.hide()
-
 func _on_pitch_timer_timeout():
 	$AudioStreamPlayer3D.pitch_scale = randf_range(0.75,1.25)
-
 
 func _on_absences_timeout():
 	if !multiplayer.is_server() : return
@@ -260,6 +168,6 @@ func baja_blast_her(steam_name):
 @rpc("any_peer","call_local")
 func boost_leahy(pl):
 	if multiplayer.is_server():
-		SPEED *= 1.5
+		speed *= 1.5
 		Game.add_book_boost.rpc(0.5)
 		Game.info_text(pl + " gave Ms.Leahy Redbull...")

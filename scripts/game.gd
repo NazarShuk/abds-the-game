@@ -92,7 +92,13 @@ func prepare_multiplayer():
 	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
 	multiplayer.server_disconnected.connect(_on_disconnected_from_server)
 	
+	if peer is SteamMultiplayerPeer:
+		peer.connect("network_session_failed",_on_network_session_failed)
+	
 	_on_peer_connected()
+
+func _on_network_session_failed(steam_id: int, reason: int, connection_state: int):
+	_on_disconnected_from_server()
 
 func _on_disconnected_from_server():
 	if !EndGameSingleton.did_finish:

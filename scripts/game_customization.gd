@@ -8,8 +8,6 @@ class_name GameParams
 @export var param_starting_notebooks: int = 9
 @export var param_max_deaths: int = 9
 @export var param_deaths_per_player: int = 1
-@export var param_leahy_starting_speed: float = 6.0
-@export var param_leahy_speed_per_notebook: float = 0.5
 
 @export var param_vertical_camera: bool = false
 @export var param_mr_azzu: bool = true

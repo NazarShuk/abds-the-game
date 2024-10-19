@@ -20,7 +20,7 @@ var stamina = 100
 var can_run = true
 var is_moving = false
 var can_move = true
-var slipped = false
+var is_ragdolled = false
 
 @onready var progress_bar: ProgressBar = $"CanvasLayer/Control/Progress bar handler/ProgressBar"
 @onready var progress_bar_handler = $"CanvasLayer/Control/Progress bar handler"
@@ -179,8 +179,8 @@ func _physics_process(delta):
 					camera_3d.h_offset = 0
 					camera_3d.v_offset = 0
 				
-				if closest_leahy.current_player_target_name:
-					if closest_leahy.current_player_target_name == steam_name:
+				if closest_leahy.target_player_name:
+					if closest_leahy.target_player_name == steam_name:
 						if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
 							leahy_approaching.is_shown = true
 							leahy_approaching.distance = leahy_dst
@@ -336,18 +336,34 @@ func _on_area_3d_area_entered(area):
 
 func landmine_slip():
 	velocity.y += 5
+	is_ragdolled = true
+	apply_random_rotation()
 	
-	for i in range(0,100):
-		
-		if global_rotation_degrees.x < 90:
-			global_rotation_degrees.x += 5
-		if global_rotation_degrees.x < -90:
-			global_rotation_degrees.x -= 5
-		
-		await Game.sleep(0.01)
-	await Game.sleep(1)
+	if !$Banana.is_stopped():
+		$Banana.start($Banana.time_left + 3)
+		return
+	else:
+		$Banana.start(3)
+	
+	await $Banana.timeout
+	
+	is_ragdolled = false
 	global_rotation_degrees.x = 0
 	global_rotation_degrees.z = 0
+
+func apply_random_rotation():
+	# Generate a random rotation axis
+	var random_axis = Vector3(
+		randf_range(-1, 1),
+		randf_range(-1, 1),
+		randf_range(-1, 1)
+	).normalized()
+	
+	# Generate a random rotation angle (in radians)
+	var random_angle = randf_range(0, PI * 2)  # Full rotation range
+	
+	# Apply the rotation
+	rotate(random_axis, random_angle)
 
 func _on_area_3d_area_exited(area):
 	if !is_multiplayer_authority(): return
@@ -526,7 +542,8 @@ var death_cause = ""
 @rpc("any_peer","call_local")
 func die(cause):
 	if is_dead: return
-	
+	$Banana.start(0.01)
+	is_ragdolled = false
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
 	parent.set_player_dead.rpc(name.to_int(), true,true)
@@ -1018,16 +1035,43 @@ func movement_function(delta):
 				# Calculate the movement direction in global space
 				var movement = (forward * input_dir.z + right * input_dir.x).normalized()
 				
-				if movement != Vector3.ZERO:
-					velocity.x = (movement * SPEED).x
-					velocity.z = (movement * SPEED).z
-					$walking.volume_db = 0
-					is_moving = true
+				if not is_ragdolled:
+					if movement != Vector3.ZERO:
+						velocity.x = (movement * SPEED).x
+						velocity.z = (movement * SPEED).z
+						$walking.volume_db = 0
+						is_moving = true
+					else:
+						velocity.x = velocity.move_toward(Vector3.ZERO, SPEED).x
+						velocity.z = velocity.move_toward(Vector3.ZERO, SPEED).z
+						is_moving = false
 				else:
-					velocity.x = velocity.move_toward(Vector3.ZERO, SPEED).x
-					velocity.z = velocity.move_toward(Vector3.ZERO, SPEED).z
-					is_moving = false
-					
+					for i in get_slide_collision_count():
+						var collision = get_slide_collision(i)
+						if collision.get_collider() is StaticBody3D:
+							var normal = collision.get_normal()
+							
+							# Check if the collision is on the sides (not floor or ceiling)
+							if abs(normal.y) < 0.1:  # Tolerance for slight slopes
+								# Calculate bounce direction (only for x and z components)
+								var bounce_dir = Vector3(normal.x, 0, normal.z).normalized()
+								
+								# Apply bounce only to horizontal components
+								velocity.x = bounce_dir.x * 30
+								velocity.z = bounce_dir.z * 30
+								
+								var rotation_axis = Vector3(-bounce_dir.z, 0, bounce_dir.x)
+								
+								rotate(rotation_axis, 5.0 * delta)
+								velocity.y += 1
+								if !$Banana.is_stopped():
+									$Banana.start($Banana.time_left + 0.5)
+								
+								play_sound("res://parry-ultrakill.mp3")
+								
+					velocity.x *= 0.99
+					velocity.z *= 0.99
+				
 				move_and_slide()
 				
 				# Update is_moving based on actual movement

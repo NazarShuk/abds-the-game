@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b42e13tea2avo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mye61"]
+albedo_color = Color(0, 0.572549, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xrylo"]
+radius = 0.125
+height = 0.25
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ahtn0"]
+properties/0/path = NodePath(".:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="CPUParticles3D" type="CPUParticles3D"]
+material_override = SubResource("StandardMaterial3D_mye61")
+amount = 13
+mesh = SubResource("CapsuleMesh_xrylo")
+emission_shape = 3
+emission_box_extents = Vector3(0.75, 0.75, 0.75)
+gravity = Vector3(0, -3.045, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ahtn0")

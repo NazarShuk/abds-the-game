@@ -1198,6 +1198,9 @@ one_shot = true
 wait_time = 10.0
 one_shot = true
 
+[node name="Banana" type="Timer" parent="."]
+one_shot = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
 
@@ -2791,7 +2794,7 @@ far = 100.0
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.370945, -0.0430524)
 spot_range = 48.4692
-spot_angle = 16.4922
+spot_angle = 34.8267
 
 [node name="VisualHand" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.239033, 0.0770259, 0.343605, -0.128775, 0.471567, 0.252963, -0.119946, -0.352778, 0.413165, -0.32, 0.335, -0.425)
