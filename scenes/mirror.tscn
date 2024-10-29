@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdw7llih5p4hq"]
+
+[ext_resource type="Script" path="res://scripts/mirror.gd" id="1_2m73q"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_1rho3"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pmkou"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f77dq"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_pmkou")
+metallic = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ikb37"]
+
+[node name="Mirror" type="Node3D" node_paths=PackedStringArray("camera")]
+script = ExtResource("1_2m73q")
+camera = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_1rho3")
+surface_material_override/0 = SubResource("StandardMaterial3D_f77dq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.05361, 0, 0, 0, 2.05079, 0, 0, 0, 0.026273, 0, 0, -0.0189746)
+mesh = SubResource("BoxMesh_ikb37")

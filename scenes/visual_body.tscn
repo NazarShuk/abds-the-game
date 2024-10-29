@@ -1,13 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://c6ir5pmxmbuqj"]
+[gd_scene load_steps=24 format=3 uid="uid://c6ir5pmxmbuqj"]
 
 [ext_resource type="Script" path="res://scripts/visual_body.gd" id="1_gd1u8"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_j1e57"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="3_lqmnm"]
-[ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="4_06kpf"]
-[ext_resource type="Texture2D" uid="uid://bwdkvin85x0lj" path="res://Mouth/mouth_1.png" id="5_g3h2g"]
-[ext_resource type="Texture2D" uid="uid://dhj8rt54whhxj" path="res://Mouth/mouth_2.png" id="6_wxbds"]
-[ext_resource type="Texture2D" uid="uid://du7llvn5hs8h6" path="res://Mouth/mouth_3.png" id="7_tv7sn"]
-[ext_resource type="Texture2D" uid="uid://cl8p5wgm14xp7" path="res://Mouth/mouth_5.png" id="8_ha3jn"]
 [ext_resource type="Texture2D" uid="uid://cbdunl7jdeyq" path="res://freaky.png" id="9_1ha42"]
 [ext_resource type="Texture2D" uid="uid://dta0u30sd2fbk" path="res://freaky_back.png" id="10_7q8jk"]
 [ext_resource type="Texture2D" uid="uid://e481qnldgi3y" path="res://player_cool.png" id="11_vp0dv"]
@@ -24,23 +19,6 @@ albedo_texture = ExtResource("2_j1e57")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w88l"]
 albedo_texture = ExtResource("3_lqmnm")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_83xys"]
-albedo_texture = ExtResource("4_06kpf")
-
-[sub_resource type="QuadMesh" id="QuadMesh_jxa1y"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mawv5"]
-albedo_texture = ExtResource("5_g3h2g")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m1o4l"]
-albedo_texture = ExtResource("6_wxbds")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jk6g"]
-albedo_texture = ExtResource("7_tv7sn")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xntha"]
-albedo_texture = ExtResource("8_ha3jn")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ej76l"]
 albedo_texture = ExtResource("9_1ha42")
@@ -101,38 +79,6 @@ mesh = SubResource("QuadMesh_orlgu")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_3w88l")
 
-[node name="Mouth" type="Node3D" parent="Default"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_83xys")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="1" type="MeshInstance3D" parent="Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_mawv5")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="2" type="MeshInstance3D" parent="Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_m1o4l")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="3" type="MeshInstance3D" parent="Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_3jk6g")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="4" type="MeshInstance3D" parent="Default/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_xntha")
-mesh = SubResource("QuadMesh_jxa1y")
-
 [node name="Freaky" type="Node3D" parent="."]
 visible = false
 
@@ -147,38 +93,6 @@ transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0,
 mesh = SubResource("QuadMesh_orlgu")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_kaku0")
-
-[node name="Mouth" type="Node3D" parent="Freaky"]
-transform = Transform3D(1.41953, 0, 0, 0, 1.41481, 0, 0, 0, 1, 0.0146903, -0.172228, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_83xys")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="1" type="MeshInstance3D" parent="Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_mawv5")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="2" type="MeshInstance3D" parent="Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_m1o4l")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="3" type="MeshInstance3D" parent="Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_3jk6g")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="4" type="MeshInstance3D" parent="Freaky/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_xntha")
-mesh = SubResource("QuadMesh_jxa1y")
 
 [node name="Perfect" type="Node3D" parent="."]
 visible = false
@@ -195,38 +109,6 @@ mesh = SubResource("QuadMesh_orlgu")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_4rnbe")
 
-[node name="Mouth" type="Node3D" parent="Perfect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00918858, -0.0322273, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_83xys")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="1" type="MeshInstance3D" parent="Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_mawv5")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="2" type="MeshInstance3D" parent="Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_m1o4l")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="3" type="MeshInstance3D" parent="Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_3jk6g")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="4" type="MeshInstance3D" parent="Perfect/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_xntha")
-mesh = SubResource("QuadMesh_jxa1y")
-
 [node name="Impossible" type="Node3D" parent="."]
 visible = false
 
@@ -242,38 +124,6 @@ mesh = SubResource("QuadMesh_orlgu")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_ftxcc")
 
-[node name="Mouth" type="Node3D" parent="Impossible"]
-transform = Transform3D(0.623881, 0, 0, 0, 0.637448, 0, 0, 0, 1, 0.0345617, 0.06379, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_83xys")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="1" type="MeshInstance3D" parent="Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_mawv5")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="2" type="MeshInstance3D" parent="Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_m1o4l")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="3" type="MeshInstance3D" parent="Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_3jk6g")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="4" type="MeshInstance3D" parent="Impossible/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_xntha")
-mesh = SubResource("QuadMesh_jxa1y")
-
 [node name="Disoriented" type="Node3D" parent="."]
 visible = false
 
@@ -288,38 +138,6 @@ transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0,
 mesh = SubResource("QuadMesh_orlgu")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_wjd3x")
-
-[node name="Mouth" type="Node3D" parent="Disoriented"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.132746)
-
-[node name="0" type="MeshInstance3D" parent="Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-material_override = SubResource("StandardMaterial3D_83xys")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="1" type="MeshInstance3D" parent="Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_mawv5")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="2" type="MeshInstance3D" parent="Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_m1o4l")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="3" type="MeshInstance3D" parent="Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_3jk6g")
-mesh = SubResource("QuadMesh_jxa1y")
-
-[node name="4" type="MeshInstance3D" parent="Disoriented/Mouth"]
-transform = Transform3D(-0.190528, 0, -8.74228e-08, 0, 0.14297, 0, 1.66565e-08, 0, -1, 0, 0.35281, 0.127427)
-visible = false
-material_override = SubResource("StandardMaterial3D_xntha")
-mesh = SubResource("QuadMesh_jxa1y")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qkhwy")

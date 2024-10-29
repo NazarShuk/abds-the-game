@@ -11,7 +11,7 @@ var do_playback = false
 @onready var camera_3d_2 = $"../CanvasLayer/MultiPlayer/ColorRect/SubViewportContainer/SubViewport/Camera3D/Camera3D2"
 
 func _ready():
-	playbacks = Allsingleton.playbacks
+	playbacks = GlobalVars.playbacks
 	if playbacks != []:
 		do_playback = true
 		var players = []
@@ -63,4 +63,4 @@ func _on_timer_timeout():
 
 
 func _exit_tree():
-	Allsingleton.playbacks = [recorded]
+	GlobalVars.playbacks = [recorded]

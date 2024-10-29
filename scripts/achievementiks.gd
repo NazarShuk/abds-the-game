@@ -21,13 +21,13 @@ func _ready():
 	
 	$visual_body.pick_skin()
 	
-	if Achievements.achievements["freaky_ending"] == false:
+	if Achievements.achievements.has("freaky_ending") == false:
 		skin_list.set_item_disabled(1,true)
-	if Achievements.achievements["perfect_ending"] == false:
+	if Achievements.achievements.has("perfect_ending") == false:
 		skin_list.set_item_disabled(2,true)
-	if Achievements.achievements["impossible_ending"] == false:
+	if Achievements.achievements.has("impossible_ending") == false:
 		skin_list.set_item_disabled(3,true)
-	if Achievements.achievements["disoriented_ending"] == false:
+	if Achievements.achievements.has("disoriented_ending") == false:
 		skin_list.set_item_disabled(4,true)
 
 func _on_button_pressed():

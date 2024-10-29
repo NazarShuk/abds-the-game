@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=122 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
@@ -51,6 +51,7 @@
 [ext_resource type="PackedScene" uid="uid://rhxdyygmn50t" path="res://models/Car.glb" id="47_6sv53"]
 [ext_resource type="PackedScene" uid="uid://b0kihxyehcgo4" path="res://models/Sports Car.glb" id="48_in3nt"]
 [ext_resource type="PackedScene" uid="uid://bc3kpnykxfbph" path="res://gambling_wheel.tscn" id="50_jgq1w"]
+[ext_resource type="Script" path="res://scripts/camera_tv.gd" id="53_0rrcy"]
 [ext_resource type="PackedScene" uid="uid://diy5vww1d7cf4" path="res://evil darel.tscn" id="65_a2gyi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
@@ -457,7 +458,7 @@ _data = {
 size = Vector3(2.38672, 3.2959, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xghtw"]
-size = Vector3(56.8828, 111.123, 58.9055)
+size = Vector3(56.8828, 208.609, 58.9055)
 
 [sub_resource type="Animation" id="Animation_hgnq6"]
 length = 0.001
@@ -772,6 +773,61 @@ _data = {
 "carpool": SubResource("Animation_rpmyj")
 }
 
+[sub_resource type="BoxMesh" id="BoxMesh_g8wa1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7n5ys"]
+albedo_color = Color(0, 0, 0, 1)
+metallic = 0.43
+
+[sub_resource type="QuadMesh" id="QuadMesh_tacpp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1g0i"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_mk6dc"]
+viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D2/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x6vmi"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_mk6dc")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qrmti"]
+viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D3/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8pjv"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_qrmti")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1qssw"]
+viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D4/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kv31t"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_1qssw")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_t62ku"]
+viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D5/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rem78"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_t62ku")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_aft8m"]
+viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D6/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xitqq"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_aft8m")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wkfb2"]
+viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D7/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0nsfl"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_wkfb2")
+
 [node name="Game" type="Node3D" node_paths=PackedStringArray("school")]
 script = ExtResource("1_y4eyb")
 school = NodePath("School")
@@ -789,7 +845,7 @@ environment = SubResource("Environment_5hwxw")
 camera_attributes = SubResource("CameraAttributesPractical_u7eo5")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn", "res://puddle.tscn", "res://dropped_item.tscn", "res://player_sound.tscn", "res://smoke wall.tscn")
+_spawnable_scenes = PackedStringArray("res://player.tscn", "res://puddle.tscn", "res://dropped_item.tscn", "res://player_sound.tscn", "res://smoke wall.tscn", "res://dropped_mtndew.tscn", "res://Clorox Wipes.tscn")
 spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -1226,20 +1282,6 @@ param_name = "deaths_per_player"
 label_text = "Dissapearences per player"
 max_val = 999.0
 
-[node name="NumBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
-layout_mode = 2
-param_name = "leahy_starting_speed"
-label_text = "Ms.Leahy starting speed"
-max_val = 999.0
-min_val = -999.0
-
-[node name="NumBox2" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_gld5r")]
-layout_mode = 2
-param_name = "leahy_speed_per_notebook"
-label_text = "Ms.Leahy speed per notebook"
-max_val = 999.0
-min_val = -999.0
-
 [node name="CheckBox" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer" instance=ExtResource("9_pvk13")]
 layout_mode = 2
 param_name = "mr_azzu"
@@ -1563,13 +1605,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3002, 1.27832, -120.408)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.4819, 1.27832, -128.381)
 
 [node name="LandMine Spawn11" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.3545, 1.27832, -106.878)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.8371, 1.27832, -106.878)
 
 [node name="LandMine Spawn12" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6632, 1.27832, -74.0183)
 
 [node name="LandMine Spawn13" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8042, 1.27832, -48.6489)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.9274, 1.27832, -48.6489)
 
 [node name="LandMine Spawn14" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.8844, 1.27832, -33.6688)
@@ -1586,9 +1628,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.6568, 1.27832, -55.6557)
 [node name="LandMine Spawn18" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.59, 1.27832, -54.4476)
 
-[node name="LandMine Spawn19" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.174, 1.27832, -44.5415)
-
 [node name="LandMine Spawn20" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.0396, 1.27832, -35.0088)
 
@@ -1603,15 +1642,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.3366, 1.27832, -38.2959)
 
 [node name="LandMine Spawn24" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.6138, 1.27832, -126.72)
-
-[node name="LandMine Spawn25" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.681, 1.27832, -138.075)
-
-[node name="LandMine Spawn26" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107.99, 1.27832, -178.666)
-
-[node name="LandMine Spawn27" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.6474, 1.27832, -182.291)
 
 [node name="LandMine Spawn28" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.53471, 1.27832, -201.378)
@@ -1663,27 +1693,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.6382, 1.27832, -124.002)
 
 [node name="LandMine Spawn44" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.6233, 1.27832, -222.534)
-
-[node name="LandMine Spawn45" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.60842, 1.27832, -234.085)
-
-[node name="LandMine Spawn46" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4787, 1.27832, -180.176)
-
-[node name="LandMine Spawn47" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.0019, 1.27832, -163.641)
-
-[node name="LandMine Spawn48" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.2636, 1.27832, -152.813)
-
-[node name="LandMine Spawn49" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.0822, 1.27832, -143.992)
-
-[node name="LandMine Spawn50" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.0735, 1.27832, -143.537)
-
-[node name="LandMine Spawn51" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.42976, 1.27832, -143.901)
 
 [node name="LandMine Spawn52" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.95766, 1.27832, -128.298)
@@ -1908,7 +1917,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 114.89
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 18.2789, -7.62939e-06, 33.067)
 
 [node name="Landmine7" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -42.5739, -7.62939e-06, -41.6539)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -40.6216, -7.62939e-06, -41.6539)
 
 [node name="Landmine8" parent="School" instance=ExtResource("28_dmjcx")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -87.7715, 0, -101.304)
@@ -2033,7 +2042,7 @@ transform = Transform3D(3.69764e-07, -0.102145, -3.81941e-07, -4.46352e-09, -3.8
 transform = Transform3D(3.69764e-07, -0.102145, -3.81941e-07, -4.46352e-09, -3.81941e-07, 0.102145, -0.102145, -3.69764e-07, -4.4649e-09, 8.49295, 3.05176e-05, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="pre_start_game_anim/SCHOOL BUS/StaticBody3D"]
-transform = Transform3D(1, -7.10543e-15, -7.708e-20, 7.10543e-15, 1, -7.10543e-15, 0, 7.10543e-15, 1, 0, 0, 28.9526)
+transform = Transform3D(1, 0, -8.13152e-20, 1.02318e-11, 1, -7.10537e-15, 6.77626e-21, 3.5528e-15, 1, 3.8147e-06, 48.7429, 28.9525)
 shape = SubResource("BoxShape3D_xghtw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pre_start_game_anim"]
@@ -2099,6 +2108,113 @@ visible = false
 [node name="darel_timer" type="Timer" parent="EvilDarel"]
 wait_time = 80.0
 one_shot = true
+
+[node name="CameraTv" type="MeshInstance3D" parent="." node_paths=PackedStringArray("subviewports")]
+transform = Transform3D(-1.85835e-07, 0, 0.256015, 0, 1.8242, 0, -4.25141, 0, -1.11908e-08, 25.5962, 1.55983, -45.0694)
+mesh = SubResource("BoxMesh_g8wa1")
+surface_material_override/0 = SubResource("StandardMaterial3D_7n5ys")
+script = ExtResource("53_0rrcy")
+subviewports = [NodePath("MeshInstance3D/MeshInstance3D2/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D3/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D4/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D5/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D6/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D7/SubViewport")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraTv"]
+transform = Transform3D(0.924324, 0, 0, 0, 0.885954, 0, -1.7053e-13, 0, 1, 0, 0, 0.502617)
+mesh = SubResource("QuadMesh_tacpp")
+surface_material_override/0 = SubResource("StandardMaterial3D_f1g0i")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
+transform = Transform3D(0.265029, 0, -7.77156e-16, 0, 0.431563, 0, 2.84217e-14, 0, 0.495691, -0.34033, 0.259355, 0.00791836)
+mesh = SubResource("QuadMesh_tacpp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_x6vmi")
+
+[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D2"]
+use_occlusion_culling = true
+size = Vector2i(128, 128)
+
+[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D2/SubViewport"]
+transform = Transform3D(-0.737277, 0.16344, -0.655522, 0, 0.970296, 0.241922, 0.67559, 0.178364, -0.715377, 41.5819, 1.90116, -132.948)
+fov = 125.0
+far = 60.45
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
+transform = Transform3D(0.265029, 0, -9.99201e-16, 0, 0.431563, 0, 2.84217e-14, 0, 0.495691, -0.00493431, 0.259355, 0.0079174)
+mesh = SubResource("QuadMesh_tacpp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_j8pjv")
+
+[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D3"]
+use_occlusion_culling = true
+size = Vector2i(128, 128)
+
+[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D3/SubViewport"]
+transform = Transform3D(0.707107, 0.171065, -0.686103, 0, 0.970296, 0.241922, 0.707107, -0.171065, 0.686103, 62.4222, 1.90116, -122.209)
+current = true
+fov = 125.0
+far = 41.1
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
+transform = Transform3D(0.265029, 0, -1.11022e-15, 0, 0.431563, 0, 4.26326e-14, 0, 0.495691, 0.324688, 0.259355, 0.0079174)
+mesh = SubResource("QuadMesh_tacpp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_kv31t")
+
+[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D4"]
+use_occlusion_culling = true
+size = Vector2i(128, 128)
+
+[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D4/SubViewport"]
+transform = Transform3D(-0.737277, 0.16344, -0.655522, 1.19055e-08, 0.970296, 0.241922, 0.67559, 0.178364, -0.715377, -89.7101, 7.35151, -162.659)
+current = true
+fov = 125.0
+far = 45.5
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
+transform = Transform3D(0.265029, 0, -7.77156e-16, 0, 0.431197, 0, 2.84217e-14, 0, 0.495691, -0.34033, -0.227257, 0.00791836)
+mesh = SubResource("QuadMesh_tacpp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_rem78")
+
+[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D5"]
+use_occlusion_culling = true
+size = Vector2i(128, 128)
+
+[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D5/SubViewport"]
+transform = Transform3D(0.461749, 0.214587, -0.860663, 1.19055e-08, 0.970296, 0.241922, 0.887011, -0.111707, 0.448033, 11.0534, 16.4704, -141.884)
+current = true
+fov = 94.5
+far = 104.6
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
+transform = Transform3D(0.265029, 0, -9.99201e-16, 0, 0.431197, 0, 2.84217e-14, 0, 0.495691, -0.00493431, -0.227257, 0.0079174)
+mesh = SubResource("QuadMesh_tacpp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xitqq")
+
+[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D6"]
+use_occlusion_culling = true
+size = Vector2i(128, 128)
+
+[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D6/SubViewport"]
+transform = Transform3D(-0.5373, 0.204035, -0.818339, 0, 0.970296, 0.241922, 0.843391, 0.129985, -0.52134, 28.3872, 2.17531, -226.769)
+current = true
+fov = 94.0
+far = 103.25
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
+transform = Transform3D(0.265029, 0, -1.11022e-15, 0, 0.431197, 0, 4.26326e-14, 0, 0.495691, 0.324688, -0.227257, 0.0079174)
+mesh = SubResource("QuadMesh_tacpp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_0nsfl")
+
+[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D7"]
+use_occlusion_culling = true
+size = Vector2i(128, 128)
+
+[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D7/SubViewport"]
+transform = Transform3D(-0.737277, 0.16344, -0.655522, 1.19055e-08, 0.970296, 0.241922, 0.67559, 0.178364, -0.715377, 120.033, 6.36005, -196.57)
+current = true
+fov = 82.5
+far = 66.05
 
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]

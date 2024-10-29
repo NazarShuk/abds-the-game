@@ -1,24 +1,15 @@
-extends CharacterBody3D
+extends "res://scripts/teacher.gd"
 
-@onready var nav_agent = $NavigationAgent3D
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var unstucker = $Unstucker
 
-
-var SPEED = 10
-
-@export var server_target = false
 @export var is_angry = false
 
 var init_pos : Vector3
 
-var angerer
-
-const push_force = 1.0
-
 var broken_machines = []
 
 func _ready():
+	super._ready()
 	init_pos = global_position
 	Game.on_pre_game_started.connect(_on_pregame_started)
 
@@ -27,17 +18,7 @@ func _on_pregame_started():
 		queue_free()
 
 func _physics_process(_delta):
-	if nav_agent.target_position:
-		var current_location = global_transform.origin
-		var next_location = nav_agent.get_next_path_position()
-		
-		var new_velocity = (next_location - current_location).normalized() * SPEED
-		velocity = new_velocity
-		if global_position.distance_to(next_location) > 1.5:
-			look_at(next_location)
-		rotation_degrees.x = 0
-		rotation_degrees.z = 0
-		move_and_slide()
+	super._physics_process(_delta)
 	
 	var cloroxes = get_tree().get_nodes_in_group("clorox_wipes")
 	
@@ -46,34 +27,18 @@ func _physics_process(_delta):
 		
 		if distance < 5:
 			if multiplayer.is_server():
-				angerer = Game.get_player_by_id(clorox.launcher)
+				target_player = Game.get_player_by_id(clorox.launcher)
 				Game.info_text("Mr.Misuraca is angry")
 	
 	if multiplayer.is_server():
-		unstucker.do_penalties = ((angerer != null) and broken_machines.size() > 0)
+		unstucker.do_penalties = ((target_player != null) and broken_machines.size() > 0)
 		
 		go_back()
 		fix_vending_machines()
-		
-		for index in range(get_slide_collision_count()):
-			var collision = get_slide_collision(index)
-			var collider = collision.get_collider()
-			
-			# If the collider is a RigidBody
-			if collider is RigidBody3D:
-				# Calculate the push direction
-				var push_direction = collision.get_normal()
-				
-				# Apply the force to the RigidBody
-				collider.push_item.rpc(push_direction,push_force)
-
-func update_target_location(target_location):
-	if typeof(target_location) == TYPE_VECTOR3:
-		nav_agent.target_position = target_location
 
 func go_back():
-	if angerer:
-		update_target_location(angerer.global_position)
+	if target_player:
+		update_target_location(target_player.global_position)
 		is_angry = true
 	else:
 		update_target_location(init_pos)
@@ -93,11 +58,11 @@ func fix_vending_machines():
 			if dst < 2:
 				machine.uses_left = machine.MAX_USES
 	
-	if !angerer and broken_machines.size() > 0:
+	if !target_player and broken_machines.size() > 0:
 		update_target_location(broken_machines[0].global_position)
 
 func _on_misuraca_area_entered(area):
 	if area.is_in_group("player_area"):
-		if angerer:
-			if area.get_parent().name == angerer.name:
-				angerer = null
+		if target_player:
+			if area.get_parent().name == target_player.name:
+				target_player = null

@@ -64,7 +64,7 @@ func _ready():
 		Game.sun.visible = Settings.better_lighting
 	
 	
-	if Allsingleton.is_bossfight:
+	if GlobalVars.is_bossfight:
 		$CanvasLayer/Glitch.show()
 		$Music1.stream = PRE_BOSS
 		$Music2.stream = GLORY
@@ -83,7 +83,9 @@ func _ready():
 		Game.sun.visible = false
 	
 	prepare_multiplayer()
-	$Music0.play(Allsingleton.menu_music_duration)
+	$Music0.play(GlobalVars.menu_music_duration)
+	GuiManager.reset_cursor()
+	GuiManager.show_cursor()
 
 
 func prepare_multiplayer():
@@ -92,23 +94,20 @@ func prepare_multiplayer():
 	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
 	multiplayer.server_disconnected.connect(_on_disconnected_from_server)
 	
-	if peer is SteamMultiplayerPeer:
-		peer.connect("network_session_failed",_on_network_session_failed)
-	
 	_on_peer_connected()
 
-func _on_network_session_failed(steam_id: int, reason: int, connection_state: int):
+func _on_network_session_failed(_steam_id: int, _reason: int, _connection_state: int):
 	_on_disconnected_from_server()
 
 func _on_disconnected_from_server():
-	if !EndGameSingleton.did_finish:
+	if !GlobalVars.did_finish:
 		print_rich("[color=red] disconnected from server with no ending")
 		get_tree().change_scene_to_packed.call_deferred(LOGOS)
 
 func _on_book_collected(_amount):
 	if !multiplayer.is_server(): return
 	
-	if Allsingleton.is_bossfight:
+	if GlobalVars.is_bossfight:
 		evil_darel.health -= 5
 	
 	if is_bet:
@@ -121,7 +120,7 @@ func _on_book_collected(_amount):
 			start_da_game.rpc()
 			canPlayersMove = false
 	elif Game.collected_books >= Game.books_to_collect:
-		if !Allsingleton.is_bossfight:
+		if !GlobalVars.is_bossfight:
 			var total_deaths = 0
 			for idd in Game.players.keys():
 				total_deaths += Game.players[idd].deaths
@@ -161,7 +160,7 @@ var music_pitch_boost = 1
 func _process(_delta):
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
-		if Allsingleton.is_bossfight:
+		if GlobalVars.is_bossfight:
 			
 			if Input.is_action_just_pressed("debug"):
 				evil_darel.health -= 5
@@ -206,7 +205,7 @@ func _process(_delta):
 		players_in_lobby = Game.players.keys().size()
 		
 		if Game.game_started:
-			if !Allsingleton.is_bossfight:
+			if !GlobalVars.is_bossfight:
 				if !is_pacer:
 					collected_books_label.text = str(Game.collected_books) + " books collected out of " + str(Game.books_to_collect)
 					if is_bet:
@@ -220,12 +219,12 @@ func _process(_delta):
 func _input(event):
 	if event.is_action_type():
 		if event.is_action_pressed("fullscreen"):
-			if Allsingleton.is_fullscreen == false:
+			if GlobalVars.is_fullscreen == false:
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			else:
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 			
-			Allsingleton.is_fullscreen = !Allsingleton.is_fullscreen
+			GlobalVars.is_fullscreen = !GlobalVars.is_fullscreen
 
 func _on_connected_to_server():
 	$CanvasLayer/Lobby.show()
@@ -244,7 +243,8 @@ func receive_steam_usr(id,username):
 
 func disconenct_btn():
 	multiplayer.multiplayer_peer.close()
-	get_tree().change_scene_to_packed(LOGOS)
+	if peer is OfflineMultiplayerPeer:
+		_on_disconnected_from_server()
 
 func _on_peer_connected(id = 1):
 	if !players_spawned:
@@ -274,7 +274,7 @@ func _on_peer_connected(id = 1):
 	request_steam_usr.rpc_id(id)
 	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
 	
-	if Allsingleton.is_bossfight:
+	if GlobalVars.is_bossfight:
 		pre_start_game_btn()
 
 
@@ -286,9 +286,8 @@ func pre_start_game_btn():
 	spawn_players()
 	pre_start_game.rpc()
 	if multiplayer.is_server():
-		if peer is SteamMultiplayerPeer:
-			if Game.lobby_id:
-				SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
+		if Game.lobby_id:
+			SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
 		
 		var weather_chance = randi_range(0,20)
 	
@@ -345,19 +344,19 @@ func start_da_game():
 	$bum.play()
 	$Music1.stop()
 	
-	if Allsingleton.is_bossfight || OS.has_feature("debug"):
+	if GlobalVars.is_bossfight || OS.has_feature("debug"):
 		$Music2/Timer.start(0.01)
 	else:
 		$Music2/Timer.start()
 	
-	if !Allsingleton.is_bossfight:
+	if !GlobalVars.is_bossfight:
 		$CanvasLayer/Glitch.hide()
 
 
 	if multiplayer.is_server():
-		if peer is SteamMultiplayerPeer:
+		if Game.lobby_id:
 			SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
-		if !Allsingleton.is_bossfight:
+		if !GlobalVars.is_bossfight:
 			leahy_look = true
 
 func _on_timer_timeout():
@@ -369,7 +368,7 @@ func _on_timer_timeout():
 		leahy_look = false
 		$FakeFox/AnimationPlayer.play("new_animation")
 		
-		if Allsingleton.is_bossfight:
+		if GlobalVars.is_bossfight:
 			$School.toggle_ceiling(false)
 			do_vertical_camera_normal = true
 			$EvilDarel.show()
@@ -387,13 +386,13 @@ func set_player_dead(id,is_dead,do_deaths):
 		Game.players[id].is_dead = is_dead
 		if is_dead and do_deaths:
 			
-			if !Allsingleton.is_bossfight:
+			if !GlobalVars.is_bossfight:
 				Game.players[id].deaths += 1
 			var total_deaths = 0
 			for pl_id in Game.players.keys():
 				total_deaths += Game.players[pl_id].deaths
 			
-			if !Allsingleton.is_bossfight:
+			if !GlobalVars.is_bossfight:
 				Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)))
 			if !is_dp:
 				if total_deaths >= (Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)):
@@ -452,9 +451,9 @@ func pong_set_singleton(id):
 
 @rpc("authority","call_local")
 func set_singleton(deaths,books,ending):
-	EndGameSingleton.deaths = deaths
-	EndGameSingleton.books_collected = books
-	EndGameSingleton.did_finish = true
+	GlobalVars.deaths = deaths
+	GlobalVars.books_collected = books
+	GlobalVars.did_finish = true
 	
 	#peer.close()
 	if ending == "normal":
@@ -777,17 +776,3 @@ func darel_phase2_start():
 	$Music2.play()
 
 var is_quitting = false
-
-
-
-func _notification(what):
-	#if what == NOTIFICATION_WM_CLOSE_REQUEST:
-	#	get_tree().auto_accept_quit = false
-	#	
-	#	if not is_quitting:
-	#		is_quitting = true
-	#		if multiplayer.has_multiplayer_peer() and multiplayer.is_server() and Game.pre_game_started:
-	#			end_game.rpc("none")
-	#		else:
-	#			get_tree().quit()
-	pass

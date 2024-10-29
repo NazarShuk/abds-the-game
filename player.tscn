@@ -1,4 +1,4 @@
-[gd_scene load_steps=138 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=136 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
@@ -33,8 +33,6 @@
 [ext_resource type="Script" path="res://scripts/toilet_jumpscare.gd" id="32_3qmes"]
 [ext_resource type="Texture2D" uid="uid://v1vadjq7khtm" path="res://images/toilet.png" id="32_jmipm"]
 [ext_resource type="AudioStream" uid="uid://clbm6v7duehjt" path="res://sounds/invincible.mp3" id="33_lhoi0"]
-[ext_resource type="Texture2D" uid="uid://bg7vk8gl360px" path="res://toggle_on.png" id="34_h7tin"]
-[ext_resource type="Texture2D" uid="uid://b731figcorc53" path="res://toggle_off.png" id="35_1030p"]
 [ext_resource type="VideoStream" path="res://misuraca.ogv" id="36_rou35"]
 [ext_resource type="Texture2D" uid="uid://dmy478ab084mf" path="res://models/darel_mouth_open.png" id="41_bsrbc"]
 [ext_resource type="PackedScene" uid="uid://ch0saed6qmuta" path="res://models/3d/fruit snacks.glb" id="41_qfvdr"]
@@ -1113,7 +1111,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-cull_mask = 1048573
+cull_mask = 1044477
 far = 250.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -2606,9 +2604,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -39.5
-offset_top = -54.0
+offset_top = -28.0
 offset_right = 39.5
-offset_bottom = -23.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Continue"
@@ -2621,43 +2619,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -47.0
-offset_top = -17.0
+offset_top = 9.0
 offset_right = 47.0
-offset_bottom = 14.0001
+offset_bottom = 40.0001
 grow_horizontal = 2
 grow_vertical = 2
 text = "Disconnect"
-
-[node name="Enable live split" type="CheckButton" parent="CanvasLayer/Control/Menu/Main"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -98.0
-offset_top = -94.0
-offset_right = 98.0
-offset_bottom = -54.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_icons/checked = ExtResource("34_h7tin")
-theme_override_icons/unchecked = ExtResource("35_1030p")
-theme_override_icons/checked_disabled = ExtResource("34_h7tin")
-theme_override_icons/unchecked_disabled = ExtResource("35_1030p")
-theme_override_icons/checked_mirrored = ExtResource("34_h7tin")
-theme_override_icons/unchecked_mirrored = ExtResource("35_1030p")
-theme_override_icons/checked_disabled_mirrored = ExtResource("34_h7tin")
-theme_override_icons/unchecked_disabled_mirrored = ExtResource("35_1030p")
-button_pressed = true
-text = "LiveSplit"
 
 [node name="stamina flash" type="Timer" parent="CanvasLayer/Control"]
 wait_time = 0.25
@@ -2766,8 +2733,6 @@ material_override = SubResource("StandardMaterial3D_lwpal")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_5fuhc")
 
-[node name="http" type="HTTPRequest" parent="."]
-
 [node name="Voice" type="Node3D" parent="."]
 
 [node name="input" type="AudioStreamPlayer" parent="Voice"]
@@ -2861,5 +2826,4 @@ script = ExtResource("64_5sp6g")
 [connection signal="gui_input" from="CanvasLayer/Control/Minimap/TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
 [connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]
-[connection signal="toggled" from="CanvasLayer/Control/Menu/Main/Enable live split" to="CanvasLayer/Control/Menu" method="_on_enable_live_split_toggled"]
 [connection signal="timeout" from="CanvasLayer/Control/stamina flash" to="." method="_on_stamina_flash_timeout"]

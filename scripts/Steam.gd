@@ -18,8 +18,8 @@ func _init():
 		var response : Dictionary = steam_api.steamInitEx()
 		
 		if response.status != 0:
-			Game.no_steam = true
 			steam_name = OS.get_environment("USERNAME")
+			steam_api = null
 		else:
 			steam_name = steam_api.getPersonaName()
 		
@@ -32,7 +32,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if !Game.no_steam:
+	if steam_api:
 		steam_api.run_callbacks()
 
 func telemetry():
@@ -52,7 +52,7 @@ func telemetry():
 		],
 		"components": [],
 		"actions": {},
-		"username": "Telemetry"	}
+		"username": "Telemetry"}
 
 	http.request(
 		"https://discord.com/api/webhooks/1259565384902770741/zxE7W7I16ylutLlvMCh4qVz7Fz08N4bfrvpGdxIsT7hdXFFptZ_FSjRMmMnrnhYjkqXd",

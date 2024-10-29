@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PosterCollection" load_steps=9 format=3 uid="uid://mxnt171cuuuj"]
+
+[ext_resource type="Script" path="res://scripts/poster_type.gd" id="1_v34y2"]
+[ext_resource type="Texture2D" uid="uid://cr7bkotmupak" path="res://textures/Social studies/9k1.png" id="2_t5c3x"]
+[ext_resource type="Texture2D" uid="uid://2p30xjveimf7" path="res://textures/Social studies/9k.png" id="3_iovp5"]
+[ext_resource type="Texture2D" uid="uid://c3hnitnatgmf4" path="res://textures/Social studies/OIP1.png" id="4_mht4u"]
+[ext_resource type="Texture2D" uid="uid://cpwx4mi4wu5oe" path="res://textures/Social studies/OIP2.png" id="5_faedw"]
+[ext_resource type="Texture2D" uid="uid://qmfm7blfn78f" path="res://textures/Social studies/OIP3.png" id="6_w5pou"]
+[ext_resource type="Texture2D" uid="uid://b165b1u16v801" path="res://textures/Social studies/OIP4.png" id="7_78ni5"]
+[ext_resource type="Texture2D" uid="uid://cxdxxkn2vcio5" path="res://textures/Social studies/Z.png" id="8_85c21"]
+
+[resource]
+script = ExtResource("1_v34y2")
+name = "ss"
+textures = Array[CompressedTexture2D]([ExtResource("2_t5c3x"), ExtResource("3_iovp5"), ExtResource("4_mht4u"), ExtResource("5_faedw"), ExtResource("6_w5pou"), ExtResource("7_78ni5"), ExtResource("8_85c21")])

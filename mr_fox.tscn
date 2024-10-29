@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dabuuhhrl22km"]
+[gd_scene load_steps=13 format=3 uid="uid://dabuuhhrl22km"]
 
 [ext_resource type="Script" path="res://scripts/fox.gd" id="1_7a5un"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="2_e6wkd"]
@@ -58,11 +58,17 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="Mr Fox" type="CharacterBody3D" groups=["mr_fox"]]
-transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 2.17448, -174.032)
+[sub_resource type="BoxShape3D" id="BoxShape3D_fj8a2"]
+size = Vector3(1, 1, 0.389648)
+
+[node name="Mr Fox" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_fox"]]
+transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17
 script = ExtResource("1_7a5un")
+nav_agent = NodePath("NavigationAgent3D")
+area_3d = NodePath("mr_fox")
+DEFAULT_SPEED = 8.0
 
 [node name="Mr Fox2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
@@ -95,3 +101,8 @@ debug_enabled = true
 replication_config = SubResource("SceneReplicationConfig_1e64h")
 
 [node name="Unstucker" parent="." instance=ExtResource("4_u5ux6")]
+
+[node name="mr_fox" type="Area3D" parent="."]
+
+[node name="mr_fox" type="CollisionShape3D" parent="mr_fox"]
+shape = SubResource("BoxShape3D_fj8a2")

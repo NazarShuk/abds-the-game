@@ -6,11 +6,6 @@ extends Node3D
 @onready var impossible: Node3D = $Impossible
 @onready var disoriented: Node3D = $Disoriented
 
-
-func _exit_tree():
-	show()
-	EndGameSingleton.current_skin = duplicate()
-
 func _ready() -> void:
 	if !multiplayer.has_multiplayer_peer():
 		$MultiplayerSynchronizer.queue_free()

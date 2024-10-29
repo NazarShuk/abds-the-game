@@ -3,7 +3,7 @@ extends Camera3D
 @export var do_shake = false
 @export_range(0,15) var shake_strength : float
 
-func _process(delta):
+func _process(_delta):
 	if do_shake:
 		h_offset = randf_range(-shake_strength,shake_strength)
 		v_offset = randf_range(-shake_strength,shake_strength)

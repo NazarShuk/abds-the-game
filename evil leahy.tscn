@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://csfubc70y8sea" path="res://models/ggrrrrrrrr.mp3" id="5_i0ioo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmd6h"]
+cull_mode = 2
 albedo_texture = ExtResource("1_xr5qm")
 
 [sub_resource type="QuadMesh" id="QuadMesh_vx4ir"]
@@ -41,6 +42,9 @@ properties/6/replication_mode = 2
 properties/7/path = NodePath(".:target_player_name")
 properties/7/spawn = true
 properties/7/replication_mode = 2
+properties/8/path = NodePath("LeahyPNG:visible")
+properties/8/spawn = true
+properties/8/replication_mode = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rkeq3"]
 
@@ -58,13 +62,8 @@ nav_agent = NodePath("NavigationAgent3D")
 area_3d = NodePath("EvilLeahy")
 speed = 6.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_tmd6h")
-mesh = SubResource("QuadMesh_vx4ir")
-surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+[node name="LeahyPNG" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_tmd6h")
 mesh = SubResource("QuadMesh_vx4ir")
 surface_material_override/0 = SubResource("StandardMaterial3D_nmbo2")

@@ -23,7 +23,6 @@ func _on_area_entered(area):
 func play_skibidi_sound():
 	var aud = AudioStreamPlayer3D.new()
 	aud.stream = SLIPPING_ON_BANANA
-	aud.max_distance = 30
 	aud.bus = "Dialogs"
 	
 	get_parent().add_child(aud)

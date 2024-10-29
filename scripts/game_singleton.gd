@@ -28,7 +28,6 @@ signal on_customization_reset
 var players = {}
 
 # steam stuff
-var no_steam = false
 var lobby_id
 
 func reset_values():

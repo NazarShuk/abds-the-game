@@ -1,7 +1,7 @@
 extends Node3D
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	GuiManager.show_cursor()
 	AudioServer.set_bus_mute(1,false)
 	AudioServer.set_bus_mute(2,false)
 	AudioServer.set_bus_solo(6,false)
@@ -24,5 +24,5 @@ func _on_button_pressed():
 
 
 func _on_butto22n_pressed():
-	Allsingleton.is_bossfight = true
+	GlobalVars.is_bossfight = true
 	$CanvasLayer/AnimationPlayer.play("final")

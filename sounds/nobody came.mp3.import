@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://o45sn5bdjobo"
+path="res://.godot/imported/nobody came.mp3-a2dafb0a01a75c32cb090d7a9f4e41ca.mp3str"
+
+[deps]
+
+source_file="res://sounds/nobody came.mp3"
+dest_files=["res://.godot/imported/nobody came.mp3-a2dafb0a01a75c32cb090d7a9f4e41ca.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

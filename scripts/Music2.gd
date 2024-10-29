@@ -16,7 +16,7 @@ func _process(_delta):
 	
 	pitch_scale = lerp(pitch_scale,pitch_target,0.05)
 	
-	if Allsingleton.is_bossfight == false:
+	if GlobalVars.is_bossfight == false:
 		
 		
 		var final_pitch = 1.0

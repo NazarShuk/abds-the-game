@@ -38,7 +38,7 @@ func _on_area_exited(area : Area3D):
 		area.get_parent().set_open.rpc(false)
 		play_sound("res://door_close.mp3")
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if multiplayer.is_server():
 		
 		speed = DEFAULT_SPEED * speed_multiplier
@@ -67,7 +67,6 @@ func navigation():
 	
 	var new_velocity = (next_location - current_location).normalized() * speed
 	
-	var path = nav_agent.get_current_navigation_path()
 	
 	velocity = new_velocity
 	if global_transform.origin != next_location:
@@ -92,8 +91,9 @@ func item_collision():
 func stick_to_clorox():
 	var cloroxes = get_tree().get_nodes_in_group("clorox_wipes")
 	for clorox in cloroxes:
-		if global_position.distance_to(clorox.global_position) < 1:
+		if global_position.distance_to(clorox.global_position) < 2:
 			velocity = Vector3()
+			global_position = clorox.global_position - Vector3(0.5,0,0)
 
 func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20):
 	play_sound_rpc.rpc(stream_path,volume_db,bus,max_distance,global_position)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PosterCollection" load_steps=8 format=3 uid="uid://bgrq2uqa0aq30"]
+
+[ext_resource type="Script" path="res://scripts/poster_type.gd" id="1_wenal"]
+[ext_resource type="Texture2D" uid="uid://d1hnhad4sep36" path="res://textures/ELA/3OIP.png" id="2_olq2p"]
+[ext_resource type="Texture2D" uid="uid://cadg1cdwdy4ik" path="res://textures/ELA/7OIP.png" id="3_1kb7v"]
+[ext_resource type="Texture2D" uid="uid://b5gdan86ka1w1" path="res://textures/ELA/9k.png" id="4_6r366"]
+[ext_resource type="Texture2D" uid="uid://ct0ndjspe6yva" path="res://textures/ELA/image.png" id="5_rr6ur"]
+[ext_resource type="Texture2D" uid="uid://b0tyc804ibrcg" path="res://textures/ELA/OIP2.png" id="6_38asl"]
+[ext_resource type="Texture2D" uid="uid://busok2gw2cb3x" path="res://textures/ELA/OIP.png" id="7_3qeo6"]
+
+[resource]
+script = ExtResource("1_wenal")
+name = "ela"
+textures = Array[CompressedTexture2D]([ExtResource("2_olq2p"), ExtResource("3_1kb7v"), ExtResource("4_6r366"), ExtResource("5_rr6ur"), ExtResource("6_38asl"), ExtResource("7_3qeo6")])

@@ -5,4 +5,4 @@ extends "res://scripts/end.gd"
 func _ready():
 	super._ready()
 	
-	get_node(player_obj).add_child(EndGameSingleton.current_skin)
+	get_node(player_obj).add_child(GlobalVars.current_skin)

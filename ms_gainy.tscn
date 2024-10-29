@@ -26,12 +26,18 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:target_player_name")
+properties/3/spawn = true
+properties/3/replication_mode = 2
 
-[node name="Ms_Gainy" type="CharacterBody3D" groups=["ms_gainy"]]
+[node name="Ms_Gainy" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["ms_gainy"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17
 script = ExtResource("1_i6xwf")
+nav_agent = NodePath("NavigationAgent3D")
+area_3d = NodePath("gainy")
+DEFAULT_SPEED = 20.0
 
 [node name="Mr Fox2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
@@ -69,5 +75,5 @@ replication_config = SubResource("SceneReplicationConfig_ortgb")
 
 [node name="Unstucker" parent="." instance=ExtResource("3_mu1hk")]
 
-[connection signal="area_entered" from="gainy" to="." method="_on_area_entered"]
+[connection signal="area_entered" from="gainy" to="." method="_on_gainy_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

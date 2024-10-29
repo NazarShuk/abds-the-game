@@ -1,10 +1,11 @@
-[gd_scene load_steps=60 format=3 uid="uid://cye1siquj1g35"]
+[gd_scene load_steps=62 format=3 uid="uid://cye1siquj1g35"]
 
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_17gtv"]
 [ext_resource type="Script" path="res://scripts/copy_the_skin.gd" id="1_rp8v3"]
 [ext_resource type="AudioStream" uid="uid://ck1s4rpwaeb4g" path="res://sounds/AdhesiveWombat - Storm Crusher [WoWNeJdHFTA].mp3" id="3_21bb3"]
 [ext_resource type="Script" path="res://scripts/flashbang_rect.gd" id="3_yj7jo"]
 [ext_resource type="PackedScene" uid="uid://cwq81kfmp7a4f" path="res://models/Convertible.glb" id="4_a5gvu"]
+[ext_resource type="PackedScene" uid="uid://c0bsgfl8j3hnb" path="res://param_azzu.tscn" id="5_ng0j5"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_pk24k"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="6_k5egw"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://player_back.png" id="7_chqw2"]
@@ -245,6 +246,18 @@ tracks/15/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../../Convertible/MeshInstance3D:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_snlji"]
 resource_name = "theEnd"
@@ -481,10 +494,127 @@ tracks/17/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_ub0uq"]
+resource_name = "theEnd_noazzu"
+length = 25.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.2, 8.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 8.4, 12.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 12.6, 16.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 192.114,
+"start_offset": 20.9648,
+"stream": ExtResource("3_21bb3")
+}],
+"times": PackedFloat32Array(0.00328305)
+}
+tracks/3/use_blend = true
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../AudioStreamPlayer:volume_db")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 21, 25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -80.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ColorRect:color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1, 20.9, 21),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.0470588, 0.0470588, 0.0470588, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../Convertible:position")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.8, 4, 5, 6, 7, 7.9, 8, 25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.30639, 0, 6.98025), Vector3(1.30634, 0, -33.9039), Vector3(1.30633, 4.74114, -41.645), Vector3(1.30634, 9.06464, -34.9221), Vector3(1.30635, 3.67171, -28.288), Vector3(1.30635, -0.150989, -28.288), Vector3(1.30635, -0.150989, -28.288), Vector3(1.306, -0.151, -192.108)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../../Convertible:rotation")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 4, 4.5, 5, 5.6, 6.3, 7, 7.9, 24.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 0), Vector3(-0.479966, -3.14159, 0), Vector3(-1.5708, -3.14159, 0), Vector3(-2.33525, -3.14159, 0), Vector3(-3.49764, -3.14159, 0), Vector3(1.49226, -3.14159, 0), Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../../Convertible/MeshInstance3D:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_88r7y"]
 _data = {
 "RESET": SubResource("Animation_kb86r"),
-"theEnd": SubResource("Animation_snlji")
+"theEnd": SubResource("Animation_snlji"),
+"theEnd_noazzu": SubResource("Animation_ub0uq")
 }
 
 [sub_resource type="QuadMesh" id="QuadMesh_e40yl"]
@@ -707,7 +837,10 @@ root_node = NodePath("../CanvasLayer/Control")
 libraries = {
 "": SubResource("AnimationLibrary_88r7y")
 }
-autoplay = "theEnd"
+
+[node name="paramAzzu" parent="AnimationPlayer" instance=ExtResource("5_ng0j5")]
+true_animation = "theEnd"
+false_animation = "theEnd_noazzu"
 
 [node name="Convertible" parent="." instance=ExtResource("4_a5gvu")]
 transform = Transform3D(-0.473811, 0, -1.2012e-06, 0, 0.473811, 0, 1.2012e-06, 0, -0.473811, 1.30639, 0, 6.98025)

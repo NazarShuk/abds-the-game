@@ -1,5 +1,5 @@
 extends TextureRect
 
 func _enter_tree():
-	if EndGameSingleton.screenshot:
-		texture = EndGameSingleton.screenshot
+	if GlobalVars.screenshot:
+		texture = GlobalVars.screenshot

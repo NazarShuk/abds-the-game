@@ -52,6 +52,7 @@ func _physics_process(delta):
 		unstucker_constraints()
 		
 		ai(delta)
+		
 
 func unstucker_constraints():
 	unstucker.do_penalties = (absent == false && appeased == false && baja_blasted == false)
@@ -87,7 +88,8 @@ func ai(delta):
 								update_target_location(global_position)
 							else:
 								var mr_azzu = Game.get_closest_node_in_group(global_position,"mr_azzu")
-								update_target_location(mr_azzu.global_position)
+								if mr_azzu:
+									update_target_location(mr_azzu.global_position)
 					else:
 						# baja blast
 						var bathrooms = get_tree().get_nodes_in_group("bathroom_spawn")
@@ -130,7 +132,7 @@ func _on_absences_timeout():
 	if !multiplayer.is_server() : return
 	if !Game.game_started : return
 	if Game.powered_off: return
-	if Allsingleton.is_bossfight: return
+	if GlobalVars.is_bossfight: return
 	
 	if randi_range(0, 20) == 1: 
 		absent = true
@@ -168,6 +170,6 @@ func baja_blast_her(steam_name):
 @rpc("any_peer","call_local")
 func boost_leahy(pl):
 	if multiplayer.is_server():
-		speed *= 1.5
+		speed_multiplier += 0.5
 		Game.add_book_boost.rpc(0.5)
 		Game.info_text(pl + " gave Ms.Leahy Redbull...")

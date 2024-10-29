@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b7kb58x7l8qps"]
+[gd_scene load_steps=14 format=3 uid="uid://b7kb58x7l8qps"]
 
 [ext_resource type="Script" path="res://scripts/end.gd" id="1_5d8na"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_3ibbu"]
 [ext_resource type="VideoStream" path="res://azzu_angry.ogv" id="2_sha3l"]
 [ext_resource type="AudioStream" uid="uid://cmxhw4erdw53v" path="res://Exhilarate (128kbps)_01.mp3" id="3_g3t6j"]
-[ext_resource type="Texture2D" uid="uid://njbmfumje8ks" path="res://deadAzzu.png" id="4_l4glg"]
+[ext_resource type="AudioStream" uid="uid://o45sn5bdjobo" path="res://sounds/nobody came.mp3" id="4_ucvbn"]
+[ext_resource type="PackedScene" uid="uid://c0bsgfl8j3hnb" path="res://param_azzu.tscn" id="5_jvlh3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p4lce"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -59,6 +60,30 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(1064, 0)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../AudioStreamPlayer:stream")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_g3t6j")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Label4:text")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["press ESC to skip"]
+}
 
 [sub_resource type="Animation" id="Animation_do4mw"]
 resource_name = "bro died"
@@ -100,11 +125,143 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(2000, 0), Vector2(1064, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1064, 0)]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../VideoStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../AudioStreamPlayer:stream")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_g3t6j")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Label4:text")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["press ESC to skip"]
+}
+
+[sub_resource type="Animation" id="Animation_ymq7n"]
+resource_name = "bro died_no azzu"
+length = 30.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 6, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2000, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1064, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 6, 8, 12, 14),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2000, 0), Vector2(1064, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1064, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 12, 14, 18, 20),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2000, 0), Vector2(1064, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1064, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../AudioStreamPlayer:stream")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_ucvbn")]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Label4:text")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["but nobody came"]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wyato"]
 _data = {
 "RESET": SubResource("Animation_046hh"),
-"bro died": SubResource("Animation_do4mw")
+"bro died": SubResource("Animation_do4mw"),
+"bro died_no azzu": SubResource("Animation_ymq7n")
 }
 
 [node name="End" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
@@ -122,20 +279,6 @@ environment = SubResource("Environment_5jswd")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -145.5
-offset_right = 250.0
-offset_bottom = 145.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_l4glg")
-
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,7 +286,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_sha3l")
-autoplay = true
 expand = true
 bus = &"Dialogs"
 
@@ -163,7 +305,10 @@ grow_vertical = 2
 libraries = {
 "": SubResource("AnimationLibrary_wyato")
 }
-autoplay = "bro died"
+
+[node name="paramAzzu" parent="CanvasLayer/Control/AnimationPlayer" instance=ExtResource("5_jvlh3")]
+true_animation = "bro died"
+false_animation = "bro died_no azzu"
 
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 1
@@ -237,7 +382,6 @@ vertical_alignment = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_g3t6j")
 volume_db = -10.0
-autoplay = true
 bus = &"Music"
 
 [node name="Timer" type="Timer" parent="."]

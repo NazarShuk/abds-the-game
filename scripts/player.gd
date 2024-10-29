@@ -84,15 +84,18 @@ func _enter_tree():
 		$CanvasLayer.show()
 		parent.hide_menu()
 
+
 func _ready():
 	if is_multiplayer_authority():
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		if Allsingleton.is_bossfight:
+		GuiManager.hide_cursor()
+		if GlobalVars.is_bossfight:
 			$"CanvasLayer/Control/Progress bar handler/ProgressBar".hide()
 		
 		
-		$visual_body.hide()
+		
 		$visual_body.pick_skin()
+		GlobalVars.current_skin = $visual_body.duplicate()
+		$visual_body.hide()
 		
 		if Settings.render_distance:
 			camera_3d.far = Settings.render_distance
@@ -109,7 +112,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("debug") and OS.has_feature("debug"):
 			buy_book_rpc.rpc(steam_name)
 		
-		if Allsingleton.is_bossfight:
+		if GlobalVars.is_bossfight:
 			if global_position.distance_to(get_tree().get_first_node_in_group("evil darel").global_position) < 1:
 				die("darel")
 		
@@ -143,12 +146,12 @@ func _physics_process(delta):
 				is_minimap_open = !is_minimap_open
 				if is_minimap_open:
 					$Minimap.process_mode = Node.PROCESS_MODE_INHERIT
-					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-					can_cam_move = false
+					GuiManager.show_cursor()
 				else:
 					$Minimap.process_mode = Node.PROCESS_MODE_DISABLED
-					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-					can_cam_move = true
+					GuiManager.hide_cursor()
+		
+		can_cam_move = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 		
 		minimap_cam.size = lerp(minimap_cam.size,float(minimap_zoom),0.25)
 		minimap_zoom = clamp(minimap_zoom,5,95)
@@ -212,7 +215,7 @@ func punch():
 	if ray.get_collider():
 		var collider = ray.get_collider()
 		
-		if Allsingleton.is_bossfight:
+		if GlobalVars.is_bossfight:
 			if collider.is_in_group("lil darel"):
 				
 				$VisualHand/AnimationPlayer.play("parry")
@@ -382,7 +385,7 @@ func _on_timer_timeout():
 	if is_running and is_moving:
 		if stamina > 0:
 			if can_run:
-				if !Allsingleton.is_bossfight:
+				if !GlobalVars.is_bossfight:
 					stamina -= 1
 				run_multiplier = 2
 		else:
@@ -512,17 +515,18 @@ func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	return items_chances.keys()[-1]
 
 @rpc("any_peer", "call_local")
-func spawn_clorox():
-	var packed_clorox = load("res://Clorox Wipes.tscn")
-	var clorox: StaticBody3D = packed_clorox.instantiate()
-
-	get_parent().add_child(clorox)
-
-	clorox.initial_pos = $RayCast3D.global_position
-	clorox.global_position = $RayCast3D.global_position
-	clorox.global_rotation = $"Camera target".global_rotation
-	clorox.launcher = name.to_int()
-	clorox.add_to_group("clorox_wipes")
+func spawn_clorox(pos, rot, launcher):
+	if multiplayer.is_server():
+		var packed_clorox = load("res://Clorox Wipes.tscn")
+		var clorox: StaticBody3D = packed_clorox.instantiate()
+		
+		get_parent().add_child(clorox)
+		
+		clorox.initial_pos = pos #$RayCast3D.global_position
+		clorox.global_position = pos #$RayCast3D.global_position
+		clorox.global_rotation = rot #$"Camera target".global_rotation
+		clorox.launcher = launcher #name.to_int()
+		clorox.add_to_group("clorox_wipes")
 
 
 @rpc("any_peer", "call_local")
@@ -602,7 +606,7 @@ func _on_anti_wall_walk_timeout():
 	if is_on_top:
 		on_top_counter += 1
 		if on_top_counter == 10:
-			if !Allsingleton.is_bossfight:
+			if !GlobalVars.is_bossfight:
 				die("wall")
 				global_position.y = 1
 			on_top_counter = 0
@@ -632,8 +636,7 @@ func open_shop():
 		is_minimap_open = false
 		$CanvasLayer/Control/Shop.show()
 		$CanvasLayer/Control/Shop/AudioStreamPlayer.play()
-		can_cam_move = false
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		GuiManager.show_cursor()
 		AudioServer.set_bus_solo(6,true)
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 		can_use_shop = false
@@ -647,8 +650,7 @@ func open_shop():
 func close_shop(set_death = true):
 	$CanvasLayer/Control/Shop.hide()
 	$CanvasLayer/Control/Shop/AudioStreamPlayer.stop()
-	can_cam_move = true
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	GuiManager.hide_cursor()
 	AudioServer.set_bus_solo(6,false)
 	if set_death:
 		parent.set_player_dead.rpc(name.to_int(), false,false)
@@ -726,9 +728,8 @@ func _on_buy_book_pressed():
 @rpc("any_peer","call_local")
 func buy_book_rpc(pname):
 	if multiplayer.is_server():
-		var id = Game.players.keys().pick_random()
 		
-		Game.players[id].books_collected += 1 + Game.book_boost
+		Game.players[name.to_int()].books_collected += 1 + Game.book_boost
 		Game.calculate_total_books()
 		Game.info_text(pname + " bought a book")
 
@@ -934,8 +935,7 @@ func _on_toilet_timeout_timeout():
 var gamble = []
 
 func open_gambling():
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	can_cam_move = false
+	GuiManager.show_cursor()
 	$CanvasLayer/Control/paper.show()
 	gamble = []
 	
@@ -952,8 +952,7 @@ func open_gambling():
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 
 func close_gambling(do_deaths = true):
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	can_cam_move = true
+	GuiManager.hide_cursor()
 	$CanvasLayer/Control/paper.hide()
 	if do_deaths:
 		parent.set_player_dead.rpc(name.to_int(), false,false)
@@ -989,7 +988,7 @@ func movement_function(delta):
 	else:
 		is_on_top = false
 	
-	if Allsingleton.is_bossfight:
+	if GlobalVars.is_bossfight:
 		if Game.game_started:
 			if is_on_floor() and not is_dead:
 				if Input.is_action_just_pressed("jump"):
@@ -1081,182 +1080,12 @@ func movement_function(delta):
 				else:
 					$HandTree.set("parameters/Transition/transition_request","swing")
 				
-				if Input.is_action_just_pressed("interact"):
-					if ray.get_collider() != null and get_cur_item() == -1:
-						if ray.get_collider().is_in_group("vending_machines"):
-							if Game.game_started:
-								choose_item(-1)
-							else:
-								pick_item(2)
-							ray.get_collider().use_vending_machine.rpc()
-						
-					if ray.get_collider() != null and Game.game_started:
-						if ray.get_collider().is_in_group("shop"):
-							open_shop()
-						if ray.get_collider().is_in_group("coffee_machine"):
-							if !can_use_coffee: return
-							add_speed_boost(1, 6)
-							ray.get_collider().play_sound.rpc()
-							can_use_coffee = false
-							$"Coffee timeout".start(20)
-						if ray.get_collider().name == "Breaker":
-							if !can_use_breaker: return
-							
-							
-							ray.get_collider().toggle_power.rpc()
-							
-							can_use_breaker = false
-							$BreakerTimeout.start(60)
-						if ray.get_collider().is_in_group("mr_misuraca"):
-							open_gambling()
-						
-						if ray.get_collider().is_in_group("dropped_item"):
-							if ray.get_collider():
-								ray.get_collider().remove_item.rpc()
-								pick_item(ray.get_collider().item)
-						
-						if ray.get_collider().is_in_group("video_player"):
-							ray.get_collider().play.rpc()
-						
-						if ray.get_collider().name == "fire":
-							ray.get_collider().get_parent().break_glass.rpc()
-							if ray.get_collider().get_parent().can_pickup:
-								pick_item(9)
-							
-						if ray.get_collider().name == "wheel":
-							ray.get_collider().get_parent().spin.rpc()
-							
-						if ray.get_collider().is_in_group("freezer"):
-							global_position.x = ray.get_collider().global_position.x
-							global_position.z = ray.get_collider().global_position.z
-							can_move = false
-							global_rotation.y = -ray.get_collider().global_rotation.y
-							parent.set_player_dead.rpc(name.to_int(), true,false)
-							is_in_freezer = true
-							$CanvasLayer/Control/Freezer/AnimationPlayer.play("freez")
-							
-							$freezerDeath.start()
-							
-							
-							
-						
-						if ray.get_collider().is_in_group("toilet"):
-							if !can_toilet_tp : return
-							var spawns = get_tree().get_nodes_in_group("bathroom_spawn")
-							
-							var farthest_dst = -1
-							var farthest_obj
-							
-							for spawn in spawns:
-								if global_position.distance_to(spawn.global_position) > farthest_dst:
-									farthest_dst = global_position.distance_to(spawn.global_position)
-									farthest_obj = spawn
-							can_toilet_tp = false
-							$ToiletTimeout.start()
-							$CanvasLayer/Control/toilet.show()
-							global_position = farthest_obj.global_position
-							await Game.sleep(2)
-							play_sound("res://flush.mp3",5)
-						
-						if ray.get_collider():
-							if ray.get_collider().is_in_group("water fountain"):
-								if get_cur_item() == 7:
-									hand.get_node("Bucket 7/Bucket/water").show()
-								else:
-									stamina = 100
-						if ray.get_collider():
-							if ray.get_collider().is_in_group("bucket"):
-								if get_cur_item() == -1:
-									pick_item(7)
-						
 				
-				if Input.is_action_just_pressed("give"):
-					if get_cur_item() == 3:
-						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
-						var distance = global_position.distance_to(evil_leahy.global_position)
-						
-						var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
-						var dist = global_position.distance_to(fox.global_position)
-						if dist < 20:
-							pick_item(-1)
-							
-							fox.mr_fox_collect.rpc(1)
-						elif distance < 15:
-							pick_item(-1)
-							
-							evil_leahy.appease.rpc(steam_name,5)
-					elif get_cur_item() == 5:
-						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
-						var distance = global_position.distance_to(evil_leahy.global_position)
-						
-						var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
-						var dist = global_position.distance_to(fox.global_position)
-						if dist < 30:
-							pick_item(-1)
-							fox.mr_fox_collect.rpc(2)
-						elif distance < 30:
-							pick_item(-1)
-							evil_leahy.appease.rpc(steam_name,15)
-						
-					elif get_cur_item() == 6:
-						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
-						var distance = global_position.distance_to(evil_leahy.global_position)
-						
-						if distance < 10:
-							pick_item(-1)
-							evil_leahy.boost_leahy.rpc(steam_name)
-					elif get_cur_item() == 8:
-						var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
-						var distance = global_position.distance_to(evil_leahy.global_position)
-						
-						if distance < 10:
-							pick_item(-1)
-							evil_leahy.baja_blast_her.rpc(steam_name)
 				
-				if Input.is_action_just_pressed("use_item"):
-					if get_cur_item() == 0:
-						pick_item(-1)
-						add_speed_boost(1, 3)
-					elif get_cur_item() == 1:
-						pick_item(-1)
-						spawn_clorox.rpc()
-					elif get_cur_item() == 2:
-						pick_item(-1)
-						velocity.y += 10
-						shart.rpc()
-					
-					elif get_cur_item() == 4:
-						
-						squeak.rpc()
-						pick_item(-1)
-						parent.start_da_pacer.rpc(name.to_int()) # i want to kms because of this
-					elif get_cur_item() == 6:
-						pick_item(-1)
-						add_speed_boost(2, 3)
-						play_sound("res://redbull.mp3")
-					elif get_cur_item() == 7:
-						
-						if hand.get_node("Bucket 7/Bucket/water").visible:
-							hand.get_node("Bucket 7/Bucket/water").visible = false
-							pick_item(-1)
-							play_sound("res://water.mp3")
-							
-							spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
-					elif get_cur_item() == 8:
-						pick_item(-1)
-						is_baja = true
-						
-						add_speed_boost(4,7.5)
-						$"baja trail".start()
-					elif get_cur_item() == 9:
-						pick_item(-1)
-						spawn_smoke.rpc(global_position)
-						play_sound("res://fire extinguisher.mp3")
-					elif get_cur_item() == 10:
-						pick_item(-1)
-						add_speed_boost(3,5)
-						play_sound("res://models/sonic.mp3",3)
-
+				interaction_functions()
+				item_give_functions()
+				item_use_functions()
+	
 	if Input.is_action_just_pressed("throw"):
 		if get_cur_item() != -1:
 			var cloned_item = hand.get_child(get_cur_item()).get_child(0).get_path()
@@ -1291,8 +1120,6 @@ func spawn_puddle(pos):
 func _on_button_pressed():
 	close_gambling()
 
-
-
 func _on_pp_timeout_timeout():
 	if is_multiplayer_authority():
 		if is_baja:
@@ -1302,6 +1129,197 @@ func _on_pp_timeout_timeout():
 			if baja_previous_pos.distance_to(pos) > 0.75:
 				spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 			baja_previous_pos = pos
+
+func interaction_functions():
+	if Input.is_action_just_pressed("interact"):
+		if ray.get_collider() != null and get_cur_item() == -1:
+			if ray.get_collider().is_in_group("vending_machines"):
+				var vending_machine = ray.get_collider()
+				
+				if vending_machine.uses_left > 0:
+					if Game.game_started:
+						choose_item(-1)
+					else:
+						pick_item(2)
+					vending_machine.use_vending_machine.rpc()
+				else:
+					GuiManager.show_tip_once("vending_broke","[color=green]Vending Machines[/color]\nVending machines will [b]break[/b] after being used way too much. [b]Mr.Misuraca[/b] will come and [b]fix them.[/b]")
+			
+		if ray.get_collider() != null and Game.game_started:
+			if ray.get_collider().is_in_group("shop"):
+				open_shop()
+			if ray.get_collider().is_in_group("coffee_machine"):
+				if !can_use_coffee: return
+				add_speed_boost(1, 6)
+				ray.get_collider().play_sound.rpc()
+				can_use_coffee = false
+				$"Coffee timeout".start(20)
+			if ray.get_collider().name == "Breaker":
+				if !can_use_breaker: return
+				
+				
+				ray.get_collider().toggle_power.rpc()
+				
+				can_use_breaker = false
+				$BreakerTimeout.start(60)
+			if ray.get_collider().is_in_group("mr_misuraca"):
+				open_gambling()
+			
+			if ray.get_collider().is_in_group("dropped_item"):
+				if ray.get_collider():
+					ray.get_collider().remove_item.rpc()
+					pick_item(ray.get_collider().item)
+			
+			if ray.get_collider().is_in_group("video_player"):
+				ray.get_collider().play.rpc()
+			
+			if ray.get_collider().name == "fire":
+				ray.get_collider().get_parent().break_glass.rpc()
+				if ray.get_collider().get_parent().can_pickup:
+					pick_item(9)
+				
+			if ray.get_collider().name == "wheel":
+				ray.get_collider().get_parent().spin.rpc()
+				
+			if ray.get_collider().is_in_group("freezer"):
+				global_position.x = ray.get_collider().global_position.x
+				global_position.z = ray.get_collider().global_position.z
+				can_move = false
+				global_rotation.y = -ray.get_collider().global_rotation.y
+				parent.set_player_dead.rpc(name.to_int(), true,false)
+				is_in_freezer = true
+				$CanvasLayer/Control/Freezer/AnimationPlayer.play("freez")
+				
+				$freezerDeath.start()
+			if ray.get_collider().is_in_group("toilet"):
+				if !can_toilet_tp : return
+				var spawns = get_tree().get_nodes_in_group("bathroom_spawn")
+				
+				var farthest_dst = -1
+				var farthest_obj
+				
+				for spawn in spawns:
+					if global_position.distance_to(spawn.global_position) > farthest_dst:
+						farthest_dst = global_position.distance_to(spawn.global_position)
+						farthest_obj = spawn
+				can_toilet_tp = false
+				$ToiletTimeout.start()
+				$CanvasLayer/Control/toilet.show()
+				global_position = farthest_obj.global_position
+				await Game.sleep(2)
+				play_sound("res://flush.mp3",5)
+			if ray.get_collider().is_in_group("blackboard"):
+				ray.get_collider().select_image()
+			
+			
+			if ray.get_collider():
+				if ray.get_collider().is_in_group("water fountain"):
+					if get_cur_item() == 7:
+						hand.get_node("Bucket 7/Bucket/water").show()
+					else:
+						stamina = 100
+			if ray.get_collider():
+				if ray.get_collider().is_in_group("bucket"):
+					if get_cur_item() == -1:
+						pick_item(7)
+
+func item_use_functions():
+	if Input.is_action_just_pressed("use_item"):
+		if get_cur_item() == 0:
+			pick_item(-1)
+			add_speed_boost(1, 3)
+		elif get_cur_item() == 1:
+			pick_item(-1)
+			spawn_clorox.rpc($RayCast3D.global_position, $"Camera target".global_rotation, name.to_int())
+		elif get_cur_item() == 2:
+			pick_item(-1)
+			velocity.y += 10
+			shart.rpc()
+		elif get_cur_item() == 4:
+			
+			squeak.rpc()
+			pick_item(-1)
+			parent.start_da_pacer.rpc(name.to_int()) # i want to kms because of this
+		elif get_cur_item() == 6:
+			pick_item(-1)
+			add_speed_boost(2, 3)
+			play_sound("res://redbull.mp3")
+		elif get_cur_item() == 7:
+			
+			if hand.get_node("Bucket 7/Bucket/water").visible:
+				hand.get_node("Bucket 7/Bucket/water").visible = false
+				pick_item(-1)
+				play_sound("res://water.mp3")
+				
+				spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
+		elif get_cur_item() == 8:
+			pick_item(-1)
+			is_baja = true
+			
+			add_speed_boost(4,7.5)
+			$"baja trail".start()
+		elif get_cur_item() == 9:
+			pick_item(-1)
+			spawn_smoke.rpc(global_position)
+			play_sound("res://fire extinguisher.mp3")
+		elif get_cur_item() == 10:
+			pick_item(-1)
+			add_speed_boost(3,5)
+			play_sound("res://models/sonic.mp3",3)
+
+func item_give_functions():
+	if Input.is_action_just_pressed("give"):
+		if get_cur_item() == 3:
+			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
+			var distance = INF
+			if evil_leahy:
+				distance = global_position.distance_to(evil_leahy.global_position)
+			
+			var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
+			var dist = INF
+			
+			if fox:
+				dist = global_position.distance_to(fox.global_position)
+			
+			if dist < 20:
+				pick_item(-1)
+				fox.mr_fox_collect.rpc(1)
+			elif distance < 15:
+				pick_item(-1)
+				evil_leahy.appease.rpc(steam_name,5)
+		elif get_cur_item() == 5:
+			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
+			var distance = INF
+			if evil_leahy:
+				distance = global_position.distance_to(evil_leahy.global_position)
+			
+			var fox = Game.get_closest_node_in_group(global_position,"mr_fox")
+			var dist = INF
+			
+			if fox:
+				dist = global_position.distance_to(fox.global_position)
+			
+			if dist < 30:
+				pick_item(-1)
+				fox.mr_fox_collect.rpc(2)
+			elif distance < 30:
+				pick_item(-1)
+				evil_leahy.appease.rpc(steam_name,15)
+			
+		elif get_cur_item() == 6:
+			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
+			var distance = global_position.distance_to(evil_leahy.global_position)
+			
+			if distance < 10:
+				pick_item(-1)
+				evil_leahy.boost_leahy.rpc(steam_name)
+		elif get_cur_item() == 8:
+			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
+			var distance = global_position.distance_to(evil_leahy.global_position)
+			
+			if distance < 10:
+				pick_item(-1)
+				evil_leahy.baja_blast_her.rpc(steam_name)
 
 func _on_baja_trail_timeout():
 	is_baja = false

@@ -29,19 +29,17 @@ driver/mix_rate=8000
 
 [autoload]
 
-EndGameSingleton="*res://scripts/end_game_singleton.gd"
-Allsingleton="*res://scripts/allsingleton.gd"
+GlobalVars="*res://scripts/global_vars.gd"
 Settings="*res://scripts/AudioVolume.gd"
-Achievements="*res://scripts/Achievements.gd"
-LiveSplit="*res://scripts/LiveSplit.gd"
-Leaderboard="*res://scripts/Leaderboard.gd"
 Game="*res://scripts/game_singleton.gd"
 GuiManager="*res://scripts/GUIManager.gd"
 SteamManager="*res://scenes/steam_manager.tscn"
+Achievements="*res://scenes/AchievementsOverlay.tscn"
 
 [debug]
 
 file_logging/enable_file_logging=true
+gdscript/warnings/unused_variable=0
 
 [display]
 
@@ -181,6 +179,7 @@ submit={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 textures/vram_compression/import_s3tc_bptc=true
 global_illumination/gi/use_half_resolution=true
 camera/depth_of_field/depth_of_field_bokeh_shape=0
@@ -191,7 +190,6 @@ environment/glow/upscale_mode=0
 environment/volumetric_fog/use_filter=0
 environment/defaults/default_clear_color=Color(1, 1, 1, 1)
 occlusion_culling/use_occlusion_culling=true
-vrs/mode=2
 
 [xr]
 

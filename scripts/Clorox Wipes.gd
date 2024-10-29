@@ -18,7 +18,7 @@ var is_stopped = false
 
 func _ready():
 	global_position = initial_pos
-	if !Allsingleton.is_bossfight:
+	if !GlobalVars.is_bossfight:
 		$Timer.start(3)
 	else:
 		if !stop_timer:

@@ -6,7 +6,8 @@ var peer
 const main_game_path = "res://game.tscn"
 
 func _ready() -> void:
-	$AudioStreamPlayer.play(Allsingleton.menu_music_duration)
+	$AudioStreamPlayer.play(GlobalVars.menu_music_duration)
+	GuiManager.show_cursor()
 
 func _on_achievements_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://achievements.tscn")
@@ -18,13 +19,11 @@ func _on_play_pressed():
 	host_lobby()
 
 func _on_lobby_list_lobby_clicked(lobby_id):
-	peer = SteamMultiplayerPeer.new()
+	peer = ClassDB.instantiate("SteamMultiplayerPeer")
 	loading.show()
 	var err = peer.connect_lobby(lobby_id)
 	print_rich("[color=orange]connecting via steam to lobby ", lobby_id)
 	print("connect lobby err: ", err)
-	
-	await Game.sleep(0.5)
 	
 	if err == OK:
 		Game.lobby_id = lobby_id
@@ -34,11 +33,10 @@ func _on_lobby_list_lobby_clicked(lobby_id):
 
 func host_lobby():
 	loading.show()
-	await Game.sleep(0.5)
 	
-	if !Game.no_steam:
-		peer = SteamMultiplayerPeer.new()
-		peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
+	if SteamManager.steam_api:
+		peer = ClassDB.instantiate("SteamMultiplayerPeer")
+		peer.create_lobby(peer.LOBBY_TYPE_FRIENDS_ONLY)
 		peer.lobby_created.connect(_on_lobby_created)
 		
 		print_rich("[color=orange]startig to open a lobby...")
@@ -74,7 +72,8 @@ func _on_refresh_pressed() -> void:
 	$Control/lobby_list.get_friends_lobbies()
 
 func _exit_tree() -> void:
-	Allsingleton.menu_music_duration = $AudioStreamPlayer.get_playback_position()
+	GlobalVars.menu_music_duration = $AudioStreamPlayer.get_playback_position()
+	
 
 func load_main_game():
 	ResourceLoader.load_threaded_request(main_game_path)

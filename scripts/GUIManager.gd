@@ -10,6 +10,10 @@ var saved_tips : Dictionary = {}
 var tips_queue = []
 var is_showing_tip = false
 
+# Cursor management
+var _cursor_requests: int = 0
+var _force_cursor_visible: bool = false
+
 signal tip_created(text: String, duration: float)
 
 func _ready():
@@ -49,3 +53,30 @@ func load_tips():
 	if file:
 		saved_tips = file.get_var()
 		file.close()
+
+func show_cursor() -> void:
+	_cursor_requests += 1
+	_update_cursor_state()
+
+func hide_cursor() -> void:
+	_cursor_requests = max(0, _cursor_requests - 1)
+	_update_cursor_state()
+
+func force_cursor_state(visible: bool) -> void:
+	_force_cursor_visible = visible
+	_cursor_requests = 0  # Clear all previous requests
+	_update_cursor_state()
+
+func _update_cursor_state() -> void:
+	if _force_cursor_visible or _cursor_requests > 0:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func reset_cursor() -> void:
+	_cursor_requests = 0
+	_force_cursor_visible = false
+	_update_cursor_state()
+
+func is_cursor_visible() -> bool:
+	return _force_cursor_visible or _cursor_requests > 0

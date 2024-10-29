@@ -3,7 +3,7 @@ extends MeshInstance3D
 func _ready():
 	Game.on_game_started.connect(_on_start_game)
 	Game.on_pre_game_started.connect(on_pre_start_game)
-	if Allsingleton.is_bossfight:
+	if GlobalVars.is_bossfight:
 		queue_free()
 
 func on_pre_start_game():

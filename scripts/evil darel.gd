@@ -48,7 +48,7 @@ func _process(_delta):
 	if Game.game_started == false:
 		return
 	
-	if Allsingleton.is_bossfight == false:
+	if GlobalVars.is_bossfight == false:
 		return
 	
 	if previous_health > health:
@@ -202,7 +202,7 @@ var force_magnitude: float = 100.0
 func _on_darel_ball_timeout():
 	if Game.game_started == false:
 		return
-	if Allsingleton.is_bossfight == false:
+	if GlobalVars.is_bossfight == false:
 		return
 	if is_phase_2: return
 	
@@ -236,7 +236,7 @@ func ray_attack():
 	
 	if Game.game_started == false:
 		return
-	if Allsingleton.is_bossfight == false:
+	if GlobalVars.is_bossfight == false:
 		return
 	
 	var right_point = right_eye.global_position + Vector3(0,0,200)

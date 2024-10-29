@@ -1,12 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://cx7itjqsyc1xu"]
+[gd_scene load_steps=8 format=3 uid="uid://cx7itjqsyc1xu"]
 
 [ext_resource type="Script" path="res://scripts/breaker.gd" id="1_m5dcq"]
 [ext_resource type="AudioStream" uid="uid://i2dkw33jamoi" path="res://breaker.mp3" id="2_blw3u"]
 [ext_resource type="PackedScene" uid="uid://dpwcylt8vvrkv" path="res://models/3d/Fuse Box.glb" id="3_knyfq"]
 [ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="4_c6xd0"]
+[ext_resource type="AudioStream" uid="uid://cpg0g3lhqar4w" path="res://sounds/dark.mp3" id="5_xi5tt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5libq"]
 size = Vector3(1.22998, 0.818846, 0.191406)
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_b2mg1"]
+clip_count = 2
+clip_0/name = &"Power Off"
+clip_0/stream = ExtResource("4_c6xd0")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"Dark"
+clip_1/stream = ExtResource("5_xi5tt")
+clip_1/auto_advance = 1
+clip_1/next_clip = 1
+_transitions = {
+Vector2i(0, 0): {
+"fade_beats": 5,
+"fade_mode": 3,
+"from_time": 3,
+"to_time": 1
+}
+}
 
 [node name="Breaker" type="StaticBody3D" groups=["breaker"]]
 script = ExtResource("1_m5dcq")
@@ -35,7 +55,7 @@ autostart = true
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0032116, 0.355725, 0)
 
 [node name="power_outage" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_c6xd0")
-bus = &"Dialogs"
+stream = SubResource("AudioStreamInteractive_b2mg1")
+bus = &"Music"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

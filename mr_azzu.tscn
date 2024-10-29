@@ -27,12 +27,18 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:angered")
 properties/2/spawn = true
 properties/2/replication_mode = 2
+properties/3/path = NodePath(".:target_player_name")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
-[node name="Mr_Azzu" type="CharacterBody3D" groups=["mr_azzu"]]
+[node name="Mr_Azzu" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_azzu"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17
 script = ExtResource("1_s00pa")
+nav_agent = NodePath("NavigationAgent3D")
+area_3d = NodePath("azzu")
+DEFAULT_SPEED = 15.0
 
 [node name="Mr Fox2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)

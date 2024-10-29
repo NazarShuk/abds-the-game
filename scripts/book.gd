@@ -12,6 +12,5 @@ func _on_book_area_entered(area):
 		Game.calculate_total_books()
 		
 		Game.info_text(player.steam_name + " collected a book!")
-		LiveSplit.split_for_everyone.rpc()
 		
 		global_position = get_tree().get_nodes_in_group("book_spawn").pick_random().global_position

@@ -8,7 +8,7 @@ func _ready():
 	get_friends_lobbies()
 
 func get_friends_lobbies():
-	if Game.no_steam:
+	if !SteamManager.steam_api:
 		clear()
 		add_item("Steam was not found.")
 		return

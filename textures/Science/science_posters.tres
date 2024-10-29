@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PosterCollection" load_steps=12 format=3 uid="uid://cps6dmcj083ka"]
+
+[ext_resource type="Script" path="res://scripts/poster_type.gd" id="1_p44lg"]
+[ext_resource type="Texture2D" uid="uid://b43pend6nvdjb" path="res://textures/Science/OIP1.png" id="2_wi7ad"]
+[ext_resource type="Texture2D" uid="uid://cbtt5yltht12n" path="res://textures/Science/OIP2.png" id="3_upend"]
+[ext_resource type="Texture2D" uid="uid://5oh6r32rre2e" path="res://textures/Science/OIP3.png" id="4_wtcdi"]
+[ext_resource type="Texture2D" uid="uid://blcmfh0k3n415" path="res://textures/Science/OIP4.png" id="5_pvxhw"]
+[ext_resource type="Texture2D" uid="uid://der3pi52k01xc" path="res://textures/Science/OIP5.png" id="6_bvmvc"]
+[ext_resource type="Texture2D" uid="uid://bqcvdvje3rokr" path="res://textures/Science/OIP6.png" id="7_2tm8y"]
+[ext_resource type="Texture2D" uid="uid://ijv8y3f4ftab" path="res://textures/Science/OIP7.png" id="8_yi2sv"]
+[ext_resource type="Texture2D" uid="uid://cukeilvjmrtc1" path="res://textures/Science/OIP8.png" id="9_20xhd"]
+[ext_resource type="Texture2D" uid="uid://d13xwk4btloqh" path="res://textures/Science/OIP9.png" id="10_s1h5i"]
+[ext_resource type="Texture2D" uid="uid://qswkpdqiv4xj" path="res://textures/Science/OIP10.png" id="11_cyldl"]
+
+[resource]
+script = ExtResource("1_p44lg")
+name = "science"
+textures = Array[CompressedTexture2D]([ExtResource("2_wi7ad"), ExtResource("3_upend"), ExtResource("4_wtcdi"), ExtResource("5_pvxhw"), ExtResource("6_bvmvc"), ExtResource("7_2tm8y"), ExtResource("8_yi2sv"), ExtResource("9_20xhd"), ExtResource("10_s1h5i"), ExtResource("11_cyldl")])

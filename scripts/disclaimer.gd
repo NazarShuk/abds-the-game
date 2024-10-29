@@ -1,11 +1,11 @@
 extends ColorRect
 
 func _ready() -> void:
-	if Allsingleton.did_show_disclaimer:
+	if GlobalVars.did_show_disclaimer:
 		queue_free()
 	else:
-		Allsingleton.did_show_disclaimer = true
+		GlobalVars.did_show_disclaimer = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_anything_pressed():
 		queue_free()

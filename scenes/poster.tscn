@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnvdkagkks0iq"]
+[gd_scene load_steps=10 format=3 uid="uid://bnvdkagkks0iq"]
 
 [ext_resource type="Script" path="res://scripts/poster.gd" id="1_66gga"]
+[ext_resource type="Script" path="res://scripts/poster_type.gd" id="2_35h6y"]
+[ext_resource type="Resource" uid="uid://mxnt171cuuuj" path="res://textures/Social studies/social_studies_posters.tres" id="3_hwxqg"]
+[ext_resource type="Resource" uid="uid://cps6dmcj083ka" path="res://textures/Science/science_posters.tres" id="4_s50nk"]
+[ext_resource type="Resource" uid="uid://b3ltkgk3oc380" path="res://textures/Math/math.tres" id="5_1iub5"]
+[ext_resource type="Resource" uid="uid://bw6pv0jsdtwyb" path="res://textures/Graffiti/graffiti_posters.tres" id="6_vac6a"]
+[ext_resource type="Resource" uid="uid://bgrq2uqa0aq30" path="res://textures/ELA/ela_posters.tres" id="7_5dgko"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_35ngs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5tm3i"]
+cull_mode = 2
 
 [node name="poster" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1.5, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("QuadMesh_35ngs")
+surface_material_override/0 = SubResource("StandardMaterial3D_5tm3i")
 script = ExtResource("1_66gga")
+posters = Array[ExtResource("2_35h6y")]([ExtResource("3_hwxqg"), ExtResource("4_s50nk"), ExtResource("5_1iub5"), ExtResource("6_vac6a"), ExtResource("7_5dgko")])

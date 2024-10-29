@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PosterCollection" load_steps=13 format=3 uid="uid://bw6pv0jsdtwyb"]
+
+[ext_resource type="Script" path="res://scripts/poster_type.gd" id="1_r7sn4"]
+[ext_resource type="Texture2D" uid="uid://b3o2yvjymq6s7" path="res://textures/Graffiti/2Q.png" id="2_t5vud"]
+[ext_resource type="Texture2D" uid="uid://d3bywgiv1oooa" path="res://textures/Graffiti/9k.png" id="3_0muh4"]
+[ext_resource type="Texture2D" uid="uid://xhdmnn3llmpb" path="res://textures/Graffiti/Drawing-2.sketchpad.png" id="4_evgfu"]
+[ext_resource type="Texture2D" uid="uid://c622wrqtuvl8a" path="res://textures/Graffiti/Drawing.png" id="5_tu6da"]
+[ext_resource type="Texture2D" uid="uid://dr136br8yb0um" path="res://textures/Graffiti/Drawing.sketchpad_1.png" id="6_mmuj0"]
+[ext_resource type="Texture2D" uid="uid://dkt8cv0wxa4p5" path="res://textures/Graffiti/Drawing_1.png" id="7_1ia4n"]
+[ext_resource type="Texture2D" uid="uid://cl7w1m38d3ou7" path="res://textures/Graffiti/OIP.png" id="8_va871"]
+[ext_resource type="Texture2D" uid="uid://coi5cujk10g0u" path="res://textures/Graffiti/Screenshot_20240819_175024_Canva.jpg" id="9_fvnnt"]
+[ext_resource type="Texture2D" uid="uid://lwq64ujgy0p7" path="res://textures/Graffiti/Untitled88_20241008175605.png" id="10_al8g4"]
+[ext_resource type="Texture2D" uid="uid://qqcpmkqataj0" path="res://textures/Graffiti/Untitled89_20241008175949.png" id="11_ccegh"]
+[ext_resource type="Texture2D" uid="uid://c05ga6aaj87c2" path="res://textures/Graffiti/Untitled90_20241008180400.png" id="12_mnc07"]
+
+[resource]
+script = ExtResource("1_r7sn4")
+name = "graffiti"
+textures = Array[CompressedTexture2D]([ExtResource("2_t5vud"), ExtResource("3_0muh4"), ExtResource("4_evgfu"), ExtResource("5_tu6da"), ExtResource("6_mmuj0"), ExtResource("7_1ia4n"), ExtResource("8_va871"), ExtResource("9_fvnnt"), ExtResource("10_al8g4"), ExtResource("11_ccegh"), ExtResource("12_mnc07")])

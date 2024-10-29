@@ -11,7 +11,9 @@ var target_bg_pitch = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	GuiManager.reset_cursor()
+	GuiManager.force_cursor_state(true)
+	
 	AudioServer.set_bus_mute(1,false)
 	AudioServer.set_bus_mute(2,false)
 	AudioServer.set_bus_solo(6,false)
@@ -25,9 +27,12 @@ func _ready():
 	
 	http.request("https://tiktok-tts.weilbyte.dev/api/generate",["Content-Type: application/json"],HTTPClient.METHOD_POST,body)
 
+func _exit_tree() -> void:
+	GuiManager.force_cursor_state(false)
+	GuiManager.reset_cursor()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if audio_player:
 		var capture : AudioEffectCapture = AudioServer.get_bus_effect(2,0)
 		var buff : PackedVector2Array = capture.get_buffer(capture.get_frames_available())
@@ -48,7 +53,7 @@ func _process(delta):
 	$bg.pitch_scale = lerp($bg.pitch_scale,float(target_bg_pitch),0.005)
 	
 
-func _on_http_request_request_completed(result, response_code, headers, body):
+func _on_http_request_request_completed(result, _response_code, _headers, body):
 	
 	if result == OK:
 		var base_64_str = body.get_string_from_utf8()
@@ -130,7 +135,7 @@ func play_da_dialog():
 func get_the_prompt(which_one):
 	
 	var fake_name = "Player"
-	if !Game.no_steam:
+	if SteamManager.steam_api:
 		fake_name = SteamManager.steam_name
 	
 	var user_dir = OS.get_user_data_dir()
