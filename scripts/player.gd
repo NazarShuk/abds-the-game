@@ -13,7 +13,11 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var books_collected = 0
 
+var inventory = []
+var selected_slot = 0
+var max_slots = 5
 @export var hand : Node3D
+signal inventory_changed
 
 var is_running = false
 var stamina = 100
@@ -37,12 +41,6 @@ var is_suspended = false
 
 var is_on_top = false
 var on_top_counter = 0
-
-@onready var default = $visual_body/Default
-@onready var perfect = $visual_body/Perfect
-@onready var impossible = $visual_body/Impossible
-@onready var freaky = $visual_body/Freaky
-@onready var disoriented = $visual_body/Disoriented
 
 var can_get_item = true
 
@@ -82,16 +80,11 @@ func _enter_tree():
 	$CanvasLayer.hide()
 	if is_multiplayer_authority():
 		$CanvasLayer.show()
-		parent.hide_menu()
 
 
 func _ready():
 	if is_multiplayer_authority():
 		GuiManager.hide_cursor()
-		if GlobalVars.is_bossfight:
-			$"CanvasLayer/Control/Progress bar handler/ProgressBar".hide()
-		
-		
 		
 		$visual_body.pick_skin()
 		GlobalVars.current_skin = $visual_body.duplicate()
@@ -101,10 +94,28 @@ func _ready():
 			camera_3d.far = Settings.render_distance
 		
 		GuiManager.show_tip_once("movement_controls","[color=green]Movement[/color]\nWASD to move, LeftShift to run (consumes stamina), Space to look behind, M to open the minimap")
-
+		
+		inventory.resize(max_slots)
+		for i in range(max_slots):
+			inventory[i] = -1
+		
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		if !get_tree(): return
+		
+		if Input.is_action_just_released("zoom_in"):
+			
+			var slot = selected_slot + 1
+			if slot > inventory.size() - 1:
+				slot = 0
+			
+			select_item(slot)
+		if Input.is_action_just_released("zoom_out"):
+			var slot = selected_slot - 1
+			if slot < 0:
+				slot = inventory.size() - 1
+			select_item(slot)
+		
 		
 		if Input.is_action_just_pressed("submit") and is_shop_open:
 			_on_submit_button_pressed() 
@@ -112,16 +123,10 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("debug") and OS.has_feature("debug"):
 			buy_book_rpc.rpc(steam_name)
 		
-		if GlobalVars.is_bossfight:
-			if global_position.distance_to(get_tree().get_first_node_in_group("evil darel").global_position) < 1:
-				die("darel")
 		
 		if Input.is_action_just_pressed("revive"):
 			if is_dead_of_dariel:
 				_on_revive_timer_timeout()
-		
-		if Input.is_action_just_pressed("punch"):
-			punch()
 		
 		update_item_weights()
 		
@@ -211,50 +216,6 @@ func _physics_process(delta):
 		camera_3d.current = true
 		camera_3d.global_transform = $"Camera target".global_transform
 
-func punch():
-	if ray.get_collider():
-		var collider = ray.get_collider()
-		
-		if GlobalVars.is_bossfight:
-			if collider.is_in_group("lil darel"):
-				
-				$VisualHand/AnimationPlayer.play("parry")
-				collider.inverse = true
-				collider.is_stopped = true
-				await Game.sleep(0.15)
-				$"Parry sound".play()
-				
-				parry_pause(collider)
-				$CanvasLayer/Control/parry.show()
-				get_tree().paused = true
-			elif collider.is_in_group("evil_wipes"):
-				$VisualHand/AnimationPlayer.play("parry")
-				collider.reversed = true
-				collider.is_evil = false
-				collider.is_stopped = true
-				await Game.sleep(0.15)
-				$"Parry sound".play()
-				
-				parry_pause(collider)
-				$CanvasLayer/Control/parry.show()
-				get_tree().paused = true
-			
-		else:
-			$VisualHand/AnimationPlayer.play("punch")
-	else:
-		$VisualHand/AnimationPlayer.play("punch")
-
-func parry_pause(collider):
-	await Game.sleep(0.25)
-	get_tree().paused = false
-	
-	if is_instance_valid(collider):
-		if collider.is_in_group("lil darel") or collider.is_in_group("evil_wipes"):
-			collider.is_stopped = false
-	
-	$CanvasLayer/Control/parry.hide()
-	
-
 var vertical_angle = 0.0
 var max_vertical_angle = 89.0  # You can adjust this as needed.
 
@@ -279,14 +240,16 @@ func _input(event):
 					rotation.x = deg_to_rad(vertical_angle)
 	
 	if event is InputEventKey:
-		if OS.has_feature("debug"):
 			if event.pressed:
 				var regex = RegEx.new() # Create a new RegEx object
 				var pattern = "^[0-9]+$" # Pattern to allow only numbers from 0-9
 				regex.compile(pattern) # Compile the pattern
 				
 				if regex.search(event.as_text_keycode()):
-					pick_item(event.as_text_keycode().to_int())
+					if event.as_text_keycode().to_int() < inventory.size() + 1:
+						select_item(event.as_text_keycode().to_int() - 1)
+					else:
+						select_item(0)
 	
 
 func toilet_tp_timeout():
@@ -385,8 +348,7 @@ func _on_timer_timeout():
 	if is_running and is_moving:
 		if stamina > 0:
 			if can_run:
-				if !GlobalVars.is_bossfight:
-					stamina -= 1
+				stamina -= 1
 				run_multiplier = 2
 		else:
 			is_running = false
@@ -442,28 +404,62 @@ func _on_revive_timer_timeout():
 	await Game.sleep(5)
 	is_dead = false
 
-func pick_item(item: int):
+# Add item to first empty slot
+func add_item(item_id: int) -> bool:
+	for i in range(inventory.size()):
+		if inventory[i] == -1:  # Empty slot
+			inventory[i] = item_id
+			inventory_changed.emit()
+			
+			select_item(i)
+			
+			return true
+	throw_item(item_id)
+	return false  # Inventory full
+
+# Remove item from specific slot
+func remove_item(slot: int) -> int:
+	if slot >= 0 and slot < inventory.size():
+		var item_id = inventory[slot]
+		inventory[slot] = -1
+		select_item(slot)
+		inventory_changed.emit()
+		return item_id
+	return -1
+
+func remove_item_by_id(id : int) -> int:
+	for i in range(0,inventory.size()):
+		if inventory[i] == id:
+			remove_item(i)
+			inventory_changed.emit()
+			return i
+	return -1
+
+# Select and display item
+func select_item(slot: int):
+	if slot < 0 or slot >= inventory.size():
+		selected_slot = -1
+	else:
+		selected_slot = slot
 	
+	# Hide all items first
 	for i in hand.get_children().size():
-		set_item_vis.rpc(i,false)
+		set_item_vis.rpc(i, false)
 	
-	if item != -1:
-		set_item_vis.rpc(item,true)
-		GuiManager.show_tip_once("items","[color=green]Items[/color]\nEvery item can be used by clicking [b]either right or left[/b] mouse button. [b]Press Q[/b] to throw the item out.")
-		$HandTree.set("parameters/pickup/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	# Show selected item if any
+	if selected_slot != -1 and inventory[selected_slot] != -1:
+		set_item_vis.rpc(inventory[selected_slot], true)
+		$HandTree.set("parameters/pickup/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		
+# Get currently selected item ID
+func get_selected_item() -> int:
+	if selected_slot != -1:
+		return inventory[selected_slot]
+	return -1
 
 @rpc("any_peer","call_local")
 func set_item_vis(item : int,vis : bool):
 	hand.get_child(item).visible = vis
-
-func get_cur_item():
-	var id = -1
-	for i in range(0, hand.get_children().size()):
-		if hand.get_children()[i].visible == true:
-			id = i
-			break
-
-	return id
 
 var item_weights = {}
 
@@ -486,14 +482,13 @@ func choose_item(item_ov,ov_timeout = false):
 	if item_ov == -1:
 		if can_get_item:
 			can_get_item = false
-			
-			pick_item(pick_random_weighted(item_weights).to_int())
+			add_item(pick_random_weighted(item_weights).to_int())
 	else:
 		if ov_timeout:
 			if !can_get_item: return
 			can_get_item = false
 		
-		pick_item(item_ov)
+		add_item(item_ov)
 
 func pick_random_weighted(items_chances: Dictionary) -> Variant:
 	# Calculate the total weight
@@ -552,8 +547,9 @@ func die(cause):
 	can_move = false
 	parent.set_player_dead.rpc(name.to_int(), true,true)
 	$"CanvasLayer/Control/Died thing".show()
-	if cause != "darel":
+	if !parent.can_escape:
 		$ReviveTimer.start(5)
+	
 	is_dead = true
 	AudioServer.set_bus_mute(1, true)
 	AudioServer.set_bus_mute(2, true)
@@ -594,6 +590,8 @@ func die(cause):
 		
 		for lil_darel in get_tree().get_nodes_in_group("lil darel"):
 			lil_darel.queue_free()
+	
+	
 
 
 func _on_silent_lunch_timeout():
@@ -606,9 +604,8 @@ func _on_anti_wall_walk_timeout():
 	if is_on_top:
 		on_top_counter += 1
 		if on_top_counter == 10:
-			if !GlobalVars.is_bossfight:
-				die("wall")
-				global_position.y = 1
+			die("wall")
+			global_position.y = 1
 			on_top_counter = 0
 	else:
 		on_top_counter = 0
@@ -736,14 +733,14 @@ func buy_book_rpc(pname):
 func _on_buy_duck_pressed():
 	if credits >= 10:
 		credits -= 10
-		pick_item(4)
+		add_item(4)
 		
 		play_sound("res://money.mp3",0,"shop")
 
 func _on_buy_baja_pressed():
 	if credits >= 15:
 		credits -= 15
-		pick_item(8)
+		add_item(8)
 		
 		play_sound("res://money.mp3",0,"shop")
 
@@ -843,10 +840,7 @@ func control_text_setters():
 	var final_text = ""
 	if looking_at:
 		if looking_at.is_in_group("vending_machine"):
-			if get_cur_item() == -1:
-				final_text += "Vending Machine\nE - grab item"
-			else:
-				final_text += "Vending Machine\nYou already have an item"
+			final_text += "Vending Machine\nE - grab item"
 		elif looking_at.name == "CoffeMachine":
 			final_text += "Coffee Machine\n" + format_time("Coffee timeout","E - drink")
 		elif looking_at.is_in_group("shop"):
@@ -856,7 +850,7 @@ func control_text_setters():
 		elif looking_at.is_in_group("toilet"):
 			final_text += "Toilet\n" + format_time("ToiletTimeout","E - flush down")
 		elif looking_at.name == "water fountain":
-			if get_cur_item() != 7:
+			if get_selected_item() != 7:
 				final_text += "Water fountain\nE - Drink"
 			else:
 				if !hand.get_node("Bucket 7/Bucket/water").visible:
@@ -876,7 +870,7 @@ func control_text_setters():
 		elif looking_at.is_in_group("dropped_item"):
 			final_text += "Dropped item\n E - Pick it up"
 	
-	var cur_item = get_cur_item()
+	var cur_item = get_selected_item()
 	if final_text != "":
 		final_text += "\n"
 	
@@ -988,16 +982,10 @@ func movement_function(delta):
 	else:
 		is_on_top = false
 	
-	if GlobalVars.is_bossfight:
-		if Game.game_started:
-			if is_on_floor() and not is_dead:
-				if Input.is_action_just_pressed("jump"):
-					velocity.y += 5
+	if Input.is_action_pressed("jump"):
+		$"Camera target".rotation_degrees.y = 180
 	else:
-		if Input.is_action_pressed("jump"):
-			$"Camera target".rotation_degrees.y = 180
-		else:
-			$"Camera target".rotation_degrees.y = 0
+		$"Camera target".rotation_degrees.y = 0
 	
 	
 	if Input.is_action_just_pressed("sprint"):
@@ -1087,11 +1075,11 @@ func movement_function(delta):
 				item_use_functions()
 	
 	if Input.is_action_just_pressed("throw"):
-		if get_cur_item() != -1:
-			var cloned_item = hand.get_child(get_cur_item()).get_child(0).get_path()
-			parent.spawn_dropped_item.rpc(hand.global_position,cloned_item,get_cur_item())
+		if get_selected_item() != -1:
+			throw_item(get_selected_item())
 		
-		pick_item(-1)
+		remove_item(selected_slot)
+		
 	if parent.leahy_look:
 		var target = Game.get_closest_node_in_group(global_position,"enemies")
 		
@@ -1101,6 +1089,10 @@ func movement_function(delta):
 			global_rotation_degrees.z = 0
 			
 			cam_fov = 10
+
+func throw_item(item_id):
+	var cloned_item = hand.get_child(item_id).get_child(0).get_path()
+	parent.spawn_dropped_item.rpc(hand.global_position,cloned_item,item_id)
 
 @rpc("any_peer","call_local")
 func spawn_smoke(pos):
@@ -1132,7 +1124,7 @@ func _on_pp_timeout_timeout():
 
 func interaction_functions():
 	if Input.is_action_just_pressed("interact"):
-		if ray.get_collider() != null and get_cur_item() == -1:
+		if ray.get_collider() != null:
 			if ray.get_collider().is_in_group("vending_machines"):
 				var vending_machine = ray.get_collider()
 				
@@ -1140,7 +1132,7 @@ func interaction_functions():
 					if Game.game_started:
 						choose_item(-1)
 					else:
-						pick_item(2)
+						add_item(2)
 					vending_machine.use_vending_machine.rpc()
 				else:
 					GuiManager.show_tip_once("vending_broke","[color=green]Vending Machines[/color]\nVending machines will [b]break[/b] after being used way too much. [b]Mr.Misuraca[/b] will come and [b]fix them.[/b]")
@@ -1168,7 +1160,7 @@ func interaction_functions():
 			if ray.get_collider().is_in_group("dropped_item"):
 				if ray.get_collider():
 					ray.get_collider().remove_item.rpc()
-					pick_item(ray.get_collider().item)
+					add_item(ray.get_collider().item)
 			
 			if ray.get_collider().is_in_group("video_player"):
 				ray.get_collider().play.rpc()
@@ -1176,7 +1168,7 @@ func interaction_functions():
 			if ray.get_collider().name == "fire":
 				ray.get_collider().get_parent().break_glass.rpc()
 				if ray.get_collider().get_parent().can_pickup:
-					pick_item(9)
+					add_item(9)
 				
 			if ray.get_collider().name == "wheel":
 				ray.get_collider().get_parent().spin.rpc()
@@ -1208,68 +1200,68 @@ func interaction_functions():
 				global_position = farthest_obj.global_position
 				await Game.sleep(2)
 				play_sound("res://flush.mp3",5)
-			if ray.get_collider().is_in_group("blackboard"):
-				ray.get_collider().select_image()
+			if ray.get_collider():
+				if ray.get_collider().is_in_group("blackboard"):
+					ray.get_collider().select_image()
 			
 			
 			if ray.get_collider():
 				if ray.get_collider().is_in_group("water fountain"):
-					if get_cur_item() == 7:
+					if get_selected_item() == 7:
 						hand.get_node("Bucket 7/Bucket/water").show()
 					else:
 						stamina = 100
 			if ray.get_collider():
 				if ray.get_collider().is_in_group("bucket"):
-					if get_cur_item() == -1:
-						pick_item(7)
+					add_item(7)
 
 func item_use_functions():
 	if Input.is_action_just_pressed("use_item"):
-		if get_cur_item() == 0:
-			pick_item(-1)
+		if get_selected_item() == 0:
+			remove_item(selected_slot)
 			add_speed_boost(1, 3)
-		elif get_cur_item() == 1:
-			pick_item(-1)
+		elif get_selected_item() == 1:
+			remove_item(selected_slot)
 			spawn_clorox.rpc($RayCast3D.global_position, $"Camera target".global_rotation, name.to_int())
-		elif get_cur_item() == 2:
-			pick_item(-1)
+		elif get_selected_item() == 2:
+			remove_item(selected_slot)
 			velocity.y += 10
 			shart.rpc()
-		elif get_cur_item() == 4:
+		elif get_selected_item() == 4:
 			
 			squeak.rpc()
-			pick_item(-1)
+			remove_item(selected_slot)
 			parent.start_da_pacer.rpc(name.to_int()) # i want to kms because of this
-		elif get_cur_item() == 6:
-			pick_item(-1)
+		elif get_selected_item() == 6:
+			remove_item(selected_slot)
 			add_speed_boost(2, 3)
 			play_sound("res://redbull.mp3")
-		elif get_cur_item() == 7:
+		elif get_selected_item() == 7:
 			
 			if hand.get_node("Bucket 7/Bucket/water").visible:
 				hand.get_node("Bucket 7/Bucket/water").visible = false
-				pick_item(-1)
+				remove_item(selected_slot)
 				play_sound("res://water.mp3")
 				
 				spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
-		elif get_cur_item() == 8:
-			pick_item(-1)
+		elif get_selected_item() == 8:
+			remove_item(selected_slot)
 			is_baja = true
 			
 			add_speed_boost(4,7.5)
 			$"baja trail".start()
-		elif get_cur_item() == 9:
-			pick_item(-1)
+		elif get_selected_item() == 9:
+			remove_item(selected_slot)
 			spawn_smoke.rpc(global_position)
 			play_sound("res://fire extinguisher.mp3")
-		elif get_cur_item() == 10:
-			pick_item(-1)
+		elif get_selected_item() == 10:
+			remove_item(selected_slot)
 			add_speed_boost(3,5)
 			play_sound("res://models/sonic.mp3",3)
 
 func item_give_functions():
 	if Input.is_action_just_pressed("give"):
-		if get_cur_item() == 3:
+		if get_selected_item() == 3:
 			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 			var distance = INF
 			if evil_leahy:
@@ -1282,12 +1274,12 @@ func item_give_functions():
 				dist = global_position.distance_to(fox.global_position)
 			
 			if dist < 20:
-				pick_item(-1)
+				remove_item(selected_slot)
 				fox.mr_fox_collect.rpc(1)
 			elif distance < 15:
-				pick_item(-1)
+				remove_item(selected_slot)
 				evil_leahy.appease.rpc(steam_name,5)
-		elif get_cur_item() == 5:
+		elif get_selected_item() == 5:
 			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 			var distance = INF
 			if evil_leahy:
@@ -1300,25 +1292,25 @@ func item_give_functions():
 				dist = global_position.distance_to(fox.global_position)
 			
 			if dist < 30:
-				pick_item(-1)
+				remove_item(selected_slot)
 				fox.mr_fox_collect.rpc(2)
 			elif distance < 30:
-				pick_item(-1)
+				remove_item(selected_slot)
 				evil_leahy.appease.rpc(steam_name,15)
 			
-		elif get_cur_item() == 6:
+		elif get_selected_item() == 6:
 			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 			var distance = global_position.distance_to(evil_leahy.global_position)
 			
 			if distance < 10:
-				pick_item(-1)
+				remove_item(selected_slot)
 				evil_leahy.boost_leahy.rpc(steam_name)
-		elif get_cur_item() == 8:
+		elif get_selected_item() == 8:
 			var evil_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 			var distance = global_position.distance_to(evil_leahy.global_position)
 			
 			if distance < 10:
-				pick_item(-1)
+				remove_item(selected_slot)
 				evil_leahy.baja_blast_her.rpc(steam_name)
 
 func _on_baja_trail_timeout():

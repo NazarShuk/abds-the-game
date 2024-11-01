@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=125 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
@@ -20,9 +20,11 @@
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="Script" path="res://scripts/Music2.gd" id="13_il7ji"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
+[ext_resource type="AudioStream" uid="uid://uw1c631w2s6n" path="res://sounds/escape_start.mp3" id="16_jhdn0"]
 [ext_resource type="PackedScene" uid="uid://xxyguo1ps1gc" path="res://school.tscn" id="17_3oefh"]
 [ext_resource type="PackedScene" uid="uid://45erl4lj8ygx" path="res://scenes/leader_board.tscn" id="17_625id"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
+[ext_resource type="AudioStream" uid="uid://biy40pusiwx17" path="res://sounds/escape_loop.mp3" id="17_on1kb"]
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
@@ -52,7 +54,7 @@
 [ext_resource type="PackedScene" uid="uid://b0kihxyehcgo4" path="res://models/Sports Car.glb" id="48_in3nt"]
 [ext_resource type="PackedScene" uid="uid://bc3kpnykxfbph" path="res://gambling_wheel.tscn" id="50_jgq1w"]
 [ext_resource type="Script" path="res://scripts/camera_tv.gd" id="53_0rrcy"]
-[ext_resource type="PackedScene" uid="uid://diy5vww1d7cf4" path="res://evil darel.tscn" id="65_a2gyi"]
+[ext_resource type="PackedScene" uid="uid://tiwq41uqylbi" path="res://scenes/exit.tscn" id="55_fvbsc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -103,6 +105,12 @@ properties/6/replication_mode = 1
 properties/7/path = NodePath("Music2:pitch_scale")
 properties/7/spawn = true
 properties/7/replication_mode = 1
+properties/8/path = NodePath(".:escape")
+properties/8/spawn = true
+properties/8/replication_mode = 2
+properties/9/path = NodePath(".:can_escape")
+properties/9/spawn = true
+properties/9/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_8oj72"]
 length = 0.001
@@ -346,6 +354,25 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Label4/gameConfigClient:text")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_du2f5"]
+clip_count = 2
+clip_0/name = &"intro"
+clip_0/stream = ExtResource("16_jhdn0")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"loop"
+clip_1/stream = ExtResource("17_on1kb")
+clip_1/auto_advance = 1
+clip_1/next_clip = 1
+_transitions = {
+Vector2i(0, 0): {
+"fade_beats": 1,
+"fade_mode": 4,
+"from_time": 0,
+"to_time": 1
+}
+}
 
 [sub_resource type="SphereMesh" id="SphereMesh_2pqsq"]
 
@@ -1373,11 +1400,12 @@ stream = ExtResource("3_ancut")
 volume_db = -5.0
 bus = &"Music"
 
-[node name="Music2" type="AudioStreamPlayer" parent="."]
+[node name="Music2" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("game")]
 stream = ExtResource("4_m78sl")
 volume_db = -7.5
 bus = &"Music"
 script = ExtResource("13_il7ji")
+game = NodePath("..")
 
 [node name="Timer" type="Timer" parent="Music2"]
 wait_time = 4.0
@@ -1385,6 +1413,10 @@ one_shot = true
 
 [node name="bum" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_2rhtw")
+bus = &"Dialogs"
+
+[node name="escape" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_du2f5")
 bus = &"Dialogs"
 
 [node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
@@ -2101,14 +2133,6 @@ autoplay = "carpool"
 [node name="wheel" parent="." node_paths=PackedStringArray("game") instance=ExtResource("50_jgq1w")]
 game = NodePath("..")
 
-[node name="EvilDarel" parent="." instance=ExtResource("65_a2gyi")]
-transform = Transform3D(-5.24537e-06, 60, 103.923, 0, 103.923, -60, -120, -2.62268e-06, -4.54262e-06, -71.921, 89.0039, -87.2176)
-visible = false
-
-[node name="darel_timer" type="Timer" parent="EvilDarel"]
-wait_time = 80.0
-one_shot = true
-
 [node name="CameraTv" type="MeshInstance3D" parent="." node_paths=PackedStringArray("subviewports")]
 transform = Transform3D(-1.85835e-07, 0, 0.256015, 0, 1.8242, 0, -4.25141, 0, -1.11908e-08, 25.5962, 1.55983, -45.0694)
 mesh = SubResource("BoxMesh_g8wa1")
@@ -2216,6 +2240,9 @@ current = true
 fov = 82.5
 far = 66.05
 
+[node name="Exit" parent="." node_paths=PackedStringArray("game") instance=ExtResource("55_fvbsc")]
+game = NodePath("..")
+
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
@@ -2223,4 +2250,3 @@ far = 66.05
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]
-[connection signal="timeout" from="EvilDarel/darel_timer" to="." method="_on_darel_timer_timeout"]

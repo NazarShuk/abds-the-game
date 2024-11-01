@@ -1,7 +1,7 @@
 extends AudioStreamPlayer
 
 var pitch_target = 1.0
-
+@export var game : Node3D
 
 func _ready():
 	Game.on_power_changed.connect(_power_changed)
@@ -14,13 +14,10 @@ func _power_changed(power_on):
 
 func _process(_delta):
 	
-	pitch_scale = lerp(pitch_scale,pitch_target,0.05)
+	pitch_scale = lerp(pitch_scale,pitch_target,0.01)
+	var final_pitch = 1.0
 	
-	if GlobalVars.is_bossfight == false:
-		
-		
-		var final_pitch = 1.0
-		
+	if !game.escape:
 		if Game.collected_books == Game.books_to_collect - 1:
 			final_pitch += 0.5
 		
@@ -30,5 +27,7 @@ func _process(_delta):
 				final_pitch -= 0.5
 		
 		final_pitch += Game.book_boost
-		
-		pitch_target = final_pitch
+	else:
+		final_pitch = 4.0
+	
+	pitch_target = final_pitch

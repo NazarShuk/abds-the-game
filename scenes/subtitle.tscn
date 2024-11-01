@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw4fjg7djigwv"]
+
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_g7ve8"]
+[ext_resource type="Script" path="res://Subtitle.gd" id="2_2pm3o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiy5l"]
+bg_color = Color(0, 0, 0, 0.584314)
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[node name="Subtitle" type="Label"]
+theme_override_fonts/font = ExtResource("1_g7ve8")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_wiy5l")
+text = "asd"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_2pm3o")

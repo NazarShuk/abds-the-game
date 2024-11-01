@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://chfd6mwokfbom"]
+
+[ext_resource type="Script" path="res://scenes/item_visualiser.gd" id="1_7jni1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxrki"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(1, 1, 1, 1)
+ground_bottom_color = Color(1, 1, 1, 1)
+ground_horizon_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Sky" id="Sky_msuqp"]
+sky_material = SubResource("ProceduralSkyMaterial_jxrki")
+
+[sub_resource type="Environment" id="Environment_15wst"]
+background_mode = 2
+sky = SubResource("Sky_msuqp")
+
+[node name="ItemVisualiser" type="Panel"]
+size_flags_horizontal = 3
+script = ExtResource("1_7jni1")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 4
+
+[node name="ItemHold" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.43005)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_15wst")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.25098)

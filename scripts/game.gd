@@ -1,8 +1,5 @@
 extends Node3D
 
-const PRE_BOSS = preload("res://pre_boss.mp3")
-const GLORY = preload("res://dariel/placeholders/Glory [kzbbO_lyZ94].mp3")
-const NOISE = preload("res://noise.mp3")
 const PLAYER = preload("res://player.tscn")
 const LOGOS = preload("res://logos.tscn")
 const BAD_END = preload("res://bad_end.tscn")
@@ -14,13 +11,10 @@ const PERFECT_END = preload("res://perfect_end.tscn")
 const HUH_ENDING = preload("res://huh_ending.tscn")
 const HUH_ENDING_2 = preload("res://huh_ending_2.tscn")
 const WORST_END = preload("res://worst_end.tscn")
-const VERSUS_LOOP = preload("res://dariel/placeholders/versus_loop.mp3")
 
 var peer
 
-@onready var book_spawns = $School/BookSpawns
 @onready var collected_books_label = $CanvasLayer/Main/CollectedBooksLabel
-
 @export var players_in_lobby = 0
 
 @export var canPlayersMove = true
@@ -33,8 +27,6 @@ var is_pacer_intro = false
 
 @export var do_achievements = true
 
-@export var shop : StaticBody3D
-
 @onready var player_list_text = $CanvasLayer/Lobby/playerListText
 var players_spawned = false
 
@@ -43,6 +35,12 @@ var players_spawned = false
 @export var school : Node3D
 
 var do_vertical_camera_normal = false
+
+var music_pitch_target = 1
+var music_pitch_boost = 1
+
+@export var escape = false
+@export var can_escape = false
 
 func _enter_tree():
 	name = "MainGameScene"
@@ -63,24 +61,6 @@ func _ready():
 	if Settings.better_lighting != null:
 		Game.sun.visible = Settings.better_lighting
 	
-	
-	if GlobalVars.is_bossfight:
-		$CanvasLayer/Glitch.show()
-		$Music1.stream = PRE_BOSS
-		$Music2.stream = GLORY
-		$Music0.stream = NOISE
-		$Music0.play()
-		
-		# Lobby
-		$CanvasLayer/Lobby/Button7.hide()
-		$CanvasLayer/Lobby/Button8.hide()
-		$CanvasLayer/Lobby/Label4.hide()
-		$CanvasLayer/Lobby/Label2.hide()
-		$CanvasLayer/Lobby/achievement.hide()
-		$CanvasLayer/Lobby/Label3.hide()
-		$CanvasLayer/Lobby/playerListText.hide()
-		
-		Game.sun.visible = false
 	
 	prepare_multiplayer()
 	$Music0.play(GlobalVars.menu_music_duration)
@@ -107,9 +87,6 @@ func _on_disconnected_from_server():
 func _on_book_collected(_amount):
 	if !multiplayer.is_server(): return
 	
-	if GlobalVars.is_bossfight:
-		evil_darel.health -= 5
-	
 	if is_bet:
 		bet_books_left -= 1
 		if bet_books_left <= 0:
@@ -120,76 +97,40 @@ func _on_book_collected(_amount):
 			start_da_game.rpc()
 			canPlayersMove = false
 	elif Game.collected_books >= Game.books_to_collect:
-		if !GlobalVars.is_bossfight:
-			var total_deaths = 0
-			for idd in Game.players.keys():
-				total_deaths += Game.players[idd].deaths
-			
-			var default_params = GameParams.new()
-			
-			for property in default_params.get_property_list():
-				if property.name.begins_with("param_"):
-					if default_params.get(property.name) != Game.game_params.get(property.name) and not default_params.neutral_parameters.has(property.name):
-						do_achievements = false
-						break
-			
-			if do_achievements:
-				if total_deaths == 0:
-					# impossible ending
-					end_game.rpc("imp")
-				elif total_deaths <= 3:
-					# perfect run
-					end_game.rpc("perfect")
-				elif total_deaths > 3:
-					if !Game.game_params.get_param("vertical_camera"):
-						end_game.rpc("normal")
-					else:
-						end_game.rpc("disoriented")
-			else:
+		escape_mode.rpc()
+
+func ending_check():
+	var total_deaths = 0
+	for idd in Game.players.keys():
+		total_deaths += Game.players[idd].deaths
+	
+	var default_params = GameParams.new()
+	
+	for property in default_params.get_property_list():
+		if property.name.begins_with("param_"):
+			if default_params.get(property.name) != Game.game_params.get(property.name) and not default_params.neutral_parameters.has(property.name):
+				do_achievements = false
+				break
+	
+	if do_achievements:
+		if total_deaths == 0:
+			# impossible ending
+			end_game.rpc("imp")
+		elif total_deaths <= 3:
+			# perfect run
+			end_game.rpc("perfect")
+		elif total_deaths > 3:
+			if !Game.game_params.get_param("vertical_camera"):
 				end_game.rpc("normal")
-
-var music_pitch_target = 1
-var music_pitch_boost = 1
-
-@onready var boss_bar = $CanvasLayer/Main/Bossbar/ProgressBar
-@onready var evil_darel = $EvilDarel
-@onready var previous_darel_health = evil_darel.health
-
+			else:
+				end_game.rpc("disoriented")
+	else:
+		end_game.rpc("normal")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
-		if GlobalVars.is_bossfight:
-			
-			if Input.is_action_just_pressed("debug"):
-				evil_darel.health -= 5
-			
-			if Game.game_started:
-				boss_bar.value = lerp(boss_bar.value,float(evil_darel.health),0.1)
-				evil_darel.look_at(get_tree().get_first_node_in_group("player").global_position)
-				
-				$CanvasLayer/Main.scale = lerp($CanvasLayer/Main.scale, Vector2(1,1),0.1)
-				
-				if previous_darel_health > evil_darel.health:
-					$CanvasLayer/Main.scale += Vector2(0.1,0.1)
-				
-				previous_darel_health = evil_darel.health
-				music_pitch_target = 1 #((100 - evil_darel.health) / 200) + 1
-				
-				if !evil_darel.is_phase_2:
-					if evil_darel.health < 50:
-						if $EvilDarel/darel_timer.is_stopped():
-							$EvilDarel/darel_timer.start()
-						$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.value = $EvilDarel/darel_timer.time_left
-						$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = true
-					else:
-						if !$EvilDarel/darel_timer.is_stopped():
-							$EvilDarel/darel_timer.stop()
-						$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = false
-				else:
-					$CanvasLayer/Main/Bossbar/ProgressBar/ProgressBar2.visible = false
-			
 			
 			
 		if Input.is_action_just_pressed("jump"):
@@ -199,19 +140,18 @@ func _process(_delta):
 		
 		Game.calculate_total_books()
 		
-		$Music2.pitch_scale = lerp($Music2.pitch_scale,float(music_pitch_target * music_pitch_boost),0.05)
 		update_player_text()
 	
 		players_in_lobby = Game.players.keys().size()
 		
 		if Game.game_started:
-			if !GlobalVars.is_bossfight:
+			if !can_escape:
 				if !is_pacer:
 					collected_books_label.text = str(Game.collected_books) + " books collected out of " + str(Game.books_to_collect)
 					if is_bet:
 						collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
 			else:
-				collected_books_label.text = ""
+				collected_books_label.text = "Run."
 		else:
 			collected_books_label.text = "Find a ELA book!"
 	
@@ -273,9 +213,6 @@ func _on_peer_connected(id = 1):
 	await Game.sleep(1)
 	request_steam_usr.rpc_id(id)
 	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
-	
-	if GlobalVars.is_bossfight:
-		pre_start_game_btn()
 
 
 @rpc("any_peer","call_local")
@@ -327,6 +264,8 @@ func pre_start_game():
 	$CanvasLayer/Lobby.hide()
 	$CanvasLayer/Main.show()
 	$pre_start_game_anim/AnimationPlayer.play("pre")
+	$Music1.play()
+	$Music0.stop()
 
 
 func _on_peer_disconnect(id):
@@ -344,19 +283,15 @@ func start_da_game():
 	$bum.play()
 	$Music1.stop()
 	
-	if GlobalVars.is_bossfight || OS.has_feature("debug"):
+	if OS.has_feature("debug"):
 		$Music2/Timer.start(0.01)
 	else:
 		$Music2/Timer.start()
 	
-	if !GlobalVars.is_bossfight:
-		$CanvasLayer/Glitch.hide()
-
-
+	$CanvasLayer/Glitch.hide()
 	if multiplayer.is_server():
 		if Game.lobby_id:
 			SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
-		if !GlobalVars.is_bossfight:
 			leahy_look = true
 
 func _on_timer_timeout():
@@ -368,17 +303,6 @@ func _on_timer_timeout():
 		leahy_look = false
 		$FakeFox/AnimationPlayer.play("new_animation")
 		
-		if GlobalVars.is_bossfight:
-			$School.toggle_ceiling(false)
-			do_vertical_camera_normal = true
-			$EvilDarel.show()
-			$CanvasLayer/Main/Bossbar.show()
-			$CanvasLayer/ColorRect/AnimationPlayer.play("bomboklatz")
-			GuiManager.show_tip("[color=green]Movement[/color]\nPress [b]space[/b] to jump [color=orange]//[/color] press [b]F key[/b] to punch [color=orange]//[/color] look up and down with [b]mouse[/b]",7)
-			
-			await Game.sleep(10)
-			
-			GuiManager.show_tip("[color=green]Darel.png[/color]\nDamage [b]Darel.png[/b] with clorox wipes [color=orange]//[/color] by collecting books", 7)
 
 @rpc("any_peer","call_local")
 func set_player_dead(id,is_dead,do_deaths):
@@ -386,22 +310,26 @@ func set_player_dead(id,is_dead,do_deaths):
 		Game.players[id].is_dead = is_dead
 		if is_dead and do_deaths:
 			
-			if !GlobalVars.is_bossfight:
-				Game.players[id].deaths += 1
+			Game.players[id].deaths += 1
 			var total_deaths = 0
+			var dead_players = 0
+			
+			
 			for pl_id in Game.players.keys():
 				total_deaths += Game.players[pl_id].deaths
+				if Game.players[pl_id].is_dead:
+					dead_players += 1
 			
-			if !GlobalVars.is_bossfight:
-				Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)))
+			var is_eveyone_dead = dead_players == Game.players.keys().size()
+			Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)))
 			if !is_dp:
-				if total_deaths >= (Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)):
+				if total_deaths >= (Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)) or (can_escape and is_eveyone_dead):
 					if Game.collected_books == 1:
 						end_game.rpc("you suck")
 					elif Game.collected_books > 1:
 						end_game.rpc("worst")
 					elif Game.collected_books == 0:
-						end_game("dumb")
+						end_game.rpc("dumb")
 			else:
 				end_game.rpc("none")
 
@@ -433,8 +361,6 @@ func end_game(ending : String):
 			
 			print("all players disconnected")
 		
-		if is_quitting:
-			get_tree().quit()
 		if Game.players.has(1):
 			set_singleton(Game.players[1].deaths,Game.players[1].books_collected,ending)
 		
@@ -490,9 +416,6 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_packed(LOGOS)
 	peer.close()
 
-func hide_menu():
-	$Music1.play()
-	$Music0.stop()
 
 @onready var current_pacer_target = $"School/Pacer/Pacer target"
 
@@ -763,16 +686,25 @@ func give_item_to_everyone(item_id):
 func reload_game():
 	get_tree().change_scene_to_packed(LOGOS)
 
-func _on_darel_timer_timeout():
-	get_tree().get_first_node_in_group("player").die("darel")
-
-func darel_phase2_transition():
+@rpc("authority","call_local")
+func escape_mode():
+	if escape: return
+	if multiplayer.is_server():
+		escape = true
+	
+	await Game.sleep(5)
 	$Music2.stop()
-	$EvilDarel/darel_timer.stop()
-	$CanvasLayer/ColorRect/AnimationPlayer.play("bomboklatz")
-
-func darel_phase2_start():
-	$Music2.stream = VERSUS_LOOP
-	$Music2.play()
-
-var is_quitting = false
+	await Game.sleep(2)
+	$escape.play()
+	
+	GuiManager.show_subtitle_for("Congratulations! You collected", 2.36)
+	await Game.sleep(2.36)
+	GuiManager.show_subtitle_for("All green ELA notebooks", 5.23 - 2.36)
+	await Game.sleep(5.23 - 2.36)
+	GuiManager.show_subtitle_for("Now all you have to do is...", 6.83 - 5.23)
+	await Game.sleep(6.83 - 5.23)
+	GuiManager.show_subtitle_for("Run.", 7.81 - 6.83)
+	await Game.sleep(7.81 - 6.83)
+	#await Game.sleep(7.81)
+	can_escape = true
+	

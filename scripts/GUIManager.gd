@@ -4,7 +4,8 @@ signal on_subtitle(text, duration)
 
 func show_subtitle(text, stream):
 	on_subtitle.emit(text,stream.get_length())
-
+func show_subtitle_for(text,sec):
+	on_subtitle.emit(text,sec)
 
 var saved_tips : Dictionary = {}
 var tips_queue = []

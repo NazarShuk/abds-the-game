@@ -132,7 +132,6 @@ func _on_absences_timeout():
 	if !multiplayer.is_server() : return
 	if !Game.game_started : return
 	if Game.powered_off: return
-	if GlobalVars.is_bossfight: return
 	
 	if randi_range(0, 20) == 1: 
 		absent = true

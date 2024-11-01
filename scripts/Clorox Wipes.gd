@@ -18,11 +18,7 @@ var is_stopped = false
 
 func _ready():
 	global_position = initial_pos
-	if !GlobalVars.is_bossfight:
-		$Timer.start(3)
-	else:
-		if !stop_timer:
-			$Timer.start(15)
+	$Timer.start(3)
 	
 	if is_evil:
 		$hand.show()

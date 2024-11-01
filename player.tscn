@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=138 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="7_mv5hh"]
 [ext_resource type="AudioStream" uid="uid://d2e0x50n80346" path="res://jumpscare-154489 (1)_01.mp3" id="8_4ilia"]
 [ext_resource type="VideoStream" path="res://models/jumpscare.ogv" id="9_7mdnm"]
+[ext_resource type="Script" path="res://scripts/inventory_ui.gd" id="10_777lu"]
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://shop.mp3" id="12_u07an"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="12_xfb3j"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
@@ -107,6 +108,9 @@ load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bgiyt"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulseo"]
+bg_color = Color(0.6, 0.6, 0.6, 0.396078)
 
 [sub_resource type="Animation" id="Animation_3kw6p"]
 length = 0.001
@@ -1326,6 +1330,28 @@ offset_bottom = 127.0
 texture = SubResource("ViewportTexture_bgiyt")
 expand_mode = 1
 
+[node name="Inventory" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("player", "hand")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -228.0
+offset_right = 228.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ulseo")
+script = ExtResource("10_777lu")
+player = NodePath("../../..")
+hand = NodePath("../../../Hand")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Inventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Freezer" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -2473,14 +2499,15 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -39.0
-offset_top = -102.0
+offset_top = -228.0
 offset_right = 39.0
-offset_bottom = -73.0
+offset_bottom = -199.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_wiy5l")
+text = "asd"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("47_m8xrv")
@@ -2793,6 +2820,7 @@ near = 0.001
 far = 20.0
 script = ExtResource("64_5sp6g")
 
+[connection signal="inventory_changed" from="." to="CanvasLayer/Control/Inventory" method="_on_player_inventory_changed"]
 [connection signal="area_entered" from="PlayerArea" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="PlayerArea" to="." method="_on_area_3d_area_exited"]
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
