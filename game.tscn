@@ -2241,6 +2241,7 @@ fov = 82.5
 far = 66.05
 
 [node name="Exit" parent="." node_paths=PackedStringArray("game") instance=ExtResource("55_fvbsc")]
+visible = false
 game = NodePath("..")
 
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
