@@ -38,11 +38,9 @@ func toggle_power(do_ov = false, ov = false):
 	
 	if !Game.powered_off:
 		turn_power_on.rpc()
-		Game.info_text("Power was fixed")
 		Game.set_powered_off.rpc(false)
 	else:
 		turn_power_off.rpc()
-		Game.info_text("Power got broken")
 		Game.set_powered_off.rpc(true)
 
 @rpc("authority","call_local")

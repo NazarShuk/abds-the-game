@@ -60,7 +60,6 @@ func mr_fox_collect(amount : int):
 				mtndew.global_position = global_position
 			
 			notebooks_left = 0
-			Game.info_text("Mr.Fox was overfed")
 		else:
 			notebooks_left += amount
 			Game.info_text("Follow Mr.Fox to find " + str(notebooks_left) + " notebooks!")

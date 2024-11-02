@@ -1,4 +1,4 @@
-[gd_scene load_steps=138 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=143 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
@@ -31,6 +31,7 @@
 [ext_resource type="FontFile" uid="uid://brrbdffmjpsrm" path="res://Verdana_bold.ttf" id="26_kvv47"]
 [ext_resource type="AudioStream" uid="uid://bkdgbgtv4tcoy" path="res://sounds/correct_new.mp3" id="27_xfgq1"]
 [ext_resource type="Texture2D" uid="uid://cb10q13033mpt" path="res://0b41253a4041ddb57004d633e4979430.jpg" id="28_k1c3m"]
+[ext_resource type="Script" path="res://scripts/spectator.gd" id="30_iahmv"]
 [ext_resource type="Script" path="res://scripts/toilet_jumpscare.gd" id="32_3qmes"]
 [ext_resource type="Texture2D" uid="uid://v1vadjq7khtm" path="res://images/toilet.png" id="32_jmipm"]
 [ext_resource type="AudioStream" uid="uid://clbm6v7duehjt" path="res://sounds/invincible.mp3" id="33_lhoi0"]
@@ -89,6 +90,9 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("walking:pitch_scale")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath(".:is_dead")
+properties/7/spawn = true
+properties/7/replication_mode = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofe5t"]
 shader = ExtResource("20_kprs4")
@@ -578,6 +582,110 @@ _data = {
 "RESET": SubResource("Animation_rjchn"),
 "jumpscare": SubResource("Animation_xwtr6")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ol4fw"]
+bg_color = Color(0.791999, 0.791999, 0.791999, 1)
+
+[sub_resource type="Shader" id="Shader_w7ybm"]
+code = "shader_type canvas_item;
+
+#define time iTime
+#define resolution ( iResolution.xy )
+#define gl_FragCoord fragCoord
+#define gl_FragColor fragColor
+#define fragCoord FRAGCOORD
+#define fragColor COLOR
+#define iResolution 1.0/SCREEN_PIXEL_SIZE
+#define iTime TIME
+
+uniform float speed : hint_range(-20.0, 20.0, 0.1) = 8.0;
+uniform sampler2D iChannel0;
+
+vec3 tex2D( sampler2D _tex, vec2 _p ){
+  vec3 col = texture( _tex, _p ).xyz;
+  if ( 0.5 < abs( _p.x - 0.5 ) ) {
+    col = vec3( 0.1 );
+  }
+  return col;
+}
+
+float hash( vec2 _v ){
+  return fract( sin( dot( _v, vec2( 89.44, 19.36 ) ) ) * 22189.22 );
+}
+
+float iHash( vec2 _v, vec2 _r ){
+  float h00 = hash( vec2( floor( _v * _r + vec2( 0.0, 0.0 ) ) / _r ) );
+  float h10 = hash( vec2( floor( _v * _r + vec2( 1.0, 0.0 ) ) / _r ) );
+  float h01 = hash( vec2( floor( _v * _r + vec2( 0.0, 1.0 ) ) / _r ) );
+  float h11 = hash( vec2( floor( _v * _r + vec2( 1.0, 1.0 ) ) / _r ) );
+  vec2 ip = vec2( smoothstep( vec2( 0.0, 0.0 ), vec2( 1.0, 1.0 ), mod( _v*_r, 1. ) ) );
+  return ( h00 * ( 1. - ip.x ) + h10 * ip.x ) * ( 1. - ip.y ) + ( h01 * ( 1. - ip.x ) + h11 * ip.x ) * ip.y;
+}
+
+float noise( vec2 _v ){
+  float sum = 0.;
+  for( int i=1; i<9; i++ )
+  {
+    sum += iHash( _v + vec2( float(i) ), vec2( 2. * pow( 2., float( i ) ) ) ) / pow( 2., float( i ) );
+  }
+  return sum;
+}
+
+void fragment(){
+  vec2 uv = gl_FragCoord.xy / resolution;
+  vec2 uvn = uv;
+  vec3 col = vec3( 0.0 );
+
+  // tape wave
+  uvn.x += ( noise( vec2( uvn.y, time ) ) - 0.5 )* 0.005;
+  uvn.x += ( noise( vec2( uvn.y * 100.0, time * 10.0 ) ) - 0.5 ) * 0.01;
+
+  // tape crease
+  float tcPhase = clamp( ( sin( uvn.y * speed - time * PI * 1.2 ) - 0.92 ) * noise( vec2( time ) ), 0.0, 0.01 ) * 10.0;
+  float tcNoise = max( noise( vec2( uvn.y * 100.0, time * 10.0 ) ) - 0.5, 0.0 );
+  uvn.x = uvn.x - tcNoise * tcPhase;
+
+  // switching noise
+  float snPhase = smoothstep( 0.03, 0.0, uvn.y );
+  uvn.y += snPhase * 0.3;
+  uvn.x += snPhase * ( ( noise( vec2( uv.y * 100.0, time * 10.0 ) ) - 0.5 ) * 0.2 );
+    
+  col = tex2D( iChannel0, vec2(uvn.x, uvn.y) );
+  col *= 1.0 - tcPhase;
+  col = mix(
+    col,
+    col.yzx,
+    snPhase
+  );
+
+  // bloom
+  for( float x = -4.0; x < 2.5; x += 1.0 ){
+    col.xyz += vec3(
+      tex2D( iChannel0, uvn + vec2( x - 0.0, 0.0 ) * 7E-3 ).x,
+      tex2D( iChannel0, uvn + vec2( x - 2.0, 0.0 ) * 7E-3 ).y,
+      tex2D( iChannel0, uvn + vec2( x - 4.0, 0.0 ) * 7E-3 ).z
+    ) * 0.1;
+  }
+  col *= 0.6;
+
+  // ac beat
+  col *= 1.0 + clamp( noise( vec2( 0.0, uv.y + time * 0.2 ) ) * 0.6 - 0.25, 0.0, 0.1 );
+
+  gl_FragColor = vec4( col, 1.0 );
+  gl_FragColor = vec4( col, 1.0 - col.r );
+}
+
+#undef gl_FragCoord
+#undef gl_FragColor"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nxc1c"]
+viewport_path = NodePath("CanvasLayer/Control/Died thing/Spectate thing/Spectator/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5rkxb"]
+resource_local_to_scene = true
+shader = SubResource("Shader_w7ybm")
+shader_parameter/speed = 8.0
+shader_parameter/iChannel0 = SubResource("ViewportTexture_nxc1c")
 
 [sub_resource type="Animation" id="Animation_w14s4"]
 length = 0.001
@@ -1239,6 +1347,7 @@ offset_right = 2.5
 offset_bottom = 2.5
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(2.5, 2.5)
 texture = ExtResource("18_c15q6")
 expand_mode = 1
 
@@ -1335,9 +1444,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -228.0
-offset_right = 228.0
-offset_bottom = 70.0
+offset_left = -155.0
+offset_top = 17.0
+offset_right = 155.0
+offset_bottom = 87.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ulseo")
 script = ExtResource("10_777lu")
@@ -2248,21 +2358,51 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Died thing"]
+[node name="Spectate thing" type="Panel" parent="CanvasLayer/Control/Died thing"]
+visible = false
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = 81.0
-offset_bottom = 187.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ol4fw")
+
+[node name="Spectator" type="SubViewportContainer" parent="CanvasLayer/Control/Died thing/Spectate thing" node_paths=PackedStringArray("player", "label")]
+material = SubResource("ShaderMaterial_5rkxb")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("30_iahmv")
+player = NodePath("../../../../..")
+label = NodePath("../Label")
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Died thing/Spectate thing/Spectator"]
+handle_input_locally = false
+use_occlusion_culling = true
+size = Vector2i(1280, 720)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Died thing/Spectate thing/Spectator/SubViewport"]
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Died thing/Spectate thing"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 42.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("6_l1x2u")
-theme_override_font_sizes/font_size = 90
-text = "jumpscare"
+theme_override_font_sizes/font_size = 46
+text = "Spectating "
 horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Died thing"]
 visible = false
@@ -2294,6 +2434,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("9_7mdnm")
+expand = true
 bus = &"Non Mute"
 
 [node name="jumpscare3" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]

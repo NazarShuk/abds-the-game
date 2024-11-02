@@ -15,7 +15,7 @@ var books_collected = 0
 
 var inventory = []
 var selected_slot = 0
-var max_slots = 5
+var max_slots = 3
 @export var hand : Node3D
 signal inventory_changed
 
@@ -29,7 +29,7 @@ var is_ragdolled = false
 @onready var progress_bar: ProgressBar = $"CanvasLayer/Control/Progress bar handler/ProgressBar"
 @onready var progress_bar_handler = $"CanvasLayer/Control/Progress bar handler"
 
-var is_dead = false
+@export var is_dead = false
 
 @onready var ray = $RayCast3D
 
@@ -539,19 +539,20 @@ var is_dead_of_dariel = false
 var death_cause = ""
 
 @rpc("any_peer","call_local")
-func die(cause):
+func die(cause, do_die = true):
 	if is_dead: return
 	$Banana.start(0.01)
 	is_ragdolled = false
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
-	parent.set_player_dead.rpc(name.to_int(), true,true)
+	parent.set_player_dead.rpc(name.to_int(), true, do_die)
 	$"CanvasLayer/Control/Died thing".show()
 	if !parent.can_escape:
 		$ReviveTimer.start(5)
 	
 	is_dead = true
-	AudioServer.set_bus_mute(1, true)
+	if !parent.can_escape:
+		AudioServer.set_bus_mute(1, true)
 	AudioServer.set_bus_mute(2, true)
 	$"CanvasLayer/Control/Died thing/AudioStreamPlayer".play()
 	#TODO: make this work $CollisionShape3D.disabled = true
@@ -560,6 +561,11 @@ func die(cause):
 	close_shop(false)
 	
 	death_cause = cause
+	
+	for i in range(0, inventory.size()):
+		if inventory[i] != -1:
+			throw_item(inventory[i])
+			remove_item(i)
 	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
@@ -590,8 +596,6 @@ func die(cause):
 		
 		for lil_darel in get_tree().get_nodes_in_group("lil darel"):
 			lil_darel.queue_free()
-	
-	
 
 
 func _on_silent_lunch_timeout():

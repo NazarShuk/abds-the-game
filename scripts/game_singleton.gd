@@ -24,6 +24,8 @@ signal on_book_collected(amount)
 var game_params := GameParams.new()
 signal on_customization_reset
 
+var did_finish = false
+
 # server only
 var players = {}
 
@@ -43,6 +45,7 @@ func reset_values():
 	book_boost =           0
 	game_params =          GameParams.new()
 	lobby_id =             null
+	did_finish =           false
 
 func _ready():
 	on_game_started.connect(_on_game_started)

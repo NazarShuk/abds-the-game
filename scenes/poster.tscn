@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnvdkagkks0iq"]
+[gd_scene load_steps=11 format=3 uid="uid://bnvdkagkks0iq"]
 
 [ext_resource type="Script" path="res://scripts/poster.gd" id="1_66gga"]
+[ext_resource type="Texture2D" uid="uid://h5lb2aba25ss" path="res://textures/poster_default.png" id="1_xh3uk"]
 [ext_resource type="Script" path="res://scripts/poster_type.gd" id="2_35h6y"]
 [ext_resource type="Resource" uid="uid://mxnt171cuuuj" path="res://textures/Social studies/social_studies_posters.tres" id="3_hwxqg"]
 [ext_resource type="Resource" uid="uid://cps6dmcj083ka" path="res://textures/Science/science_posters.tres" id="4_s50nk"]
@@ -12,6 +13,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5tm3i"]
 cull_mode = 2
+albedo_texture = ExtResource("1_xh3uk")
 
 [node name="poster" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1.5, 0, 0, 0, 1, 0, 0, 0)

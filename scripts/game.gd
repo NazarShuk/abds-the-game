@@ -42,6 +42,10 @@ var music_pitch_boost = 1
 @export var escape = false
 @export var can_escape = false
 
+var end_game_ending = ""
+var players_singleton_ready = 0
+var players_singleton_required = -1
+
 func _enter_tree():
 	name = "MainGameScene"
 
@@ -80,7 +84,7 @@ func _on_network_session_failed(_steam_id: int, _reason: int, _connection_state:
 	_on_disconnected_from_server()
 
 func _on_disconnected_from_server():
-	if !GlobalVars.did_finish:
+	if !Game.did_finish:
 		print_rich("[color=red] disconnected from server with no ending")
 		get_tree().change_scene_to_packed.call_deferred(LOGOS)
 
@@ -205,7 +209,8 @@ func _on_peer_connected(id = 1):
 		"is_dead":false,
 		"deaths":0,
 		"team":0,
-		"finished_pacer":true
+		"finished_pacer":true,
+		"escaped": false
 	}
 	
 	update_player_text()
@@ -339,9 +344,7 @@ func skibidi():
 	if multiplayer.is_server():
 		end_game.rpc("freaky")
 
-var end_game_ending = ""
-var players_singleton_ready = 0
-var players_singleton_required = -1
+
 
 @rpc("authority","call_local")
 func end_game(ending : String):
@@ -356,8 +359,8 @@ func end_game(ending : String):
 		
 		if players_in_lobby > 1:
 			while players_singleton_ready != players_singleton_required:
-				await Game.sleep(0.1)
-				print("waiting for players to disconnect")
+				await Game.sleep(0.5)
+				print("waiting for players to get singletoned")
 			
 			print("all players disconnected")
 		
@@ -379,7 +382,7 @@ func pong_set_singleton(id):
 func set_singleton(deaths,books,ending):
 	GlobalVars.deaths = deaths
 	GlobalVars.books_collected = books
-	GlobalVars.did_finish = true
+	Game.did_finish = true
 	
 	#peer.close()
 	if ending == "normal":
@@ -414,7 +417,6 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_packed.call_deferred(DISORIENTED_END)
 	else:
 		get_tree().change_scene_to_packed(LOGOS)
-	peer.close()
 
 
 @onready var current_pacer_target = $"School/Pacer/Pacer target"

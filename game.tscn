@@ -1417,7 +1417,7 @@ bus = &"Dialogs"
 
 [node name="escape" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_du2f5")
-bus = &"Dialogs"
+bus = &"Music"
 
 [node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
 
@@ -2014,7 +2014,7 @@ transform = Transform3D(-5.73206e-15, 1.31134e-07, -1, -1, -4.37114e-08, 0, -4.3
 shape = SubResource("BoxShape3D_5t0v6")
 
 [node name="colum" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 45.7525, 1.39165, -40.1648)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 44.6088, 1.39165, -40.1648)
 mesh = SubResource("SphereMesh_r32xh")
 surface_material_override/0 = SubResource("StandardMaterial3D_5sqpk")
 

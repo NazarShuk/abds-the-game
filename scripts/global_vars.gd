@@ -20,6 +20,4 @@ var did_show_disclaimer = false
 var books_collected = 0
 var deaths = 0
 
-var did_finish = false
-
 var current_skin = Node.new()
