@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cg6bcppftoyak"
 path.s3tc="res://.godot/imported/school_bus_0.png-5f7c82a9391543617e6aeb6849bb5c27.s3tc.ctex"
+path.etc2="res://.godot/imported/school_bus_0.png-5f7c82a9391543617e6aeb6849bb5c27.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/3d/school_bus_0.png"
-dest_files=["res://.godot/imported/school_bus_0.png-5f7c82a9391543617e6aeb6849bb5c27.s3tc.ctex"]
+dest_files=["res://.godot/imported/school_bus_0.png-5f7c82a9391543617e6aeb6849bb5c27.s3tc.ctex", "res://.godot/imported/school_bus_0.png-5f7c82a9391543617e6aeb6849bb5c27.etc2.ctex"]
 
 [params]
 

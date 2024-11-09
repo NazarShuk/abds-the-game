@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://pt6p4fe3xury"]
+[gd_scene load_steps=9 format=3 uid="uid://pt6p4fe3xury"]
 
 [ext_resource type="Script" path="res://models/blackboard.gd" id="1_86xi5"]
 [ext_resource type="Texture2D" uid="uid://vvklw85x26dt" path="res://models/blackboard/blackboard-_0009_Layer-1.png" id="1_iejud"]
@@ -18,6 +18,14 @@ albedo_color = Color(1, 1, 1, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mxw37"]
 size = Vector3(2.00684, 1, 0.0410156)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxf18"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+
 [node name="Blackboard" type="StaticBody3D" groups=["blackboard"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_86xi5")
@@ -32,16 +40,42 @@ transform = Transform3D(1.6062, 0, 0, 0, 0.671196, 0, 0, 0, 1, 0, 0, 0.001)
 mesh = SubResource("QuadMesh_1qmn1")
 surface_material_override/0 = SubResource("StandardMaterial3D_glooa")
 
-[node name="FileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-initial_position = 1
-size = Vector2i(700, 400)
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-use_native_dialog = true
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_mxw37")
 
-[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 204.0
+offset_top = 127.0
+offset_right = -204.0
+offset_bottom = -127.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hxf18")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 61.0
+offset_top = 42.0
+offset_right = -61.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 150.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "press space to exit"

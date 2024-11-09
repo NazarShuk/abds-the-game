@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://byuespbgm2uma"]
+
+[ext_resource type="Texture2D" uid="uid://bbjlijtp7eoh4" path="res://textures/last_breath.jpg" id="1_xmwk1"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_62k3l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21rrq"]
+albedo_texture = ExtResource("1_xmwk1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eenwp"]
+size = Vector3(1.15881, 1.15686, 0.221069)
+
+[node name="LastBreath" type="StaticBody3D" groups=["last_breath"]]
+transform = Transform3D(0.537371, 0.295027, -0.544602, 0.245959, 0.56007, 0.5461, 0.568451, -0.521229, 0.278537, 60.8984, 1.38542, -47.2481)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_62k3l")
+surface_material_override/0 = SubResource("StandardMaterial3D_21rrq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 2.98023e-08, -4.47035e-08, 0, 1, 1.49012e-08, -2.98023e-08, -1.49012e-08, 1, -0.0294418, -0.0259857, 0.0656891)
+shape = SubResource("BoxShape3D_eenwp")

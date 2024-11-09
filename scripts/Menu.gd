@@ -1,17 +1,22 @@
 extends ColorRect
 
-@onready var player = $"../../.."
+@export var player : CharacterBody3D
 
 
 var previous_mouse
 var previous_cam
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(player.name.to_int())
+
 func _process(_delta):
-	if Input.is_action_just_pressed("escape"):
+	if Input.is_action_just_pressed("escape") and is_multiplayer_authority():
 		toggle_menu()
 	
 
 func toggle_menu():
+	if !is_multiplayer_authority(): return
+	
 	visible = !visible
 	
 	if visible == true:

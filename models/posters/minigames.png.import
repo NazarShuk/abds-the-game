@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ca3e5yi8kq75r"
 path.s3tc="res://.godot/imported/minigames.png-d0b2b2d27fa078d3e901b437a0e99662.s3tc.ctex"
+path.etc2="res://.godot/imported/minigames.png-d0b2b2d27fa078d3e901b437a0e99662.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/posters/minigames.png"
-dest_files=["res://.godot/imported/minigames.png-d0b2b2d27fa078d3e901b437a0e99662.s3tc.ctex"]
+dest_files=["res://.godot/imported/minigames.png-d0b2b2d27fa078d3e901b437a0e99662.s3tc.ctex", "res://.godot/imported/minigames.png-d0b2b2d27fa078d3e901b437a0e99662.etc2.ctex"]
 
 [params]
 

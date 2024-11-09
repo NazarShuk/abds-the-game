@@ -32,13 +32,3 @@ theme_override_fonts/font = ExtResource("2_rr6mg")
 theme_override_font_sizes/font_size = 31
 text = "it load"
 horizontal_alignment = 1
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
-autostart = true
-
-[node name="Timer2" type="Timer" parent="."]
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]

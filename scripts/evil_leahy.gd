@@ -55,7 +55,14 @@ func _physics_process(delta):
 		
 
 func unstucker_constraints():
-	unstucker.do_penalties = (absent == false && appeased == false && baja_blasted == false)
+	
+	var in_bathroom = false
+	var clst_bathroom = Game.get_closest_node_in_group(global_position,"bathroom_spawn")
+	if clst_bathroom:
+		in_bathroom = global_position.distance_to(clst_bathroom.global_position) < 3
+	
+	
+	unstucker.do_penalties = (absent == false && appeased == false && (!baja_blasted or !in_bathroom))
 
 func ai(delta):
 	if Game.game_started and multiplayer.is_server() and !absent:

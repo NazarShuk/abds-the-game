@@ -78,7 +78,8 @@ func prepare_multiplayer():
 	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
 	multiplayer.server_disconnected.connect(_on_disconnected_from_server)
 	
-	_on_peer_connected()
+	if !OS.has_feature("dedicated_server"):
+		_on_peer_connected()
 
 func _on_network_session_failed(_steam_id: int, _reason: int, _connection_state: int):
 	_on_disconnected_from_server()
@@ -154,8 +155,10 @@ func _process(_delta):
 					collected_books_label.text = str(Game.collected_books) + " books collected out of " + str(Game.books_to_collect)
 					if is_bet:
 						collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
+				collected_books_label.do_shake = false
 			else:
 				collected_books_label.text = "Run."
+				collected_books_label.do_shake = true
 		else:
 			collected_books_label.text = "Find a ELA book!"
 	
@@ -218,31 +221,47 @@ func _on_peer_connected(id = 1):
 	await Game.sleep(1)
 	request_steam_usr.rpc_id(id)
 	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
-
+	if OS.has_feature("dedicated_server"):
+		if Game.players.size() == 1:
+			show_start_game_btn.rpc_id(Game.players.keys()[0])
 
 @rpc("any_peer","call_local")
 func request_steam_usr():
 	receive_steam_usr.rpc(peer.get_unique_id(),SteamManager.steam_name)
 
 func pre_start_game_btn():
-	spawn_players()
-	pre_start_game.rpc()
 	if multiplayer.is_server():
-		if Game.lobby_id:
-			SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
+		spawn_players()
+		pre_start_game.rpc()
+		if multiplayer.is_server():
+			if Game.lobby_id:
+				SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
+			
+			var weather_chance = randi_range(0,20)
 		
-		var weather_chance = randi_range(0,20)
-	
-		print(weather_chance)
-		if weather_chance < 2:
-			set_fog_density.rpc(0.05)
-		elif weather_chance < 5:
-			set_fog_density.rpc(0.025)
-		
-		
-		Game.set_pre_game_started.rpc()
-		
-		Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
+			print(weather_chance)
+			if weather_chance < 2:
+				set_fog_density.rpc(0.05)
+			elif weather_chance < 5:
+				set_fog_density.rpc(0.025)
+			
+			
+			Game.set_pre_game_started.rpc()
+			
+			Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
+	else:
+		request_to_start_game.rpc(multiplayer.get_unique_id())
+
+@rpc("authority","call_remote")
+func show_start_game_btn():
+	$CanvasLayer/Lobby/Button7.show()
+
+@rpc("any_peer","call_local")
+func request_to_start_game(id):
+	if multiplayer.is_server():
+		if OS.has_feature("dedicated_server"):
+			if id == Game.players.keys()[0]:
+				pre_start_game_btn()
 
 func spawn_players():
 	if !OS.has_feature("debug"):
@@ -282,6 +301,11 @@ func _on_peer_disconnect(id):
 	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
 	
 	update_player_text()
+	
+	if OS.has_feature("dedicated_server"):
+		if Game.players.keys().size():
+				print_rich("[color=red]All players left. Shutting down.")
+				get_tree().quit()
 
 @rpc("authority","call_local")
 func start_da_game():
@@ -293,7 +317,6 @@ func start_da_game():
 	else:
 		$Music2/Timer.start()
 	
-	$CanvasLayer/Glitch.hide()
 	if multiplayer.is_server():
 		if Game.lobby_id:
 			SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
@@ -707,6 +730,5 @@ func escape_mode():
 	await Game.sleep(6.83 - 5.23)
 	GuiManager.show_subtitle_for("Run.", 7.81 - 6.83)
 	await Game.sleep(7.81 - 6.83)
-	#await Game.sleep(7.81)
 	can_escape = true
 	

@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bcky4b3vwhtkd"
 path.s3tc="res://.godot/imported/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg-743313e8998eb89d71b9e3a81d8254dd.s3tc.ctex"
+path.etc2="res://.godot/imported/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg-743313e8998eb89d71b9e3a81d8254dd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/3d/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg"
-dest_files=["res://.godot/imported/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg-743313e8998eb89d71b9e3a81d8254dd.s3tc.ctex"]
+dest_files=["res://.godot/imported/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg-743313e8998eb89d71b9e3a81d8254dd.s3tc.ctex", "res://.godot/imported/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg-743313e8998eb89d71b9e3a81d8254dd.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d1o76twd8v5ej"
 path.s3tc="res://.godot/imported/red_bull.png-1c4b33b6d02db707c7d17b4b43e53dc7.s3tc.ctex"
+path.etc2="res://.godot/imported/red_bull.png-1c4b33b6d02db707c7d17b4b43e53dc7.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://red_bull.png"
-dest_files=["res://.godot/imported/red_bull.png-1c4b33b6d02db707c7d17b4b43e53dc7.s3tc.ctex"]
+dest_files=["res://.godot/imported/red_bull.png-1c4b33b6d02db707c7d17b4b43e53dc7.s3tc.ctex", "res://.godot/imported/red_bull.png-1c4b33b6d02db707c7d17b4b43e53dc7.etc2.ctex"]
 
 [params]
 

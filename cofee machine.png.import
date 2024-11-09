@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://upqaoiqvget0"
 path.s3tc="res://.godot/imported/cofee machine.png-40caeb4237ef920389e8b8c826b16a5b.s3tc.ctex"
+path.etc2="res://.godot/imported/cofee machine.png-40caeb4237ef920389e8b8c826b16a5b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://cofee machine.png"
-dest_files=["res://.godot/imported/cofee machine.png-40caeb4237ef920389e8b8c826b16a5b.s3tc.ctex"]
+dest_files=["res://.godot/imported/cofee machine.png-40caeb4237ef920389e8b8c826b16a5b.s3tc.ctex", "res://.godot/imported/cofee machine.png-40caeb4237ef920389e8b8c826b16a5b.etc2.ctex"]
 
 [params]
 

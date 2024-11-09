@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqqpclvabyk8s"
 path.s3tc="res://.godot/imported/Fiddle-leaf Plant_FiddleleafFigPottedPlant_BaseColor.png-f03da923931b6f7c496b0d8d78eb97bb.s3tc.ctex"
+path.etc2="res://.godot/imported/Fiddle-leaf Plant_FiddleleafFigPottedPlant_BaseColor.png-f03da923931b6f7c496b0d8d78eb97bb.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/3d/Fiddle-leaf Plant_FiddleleafFigPottedPlant_BaseColor.png"
-dest_files=["res://.godot/imported/Fiddle-leaf Plant_FiddleleafFigPottedPlant_BaseColor.png-f03da923931b6f7c496b0d8d78eb97bb.s3tc.ctex"]
+dest_files=["res://.godot/imported/Fiddle-leaf Plant_FiddleleafFigPottedPlant_BaseColor.png-f03da923931b6f7c496b0d8d78eb97bb.s3tc.ctex", "res://.godot/imported/Fiddle-leaf Plant_FiddleleafFigPottedPlant_BaseColor.png-f03da923931b6f7c496b0d8d78eb97bb.etc2.ctex"]
 
 [params]
 

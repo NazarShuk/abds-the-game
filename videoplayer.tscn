@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://jrc22nnpwkws"]
+[gd_scene load_steps=10 format=3 uid="uid://jrc22nnpwkws"]
 
 [ext_resource type="Script" path="res://scripts/videoplayer.gd" id="1_06eul"]
 [ext_resource type="VideoStream" path="res://models/the j.mp3.ogv" id="1_bptja"]
-[ext_resource type="AudioStream" uid="uid://cvcy3v74vj542" path="res://models/the j.mp3.mp3" id="2_dskrk"]
+[ext_resource type="Script" path="res://video/ProjectorVideo.gd" id="2_hhuvu"]
+[ext_resource type="Resource" uid="uid://d2q03npan0fw5" path="res://video/crib.tres" id="3_aiyy8"]
+[ext_resource type="Resource" uid="uid://ds1erinngqrf6" path="res://video/thej.tres" id="4_nyqwx"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_lh7j4"]
 
@@ -20,6 +22,7 @@ data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 
 
 [node name="Videoplayer" type="StaticBody3D" groups=["video_player"]]
 script = ExtResource("1_06eul")
+videos = Array[ExtResource("2_hhuvu")]([ExtResource("3_aiyy8"), ExtResource("4_nyqwx")])
 
 [node name="thej" type="MeshInstance3D" parent="." groups=["video_player"]]
 mesh = SubResource("QuadMesh_lh7j4")
@@ -34,14 +37,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("1_bptja")
+volume_db = -80.0
 expand = true
-bus = &"Music"
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("2_dskrk")
-volume_db = 12.0
-max_distance = 250.0
-bus = &"Music"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConcavePolygonShape3D_bd6ah")

@@ -4,11 +4,21 @@ extends Node3D
 
 @export var can_pickup = false
 
-var can_break = true
+var shake = false
+var shake_strength = 0.1
+@onready var initial_pos = global_position
+
+func _process(delta: float) -> void:
+	if shake:
+		global_position = initial_pos + Vector3(randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength))
 
 @rpc("any_peer","call_local")
 func play():
 	$CPUParticles3D.emitting = true
+	shake = true
+	await Game.sleep(0.1)
+	shake = false
+	global_position = initial_pos
 
 @rpc("any_peer","call_local")
 func break_glass_sound(big):
@@ -19,12 +29,10 @@ func break_glass_sound(big):
 @rpc("any_peer","call_local")
 func break_glass():
 	if multiplayer.is_server():
-		if !can_break: return
 		
 		if !can_pickup:
 			if strength_left > 0:
 				strength_left -= 1
-				can_break = false
 				
 				break_glass_sound.rpc(false)
 				play.rpc()
@@ -36,16 +44,8 @@ func break_glass():
 				$"Fire Extinguisher".hide()
 		else:
 			can_pickup = false
-			can_break = false
-			$Timer.stop()
 			await Game.sleep(20)
 			$MeshInstance3D6.show()
 			$"Fire Extinguisher".show()
 			strength_left = 10
-			$Timer.start()
 			
-
-
-func _on_timer_timeout():
-	if multiplayer.is_server():
-		can_break = true

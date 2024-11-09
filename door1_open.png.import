@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cck2327mfrff2"
 path.s3tc="res://.godot/imported/door1_open.png-c85c6e57b52911990c5a7eebcc10ccbe.s3tc.ctex"
+path.etc2="res://.godot/imported/door1_open.png-c85c6e57b52911990c5a7eebcc10ccbe.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://door1_open.png"
-dest_files=["res://.godot/imported/door1_open.png-c85c6e57b52911990c5a7eebcc10ccbe.s3tc.ctex"]
+dest_files=["res://.godot/imported/door1_open.png-c85c6e57b52911990c5a7eebcc10ccbe.s3tc.ctex", "res://.godot/imported/door1_open.png-c85c6e57b52911990c5a7eebcc10ccbe.etc2.ctex"]
 
 [params]
 

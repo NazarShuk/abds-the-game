@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ce1wqx8rpkmv0"
 path.s3tc="res://.godot/imported/McCollum_crop.jpg-de659915d05a6b90af4f54ff3f072508.s3tc.ctex"
+path.etc2="res://.godot/imported/McCollum_crop.jpg-de659915d05a6b90af4f54ff3f072508.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://McCollum_crop.jpg"
-dest_files=["res://.godot/imported/McCollum_crop.jpg-de659915d05a6b90af4f54ff3f072508.s3tc.ctex"]
+dest_files=["res://.godot/imported/McCollum_crop.jpg-de659915d05a6b90af4f54ff3f072508.s3tc.ctex", "res://.godot/imported/McCollum_crop.jpg-de659915d05a6b90af4f54ff3f072508.etc2.ctex"]
 
 [params]
 

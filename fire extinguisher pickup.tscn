@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="1_bppgy"]
 [ext_resource type="Script" path="res://scripts/fire extinguisher pickup.gd" id="1_d5svp"]
 [ext_resource type="AudioStream" uid="uid://dn5727m67jxj" path="res://glass_big.mp3" id="3_pkan8"]
-[ext_resource type="AudioStream" uid="uid://cs28ddkshn05e" path="res://glass_small.mp3" id="4_fkm8a"]
+[ext_resource type="AudioStream" uid="uid://b5a1jtn0e8tpf" path="res://sounds/vending_machine.wav" id="4_fxus8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vy0xu"]
 
@@ -86,16 +86,12 @@ initial_velocity_max = 2.5
 
 [node name="big" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_pkan8")
+volume_db = 10.0
+max_db = 6.0
 max_distance = 10.0
 bus = &"Dialogs"
 
 [node name="small" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_fkm8a")
+stream = ExtResource("4_fxus8")
 max_distance = 10.0
 bus = &"Dialogs"
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

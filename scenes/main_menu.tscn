@@ -191,9 +191,9 @@ script = ExtResource("2_an0wb")
 layout_mode = 0
 offset_left = 977.0
 offset_top = 46.0
-offset_right = 1087.0
+offset_right = 1091.0
 offset_bottom = 77.0
-text = "host local"
+text = "host ENET"
 
 [node name="connect local" type="Button" parent="Control/Debug"]
 layout_mode = 0
@@ -201,7 +201,28 @@ offset_left = 977.0
 offset_top = 77.0
 offset_right = 1087.0
 offset_bottom = 108.0
-text = "connect local"
+text = "connect ENET"
+
+[node name="connect local2" type="Button" parent="Control/Debug"]
+layout_mode = 0
+offset_left = 976.0
+offset_top = 108.0
+offset_right = 1090.0
+offset_bottom = 139.0
+text = "connect WS"
+
+[node name="LineEdit" type="LineEdit" parent="Control/Debug"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -358.0
+offset_top = 77.0
+offset_right = -202.0
+offset_bottom = 108.0
+grow_horizontal = 0
+text = "127.0.0.1"
+placeholder_text = "Server ip (no port)"
 
 [node name="Title" type="Label" parent="Control"]
 layout_mode = 1
@@ -401,6 +422,7 @@ expand_mode = 3
 
 [connection signal="pressed" from="Control/Debug/host local" to="." method="_on_host_local_pressed"]
 [connection signal="pressed" from="Control/Debug/connect local" to="." method="_on_connect_local_pressed"]
+[connection signal="pressed" from="Control/Debug/connect local2" to="." method="_on_connect_local_2_pressed"]
 [connection signal="pressed" from="Control/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Control/Achievements" to="." method="_on_achievements_pressed"]

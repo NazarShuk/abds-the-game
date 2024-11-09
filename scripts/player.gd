@@ -71,6 +71,8 @@ const push_force = 1.0
 var is_baja = false
 var baja_previous_pos = Vector3()
 
+var last_breath = false
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	$nametag.text = SteamManager.steam_name
@@ -98,7 +100,7 @@ func _ready():
 		inventory.resize(max_slots)
 		for i in range(max_slots):
 			inventory[i] = -1
-		
+
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		if !get_tree(): return
@@ -122,7 +124,8 @@ func _physics_process(delta):
 		
 		if Input.is_action_just_pressed("debug") and OS.has_feature("debug"):
 			buy_book_rpc.rpc(steam_name)
-		
+		if Input.is_action_just_pressed("revive") and OS.has_feature("debug"):
+			add_speed_boost(2,1)
 		
 		if Input.is_action_just_pressed("revive"):
 			if is_dead_of_dariel:
@@ -169,8 +172,12 @@ func _physics_process(delta):
 		$HandTree.set("parameters/time_scale/scale", run_multiplier * speed_multiplier)
 		
 		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor(shop_timer.time_left)) + "s left"
+		$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds/Label".text = str(floor(shop_timer.time_left))
 		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits)
+		$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore/Label".text = str(credits)
+		
+		
 		var closest_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
 		if closest_leahy:
 			leahy_dst = global_position.distance_to(closest_leahy.global_position)
@@ -187,7 +194,7 @@ func _physics_process(delta):
 					camera_3d.h_offset = 0
 					camera_3d.v_offset = 0
 				
-				if closest_leahy.target_player_name:
+				if closest_leahy.target_player_name and !parent.can_escape:
 					if closest_leahy.target_player_name == steam_name:
 						if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
 							leahy_approaching.is_shown = true
@@ -215,6 +222,11 @@ func _physics_process(delta):
 		
 		camera_3d.current = true
 		camera_3d.global_transform = $"Camera target".global_transform
+		
+		if parent.can_escape and not is_dead:
+			$CanvasLayer/Control.do_shake = true
+		else:
+			$CanvasLayer/Control.do_shake = false
 
 var vertical_angle = 0.0
 var max_vertical_angle = 89.0  # You can adjust this as needed.
@@ -401,6 +413,10 @@ func _on_revive_timer_timeout():
 	elif death_cause == "freezer":
 		GuiManager.show_tip_once("freezer_death","[color=green]Freezer[/color]\n Don't stay in the freezer for too long! You will freeze to [color=red]death[/color].")
 	
+	is_ragdolled = false
+	global_rotation_degrees.x = 0
+	global_rotation_degrees.z = 0
+	
 	await Game.sleep(5)
 	is_dead = false
 
@@ -541,6 +557,16 @@ var death_cause = ""
 @rpc("any_peer","call_local")
 func die(cause, do_die = true):
 	if is_dead: return
+	if last_breath:
+		$"CanvasLayer/Control/Last breath/anim".play("boom")
+		$"CanvasLayer/Control/Last breath/audio".play()
+		last_breath = false
+		add_speed_boost(1, 3)
+		is_dead = true
+		await Game.sleep(5)
+		is_dead = false
+		return
+	
 	$Banana.start(0.01)
 	is_ragdolled = false
 	$visual_body.global_rotation_degrees.x = 0
@@ -566,6 +592,10 @@ func die(cause, do_die = true):
 		if inventory[i] != -1:
 			throw_item(inventory[i])
 			remove_item(i)
+	
+	velocity.y += 5
+	is_ragdolled = true
+	apply_random_rotation()
 	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
@@ -596,7 +626,7 @@ func die(cause, do_die = true):
 		
 		for lil_darel in get_tree().get_nodes_in_group("lil darel"):
 			lil_darel.queue_free()
-
+	
 
 func _on_silent_lunch_timeout():
 	is_suspended = false
@@ -609,7 +639,6 @@ func _on_anti_wall_walk_timeout():
 		on_top_counter += 1
 		if on_top_counter == 10:
 			die("wall")
-			global_position.y = 1
 			on_top_counter = 0
 	else:
 		on_top_counter = 0
@@ -1187,6 +1216,11 @@ func interaction_functions():
 				$CanvasLayer/Control/Freezer/AnimationPlayer.play("freez")
 				
 				$freezerDeath.start()
+			if ray.get_collider().is_in_group("last_breath"):
+				ray.get_collider().queue_free()
+				last_breath = true
+				
+				
 			if ray.get_collider().is_in_group("toilet"):
 				if !can_toilet_tp : return
 				var spawns = get_tree().get_nodes_in_group("bathroom_spawn")
@@ -1206,7 +1240,7 @@ func interaction_functions():
 				play_sound("res://flush.mp3",5)
 			if ray.get_collider():
 				if ray.get_collider().is_in_group("blackboard"):
-					ray.get_collider().select_image()
+					ray.get_collider().open_ui()
 			
 			
 			if ray.get_collider():
@@ -1229,7 +1263,8 @@ func item_use_functions():
 			spawn_clorox.rpc($RayCast3D.global_position, $"Camera target".global_rotation, name.to_int())
 		elif get_selected_item() == 2:
 			remove_item(selected_slot)
-			velocity.y += 10
+			velocity.y += 20
+			add_speed_boost(0.5,1)
 			shart.rpc()
 		elif get_selected_item() == 4:
 			

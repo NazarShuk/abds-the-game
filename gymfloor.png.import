@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://1au86bvasx7x"
 path.s3tc="res://.godot/imported/gymfloor.png-43454d1529193455b8a900ea595dda7a.s3tc.ctex"
+path.etc2="res://.godot/imported/gymfloor.png-43454d1529193455b8a900ea595dda7a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://gymfloor.png"
-dest_files=["res://.godot/imported/gymfloor.png-43454d1529193455b8a900ea595dda7a.s3tc.ctex"]
+dest_files=["res://.godot/imported/gymfloor.png-43454d1529193455b8a900ea595dda7a.s3tc.ctex", "res://.godot/imported/gymfloor.png-43454d1529193455b8a900ea595dda7a.etc2.ctex"]
 
 [params]
 

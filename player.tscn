@@ -1,10 +1,11 @@
-[gd_scene load_steps=143 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=150 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
 [ext_resource type="AudioStream" uid="uid://4ug2jt2muw6i" path="res://walk.mp3" id="5_muu2l"]
+[ext_resource type="Script" path="res://scripts/shake_control.gd" id="6_8er58"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="6_l1x2u"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="7_mv5hh"]
 [ext_resource type="AudioStream" uid="uid://d2e0x50n80346" path="res://jumpscare-154489 (1)_01.mp3" id="8_4ilia"]
@@ -32,8 +33,11 @@
 [ext_resource type="AudioStream" uid="uid://bkdgbgtv4tcoy" path="res://sounds/correct_new.mp3" id="27_xfgq1"]
 [ext_resource type="Texture2D" uid="uid://cb10q13033mpt" path="res://0b41253a4041ddb57004d633e4979430.jpg" id="28_k1c3m"]
 [ext_resource type="Script" path="res://scripts/spectator.gd" id="30_iahmv"]
+[ext_resource type="Script" path="res://scripts/lastbreaththing.gd" id="31_6rife"]
+[ext_resource type="Texture2D" uid="uid://bbjlijtp7eoh4" path="res://textures/last_breath.jpg" id="31_gmk5u"]
 [ext_resource type="Script" path="res://scripts/toilet_jumpscare.gd" id="32_3qmes"]
 [ext_resource type="Texture2D" uid="uid://v1vadjq7khtm" path="res://images/toilet.png" id="32_jmipm"]
+[ext_resource type="AudioStream" uid="uid://csydch7qv5p2m" path="res://sounds/last_breath.mp3" id="32_tixqx"]
 [ext_resource type="AudioStream" uid="uid://clbm6v7duehjt" path="res://sounds/invincible.mp3" id="33_lhoi0"]
 [ext_resource type="VideoStream" path="res://misuraca.ogv" id="36_rou35"]
 [ext_resource type="Texture2D" uid="uid://dmy478ab084mf" path="res://models/darel_mouth_open.png" id="41_bsrbc"]
@@ -583,6 +587,91 @@ _data = {
 "jumpscare": SubResource("Animation_xwtr6")
 }
 
+[sub_resource type="Animation" id="Animation_dkqts"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_m84un"]
+resource_name = "boom"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w6llb"]
+_data = {
+"RESET": SubResource("Animation_dkqts"),
+"boom": SubResource("Animation_m84un")
+}
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ol4fw"]
 bg_color = Color(0.791999, 0.791999, 0.791999, 1)
 
@@ -1048,7 +1137,6 @@ input_1/reset = true
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_3tsj5"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4knu2"]
-graph_offset = Vector2(-325.17, 120.678)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_c30ru")
 "nodes/Animation 3/position" = Vector2(280, 420)
 nodes/Static/node = SubResource("AnimationNodeAnimation_v72pr")
@@ -1321,6 +1409,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("6_8er58")
+shake_strength = 2
 
 [node name="Vignette" type="TextureRect" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
 material = SubResource("ShaderMaterial_ofe5t")
@@ -1747,17 +1837,160 @@ grow_vertical = 2
 
 [node name="ColorRect6" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -72.0
+offset_top = -102.0
+offset_right = -52.0
+offset_bottom = -90.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.937255, 0.427451, 0.223529, 1)
+
+[node name="Seconds" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -121.0
-offset_top = -156.0
-offset_right = -14.0
-offset_bottom = 155.0
+offset_left = -54.0
+offset_top = 1.0
+offset_right = -30.0
+offset_bottom = 21.0
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.302873, 0.347658, 0.302921, 1)
+theme_override_fonts/font = ExtResource("25_48n8b")
+theme_override_font_sizes/font_size = 10
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect9" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = -110.0
+offset_right = -27.0
+offset_bottom = -53.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.980392, 0.956863, 0.980392, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/ColorRect9"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.302873, 0.347658, 0.302921, 1)
+theme_override_fonts/font = ExtResource("26_kvv47")
+theme_override_font_sizes/font_size = 35
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuestionCount" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = -110.0
+offset_right = -27.0
+offset_bottom = -53.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.980392, 0.956863, 0.980392, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/QuestionCount"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.462745, 0.45098, 0.396078, 1)
+theme_override_fonts/font = ExtResource("26_kvv47")
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Smartscore" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = 82.0
+offset_right = -27.0
+offset_bottom = 138.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.980392, 0.956863, 0.980392, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.462745, 0.45098, 0.396078, 1)
+theme_override_fonts/font = ExtResource("26_kvv47")
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect7" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -35.0
+offset_right = -45.0
+offset_bottom = -19.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.117647, 0.709804, 0.913725, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/ColorRect7"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("26_kvv47")
+theme_override_font_sizes/font_size = 11
+text = "left"
+horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
@@ -2349,6 +2582,60 @@ libraries = {
 "": SubResource("AnimationLibrary_qkcp4")
 }
 
+[node name="lastbreaththing" type="Control" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -204.0
+offset_top = -70.0
+offset_right = -61.0
+offset_bottom = 77.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("31_6rife")
+player = NodePath("../../..")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/lastbreaththing"]
+modulate = Color(1, 1, 1, 0.501961)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("31_gmk5u")
+expand_mode = 1
+
+[node name="Last breath" type="TextureRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -227.0
+offset_right = 192.0
+offset_bottom = 227.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(192, 227)
+texture = ExtResource("31_gmk5u")
+expand_mode = 1
+
+[node name="audio" type="AudioStreamPlayer" parent="CanvasLayer/Control/Last breath"]
+stream = ExtResource("32_tixqx")
+bus = &"Dialogs"
+
+[node name="anim" type="AnimationPlayer" parent="CanvasLayer/Control/Last breath"]
+libraries = {
+"": SubResource("AnimationLibrary_w6llb")
+}
+
 [node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
@@ -2725,7 +3012,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 script = ExtResource("51_vep60")
 
-[node name="Menu" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="Menu" type="ColorRect" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
 process_mode = 3
 visible = false
 layout_mode = 1
@@ -2737,6 +3024,7 @@ grow_vertical = 2
 pivot_offset = Vector2(20, 20)
 color = Color(0, 0, 0, 0.556863)
 script = ExtResource("45_ndhl0")
+player = NodePath("../../..")
 
 [node name="Main" type="ColorRect" parent="CanvasLayer/Control/Menu"]
 layout_mode = 1

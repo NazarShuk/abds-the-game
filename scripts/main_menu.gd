@@ -3,11 +3,13 @@ extends CanvasLayer
 var peer
 @onready var loading: ColorRect = $Loading
 
-const main_game_path = "res://game.tscn"
 
 func _ready() -> void:
 	$AudioStreamPlayer.play(GlobalVars.menu_music_duration)
 	GuiManager.show_cursor()
+	
+	if OS.has_feature("dedicated_server"):
+		_on_host_local_pressed()
 
 func _on_achievements_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://achievements.tscn")
@@ -57,14 +59,20 @@ func _on_lobby_created(connect, lobby_id):
 		load_main_game()
 
 func _on_host_local_pressed():
-	peer = ENetMultiplayerPeer.new()
+	peer = WebSocketMultiplayerPeer.new()
 	peer.create_server(7777)
 	
 	load_main_game()
 
 func _on_connect_local_pressed():
 	peer = ENetMultiplayerPeer.new()
-	peer.create_client("127.0.0.1",7777)
+	peer.create_client($Control/Debug/LineEdit.text, 7777)
+	
+	load_main_game()
+
+func _on_connect_local_2_pressed() -> void:
+	peer = WebSocketMultiplayerPeer.new()
+	peer.create_client($Control/Debug/LineEdit.text)
 	
 	load_main_game()
 
@@ -76,20 +84,5 @@ func _exit_tree() -> void:
 	
 
 func load_main_game():
-	ResourceLoader.load_threaded_request(main_game_path)
-	$Loading.show()
-	
-	while true:
-		await Game.sleep(0.01)
-		var progress = []
-		
-		ResourceLoader.load_threaded_get_status(main_game_path,progress)
-		
-		$Loading/percent.text = str(floor(progress[0] * 100)) + "%"
-		
-		if progress[0] == 1:
-			var packed_scene = ResourceLoader.load_threaded_get(main_game_path)
-			
-			multiplayer.multiplayer_peer = peer
-			
-			get_tree().change_scene_to_packed.call_deferred(packed_scene)
+	multiplayer.multiplayer_peer = peer
+	get_tree().change_scene_to_packed.call_deferred(GlobalVars.game_scene)

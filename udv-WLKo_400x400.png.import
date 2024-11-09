@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://de8njf6qku6op"
 path.s3tc="res://.godot/imported/udv-WLKo_400x400.png-a3384cb9f8ced1ad95e4a7e4450c4fc4.s3tc.ctex"
+path.etc2="res://.godot/imported/udv-WLKo_400x400.png-a3384cb9f8ced1ad95e4a7e4450c4fc4.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://udv-WLKo_400x400.png"
-dest_files=["res://.godot/imported/udv-WLKo_400x400.png-a3384cb9f8ced1ad95e4a7e4450c4fc4.s3tc.ctex"]
+dest_files=["res://.godot/imported/udv-WLKo_400x400.png-a3384cb9f8ced1ad95e4a7e4450c4fc4.s3tc.ctex", "res://.godot/imported/udv-WLKo_400x400.png-a3384cb9f8ced1ad95e4a7e4450c4fc4.etc2.ctex"]
 
 [params]
 

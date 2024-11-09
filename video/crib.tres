@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ProjectorVideo" load_steps=4 format=3 uid="uid://d2q03npan0fw5"]
+
+[ext_resource type="AudioStream" uid="uid://b5enu5ta0xr5d" path="res://video/crib.mp3" id="1_ciamn"]
+[ext_resource type="Script" path="res://video/ProjectorVideo.gd" id="1_pq5yr"]
+[ext_resource type="VideoStream" path="res://video/crib.ogv" id="2_uvym8"]
+
+[resource]
+script = ExtResource("1_pq5yr")
+video_file = ExtResource("2_uvym8")
+audio_file = ExtResource("1_ciamn")

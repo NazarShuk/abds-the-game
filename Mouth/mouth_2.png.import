@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhj8rt54whhxj"
 path.s3tc="res://.godot/imported/mouth_2.png-be2e6c91e49b6cd9a0760a259c23b966.s3tc.ctex"
+path.etc2="res://.godot/imported/mouth_2.png-be2e6c91e49b6cd9a0760a259c23b966.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Mouth/mouth_2.png"
-dest_files=["res://.godot/imported/mouth_2.png-be2e6c91e49b6cd9a0760a259c23b966.s3tc.ctex"]
+dest_files=["res://.godot/imported/mouth_2.png-be2e6c91e49b6cd9a0760a259c23b966.s3tc.ctex", "res://.godot/imported/mouth_2.png-be2e6c91e49b6cd9a0760a259c23b966.etc2.ctex"]
 
 [params]
 
