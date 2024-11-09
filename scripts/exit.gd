@@ -2,7 +2,7 @@ extends Area3D
 
 @export var game : Node3D
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	visible = game.can_escape
 
 func _on_area_entered(area: Area3D) -> void:

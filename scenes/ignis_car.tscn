@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=4 uid="uid://h1843b5qdeq1"]
+[gd_scene load_steps=31 format=4 uid="uid://h1843b5qdeq1"]
 
 [ext_resource type="Script" path="res://scripts/ignis_car.gd" id="1_nhtjs"]
 [ext_resource type="AudioStream" uid="uid://c1ayha6oikahk" path="res://sounds/car.wav" id="2_3fyhd"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="3_aq58r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkoyw"]
 resource_name = "Material.001"
@@ -426,8 +427,7 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="ignis car" type="VehicleBody3D"]
-gravity_scale = 4.0
+[node name="ignis car" type="VehicleBody3D" groups=["ignis_car"]]
 script = ExtResource("1_nhtjs")
 
 [node name="Body" type="MeshInstance3D" parent="."]
@@ -444,7 +444,7 @@ shape = SubResource("ConvexPolygonShape3D_qjgj5")
 [node name="BackRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.28539, -0.397887, 1.42234)
 use_as_traction = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 2.5
 
 [node name="BackRightWheel" type="MeshInstance3D" parent="BackRight"]
 transform = Transform3D(-3, 0, 2.62268e-07, 0, 3, 0, -2.62268e-07, 0, -3, 1.28539, 0.397887, 1.42234)
@@ -454,7 +454,7 @@ skeleton = NodePath("")
 [node name="BackLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.285, -0.398, 1.422)
 use_as_traction = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 2.5
 
 [node name="BackLeftWheel" type="MeshInstance3D" parent="BackLeft"]
 transform = Transform3D(-3, 0, 2.62268e-07, 0, 3, 0, -2.62268e-07, 0, -3, -1.285, 0.398, 1.422)
@@ -464,7 +464,7 @@ skeleton = NodePath("")
 [node name="FrontRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.28539, -0.397887, -1.92277)
 use_as_steering = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 2.5
 
 [node name="FrontRightWheel" type="MeshInstance3D" parent="FrontRight"]
 transform = Transform3D(-3, 0, 2.62268e-07, 0, 3, 0, -2.62268e-07, 0, -3, 1.28539, 0.397887, -1.92277)
@@ -474,7 +474,7 @@ skeleton = NodePath("")
 [node name="FrontLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.285, -0.398, -1.923)
 use_as_steering = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 2.5
 
 [node name="FrontLeftWheel" type="MeshInstance3D" parent="FrontLeft"]
 transform = Transform3D(-3, 0, 2.62268e-07, 0, 3, 0, -2.62268e-07, 0, -3, -1.285, 0.398, -1.923)
@@ -487,3 +487,26 @@ autoplay = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_w5m0e")
+
+[node name="PlayerTarget" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0331005, 0.878864, 0.206938)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.5
+offset_top = 94.0
+offset_right = 148.5
+offset_bottom = 125.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_aq58r")
+theme_override_font_sizes/font_size = 25
+text = "Press space to exit the car"
+horizontal_alignment = 1

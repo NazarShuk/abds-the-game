@@ -304,8 +304,8 @@ func _on_peer_disconnect(id):
 	
 	if OS.has_feature("dedicated_server"):
 		if Game.players.keys().size():
-				print_rich("[color=red]All players left. Shutting down.")
-				get_tree().quit()
+			print_rich("[color=red]All players left. Shutting down.")
+			get_tree().quit()
 
 @rpc("authority","call_local")
 func start_da_game():

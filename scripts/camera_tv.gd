@@ -3,7 +3,7 @@ extends MeshInstance3D
 @export var subviewports : Array[SubViewport]
 var is_visible = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var closest_player = Game.get_closest_node_in_group(global_position,"player")
 	
 	if closest_player:

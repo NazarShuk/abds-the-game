@@ -25,7 +25,7 @@ func _on_timer_timeout():
 	else:
 		$OmniLight3D.visible = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if shake:
 		global_position = initial_pos + Vector3(randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength))
 		

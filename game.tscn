@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=124 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
@@ -49,14 +49,16 @@
 [ext_resource type="PackedScene" uid="uid://jrc22nnpwkws" path="res://videoplayer.tscn" id="44_jjv51"]
 [ext_resource type="PackedScene" uid="uid://chuhguxkuwyn1" path="res://models/3d/school_bus.glb" id="45_5hyb8"]
 [ext_resource type="AudioStream" uid="uid://dlu3b8bxaa7jm" path="res://models/bus.mp3" id="45_xyeqq"]
-[ext_resource type="PackedScene" uid="uid://bqi4trrdbu64p" path="res://models/Red Car.glb" id="46_x7prv"]
-[ext_resource type="PackedScene" uid="uid://rhxdyygmn50t" path="res://models/Car.glb" id="47_6sv53"]
-[ext_resource type="PackedScene" uid="uid://b0kihxyehcgo4" path="res://models/Sports Car.glb" id="48_in3nt"]
 [ext_resource type="PackedScene" uid="uid://bc3kpnykxfbph" path="res://gambling_wheel.tscn" id="50_jgq1w"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="50_metmn"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="51_7ffv4"]
+[ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="52_88bn0"]
 [ext_resource type="Script" path="res://scripts/camera_tv.gd" id="53_0rrcy"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="53_5ce3w"]
 [ext_resource type="PackedScene" uid="uid://tiwq41uqylbi" path="res://scenes/exit.tscn" id="55_fvbsc"]
 [ext_resource type="PackedScene" uid="uid://d3cvm5kjh3vj2" path="res://scenes/music disable area.tscn" id="56_k28kr"]
 [ext_resource type="PackedScene" uid="uid://byuespbgm2uma" path="res://scenes/last_breath.tscn" id="56_p14hv"]
+[ext_resource type="PackedScene" uid="uid://h1843b5qdeq1" path="res://scenes/ignis_car.tscn" id="59_rrmyq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -648,148 +650,6 @@ tracks/6/keys = {
 _data = {
 "RESET": SubResource("Animation_hgnq6"),
 "pre": SubResource("Animation_yxcq5")
-}
-
-[sub_resource type="Curve3D" id="Curve3D_rgp2y"]
-bake_interval = 26.97
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 40.53, 0, 117.125, 0, 0, 0, 0, 0, 0, 40.485, 0, 4.685, 0, 0, 0, 0, 0, 0, 32.825, 0, 0, 0, 0, 0, 0, 0, 0, -32.58, 0, 0, 0, 0, 0, 0, 0, 0, -37.465, 0, 3.66, 0, 0, 0, 0, 0, 0, -40.53, 0, 117.125),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
-}
-point_count = 6
-
-[sub_resource type="Animation" id="Animation_1v4jt"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Path3D/PathFollow3D2:progress_ratio")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Path3D/PathFollow3D3:progress_ratio")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Path3D/PathFollow3D4:progress_ratio")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Path3D:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_rpmyj"]
-resource_name = "carpool"
-length = 30.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 12.5, 17.5, 30),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.09, 0.5, 0.5, 1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Path3D/PathFollow3D2:progress_ratio")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 12.5, 17.5, 30),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.06, 0.47, 0.47, 0.97]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Path3D/PathFollow3D3:progress_ratio")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 12.5, 17.5, 30),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.03, 0.44, 0.44, 0.94]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Path3D/PathFollow3D4:progress_ratio")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 12.5, 17.5, 30),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.41, 0.41, 0.919]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Path3D:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 1, 29, 30),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(100, 100, 100), Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(100, 100, 100)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7psxp"]
-_data = {
-"RESET": SubResource("Animation_1v4jt"),
-"carpool": SubResource("Animation_rpmyj")
 }
 
 [sub_resource type="BoxMesh" id="BoxMesh_g8wa1"]
@@ -1387,7 +1247,6 @@ bus = &"Music"
 
 [node name="Music2" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("game")]
 stream = ExtResource("4_m78sl")
-volume_db = -7.5
 bus = &"Music"
 script = ExtResource("13_il7ji")
 game = NodePath("..")
@@ -1605,6 +1464,78 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1963, 1.27832, -15.1114)
 
 [node name="Book Spawn42" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3338, 1.27832, -18.802)
+
+[node name="Book Spawn46" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.4944, 1.27832, -18.4766)
+
+[node name="Book Spawn47" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.6182, 1.27832, -18.802)
+
+[node name="Book Spawn48" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.5034, 1.27832, -19.9951)
+
+[node name="Book Spawn49" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.3863, 1.27832, -21.622)
+
+[node name="Book Spawn50" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.391, 1.27832, -24.442)
+
+[node name="Book Spawn51" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.9288, 1.27832, -61.7745)
+
+[node name="Book Spawn52" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.1536, 1.27832, -69.5952)
+
+[node name="Book Spawn53" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.3475, 1.27832, -24.5601)
+
+[node name="Book Spawn54" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.89, 1.27832, -28.9869)
+
+[node name="Book Spawn55" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122.631, 1.27832, -28.6917)
+
+[node name="Book Spawn56" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.29, 1.27832, -17.6248)
+
+[node name="Book Spawn57" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.7, 1.27832, -9.06631)
+
+[node name="Book Spawn58" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.288, 1.27832, -65.7292)
+
+[node name="Book Spawn59" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.09, 1.27832, -64.5487)
+
+[node name="Book Spawn60" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.8072, 1.27832, -68.6804)
+
+[node name="Book Spawn61" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.7377, 1.27832, -237.225)
+
+[node name="Book Spawn62" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2394, 1.27832, -234.99)
+
+[node name="Book Spawn63" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5666, 1.27832, -233.161)
+
+[node name="Book Spawn64" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.8937, 1.27832, -239.51)
+
+[node name="Book Spawn65" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.654, 1.27832, -245.809)
+
+[node name="Book Spawn66" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.782, 1.27832, -240.545)
+
+[node name="Book Spawn67" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.786, 1.27832, -204.142)
+
+[node name="Book Spawn68" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.419, 1.27832, -157.028)
+
+[node name="Book Spawn69" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.207, 1.27832, -224.739)
 
 [node name="LandMineSpawns" type="Node3D" parent="School"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
@@ -2087,43 +2018,74 @@ transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 2.98023e-08, 2.98023e-08, 0, 1
 
 [node name="Carpool" type="Node3D" parent="."]
 
-[node name="Path3D" type="Path3D" parent="Carpool"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.677, 16.609)
-curve = SubResource("Curve3D_rgp2y")
+[node name="RoadManager" type="Node3D" parent="Carpool"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0292773, 24.7135)
+script = ExtResource("50_metmn")
 
-[node name="PathFollow3D" type="PathFollow3D" parent="Carpool/Path3D"]
-transform = Transform3D(0.999909, 0, 0.000400161, 0, 1, 0, -0.000400161, 0, 0.999909, 40.53, 0, 117.125)
-cubic_interp = false
+[node name="Road_001" type="Node3D" parent="Carpool/RoadManager"]
+script = ExtResource("51_7ffv4")
+material_resource = ExtResource("52_88bn0")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_006")])
+edge_rp_local_dirs = Array[int]([1, 0])
 
-[node name="Red Car" parent="Carpool/Path3D/PathFollow3D" instance=ExtResource("46_x7prv")]
-transform = Transform3D(2.55, 0, 0, 0, 2.55, 0, 0, 0, 2.55, 0, 0, 0)
+[node name="RP_001" type="Node3D" parent="Carpool/RoadManager/Road_001"]
+script = ExtResource("53_5ce3w")
+traffic_dir = Array[int]([2, 2, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+next_pt_init = NodePath("../RP_002")
 
-[node name="PathFollow3D2" type="PathFollow3D" parent="Carpool/Path3D"]
-transform = Transform3D(0.999908, 0, 0.00040016, 0, 1, 0, -0.00040016, 0, 0.999908, 40.53, 0, 117.125)
-cubic_interp = false
+[node name="RP_002" type="Node3D" parent="Carpool/RoadManager/Road_001"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8147e-06, 0, 112.144)
+script = ExtResource("53_5ce3w")
+traffic_dir = Array[int]([2, 2, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+prior_pt_init = NodePath("../RP_001")
+next_pt_init = NodePath("../RP_003")
+prior_mag = 16.0
+next_mag = 115.778
 
-[node name="Red Car" parent="Carpool/Path3D/PathFollow3D2" instance=ExtResource("46_x7prv")]
-transform = Transform3D(2.55, 0, 0, 0, 2.55, 0, 0, 0, 2.55, 0, 0, 0)
+[node name="RP_003" type="Node3D" parent="Carpool/RoadManager/Road_001"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 309.4, 0, 192.451)
+script = ExtResource("53_5ce3w")
+traffic_dir = Array[int]([2, 2, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+prior_pt_init = NodePath("../RP_002")
+next_pt_init = NodePath("../RP_004")
+prior_mag = 346.323
+next_mag = 63.0862
 
-[node name="PathFollow3D3" type="PathFollow3D" parent="Carpool/Path3D"]
-transform = Transform3D(0.999906, 0, 0.00040016, 0, 1, 0, -0.00040016, 0, 0.999906, 40.53, 0, 117.125)
-cubic_interp = false
+[node name="RP_004" type="Node3D" parent="Carpool/RoadManager/Road_001"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 349.849, 0, -128.798)
+script = ExtResource("53_5ce3w")
+traffic_dir = Array[int]([2, 2, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+prior_pt_init = NodePath("../RP_003")
+next_pt_init = NodePath("../RP_005")
+prior_mag = 321.162
+next_mag = 43.1027
 
-[node name="Car2" parent="Carpool/Path3D/PathFollow3D3" instance=ExtResource("47_6sv53")]
-transform = Transform3D(-0.05, 0, 7.54979e-09, 0, 0.05, 0, -7.54979e-09, 0, -0.05, 0, -0.742429, 0)
+[node name="RP_005" type="Node3D" parent="Carpool/RoadManager/Road_001"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 38.9049, 0, -160.798)
+script = ExtResource("53_5ce3w")
+traffic_dir = Array[int]([2, 2, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+prior_pt_init = NodePath("../RP_004")
+next_pt_init = NodePath("../RP_006")
+prior_mag = 253.036
+next_mag = 46.9643
 
-[node name="PathFollow3D4" type="PathFollow3D" parent="Carpool/Path3D"]
-transform = Transform3D(0.999914, 0, 0.000400163, 0, 1, 0, -0.000400163, 0, 0.999914, 40.53, 0, 117.125)
-cubic_interp = false
-
-[node name="Sports Car" parent="Carpool/Path3D/PathFollow3D4" instance=ExtResource("48_in3nt")]
-transform = Transform3D(-1.17, 0, -1.76573e-07, 0, 1.17, 0, 1.76573e-07, 0, -1.17, 0, -0.675501, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Carpool"]
-libraries = {
-"": SubResource("AnimationLibrary_7psxp")
-}
-autoplay = "carpool"
+[node name="RP_006" type="Node3D" parent="Carpool/RoadManager/Road_001"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.0588188, 0, 0.0548329)
+script = ExtResource("53_5ce3w")
+traffic_dir = Array[int]([2, 2, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+prior_pt_init = NodePath("../RP_005")
+prior_mag = 111.375
+next_mag = 111.375
 
 [node name="wheel" parent="." node_paths=PackedStringArray("game") instance=ExtResource("50_jgq1w")]
 game = NodePath("..")
@@ -2251,6 +2213,9 @@ shape = SubResource("BoxShape3D_03v77")
 
 [node name="LastBreath2" parent="." instance=ExtResource("56_p14hv")]
 transform = Transform3D(0.59046, -0.0555892, 0.566274, 0.00510732, 0.816562, 0.074834, -0.568974, -0.0503587, 0.588331, -30.7387, 1.48911, -234.903)
+
+[node name="ignis car" parent="." instance=ExtResource("59_rrmyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.858, 3.04671, -32.3753)
 
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]

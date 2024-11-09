@@ -16,7 +16,7 @@ func _ready() -> void:
 	if Settings.resolution_scale:
 		sb.scaling_3d_scale = Settings.resolution_scale
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !is_multiplayer_authority(): return
 	
 	var is_dead = player.is_dead

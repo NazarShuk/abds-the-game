@@ -27,6 +27,9 @@ properties/2/replication_mode = 2
 properties/3/path = NodePath("MeshInstance3D6:visible")
 properties/3/spawn = true
 properties/3/replication_mode = 2
+properties/4/path = NodePath(".:can_break")
+properties/4/spawn = true
+properties/4/replication_mode = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_2j2vy"]
 size = Vector3(0.05, 0.05, 0.05)

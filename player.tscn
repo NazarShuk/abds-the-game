@@ -97,6 +97,9 @@ properties/6/replication_mode = 1
 properties/7/path = NodePath(".:is_dead")
 properties/7/spawn = true
 properties/7/replication_mode = 2
+properties/8/path = NodePath("CollisionShape3D:disabled")
+properties/8/spawn = true
+properties/8/replication_mode = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofe5t"]
 shader = ExtResource("20_kprs4")

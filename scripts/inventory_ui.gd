@@ -11,7 +11,7 @@ func _ready() -> void:
 		var visualizer = ITEM_VISUALISER.instantiate()
 		h_box.add_child(visualizer)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	for i in range(0,player.inventory.size()):
 		if h_box.get_child(i):
 			if player.selected_slot == i:

@@ -902,6 +902,8 @@ func control_text_setters():
 			final_text += "Freezer\n E - Get inside"
 		elif looking_at.is_in_group("dropped_item"):
 			final_text += "Dropped item\n E - Pick it up"
+		elif looking_at.is_in_group("ignis_car"):
+			final_text += "Car\n E - Get inside"
 	
 	var cur_item = get_selected_item()
 	if final_text != "":
@@ -1219,7 +1221,9 @@ func interaction_functions():
 			if ray.get_collider().is_in_group("last_breath"):
 				ray.get_collider().queue_free()
 				last_breath = true
-				
+			if ray.get_collider().is_in_group("ignis_car"):
+				print("the ignis")
+				ray.get_collider().enter_car.rpc(name.to_int())
 				
 			if ray.get_collider().is_in_group("toilet"):
 				if !can_toilet_tp : return
