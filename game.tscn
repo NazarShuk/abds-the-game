@@ -2297,9 +2297,10 @@ bake_mask = 4294442495
 [node name="Mr_Misuraca" parent="." instance=ExtResource("43_t45wj")]
 transform = Transform3D(1.165, 0, -2.01784, 0, 2.33, 0, 2.01784, 0, 1.165, -67.4405, 1.24283, -168.649)
 
-[node name="Videoplayer" parent="." node_paths=PackedStringArray("audio_player") instance=ExtResource("44_jjv51")]
+[node name="Videoplayer" parent="." node_paths=PackedStringArray("audio_player", "game") instance=ExtResource("44_jjv51")]
 transform = Transform3D(12.3627, 0, 0, 0, 5.688, 0, 0, 0, 1, -25.9642, 4.66635, -194.005)
 audio_player = NodePath("../Music2")
+game = NodePath("..")
 
 [node name="pre_start_game_anim" type="Node3D" parent="."]
 

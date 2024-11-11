@@ -4,13 +4,14 @@ extends Node3D
 @export var audio_player : AudioStreamPlayer
 
 @onready var initial_clip = audio_player.stream
+@export var game : Node3D
 
 var time_left = 100
 var is_playing = false
 
 @rpc("any_peer","call_local")
 func play():
-	if multiplayer.is_server() and audio_player.playing:
+	if multiplayer.is_server() and !game.escape:
 		set_video.rpc(randi_range(0,videos.size() - 1))
 
 
@@ -32,6 +33,6 @@ func _process(delta: float) -> void:
 	elif is_playing:
 		is_playing = false
 		audio_player.stream = initial_clip
-		if audio_player.playing:
+		if !game.escape:
 			audio_player.play()
 		$SubViewport/VideoStreamPlayer.stop()

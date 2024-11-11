@@ -82,6 +82,9 @@ func prepare_multiplayer():
 	
 	if !OS.has_feature("dedicated_server"):
 		_on_peer_connected()
+	
+	if peer is SteamMultiplayerPeer:
+		peer.network_session_failed.connect(_on_disconnected_from_server)
 
 func _on_network_session_failed(_steam_id: int, _reason: int, _connection_state: int):
 	_on_disconnected_from_server()
@@ -306,6 +309,10 @@ func _on_peer_disconnect(id):
 	Game.set_books_to_collect.rpc(Game.game_params.get_param("starting_notebooks") + (Game.players.keys().size()) * Game.game_params.get_param("notebooks_per_player"))
 	
 	update_player_text()
+	
+	if !multiplayer.is_server() and peer is SteamMultiplayerPeer:
+		if id == 1:
+			_on_disconnected_from_server()
 	
 	if OS.has_feature("dedicated_server"):
 		if Game.players.keys().size():
