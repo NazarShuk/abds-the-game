@@ -27,6 +27,11 @@ func convert_csg_to_meshinstance():
 		var original_transform = mesh_instance.global_transform
 		var original_name = mesh_instance.name
 		
+		# Store the original material(s)
+		var materials = []
+		for i in original_mesh.get_surface_count():
+			materials.append(original_mesh.surface_get_material(i))
+		
 		# Create new BoxMesh
 		var box_mesh = BoxMesh.new()
 		
@@ -35,6 +40,12 @@ func convert_csg_to_meshinstance():
 		
 		# Set the box size based on the AABB dimensions
 		box_mesh.size = aabb.size
+		
+		# Apply the first material to the box mesh (since BoxMesh only has one surface)
+		if materials.size() > 0:
+			box_mesh.material = materials[0]
+			# Alternatively, if you want to keep using surface materials:
+			# box_mesh.surface_set_material(0, materials[0])
 		
 		# Update the mesh instance
 		mesh_instance.mesh = box_mesh
@@ -45,3 +56,4 @@ func convert_csg_to_meshinstance():
 		
 		# Keep the original name
 		mesh_instance.name = original_name
+	

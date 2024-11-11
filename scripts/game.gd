@@ -46,6 +46,8 @@ var end_game_ending = ""
 var players_singleton_ready = 0
 var players_singleton_required = -1
 
+@export var leahy_time = false
+
 func _enter_tree():
 	name = "MainGameScene"
 
@@ -135,6 +137,8 @@ func ending_check():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
+	
+	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
 			
 			
@@ -207,7 +211,6 @@ func _on_peer_connected(id = 1):
 	
 	Game.players[id] = {
 		"id":id,
-		#"username":str(id),
 		"books_collected":0,
 		"is_dead":false,
 		"deaths":0,
@@ -217,6 +220,8 @@ func _on_peer_connected(id = 1):
 	}
 	
 	update_player_text()
+	
+	Game.sync_customization(id)
 	
 	await Game.sleep(1)
 	request_steam_usr.rpc_id(id)
@@ -714,6 +719,7 @@ func reload_game():
 @rpc("authority","call_local")
 func escape_mode():
 	if escape: return
+	if can_escape: return
 	if multiplayer.is_server():
 		escape = true
 	
@@ -731,4 +737,22 @@ func escape_mode():
 	GuiManager.show_subtitle_for("Run.", 7.81 - 6.83)
 	await Game.sleep(7.81 - 6.83)
 	can_escape = true
+
+@rpc("authority","call_local")
+func leahy_time_mode():
+	return # TODO
 	
+	if !can_escape: return
+	if leahy_time: return
+	
+	$escape.stop()
+	leahy_time = true
+	$CanvasLayer/Main/LeahyTime/AnimationPlayer.play("intro")
+	$leahytime.play()
+	
+	if multiplayer.is_server():
+		$LeahyTime.start()
+
+func _on_leahy_time_timeout() -> void:
+	if multiplayer.is_server():
+		end_game.rpc("worst")

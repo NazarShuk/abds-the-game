@@ -1,7 +1,10 @@
 extends ColorRect
 
+@export_category("Parameter")
 @export var param_name : String
 @export var label_text : String
+
+
 @onready var check_button = $CheckButton
 
 var did_set = false

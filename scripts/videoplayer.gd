@@ -10,7 +10,7 @@ var is_playing = false
 
 @rpc("any_peer","call_local")
 func play():
-	if multiplayer.is_server():
+	if multiplayer.is_server() and audio_player.playing:
 		set_video.rpc(randi_range(0,videos.size() - 1))
 
 
@@ -32,5 +32,6 @@ func _process(delta: float) -> void:
 	elif is_playing:
 		is_playing = false
 		audio_player.stream = initial_clip
-		audio_player.play()
+		if audio_player.playing:
+			audio_player.play()
 		$SubViewport/VideoStreamPlayer.stop()

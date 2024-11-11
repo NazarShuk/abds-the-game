@@ -1,11 +1,13 @@
 extends ColorRect
 
+@export_category("Parameter")
 @export var param_name : String
 @export var label_text : String
-@export var is_disabled : bool
 
+@export_category("Value")
 @export var max_val : float
 @export var min_val : float
+
 
 func _ready():
 	$Label.text = " " + label_text

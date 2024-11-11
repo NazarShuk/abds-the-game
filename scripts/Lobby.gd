@@ -13,14 +13,33 @@ func _process(_delta):
 		
 		for property in default_params.get_property_list():
 			if property.name.begins_with("param_"):
-				if default_params.get(property.name) != Game.game_params.get(property.name) and not default_params.neutral_parameters.has(property.name):
-					changed += 1
-					
-					var formatted_name : String = property.name.replace("_"," ")
-					formatted_name = formatted_name.replace("param ","")
-					formatted_name = formatted_name.capitalize()
-					
-					game_config_client.text += formatted_name + ": " + str(Game.game_params.get(property.name)) + "\n"
+				var default_value = default_params.get(property.name)
+				var current_value = Game.game_params.get(property.name)
+				
+				if default_value != current_value:
+					if current_value is bool:
+						if not default_params.neutral_parameters.has(property.name):
+								changed += 1
+								
+								var formatted_name : String = property.name.replace("_"," ")
+								formatted_name = formatted_name.replace("param ","")
+								formatted_name = formatted_name.capitalize()
+								
+								game_config_client.text += formatted_name + ": " + str(current_value) + "\n"
+					elif current_value is float or current_value is int:
+						if current_value < default_value and not default_params.lower_is_harder.has(property.name):
+							changed += 1
+							var formatted_name : String = property.name.replace("_"," ")
+							formatted_name = formatted_name.replace("param ","")
+							formatted_name = formatted_name.capitalize()
+							game_config_client.text += formatted_name + ": " + str(current_value) + "\n"
+						# OR check if value is higher and that's not desired
+						elif current_value > default_value and not default_params.higher_is_harder.has(property.name):
+							changed += 1
+							var formatted_name : String = property.name.replace("_"," ")
+							formatted_name = formatted_name.replace("param ","")
+							formatted_name = formatted_name.capitalize()
+							game_config_client.text += formatted_name + ": " + str(current_value) + "\n"
 		
 		changed_params = changed > 0
 		$achievement.visible = changed_params

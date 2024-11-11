@@ -60,6 +60,29 @@ func clear_customization():
 	game_params = GameParams.new()
 	on_customization_reset.emit()
 
+func sync_customization(client_id):
+	
+	var default_params = GameParams.new()
+	var prms = {}
+	
+	for property in default_params.get_property_list():
+		if property.name.begins_with("param_"):
+			var default_value = default_params.get(property.name)
+			var current_value = Game.game_params.get(property.name)
+			
+			if default_value != current_value:
+				prms[property.name] = current_value
+	
+	if prms != {}:
+		receive_customization_sync.rpc_id(client_id, prms)
+	
+
+@rpc("authority","call_remote")
+func receive_customization_sync(prms : Dictionary):
+	for key in prms.keys():
+		game_params.set(key, prms[key])
+	
+
 @rpc("authority","call_local")
 func set_book_boost(val : float):
 	book_boost = val

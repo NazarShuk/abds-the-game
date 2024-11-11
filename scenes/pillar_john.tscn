@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=4 uid="uid://cnjd75clgu7jp"]
+[gd_scene load_steps=9 format=4 uid="uid://cnjd75clgu7jp"]
 
 [ext_resource type="Script" path="res://scripts/pillar_john.gd" id="1_gcuf5"]
 [ext_resource type="Texture2D" uid="uid://cwlbfh1saye8m" path="res://models/3d/pillar_john_0.png" id="1_ore6o"]
+[ext_resource type="AudioStream" uid="uid://b35vuj7uve47l" path="res://sounds/meatphobia.mp3" id="3_w4c7g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1sy8"]
 resource_name = "Material"
@@ -44,6 +45,11 @@ shadow_mesh = SubResource("ArrayMesh_njfek")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_44bt4"]
 points = PackedVector3Array(1.69304, 4.05587, 8.5171, -0.172305, -4.6935, -2.91889, 0.0913335, -4.70923, -2.928, 0.0923095, 4.59265, -8.28635, -4.42742, 0.323552, 8.22507, 4.05839, -1.79147, 8.17998, 4.60836, 0.0587231, -7.71876, -4.17813, -1.54456, -8.29108, -4.10268, 4.2458, 3.06397, -1.77745, -3.9532, 8.53647, 4.3025, 3.96541, 2.7849, 3.04608, -3.16545, -8.33623, -4.19154, 1.66267, -8.3179, 1.70919, -3.98327, 8.59661, 0.875454, 5.29788, 0.24443, -1.76159, -4.17919, -7.69628, 3.30434, 2.73169, -8.57894, -3.54878, -3.05486, 3.88155, -1.7636, 4.03551, 8.46829, 4.33223, 0.852939, 8.19743, 3.47871, -3.32478, 1.54649, -4.66594, -0.204479, -7.15096, -1.99365, 4.23042, -7.56907, -0.961381, 5.32258, 0.245725, 0.630819, -3.97539, -8.61344, 2.69227, 4.48707, -3.39867, -4.11375, -1.7785, 7.86632, 4.32194, -1.79098, -7.15246, -1.75168, -4.41678, 4.45892, 1.91494, -4.36949, -1.31951, 4.54867, -0.20028, 7.06162, -3.29889, -3.32631, -6.79429)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kmy18"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
 [node name="Pillar john" type="StaticBody3D"]
 script = ExtResource("1_gcuf5")
 
@@ -57,5 +63,24 @@ mesh = SubResource("ArrayMesh_mrje7")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 2.22045e-16, 1, 0, -1, 2.22045e-16, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_44bt4")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.25, 0, 0, 0, -5.46392e-08, 1.25, 0, -1.25, -5.46392e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_44bt4")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_kmy18")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_w4c7g")
+volume_db = 6.0
+max_db = 6.0
+autoplay = true
+max_distance = 40.0
+bus = &"Music"
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

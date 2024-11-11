@@ -73,6 +73,8 @@ var baja_previous_pos = Vector3()
 
 var last_breath = false
 
+@onready var tv: Control = $CanvasLayer/Control/TV
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	$nametag.text = SteamManager.steam_name
@@ -195,10 +197,13 @@ func _physics_process(delta):
 					camera_3d.v_offset = 0
 				
 				if closest_leahy.target_player_name and !parent.can_escape:
-					if closest_leahy.target_player_name == steam_name:
-						if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
-							leahy_approaching.is_shown = true
-							leahy_approaching.distance = leahy_dst
+					if global_position.y < 3.7:
+						if closest_leahy.target_player_name == steam_name:
+							if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
+								leahy_approaching.is_shown = true
+								leahy_approaching.distance = leahy_dst
+							else:
+								leahy_approaching.is_shown = false
 						else:
 							leahy_approaching.is_shown = false
 					else:
@@ -279,6 +284,9 @@ func _on_area_3d_area_entered(area):
 	if area.get_parent().is_in_group("Book"):
 		Achievements.books_collected += 1
 		Achievements.save_all()
+		tv.switch("book")
+		if parent.leahy_time:
+			play_sound("res://sounds/sfx_collecttoppin.ogg",6)
 	elif area.get_parent().is_in_group("evil_leahy") and Game.game_started == true:
 		var evil_leahy = area.get_parent()
 		
@@ -290,6 +298,7 @@ func _on_area_3d_area_entered(area):
 
 	elif area.is_in_group("landmine") and Game.game_started == true:
 		landmine_slip()
+		tv.switch("banana")
 	elif area.name == "azzu":
 		if area.get_parent().angered:
 			die("azzu")
@@ -868,6 +877,9 @@ func _on_stamina_flash_timeout():
 # INFOTEXT
 
 func control_text_setters():
+	if parent.leahy_time:
+		controls_text.text = ""
+		return
 	var looking_at = ray.get_collider()
 	
 	var final_text = ""

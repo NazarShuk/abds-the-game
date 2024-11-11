@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=148 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
@@ -11,7 +11,12 @@
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
 [ext_resource type="AudioStream" uid="uid://cvwobq8jsn8xc" path="res://failedme.mp3" id="6_8cxyt"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
+[ext_resource type="Texture2D" uid="uid://cwtwntla0bkcm" path="res://textures/leahytime.png" id="7_gd0qw"]
+[ext_resource type="Script" path="res://scripts/timer_progress.gd" id="8_6ddju"]
+[ext_resource type="Texture2D" uid="uid://c72tpajyecf6s" path="res://textures/jogn.png" id="8_58t2u"]
+[ext_resource type="Script" path="res://scripts/time_left.gd" id="8_evspy"]
 [ext_resource type="Script" path="res://scripts/Lobby.gd" id="8_mqq2e"]
+[ext_resource type="Texture2D" uid="uid://cuk8vbksretm7" path="res://textures/azzu.png" id="8_sxj4k"]
 [ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="9_gld5r"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="9_pvk13"]
 [ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="10_5h2pt"]
@@ -33,6 +38,7 @@
 [ext_resource type="AudioStream" uid="uid://baxilhywlt8r3" path="res://pacer_songs/pacer_music.mp3" id="22_3b7ci"]
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
 [ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
+[ext_resource type="AudioStream" uid="uid://d3pdjlgjb60r8" path="res://sounds/leahy time.mp3" id="23_texth"]
 [ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
 [ext_resource type="Script" path="res://scripts/WelcomeLeahy.gd" id="26_0x6dq"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
@@ -43,6 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://bnid1ktqxhfa7" path="res://shop.tscn" id="35_ynn12"]
 [ext_resource type="PackedScene" uid="uid://cx7itjqsyc1xu" path="res://breaker.tscn" id="36_j44h3"]
 [ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="38_ahlvj"]
+[ext_resource type="PackedScene" uid="uid://cnjd75clgu7jp" path="res://scenes/pillar_john.tscn" id="40_7hksy"]
 [ext_resource type="ArrayOccluder3D" uid="uid://dj2vhfp47eps5" path="res://game.occ" id="40_ba0mq"]
 [ext_resource type="PackedScene" uid="uid://dsqshh6157cwh" path="res://bucket.tscn" id="42_8jmcj"]
 [ext_resource type="PackedScene" uid="uid://kfniphc0hjb6" path="res://misuraca.tscn" id="43_t45wj"]
@@ -58,7 +65,6 @@
 [ext_resource type="PackedScene" uid="uid://tiwq41uqylbi" path="res://scenes/exit.tscn" id="55_fvbsc"]
 [ext_resource type="PackedScene" uid="uid://d3cvm5kjh3vj2" path="res://scenes/music disable area.tscn" id="56_k28kr"]
 [ext_resource type="PackedScene" uid="uid://byuespbgm2uma" path="res://scenes/last_breath.tscn" id="56_p14hv"]
-[ext_resource type="PackedScene" uid="uid://h1843b5qdeq1" path="res://scenes/ignis_car.tscn" id="59_rrmyq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -115,6 +121,9 @@ properties/8/replication_mode = 2
 properties/9/path = NodePath(".:can_escape")
 properties/9/spawn = true
 properties/9/replication_mode = 2
+properties/10/path = NodePath(".:leahy_time")
+properties/10/spawn = true
+properties/10/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_8oj72"]
 length = 0.001
@@ -330,6 +339,199 @@ _data = {
 "RESET": SubResource("Animation_c7x6i"),
 "fake dp ending": SubResource("Animation_hkhs3")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyr0v"]
+atlas = ExtResource("7_gd0qw")
+region = Rect2(0, 0, 250, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr7xk"]
+atlas = ExtResource("7_gd0qw")
+region = Rect2(250, 0, 250, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_loff5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyr0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pr7xk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="Animation" id="Animation_gsmih"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cool thing:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(574, 893)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ProgressBar:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(420.5, 477)]
+}
+
+[sub_resource type="Animation" id="Animation_hykiy"]
+resource_name = "intro"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cool thing:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(574, 893), Vector2(574, -304)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ProgressBar:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(420.5, 899), Vector2(420.5, 477)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vlepg"]
+_data = {
+"RESET": SubResource("Animation_gsmih"),
+"intro": SubResource("Animation_hykiy")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofv1g"]
+atlas = ExtResource("8_58t2u")
+region = Rect2(0, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8gh3"]
+atlas = ExtResource("8_58t2u")
+region = Rect2(64, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1grvq"]
+atlas = ExtResource("8_58t2u")
+region = Rect2(128, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcbwn"]
+atlas = ExtResource("8_58t2u")
+region = Rect2(192, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hplt0"]
+atlas = ExtResource("8_58t2u")
+region = Rect2(256, 0, 64, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_55fbp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ofv1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8gh3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1grvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcbwn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hplt0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqrmq"]
+atlas = ExtResource("8_sxj4k")
+region = Rect2(0, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vku4"]
+atlas = ExtResource("8_sxj4k")
+region = Rect2(64, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgidg"]
+atlas = ExtResource("8_sxj4k")
+region = Rect2(128, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ts8m8"]
+atlas = ExtResource("8_sxj4k")
+region = Rect2(192, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qoqen"]
+atlas = ExtResource("8_sxj4k")
+region = Rect2(256, 0, 64, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sryht"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqrmq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vku4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgidg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ts8m8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qoqen")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evicu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -736,6 +938,10 @@ replication_config = SubResource("SceneReplicationConfig_3nj22")
 [node name="Bet timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="LeahyTime" type="Timer" parent="."]
+wait_time = 300.0
+one_shot = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 6
 
@@ -880,6 +1086,99 @@ expand_mode = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Main/fake dp ending"]
 bus = &"Dialogs"
+
+[node name="LeahyTime" type="Control" parent="CanvasLayer/Main"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Cool thing" type="Control" parent="CanvasLayer/Main/LeahyTime"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 566.0
+offset_right = 20.0
+offset_bottom = 606.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Main/LeahyTime/Cool thing"]
+sprite_frames = SubResource("SpriteFrames_loff5")
+autoplay = "default"
+frame_progress = 0.58456
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Main/LeahyTime"]
+libraries = {
+"": SubResource("AnimationLibrary_vlepg")
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Main/LeahyTime" node_paths=PackedStringArray("timer")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -173.5
+offset_top = -177.0
+offset_right = 173.5
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+show_percentage = false
+script = ExtResource("8_6ddju")
+timer = NodePath("../../../../LeahyTime")
+max = 300.0
+
+[node name="TimeLeft" type="Label" parent="CanvasLayer/Main/LeahyTime/ProgressBar" node_paths=PackedStringArray("timer")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+text = "0:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_evspy")
+timer = NodePath("../../../../../LeahyTime")
+
+[node name="Control" type="Control" parent="CanvasLayer/Main/LeahyTime/ProgressBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Main/LeahyTime/ProgressBar/Control"]
+sprite_frames = SubResource("SpriteFrames_55fbp")
+autoplay = "default"
+frame_progress = 0.51672
+
+[node name="Control2" type="Control" parent="CanvasLayer/Main/LeahyTime/ProgressBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Main/LeahyTime/ProgressBar/Control2"]
+sprite_frames = SubResource("SpriteFrames_sryht")
+autoplay = "default"
+frame_progress = 0.755083
 
 [node name="Lobby" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -1242,7 +1541,6 @@ bus = &"Music"
 
 [node name="Music1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ancut")
-volume_db = -5.0
 bus = &"Music"
 
 [node name="Music2" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("game")]
@@ -1261,6 +1559,10 @@ bus = &"Dialogs"
 
 [node name="escape" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_du2f5")
+bus = &"Music"
+
+[node name="leahytime" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_texth")
 bus = &"Music"
 
 [node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
@@ -1313,6 +1615,18 @@ bus = &"Dialogs"
 
 [node name="book1" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, 1.078, -69.722)
+
+[node name="book2" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, -15.2905, -69.722)
+change_pos_on_game_start = true
+
+[node name="book3" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, -15.2905, -69.722)
+change_pos_on_game_start = true
+
+[node name="book4" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, -15.2905, -69.722)
+change_pos_on_game_start = true
 
 [node name="WelcomeLeahy" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.53895, 0, -1.74614, 0, 3.08144, 0, 1.74614, 0, 2.53895, 3.26805, 1.44916, -11.6121)
@@ -1891,6 +2205,12 @@ transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 
 [node name="Bucket4" parent="School" instance=ExtResource("42_8jmcj")]
 transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -66.0308, 0.545469, 2.60503)
 
+[node name="Pillar john special" type="Node3D" parent="School"]
+
+[node name="Pillar john" parent="School/Pillar john special" node_paths=PackedStringArray("game") instance=ExtResource("40_7hksy")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 105.42, 4.50884, -69.0286)
+game = NodePath("../../..")
+
 [node name="Mr Fox" parent="." instance=ExtResource("20_kw6s4")]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 1.24168, -174.032)
 
@@ -2214,10 +2534,8 @@ shape = SubResource("BoxShape3D_03v77")
 [node name="LastBreath2" parent="." instance=ExtResource("56_p14hv")]
 transform = Transform3D(0.59046, -0.0555892, 0.566274, 0.00510732, 0.816562, 0.074834, -0.568974, -0.0503587, 0.588331, -30.7387, 1.48911, -234.903)
 
-[node name="ignis car" parent="." instance=ExtResource("59_rrmyq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.858, 3.04671, -32.3753)
-
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
+[connection signal="timeout" from="LeahyTime" to="." method="_on_leahy_time_timeout"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
