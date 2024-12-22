@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Ldfcomicsans-jj7l.ttf-43a8df64cd132560e1748f8
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

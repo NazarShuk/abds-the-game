@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cop2rccne3feg"
 path.s3tc="res://.godot/imported/ela book.png-e167d0dcb4b11ceb88451412621fea5a.s3tc.ctex"
-path.etc2="res://.godot/imported/ela book.png-e167d0dcb4b11ceb88451412621fea5a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://ela book.png"
-dest_files=["res://.godot/imported/ela book.png-e167d0dcb4b11ceb88451412621fea5a.s3tc.ctex", "res://.godot/imported/ela book.png-e167d0dcb4b11ceb88451412621fea5a.etc2.ctex"]
+dest_files=["res://.godot/imported/ela book.png-e167d0dcb4b11ceb88451412621fea5a.s3tc.ctex"]
 
 [params]
 

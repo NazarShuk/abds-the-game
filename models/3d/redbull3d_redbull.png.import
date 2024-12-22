@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://kbom38vgklqr"
 path.s3tc="res://.godot/imported/redbull3d_redbull.png-38e0f18eb7ddcda83d5a28eba28a4644.s3tc.ctex"
-path.etc2="res://.godot/imported/redbull3d_redbull.png-38e0f18eb7ddcda83d5a28eba28a4644.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/3d/redbull3d_redbull.png"
-dest_files=["res://.godot/imported/redbull3d_redbull.png-38e0f18eb7ddcda83d5a28eba28a4644.s3tc.ctex", "res://.godot/imported/redbull3d_redbull.png-38e0f18eb7ddcda83d5a28eba28a4644.etc2.ctex"]
+dest_files=["res://.godot/imported/redbull3d_redbull.png-38e0f18eb7ddcda83d5a28eba28a4644.s3tc.ctex"]
 
 [params]
 

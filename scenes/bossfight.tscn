@@ -1,0 +1,469 @@
+[gd_scene load_steps=50 format=3 uid="uid://bf4w65ggasudb"]
+
+[ext_resource type="Texture2D" uid="uid://bs2hbw6eckr2j" path="res://floor.png" id="1_8sv0c"]
+[ext_resource type="AudioStream" uid="uid://bo7mhyi3janiq" path="res://sounds/bossfight_intro.mp3" id="1_j0ce3"]
+[ext_resource type="Script" path="res://scripts/bossfight.gd" id="1_ofdhs"]
+[ext_resource type="AudioStream" uid="uid://dbkecvib8fxhs" path="res://sounds/bossfight_loop.mp3" id="2_eelj2"]
+[ext_resource type="Script" path="res://scripts/bossfight_player.gd" id="4_5m83j"]
+[ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="4_47x54"]
+[ext_resource type="AudioStream" uid="uid://5atq0pajnrbc" path="res://sounds/wip_phase2_intro.mp3" id="4_uudkr"]
+[ext_resource type="AudioStream" uid="uid://6but5h5kt0m4" path="res://sounds/wip_phase2_loop.mp3" id="5_03eyn"]
+[ext_resource type="Script" path="res://scripts/evil_darel.gd" id="6_0t86w"]
+[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="6_my35y"]
+[ext_resource type="Script" path="res://scripts/health_bar_darel.gd" id="6_sruot"]
+[ext_resource type="Texture2D" uid="uid://b38xixrxxfdw4" path="res://darel.png" id="7_le1ox"]
+[ext_resource type="Texture2D" uid="uid://upa52bysxlmx" path="res://thing.svg" id="8_78bcm"]
+[ext_resource type="Script" path="res://scripts/target_player_pos.gd" id="9_31kxd"]
+[ext_resource type="PackedScene" uid="uid://vd1k4fap01bk" path="res://scenes/clorox_pickup.tscn" id="11_01kyq"]
+[ext_resource type="AudioStream" uid="uid://e6cbbc4tgc6e" path="res://dariel/scream1.mp3" id="13_nunff"]
+[ext_resource type="Texture2D" uid="uid://dvgm7yqf1y040" path="res://models/walls2.png" id="16_svsnv"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ep4rs"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(1, 1, 1, 1)
+ground_bottom_color = Color(1, 1, 1, 1)
+ground_horizon_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Sky" id="Sky_bde40"]
+sky_material = SubResource("ProceduralSkyMaterial_ep4rs")
+
+[sub_resource type="Environment" id="Environment_a81q1"]
+background_mode = 2
+sky = SubResource("Sky_bde40")
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_exposure = 1.25
+ssil_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+glow_intensity = 0.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_emission = Color(0.277528, 0.277528, 0.277528, 1)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_nhr8v"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_qp123"]
+clip_count = 4
+clip_0/name = &"intro"
+clip_0/stream = ExtResource("1_j0ce3")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"loop"
+clip_1/stream = ExtResource("2_eelj2")
+clip_1/auto_advance = 1
+clip_1/next_clip = 1
+clip_2/name = &"phase2_intro"
+clip_2/stream = ExtResource("4_uudkr")
+clip_2/auto_advance = 1
+clip_2/next_clip = 3
+clip_3/name = &"phase2_loop"
+clip_3/stream = ExtResource("5_03eyn")
+clip_3/auto_advance = 1
+clip_3/next_clip = 3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ijnw"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_3hbhv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2fij4"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.713726)
+albedo_texture = ExtResource("6_my35y")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_liflj"]
+size = Vector3(0.486328, 1, 0.420898)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5u64"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_edola"]
+material = SubResource("StandardMaterial3D_r5u64")
+
+[sub_resource type="Curve" id="Curve_fhgsr"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0404984, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Shader" id="Shader_bf1xk"]
+code = "shader_type canvas_item;
+
+uniform float jitter_amount : hint_range(0.0, 100.0) = 30.0;
+uniform float glitch_frequency : hint_range(0.1, 10.0) = 5.0;
+
+// Random function for individual rows
+float random(float x) {
+    return fract(sin(x * 12.9898) * 43758.5453);
+}
+
+void fragment() {
+    // Get individual pixel row
+    float pixel_y = floor(UV.y / TEXTURE_PIXEL_SIZE.y);
+    
+    // Generate unique timing for this row
+    float row_time = floor(TIME * glitch_frequency * random(pixel_y * 0.7937));
+    
+    // Generate displacement for this specific row
+    float offset = (random(pixel_y + row_time * 0.1234) - 0.5) * 2.0 * jitter_amount;
+    
+    // Apply displacement only to this row
+    vec2 displaced_uv = UV;
+    displaced_uv.x += offset * TEXTURE_PIXEL_SIZE.x;
+    
+    COLOR = texture(TEXTURE, displaced_uv);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_npkn5"]
+shader = SubResource("Shader_bf1xk")
+shader_parameter/jitter_amount = 0.0
+shader_parameter/glitch_frequency = 10.0
+
+[sub_resource type="GDScript" id="GDScript_5bdlq"]
+resource_name = "woag"
+script/source = "extends SubViewportContainer
+
+@export var evil_darel : EvilDarel
+
+
+func _ready() -> void:
+	evil_darel.damaged.connect(on_damaged)
+
+func _process(delta: float) -> void:
+	material.set(\"shader_parameter/jitter_amount\", lerp(material.get(\"shader_parameter/jitter_amount\"), 0.0, delta * 2.5))
+
+func on_damaged():
+	material.set(\"shader_parameter/jitter_amount\", 30.0)
+"
+
+[sub_resource type="GDScript" id="GDScript_rfys0"]
+resource_name = "cam_target"
+script/source = "extends Camera3D
+
+@export var head : Node3D
+
+
+func _process(delta: float) -> void:
+	global_transform = head.global_transform
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8aofm"]
+bg_color = Color(0.321569, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8agid"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ur3hg"]
+size = Vector3(1, 1, 0.368896)
+
+[sub_resource type="QuadMesh" id="QuadMesh_m2dta"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_olpvy"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("7_le1ox")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_84gn7"]
+size = Vector3(0.0175781, 0.865234, 0.0390625)
+
+[sub_resource type="Animation" id="Animation_rmym7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("target_player_pos:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("target_player_pos:do_target")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_oieg5"]
+resource_name = "intro"
+length = 25.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("target_player_pos:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 14.2, 22, 25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 59.2937, 11.6775), Vector3(0, 39.394, 11.6775), Vector3(0, 6.61797, 1.56261), Vector3(0, 1.95863, -3.03137)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("target_player_pos:do_target")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fa8k7"]
+_data = {
+"RESET": SubResource("Animation_rmym7"),
+"intro": SubResource("Animation_oieg5")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ye0h"]
+size = Vector3(18.3229, 89.8903, 19.4037)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wrs0q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g0fp7"]
+albedo_texture = ExtResource("1_8sv0c")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oq4w2"]
+albedo_texture = ExtResource("16_svsnv")
+uv1_scale = Vector3(3.765, 3.765, 3.765)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ysy0w"]
+material = SubResource("StandardMaterial3D_oq4w2")
+size = Vector3(2, 1, 0.5)
+
+[sub_resource type="Curve" id="Curve_vb80a"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 15), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_teo6m"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.370717, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="bossfight" type="Node3D"]
+script = ExtResource("1_ofdhs")
+
+[node name="Lighting and stuff" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting and stuff"]
+environment = SubResource("Environment_a81q1")
+camera_attributes = SubResource("CameraAttributesPractical_nhr8v")
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_qp123")
+bus = &"Music"
+
+[node name="BossfightPlayer" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera", "target_player_pos") groups=["player"]]
+script = ExtResource("4_5m83j")
+camera = NodePath("../CanvasLayer/SubViewportContainer/SubViewport/Camera3D")
+target_player_pos = NodePath("../intro/target_player_pos")
+
+[node name="visual_body" parent="BossfightPlayer" instance=ExtResource("4_47x54")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BossfightPlayer"]
+shape = SubResource("CapsuleShape3D_5ijnw")
+
+[node name="Head" type="Node3D" parent="BossfightPlayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="clorox" type="MeshInstance3D" parent="BossfightPlayer/Head"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, -0.065, -0.139)
+visible = false
+mesh = SubResource("QuadMesh_3hbhv")
+surface_material_override/0 = SubResource("StandardMaterial3D_2fij4")
+
+[node name="Area3D" type="Area3D" parent="BossfightPlayer"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BossfightPlayer/Area3D"]
+shape = SubResource("BoxShape3D_liflj")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+amount = 300
+lifetime = 3.0
+mesh = SubResource("BoxMesh_edola")
+emission_shape = 3
+emission_box_extents = Vector3(500, 100, 500)
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("Curve_fhgsr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer" node_paths=PackedStringArray("evil_darel")]
+material = SubResource("ShaderMaterial_npkn5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = SubResource("GDScript_5bdlq")
+evil_darel = NodePath("../../EvilDarel")
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport" node_paths=PackedStringArray("head")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+cull_mask = 1044477
+far = 250.0
+script = SubResource("GDScript_rfys0")
+head = NodePath("../../../../BossfightPlayer/Head")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("darel", "bossfight")]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 136.0
+offset_top = 106.0
+offset_right = -136.0
+offset_bottom = 133.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_8aofm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8agid")
+script = ExtResource("6_sruot")
+darel = NodePath("../../EvilDarel")
+bossfight = NodePath("../..")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(2.5, 2.5)
+texture = ExtResource("8_78bcm")
+expand_mode = 1
+
+[node name="EvilDarel" type="CharacterBody3D" parent="." node_paths=PackedStringArray("bossfight", "nav_agent", "area_3d")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 10.4329)
+script = ExtResource("6_0t86w")
+bossfight = NodePath("..")
+nav_agent = NodePath("NavigationAgent3D")
+area_3d = NodePath("darel")
+DEFAULT_SPEED = 10.0
+speed = 10.0
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="EvilDarel"]
+
+[node name="darel" type="Area3D" parent="EvilDarel"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EvilDarel/darel"]
+shape = SubResource("BoxShape3D_ur3hg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EvilDarel"]
+transform = Transform3D(1, 0, 0, 0, 1.25338, 0, 0, 0, 1, 0, 0.581417, 0)
+mesh = SubResource("QuadMesh_m2dta")
+surface_material_override/0 = SubResource("StandardMaterial3D_olpvy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EvilDarel"]
+shape = SubResource("BoxShape3D_84gn7")
+
+[node name="scream" type="AudioStreamPlayer3D" parent="EvilDarel"]
+stream = ExtResource("13_nunff")
+volume_db = 6.0
+max_db = 6.0
+bus = &"Dialogs"
+
+[node name="intro" type="Node3D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="intro"]
+libraries = {
+"": SubResource("AnimationLibrary_fa8k7")
+}
+
+[node name="target_player_pos" type="Node3D" parent="intro"]
+script = ExtResource("9_31kxd")
+
+[node name="Cloroxes" type="Node3D" parent="."]
+visible = false
+
+[node name="CloroxPickup" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2794, -10.6171)
+
+[node name="CloroxPickup2" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.77382, 1.2794, -101.833)
+
+[node name="CloroxPickup3" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.77382, 1.2794, -212.425)
+
+[node name="CloroxPickup4" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 94.6495, 1.2794, -223.458)
+
+[node name="CloroxPickup5" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 94.6495, 1.2794, -126.829)
+
+[node name="CloroxPickup6" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -81.9974, 1.2794, -124.72)
+
+[node name="CloroxPickup7" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.148, 1.2794, -84.2861)
+
+[node name="CloroxPickup8" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.554, 1.2794, -33.4873)
+
+[node name="CloroxPickup9" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.405, 1.2794, -33.535)
+
+[node name="CloroxPickup10" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.909, 1.2794, -125.755)
+
+[node name="CloroxPickup11" parent="Cloroxes" instance=ExtResource("11_01kyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9615, 1.2794, -175.191)
+
+[node name="Pillar" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -47.6794, 0)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillar"]
+shape = SubResource("BoxShape3D_2ye0h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillar"]
+transform = Transform3D(18.3229, 0, 0, 0, 89.8903, 0, 0, 0, 19.4037, 0, 0, 0)
+mesh = SubResource("BoxMesh_wrs0q")
+surface_material_override/0 = SubResource("StandardMaterial3D_g0fp7")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Pillar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 49.8193, 0)
+emitting = false
+amount = 100
+lifetime = 5.0
+mesh = SubResource("BoxMesh_ysy0w")
+emission_shape = 2
+emission_sphere_radius = 40.0
+particle_flag_rotate_y = true
+spread = 0.0
+radial_accel_min = -64.71
+radial_accel_max = -64.71
+tangential_accel_min = 49.41
+tangential_accel_max = 49.41
+angle_max = 180.0
+angle_curve = SubResource("Curve_vb80a")
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_teo6m")
+
+[connection signal="area_entered" from="BossfightPlayer/Area3D" to="BossfightPlayer" method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="EvilDarel/darel" to="EvilDarel" method="_on_darel_area_entered"]

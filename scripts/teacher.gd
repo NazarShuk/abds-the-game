@@ -53,9 +53,15 @@ func _physics_process(_delta: float) -> void:
 		
 		move_and_slide()
 
+func add_speed_multiplier(multiplier : float, duration : float):
+	speed_multiplier += multiplier
+	await get_tree().create_timer(duration, false).timeout
+	speed_multiplier -= multiplier
+
 func target_players():
 	if target_player:
-		target_player_name = target_player.steam_name
+		if "steam_name" in target_player:
+			target_player_name = target_player.steam_name
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:

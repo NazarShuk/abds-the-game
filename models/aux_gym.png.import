@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqgj7b55gignb"
 path.s3tc="res://.godot/imported/aux_gym.png-db7a62ad00a3ba17057848909df462aa.s3tc.ctex"
-path.etc2="res://.godot/imported/aux_gym.png-db7a62ad00a3ba17057848909df462aa.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/aux_gym.png"
-dest_files=["res://.godot/imported/aux_gym.png-db7a62ad00a3ba17057848909df462aa.s3tc.ctex", "res://.godot/imported/aux_gym.png-db7a62ad00a3ba17057848909df462aa.etc2.ctex"]
+dest_files=["res://.godot/imported/aux_gym.png-db7a62ad00a3ba17057848909df462aa.s3tc.ctex"]
 
 [params]
 

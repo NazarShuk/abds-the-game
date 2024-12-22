@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bv7cybujaqr5"
 path.s3tc="res://.godot/imported/cafeteriaTable.png-244bf860528ece688c68c3887da2e6ac.s3tc.ctex"
-path.etc2="res://.godot/imported/cafeteriaTable.png-244bf860528ece688c68c3887da2e6ac.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/cafeteriaTable.png"
-dest_files=["res://.godot/imported/cafeteriaTable.png-244bf860528ece688c68c3887da2e6ac.s3tc.ctex", "res://.godot/imported/cafeteriaTable.png-244bf860528ece688c68c3887da2e6ac.etc2.ctex"]
+dest_files=["res://.godot/imported/cafeteriaTable.png-244bf860528ece688c68c3887da2e6ac.s3tc.ctex"]
 
 [params]
 

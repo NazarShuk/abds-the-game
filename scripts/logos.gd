@@ -19,6 +19,8 @@ func _ready():
 	AudioServer.set_bus_mute(2,false)
 	GlobalVars.menu_music_duration = 0
 	
+	GlobalVars.is_steam_peer = false
+	
 	if not GlobalVars.game_scene:
 		ResourceLoader.load_threaded_request(main_game_path)
 		var loading = true

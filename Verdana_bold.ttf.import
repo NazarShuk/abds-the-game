@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Verdana_bold.ttf-b53846f3f0e463b29ce0192fc474
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

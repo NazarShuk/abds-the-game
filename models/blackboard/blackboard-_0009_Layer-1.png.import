@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://vvklw85x26dt"
 path.s3tc="res://.godot/imported/blackboard-_0009_Layer-1.png-99c9d304f3f5359525483ef6c8d5623f.s3tc.ctex"
-path.etc2="res://.godot/imported/blackboard-_0009_Layer-1.png-99c9d304f3f5359525483ef6c8d5623f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/blackboard/blackboard-_0009_Layer-1.png"
-dest_files=["res://.godot/imported/blackboard-_0009_Layer-1.png-99c9d304f3f5359525483ef6c8d5623f.s3tc.ctex", "res://.godot/imported/blackboard-_0009_Layer-1.png-99c9d304f3f5359525483ef6c8d5623f.etc2.ctex"]
+dest_files=["res://.godot/imported/blackboard-_0009_Layer-1.png-99c9d304f3f5359525483ef6c8d5623f.s3tc.ctex"]
 
 [params]
 

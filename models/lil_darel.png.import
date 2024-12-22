@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://jtxxltvntbtu"
 path.s3tc="res://.godot/imported/lil_darel.png-185a94377b03236ed58ea09b35f6dd3d.s3tc.ctex"
-path.etc2="res://.godot/imported/lil_darel.png-185a94377b03236ed58ea09b35f6dd3d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/lil_darel.png"
-dest_files=["res://.godot/imported/lil_darel.png-185a94377b03236ed58ea09b35f6dd3d.s3tc.ctex", "res://.godot/imported/lil_darel.png-185a94377b03236ed58ea09b35f6dd3d.etc2.ctex"]
+dest_files=["res://.godot/imported/lil_darel.png-185a94377b03236ed58ea09b35f6dd3d.s3tc.ctex"]
 
 [params]
 

@@ -83,9 +83,6 @@ func prepare_multiplayer():
 	if !OS.has_feature("dedicated_server"):
 		_on_peer_connected()
 	
-	if peer is SteamMultiplayerPeer:
-		peer.network_session_failed.connect(_on_disconnected_from_server)
-
 func _on_network_session_failed(_steam_id: int, _reason: int, _connection_state: int):
 	_on_disconnected_from_server()
 
@@ -310,7 +307,7 @@ func _on_peer_disconnect(id):
 	
 	update_player_text()
 	
-	if !multiplayer.is_server() and peer is SteamMultiplayerPeer:
+	if !multiplayer.is_server() and GlobalVars.is_steam_peer:
 		if id == 1:
 			_on_disconnected_from_server()
 	

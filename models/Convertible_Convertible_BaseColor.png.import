@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dr5t6xh0fxu32"
 path.s3tc="res://.godot/imported/Convertible_Convertible_BaseColor.png-4149028e3f8e61d913a7f8e2d721d9fd.s3tc.ctex"
-path.etc2="res://.godot/imported/Convertible_Convertible_BaseColor.png-4149028e3f8e61d913a7f8e2d721d9fd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/Convertible_Convertible_BaseColor.png"
-dest_files=["res://.godot/imported/Convertible_Convertible_BaseColor.png-4149028e3f8e61d913a7f8e2d721d9fd.s3tc.ctex", "res://.godot/imported/Convertible_Convertible_BaseColor.png-4149028e3f8e61d913a7f8e2d721d9fd.etc2.ctex"]
+dest_files=["res://.godot/imported/Convertible_Convertible_BaseColor.png-4149028e3f8e61d913a7f8e2d721d9fd.s3tc.ctex"]
 
 [params]
 

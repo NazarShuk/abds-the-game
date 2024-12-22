@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2vmxxh2ektax"]
+
+[ext_resource type="Script" path="res://scripts/clorox_bossifight_edition.gd" id="1_u618g"]
+[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="2_ojfjk"]
+[ext_resource type="AudioStream" uid="uid://byyn5831b132x" path="res://clorox.mp3" id="3_iccb5"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_uidvk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2wra"]
+cull_mode = 2
+albedo_texture = ExtResource("2_ojfjk")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tepnt"]
+size = Vector3(1.94507, 2.06641, 0.303711)
+
+[node name="CloroxBossfightEdition" type="Area3D" groups=["clorox_bossfight"]]
+script = ExtResource("1_u618g")
+speed = 20.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("QuadMesh_uidvk")
+surface_material_override/0 = SubResource("StandardMaterial3D_i2wra")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_tepnt")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_iccb5")
+autoplay = true
+bus = &"Dialogs"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

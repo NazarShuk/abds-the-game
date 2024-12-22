@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Alostn Bridge Diddle School"
-config/description="Alostn Bridge Diddle School"
+config/name="ABDS the game"
+config/description="ABDS the game"
 run/main_scene="res://logos.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 run/max_fps=60

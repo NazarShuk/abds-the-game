@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdm6pkumip5q"
 path.s3tc="res://.godot/imported/purepng.com-treenaturetreegreensummer-831524002233ibnn9.png-5d60c2f22d126c0a396d6b0b96230d88.s3tc.ctex"
-path.etc2="res://.godot/imported/purepng.com-treenaturetreegreensummer-831524002233ibnn9.png-5d60c2f22d126c0a396d6b0b96230d88.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://purepng.com-treenaturetreegreensummer-831524002233ibnn9.png"
-dest_files=["res://.godot/imported/purepng.com-treenaturetreegreensummer-831524002233ibnn9.png-5d60c2f22d126c0a396d6b0b96230d88.s3tc.ctex", "res://.godot/imported/purepng.com-treenaturetreegreensummer-831524002233ibnn9.png-5d60c2f22d126c0a396d6b0b96230d88.etc2.ctex"]
+dest_files=["res://.godot/imported/purepng.com-treenaturetreegreensummer-831524002233ibnn9.png-5d60c2f22d126c0a396d6b0b96230d88.s3tc.ctex"]
 
 [params]
 

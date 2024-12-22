@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cng2b4xs46g0n"
 path.s3tc="res://.godot/imported/bookshefl.png-e9f36b28851c7c99a156fd14d98402f5.s3tc.ctex"
-path.etc2="res://.godot/imported/bookshefl.png-e9f36b28851c7c99a156fd14d98402f5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/bookshefl.png"
-dest_files=["res://.godot/imported/bookshefl.png-e9f36b28851c7c99a156fd14d98402f5.s3tc.ctex", "res://.godot/imported/bookshefl.png-e9f36b28851c7c99a156fd14d98402f5.etc2.ctex"]
+dest_files=["res://.godot/imported/bookshefl.png-e9f36b28851c7c99a156fd14d98402f5.s3tc.ctex"]
 
 [params]
 

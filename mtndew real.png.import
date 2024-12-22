@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://w6amceri0f5d"
 path.s3tc="res://.godot/imported/mtndew real.png-54323f00216865d5a872cffc1943fcb2.s3tc.ctex"
-path.etc2="res://.godot/imported/mtndew real.png-54323f00216865d5a872cffc1943fcb2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://mtndew real.png"
-dest_files=["res://.godot/imported/mtndew real.png-54323f00216865d5a872cffc1943fcb2.s3tc.ctex", "res://.godot/imported/mtndew real.png-54323f00216865d5a872cffc1943fcb2.etc2.ctex"]
+dest_files=["res://.godot/imported/mtndew real.png-54323f00216865d5a872cffc1943fcb2.s3tc.ctex"]
 
 [params]
 

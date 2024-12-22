@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxbfis4o3emrm"
 path.s3tc="res://.godot/imported/clorox disenfecting wipes.png-ba6efb194916dbc6568f48f9800a4bcf.s3tc.ctex"
-path.etc2="res://.godot/imported/clorox disenfecting wipes.png-ba6efb194916dbc6568f48f9800a4bcf.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/posters/clorox disenfecting wipes.png"
-dest_files=["res://.godot/imported/clorox disenfecting wipes.png-ba6efb194916dbc6568f48f9800a4bcf.s3tc.ctex", "res://.godot/imported/clorox disenfecting wipes.png-ba6efb194916dbc6568f48f9800a4bcf.etc2.ctex"]
+dest_files=["res://.godot/imported/clorox disenfecting wipes.png-ba6efb194916dbc6568f48f9800a4bcf.s3tc.ctex"]
 
 [params]
 

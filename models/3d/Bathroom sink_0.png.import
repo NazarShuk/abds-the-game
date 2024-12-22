@@ -2,21 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdqw4yxn42uhk"
+uid="uid://p4lj6qj2tpqu"
 path.s3tc="res://.godot/imported/Bathroom sink_0.png-ece40c060e774aacd26468eb3570e4ec.s3tc.ctex"
-path.etc2="res://.godot/imported/Bathroom sink_0.png-ece40c060e774aacd26468eb3570e4ec.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "86f397ace68d6e758810bd2471c3c8f3"
 }
 
 [deps]
 
 source_file="res://models/3d/Bathroom sink_0.png"
-dest_files=["res://.godot/imported/Bathroom sink_0.png-ece40c060e774aacd26468eb3570e4ec.s3tc.ctex", "res://.godot/imported/Bathroom sink_0.png-ece40c060e774aacd26468eb3570e4ec.etc2.ctex"]
+dest_files=["res://.godot/imported/Bathroom sink_0.png-ece40c060e774aacd26468eb3570e4ec.s3tc.ctex"]
 
 [params]
 

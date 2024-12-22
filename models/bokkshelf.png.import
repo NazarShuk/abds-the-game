@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ce8wh54621v0c"
 path.s3tc="res://.godot/imported/bokkshelf.png-026bf7294705666d1a6ac6462392a5a8.s3tc.ctex"
-path.etc2="res://.godot/imported/bokkshelf.png-026bf7294705666d1a6ac6462392a5a8.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/bokkshelf.png"
-dest_files=["res://.godot/imported/bokkshelf.png-026bf7294705666d1a6ac6462392a5a8.s3tc.ctex", "res://.godot/imported/bokkshelf.png-026bf7294705666d1a6ac6462392a5a8.etc2.ctex"]
+dest_files=["res://.godot/imported/bokkshelf.png-026bf7294705666d1a6ac6462392a5a8.s3tc.ctex"]
 
 [params]
 

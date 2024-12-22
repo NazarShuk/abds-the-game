@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqf3b4u2deusw"
 path.s3tc="res://.godot/imported/VISIT_GRAND_CANYON_NATIONAL_PARK.png-5e4556ba46efae60f78faecf12f6c461.s3tc.ctex"
-path.etc2="res://.godot/imported/VISIT_GRAND_CANYON_NATIONAL_PARK.png-5e4556ba46efae60f78faecf12f6c461.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/posters/VISIT_GRAND_CANYON_NATIONAL_PARK.png"
-dest_files=["res://.godot/imported/VISIT_GRAND_CANYON_NATIONAL_PARK.png-5e4556ba46efae60f78faecf12f6c461.s3tc.ctex", "res://.godot/imported/VISIT_GRAND_CANYON_NATIONAL_PARK.png-5e4556ba46efae60f78faecf12f6c461.etc2.ctex"]
+dest_files=["res://.godot/imported/VISIT_GRAND_CANYON_NATIONAL_PARK.png-5e4556ba46efae60f78faecf12f6c461.s3tc.ctex"]
 
 [params]
 

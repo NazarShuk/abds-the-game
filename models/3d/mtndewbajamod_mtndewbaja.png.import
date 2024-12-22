@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmbi2m6dekw35"
 path.s3tc="res://.godot/imported/mtndewbajamod_mtndewbaja.png-aa9006439f7e04f7a44ab4fe3fd7f8f4.s3tc.ctex"
-path.etc2="res://.godot/imported/mtndewbajamod_mtndewbaja.png-aa9006439f7e04f7a44ab4fe3fd7f8f4.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/3d/mtndewbajamod_mtndewbaja.png"
-dest_files=["res://.godot/imported/mtndewbajamod_mtndewbaja.png-aa9006439f7e04f7a44ab4fe3fd7f8f4.s3tc.ctex", "res://.godot/imported/mtndewbajamod_mtndewbaja.png-aa9006439f7e04f7a44ab4fe3fd7f8f4.etc2.ctex"]
+dest_files=["res://.godot/imported/mtndewbajamod_mtndewbaja.png-aa9006439f7e04f7a44ab4fe3fd7f8f4.s3tc.ctex"]
 
 [params]
 

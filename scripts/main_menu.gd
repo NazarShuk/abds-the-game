@@ -22,6 +22,7 @@ func _on_play_pressed():
 
 func _on_lobby_list_lobby_clicked(lobby_id):
 	peer = ClassDB.instantiate("SteamMultiplayerPeer")
+	GlobalVars.is_steam_peer = true
 	loading.show()
 	var err = peer.connect_lobby(lobby_id)
 	print_rich("[color=orange]connecting via steam to lobby ", lobby_id)
@@ -38,6 +39,7 @@ func host_lobby():
 	
 	if SteamManager.steam_api:
 		peer = ClassDB.instantiate("SteamMultiplayerPeer")
+		GlobalVars.is_steam_peer = true
 		peer.create_lobby(peer.LOBBY_TYPE_FRIENDS_ONLY)
 		peer.lobby_created.connect(_on_lobby_created)
 		

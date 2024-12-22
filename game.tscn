@@ -72,12 +72,12 @@ sky_horizon_color = Color(1, 1, 1, 1)
 ground_bottom_color = Color(1, 1, 1, 1)
 ground_horizon_color = Color(1, 1, 1, 1)
 
-[sub_resource type="Sky" id="Sky_bde40"]
+[sub_resource type="Sky" id="Sky_cheki"]
 sky_material = SubResource("ProceduralSkyMaterial_kvbmb")
 
 [sub_resource type="Environment" id="Environment_5hwxw"]
 background_mode = 2
-sky = SubResource("Sky_bde40")
+sky = SubResource("Sky_cheki")
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_exposure = 1.25
 ssil_enabled = true

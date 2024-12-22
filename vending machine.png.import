@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcouwnrkmlr4s"
 path.s3tc="res://.godot/imported/vending machine.png-e6ae78f37f5e23c5d20b9fe8356b2252.s3tc.ctex"
-path.etc2="res://.godot/imported/vending machine.png-e6ae78f37f5e23c5d20b9fe8356b2252.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://vending machine.png"
-dest_files=["res://.godot/imported/vending machine.png-e6ae78f37f5e23c5d20b9fe8356b2252.s3tc.ctex", "res://.godot/imported/vending machine.png-e6ae78f37f5e23c5d20b9fe8356b2252.etc2.ctex"]
+dest_files=["res://.godot/imported/vending machine.png-e6ae78f37f5e23c5d20b9fe8356b2252.s3tc.ctex"]
 
 [params]
 

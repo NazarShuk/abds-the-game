@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4ss6dosk2fyo"
 path.s3tc="res://.godot/imported/the floor.png-73a909d45388c19b71d2f84ef032d653.s3tc.ctex"
-path.etc2="res://.godot/imported/the floor.png-73a909d45388c19b71d2f84ef032d653.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://the floor.png"
-dest_files=["res://.godot/imported/the floor.png-73a909d45388c19b71d2f84ef032d653.s3tc.ctex", "res://.godot/imported/the floor.png-73a909d45388c19b71d2f84ef032d653.etc2.ctex"]
+dest_files=["res://.godot/imported/the floor.png-73a909d45388c19b71d2f84ef032d653.s3tc.ctex"]
 
 [params]
 

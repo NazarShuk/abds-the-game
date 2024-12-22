@@ -2,21 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbsvgeo7ti26l"
+uid="uid://bk5dnitrk0mg2"
 path.s3tc="res://.godot/imported/Car_1377 Car.png-0fb220763cf5066d6c120fda54d13452.s3tc.ctex"
-path.etc2="res://.godot/imported/Car_1377 Car.png-0fb220763cf5066d6c120fda54d13452.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "5ca4bb5fc08985785b1778b95e5ebde7"
 }
 
 [deps]
 
 source_file="res://models/Car_1377 Car.png"
-dest_files=["res://.godot/imported/Car_1377 Car.png-0fb220763cf5066d6c120fda54d13452.s3tc.ctex", "res://.godot/imported/Car_1377 Car.png-0fb220763cf5066d6c120fda54d13452.etc2.ctex"]
+dest_files=["res://.godot/imported/Car_1377 Car.png-0fb220763cf5066d6c120fda54d13452.s3tc.ctex"]
 
 [params]
 

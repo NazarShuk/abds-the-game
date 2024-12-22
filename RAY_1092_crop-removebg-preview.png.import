@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://com2rxbfj52s"
 path.s3tc="res://.godot/imported/RAY_1092_crop-removebg-preview.png-4c0dd91ec89c96ef47ab6d7992a5debc.s3tc.ctex"
-path.etc2="res://.godot/imported/RAY_1092_crop-removebg-preview.png-4c0dd91ec89c96ef47ab6d7992a5debc.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://RAY_1092_crop-removebg-preview.png"
-dest_files=["res://.godot/imported/RAY_1092_crop-removebg-preview.png-4c0dd91ec89c96ef47ab6d7992a5debc.s3tc.ctex", "res://.godot/imported/RAY_1092_crop-removebg-preview.png-4c0dd91ec89c96ef47ab6d7992a5debc.etc2.ctex"]
+dest_files=["res://.godot/imported/RAY_1092_crop-removebg-preview.png-4c0dd91ec89c96ef47ab6d7992a5debc.s3tc.ctex"]
 
 [params]
 

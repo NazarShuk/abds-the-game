@@ -23,3 +23,5 @@ var deaths = 0
 var current_skin = Node.new()
 
 var game_scene = null
+
+var is_steam_peer = false

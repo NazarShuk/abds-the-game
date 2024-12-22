@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bkmj8ey1h4mji"
 path.s3tc="res://.godot/imported/rubber-duck_0 (1).jpg-02b149077be1d6df11150ed253feabf6.s3tc.ctex"
-path.etc2="res://.godot/imported/rubber-duck_0 (1).jpg-02b149077be1d6df11150ed253feabf6.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://rubber-duck_0 (1).jpg"
-dest_files=["res://.godot/imported/rubber-duck_0 (1).jpg-02b149077be1d6df11150ed253feabf6.s3tc.ctex", "res://.godot/imported/rubber-duck_0 (1).jpg-02b149077be1d6df11150ed253feabf6.etc2.ctex"]
+dest_files=["res://.godot/imported/rubber-duck_0 (1).jpg-02b149077be1d6df11150ed253feabf6.s3tc.ctex"]
 
 [params]
 

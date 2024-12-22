@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfaexru6iblxb"
 path.s3tc="res://.godot/imported/fox_crop.jpg-30bfa4d61d3a3410d4abf303671766a3.s3tc.ctex"
-path.etc2="res://.godot/imported/fox_crop.jpg-30bfa4d61d3a3410d4abf303671766a3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://fox_crop.jpg"
-dest_files=["res://.godot/imported/fox_crop.jpg-30bfa4d61d3a3410d4abf303671766a3.s3tc.ctex", "res://.godot/imported/fox_crop.jpg-30bfa4d61d3a3410d4abf303671766a3.etc2.ctex"]
+dest_files=["res://.godot/imported/fox_crop.jpg-30bfa4d61d3a3410d4abf303671766a3.s3tc.ctex"]
 
 [params]
 

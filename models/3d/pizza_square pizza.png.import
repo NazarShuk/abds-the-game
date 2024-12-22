@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxtiksyhfel4e"
 path.s3tc="res://.godot/imported/pizza_square pizza.png-81e773be00c6d131d0a18f7da0631f0c.s3tc.ctex"
-path.etc2="res://.godot/imported/pizza_square pizza.png-81e773be00c6d131d0a18f7da0631f0c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/3d/pizza_square pizza.png"
-dest_files=["res://.godot/imported/pizza_square pizza.png-81e773be00c6d131d0a18f7da0631f0c.s3tc.ctex", "res://.godot/imported/pizza_square pizza.png-81e773be00c6d131d0a18f7da0631f0c.etc2.ctex"]
+dest_files=["res://.godot/imported/pizza_square pizza.png-81e773be00c6d131d0a18f7da0631f0c.s3tc.ctex"]
 
 [params]
 
