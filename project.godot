@@ -10,17 +10,17 @@ config_version=5
 
 [application]
 
-config/name="ABDS the game"
+config/name="Alostn Bridge Diddle School"
 config/description="ABDS the game"
 run/main_scene="res://logos.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 run/max_fps=60
 boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/show_image=false
 boot_splash/image="res://azzuNotFound.png"
 boot_splash/fullsize=false
 config/icon="res://azzuNotFound.png"
 config/windows_native_icon="res://favicon.ico"
-boot_splash/minimum_display_time=1000
 
 [audio]
 
@@ -46,7 +46,7 @@ gdscript/warnings/unused_variable=0
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/mode=2
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [editor_plugins]

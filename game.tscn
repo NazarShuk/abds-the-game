@@ -1,12 +1,10 @@
-[gd_scene load_steps=148 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=150 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
 [ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
-[ext_resource type="Script" path="res://scripts/shake_text.gd" id="4_gvu6s"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
-[ext_resource type="AudioStream" uid="uid://d38f3l7bs4jq3" path="res://Pixelland_01.mp3" id="5_grswa"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
 [ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
 [ext_resource type="AudioStream" uid="uid://cvwobq8jsn8xc" path="res://failedme.mp3" id="6_8cxyt"]
@@ -25,11 +23,13 @@
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="Script" path="res://scripts/Music2.gd" id="13_il7ji"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
+[ext_resource type="AudioStream" uid="uid://d2kii8bhcdwvs" path="res://sounds/pixelland.mp3" id="16_e2t7m"]
 [ext_resource type="AudioStream" uid="uid://uw1c631w2s6n" path="res://sounds/escape_start.mp3" id="16_jhdn0"]
 [ext_resource type="PackedScene" uid="uid://xxyguo1ps1gc" path="res://school.tscn" id="17_3oefh"]
 [ext_resource type="PackedScene" uid="uid://45erl4lj8ygx" path="res://scenes/leader_board.tscn" id="17_625id"]
 [ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://biy40pusiwx17" path="res://sounds/escape_loop.mp3" id="17_on1kb"]
+[ext_resource type="AudioStream" uid="uid://8tx5cmjo3v77" path="res://sounds/pixelland_competitive.mp3" id="17_yd2n0"]
 [ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
 [ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
 [ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
@@ -37,8 +37,9 @@
 [ext_resource type="AudioStream" uid="uid://dvadaniflxexc" path="res://pacer_songs/pacer_intro.mp3" id="21_kuvoj"]
 [ext_resource type="AudioStream" uid="uid://baxilhywlt8r3" path="res://pacer_songs/pacer_music.mp3" id="22_3b7ci"]
 [ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
+[ext_resource type="AudioStream" uid="uid://be81ar381l6t3" path="res://sounds/leahy time intro.mp3" id="23_dnqnd"]
 [ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
-[ext_resource type="AudioStream" uid="uid://d3pdjlgjb60r8" path="res://sounds/leahy time.mp3" id="23_texth"]
+[ext_resource type="AudioStream" uid="uid://b56skyxnpwv64" path="res://sounds/leahy time_loop.mp3" id="24_4u2ak"]
 [ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
 [ext_resource type="Script" path="res://scripts/WelcomeLeahy.gd" id="26_0x6dq"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
@@ -72,12 +73,12 @@ sky_horizon_color = Color(1, 1, 1, 1)
 ground_bottom_color = Color(1, 1, 1, 1)
 ground_horizon_color = Color(1, 1, 1, 1)
 
-[sub_resource type="Sky" id="Sky_cheki"]
+[sub_resource type="Sky" id="Sky_vv5pd"]
 sky_material = SubResource("ProceduralSkyMaterial_kvbmb")
 
 [sub_resource type="Environment" id="Environment_5hwxw"]
 background_mode = 2
-sky = SubResource("Sky_cheki")
+sky = SubResource("Sky_vv5pd")
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_exposure = 1.25
 ssil_enabled = true
@@ -124,6 +125,15 @@ properties/9/replication_mode = 2
 properties/10/path = NodePath(".:leahy_time")
 properties/10/spawn = true
 properties/10/replication_mode = 2
+properties/11/path = NodePath(".:competitive")
+properties/11/spawn = true
+properties/11/replication_mode = 2
+properties/12/path = NodePath(".:pacer_lap")
+properties/12/spawn = true
+properties/12/replication_mode = 2
+properties/13/path = NodePath(".:pacer_level")
+properties/13/spawn = true
+properties/13/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_8oj72"]
 length = 0.001
@@ -258,11 +268,6 @@ bg_color = Color(0.358229, 0.229203, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v8ix"]
 bg_color = Color(1, 0.670588, 0, 1)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rb4lo"]
-properties/0/path = NodePath("CollectedBooksLabel:text")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_c7x6i"]
 length = 0.001
@@ -551,6 +556,23 @@ properties/1/path = NodePath("Label4/gameConfigClient:text")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_vbqm1"]
+clip_count = 2
+clip_0/name = &"normal"
+clip_0/stream = ExtResource("16_e2t7m")
+clip_0/auto_advance = 0
+clip_1/name = &"competitive"
+clip_1/stream = ExtResource("17_yd2n0")
+clip_1/auto_advance = 0
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 3,
+"fade_mode": 4,
+"from_time": 0,
+"to_time": 0
+}
+}
+
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_du2f5"]
 clip_count = 2
 clip_0/name = &"intro"
@@ -569,6 +591,17 @@ Vector2i(0, 0): {
 "to_time": 1
 }
 }
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_s44qs"]
+clip_count = 2
+clip_0/name = &"intro"
+clip_0/stream = ExtResource("23_dnqnd")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"loop"
+clip_1/stream = ExtResource("24_4u2ak")
+clip_1/auto_advance = 1
+clip_1/next_clip = 1
 
 [sub_resource type="SphereMesh" id="SphereMesh_2pqsq"]
 
@@ -939,7 +972,7 @@ replication_config = SubResource("SceneReplicationConfig_3nj22")
 one_shot = true
 
 [node name="LeahyTime" type="Timer" parent="."]
-wait_time = 300.0
+wait_time = 150.0
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -1037,23 +1070,6 @@ text = "DAREL.PNG"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CollectedBooksLabel" type="Label" parent="CanvasLayer/Main"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 39.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_1xl1k")
-theme_override_font_sizes/font_size = 32
-text = "find a ela book!
-"
-script = ExtResource("4_gvu6s")
-metadata/_edit_use_anchors_ = true
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Main"]
-replication_config = SubResource("SceneReplicationConfig_rb4lo")
-
 [node name="fake dp ending" type="Control" parent="CanvasLayer/Main"]
 visible = false
 layout_mode = 1
@@ -1136,7 +1152,7 @@ grow_vertical = 0
 show_percentage = false
 script = ExtResource("8_6ddju")
 timer = NodePath("../../../../LeahyTime")
-max = 300.0
+max = 150.0
 
 [node name="TimeLeft" type="Label" parent="CanvasLayer/Main/LeahyTime/ProgressBar" node_paths=PackedStringArray("timer")]
 layout_mode = 1
@@ -1326,8 +1342,7 @@ grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 24
-text = "player
-player"
+text = "config"
 horizontal_alignment = 2
 
 [node name="Button7" type="Button" parent="CanvasLayer/Lobby"]
@@ -1529,6 +1544,47 @@ layout_mode = 2
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Lobby/ConfigPanel/Config/VBoxContainer"]
 layout_mode = 2
 
+[node name="competitive" type="CheckButton" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -118.5
+offset_top = 77.0
+offset_right = 118.5
+offset_bottom = 114.0
+grow_horizontal = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 24
+text = "Competitive mode"
+alignment = 1
+
+[node name="competitive_team_name" type="LineEdit" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 114.0
+offset_right = 111.0
+offset_bottom = 145.0
+grow_horizontal = 2
+placeholder_text = "Team name"
+max_length = 4
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Lobby"]
 replication_config = SubResource("SceneReplicationConfig_u6ine")
 
@@ -1536,7 +1592,8 @@ replication_config = SubResource("SceneReplicationConfig_u6ine")
 layout_mode = 1
 
 [node name="Music0" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_grswa")
+stream = SubResource("AudioStreamInteractive_vbqm1")
+autoplay = true
 bus = &"Music"
 
 [node name="Music1" type="AudioStreamPlayer" parent="."]
@@ -1562,7 +1619,7 @@ stream = SubResource("AudioStreamInteractive_du2f5")
 bus = &"Music"
 
 [node name="leahytime" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("23_texth")
+stream = SubResource("AudioStreamInteractive_s44qs")
 bus = &"Music"
 
 [node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
@@ -2540,6 +2597,8 @@ transform = Transform3D(0.59046, -0.0555892, 0.566274, 0.00510732, 0.816562, 0.0
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button7" to="." method="pre_start_game_btn"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
+[connection signal="toggled" from="CanvasLayer/Lobby/competitive" to="." method="_on_competitive_toggled"]
+[connection signal="text_changed" from="CanvasLayer/Lobby/competitive_team_name" to="." method="_on_competitive_team_name_text_changed"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]

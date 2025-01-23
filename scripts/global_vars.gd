@@ -19,6 +19,9 @@ var did_show_disclaimer = false
 
 var books_collected = 0
 var deaths = 0
+var competitive_team_won = ""
+
+var leahy_time_rank = "d"
 
 var current_skin = Node.new()
 

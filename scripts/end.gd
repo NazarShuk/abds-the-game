@@ -1,9 +1,11 @@
 extends Node3D
+class_name EndCutscene
 
 
 @export var died_text : Label
 @export var collected_text : Label
 @export var achievement_name : String
+@export var do_achievement : bool = true
 
 func _ready():
 	GuiManager.reset_cursor()
@@ -15,7 +17,8 @@ func _ready():
 	died_text.text = "you died " + str(GlobalVars.deaths) + " times"
 	collected_text.text = "and collected " + str(GlobalVars.books_collected) + " notebooks"
 	
-	Achievements.set_val(achievement_name,true)
+	if do_achievement:
+		Achievements.set_val(achievement_name,true)
 	if multiplayer.has_multiplayer_peer():
 		multiplayer.multiplayer_peer.close()
 		get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())

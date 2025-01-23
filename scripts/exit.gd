@@ -3,12 +3,12 @@ extends Area3D
 @export var game : Node3D
 
 func _process(_delta: float) -> void:
-	visible = game.can_escape
+	visible = game.can_escape and not game.leahy_time
 
 func _on_area_entered(area: Area3D) -> void:
 	if multiplayer.is_server():
 		if area.is_in_group("player_area"):
-			if game.can_escape:
+			if game.can_escape and not game.leahy_time:
 				
 				var player = area.get_parent()
 				player.die.rpc_id(player.name.to_int(),"exit",false)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1ohb2c1ndch5"]
+
+[ext_resource type="Script" path="res://scripts/bossfight_part_2.gd" id="1_ehnyh"]
+[ext_resource type="AudioStream" uid="uid://5atq0pajnrbc" path="res://sounds/wip_phase2_intro.mp3" id="3_4h1of"]
+[ext_resource type="AudioStream" uid="uid://6but5h5kt0m4" path="res://sounds/wip_phase2_loop.mp3" id="4_n2bxh"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_bf6il"]
+clip_count = 2
+clip_0/name = &"intro"
+clip_0/stream = ExtResource("3_4h1of")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"loop"
+clip_1/stream = ExtResource("4_n2bxh")
+clip_1/auto_advance = 1
+clip_1/next_clip = 1
+
+[node name="bossfight2" type="CanvasLayer" groups=["bossfight2"]]
+script = ExtResource("1_ehnyh")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_bf6il")
+autoplay = true

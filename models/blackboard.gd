@@ -105,7 +105,7 @@ func _on_close_pressed() -> void:
 	gui.hide()
 	var drawing := get_drawing()
 	
-	set_image_texture.rpc(
+	set_image_texture(
 		drawing.get_width(),
 		drawing.get_height(),
 		drawing.has_mipmaps(),

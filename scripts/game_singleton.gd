@@ -32,6 +32,8 @@ var players = {}
 # steam stuff
 var lobby_id
 
+var competitive = false
+
 func reset_values():
 	game_started =         false
 	pre_game_started =     false
@@ -46,6 +48,7 @@ func reset_values():
 	game_params =          GameParams.new()
 	lobby_id =             null
 	did_finish =           false
+	competitive =          false
 
 func _ready():
 	on_game_started.connect(_on_game_started)
@@ -151,6 +154,7 @@ func info_text(text : String):
 @rpc("any_peer","call_local")
 func rpc_info_text(text):
 	on_info_text.emit(text)
+
 
 # wait for seconds
 func sleep(seconds):

@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 const OG_SPEED = 6.0
 var SPEED = OG_SPEED
@@ -125,7 +126,7 @@ func _physics_process(delta):
 			_on_submit_button_pressed() 
 		
 		if Input.is_action_just_pressed("debug") and OS.has_feature("debug"):
-			buy_book_rpc.rpc(steam_name)
+			buy_book_rpc.rpc(steam_name, name.to_int())
 		if Input.is_action_just_pressed("revive") and OS.has_feature("debug"):
 			add_speed_boost(2,1)
 		
@@ -369,8 +370,11 @@ func _on_timer_timeout():
 	if is_running and is_moving:
 		if stamina > 0:
 			if can_run:
-				stamina -= 1
-				run_multiplier = 2
+				if parent.leahy_time:
+					run_multiplier = 4
+				else:
+					run_multiplier = 2
+					stamina -= 1
 		else:
 			is_running = false
 			can_run = false
@@ -378,7 +382,10 @@ func _on_timer_timeout():
 			GuiManager.show_tip_once("stamina_timeout","[color=green]Stamina[/color]\nIf stamina [b]reaches 0[/b], you will not be able to run for a few seconds.")
 			
 	else:
-		run_multiplier = 1
+		if parent.leahy_time:
+			run_multiplier = 2
+		else:
+			run_multiplier = 1
 		if stamina <= 100:
 			stamina += 1
 	
@@ -584,6 +591,9 @@ func die(cause, do_die = true):
 	$"CanvasLayer/Control/Died thing".show()
 	if !parent.can_escape:
 		$ReviveTimer.start(5)
+	else:
+		if parent.leahy_time:
+			$ReviveTimer.start(5)
 	
 	is_dead = true
 	if !parent.can_escape:
@@ -758,19 +768,40 @@ func set_mouth(mouth_id):
 func _on_buy_book_pressed():
 	if credits >= 20:
 		credits -= 20
-		buy_book_rpc.rpc(steam_name)
+		buy_book_rpc.rpc(steam_name, name.to_int())
 		Achievements.books_collected += 1
 		Achievements.save_all()
 		
 		play_sound("res://money.mp3",0,"shop")
 
 @rpc("any_peer","call_local")
-func buy_book_rpc(pname):
+func buy_book_rpc(pname, id):
+	$CanvasLayer/Control/TV.switch("moneyminor")
 	if multiplayer.is_server():
 		
 		Game.players[name.to_int()].books_collected += 1 + Game.book_boost
 		Game.calculate_total_books()
-		Game.info_text(pname + " bought a book")
+		
+		if not Game.competitive:
+			Game.info_text(pname + " bought a notebook")
+		else:
+			var total_books = 0
+			for idx in Game.players:
+				if Game.players[idx].team == Game.players[id].team:
+					total_books += Game.players[id].books_collected
+			
+			var notebook_text = str(total_books)
+			
+			if total_books == 1:
+				notebook_text += "st"
+			elif total_books == 2:
+				notebook_text += "nd"
+			elif total_books == 3:
+				notebook_text += "rd"
+			else:
+				notebook_text += "th"
+			
+			Game.info_text("Team " + Game.players[id].team + " bought their " + notebook_text + " notebook")
 
 func _on_buy_duck_pressed():
 	if credits >= 10:
@@ -1202,7 +1233,10 @@ func interaction_functions():
 				can_use_breaker = false
 				$BreakerTimeout.start(60)
 			if ray.get_collider().is_in_group("mr_misuraca"):
-				open_gambling()
+				if !Game.competitive:
+					open_gambling()
+				else:
+					Game.rpc_info_text("Bets are disabled in competitive mode")
 			
 			if ray.get_collider().is_in_group("dropped_item"):
 				if ray.get_collider():
@@ -1283,10 +1317,12 @@ func item_use_functions():
 			add_speed_boost(0.5,1)
 			shart.rpc()
 		elif get_selected_item() == 4:
-			
-			squeak.rpc()
-			remove_item(selected_slot)
-			parent.start_da_pacer.rpc(name.to_int()) # i want to kms because of this
+			if !Game.competitive:
+				squeak.rpc()
+				remove_item(selected_slot)
+				parent.start_da_pacer.rpc(name.to_int()) # i want to kms because of this
+			else:
+				Game.rpc_info_text("The Pacer is disabled in competitive mode")
 		elif get_selected_item() == 6:
 			remove_item(selected_slot)
 			add_speed_boost(2, 3)

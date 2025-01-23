@@ -1,7 +1,7 @@
-extends CanvasLayer
+extends Node3D
 
 var peer
-@onready var loading: ColorRect = $Loading
+@onready var loading: ColorRect = $CanvasLayer/Loading
 
 
 func _ready() -> void:
@@ -68,18 +68,18 @@ func _on_host_local_pressed():
 
 func _on_connect_local_pressed():
 	peer = ENetMultiplayerPeer.new()
-	peer.create_client($Control/Debug/LineEdit.text, 7777)
+	peer.create_client($CanvasLayer/Control/Debug/LineEdit.text, 7777)
 	
 	load_main_game()
 
 func _on_connect_local_2_pressed() -> void:
 	peer = WebSocketMultiplayerPeer.new()
-	peer.create_client($Control/Debug/LineEdit.text)
+	peer.create_client($CanvasLayer/Control/Debug/LineEdit.text)
 	
 	load_main_game()
 
 func _on_refresh_pressed() -> void:
-	$Control/lobby_list.get_friends_lobbies()
+	$CanvasLayer/Control/lobby_list.get_friends_lobbies()
 
 func _exit_tree() -> void:
 	GlobalVars.menu_music_duration = $AudioStreamPlayer.get_playback_position()

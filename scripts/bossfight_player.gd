@@ -23,6 +23,8 @@ var target_fov = 75
 
 var has_clorox = false
 
+var push_force = Vector3.ZERO
+
 func _ready():
 	# Capture mouse cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -46,7 +48,7 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	
-	if target_player_pos.do_target:
+	if target_player_pos and target_player_pos.do_target:
 		global_position = target_player_pos.global_position
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -84,6 +86,9 @@ func _physics_process(delta):
 	
 	camera.fov = lerp(camera.fov, float(target_fov), delta * 2.5)
 	
+	velocity += push_force
+	push_force = push_force.lerp(Vector3.ZERO, delta * 100)
+	
 	move_and_slide()
 	
 	$Head/clorox.visible = has_clorox
@@ -94,8 +99,27 @@ func _physics_process(delta):
 		clorox.global_position = global_position
 		clorox.global_rotation = global_rotation
 		has_clorox = false
+	
+	if get_parent().is_in_group("bossfight2"):
+		if global_position.y < -30:
+			get_parent().respawn()
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area.name == "darel":
 		get_tree().reload_current_scene()
+	
+	if get_parent().is_in_group("bossfight2"):
+		if area.is_in_group("clorox_bossfight"):
+			get_parent().respawn()
+		
+		if area.is_in_group("leahyboss"):
+			# Calculate push direction from leahyboss to the player (self)
+			var push_direction = global_position - area.global_position
+			
+			# Normalize the direction and add upward force
+			push_direction = -push_direction.normalized()
+			
+			# Apply the force to self (the player)
+			var push_strength = 10.0  # Adjust this value for stronger/weaker push
+			push_force += push_direction * push_strength

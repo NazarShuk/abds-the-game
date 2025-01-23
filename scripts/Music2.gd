@@ -1,7 +1,7 @@
 extends AudioStreamPlayer
 
 var pitch_target = 1.0
-@export var game : Node3D
+@export var game : GameScene
 
 func _ready():
 	Game.on_power_changed.connect(_power_changed)
@@ -18,7 +18,7 @@ func _process(_delta):
 	var final_pitch = 1.0
 	
 	if !game.escape:
-		if Game.collected_books == Game.books_to_collect - 1:
+		if Game.collected_books == Game.books_to_collect - 1 and not game.competitive:
 			final_pitch += 0.5
 		
 		var evil_leahy = get_tree().get_first_node_in_group("evil_leahy")

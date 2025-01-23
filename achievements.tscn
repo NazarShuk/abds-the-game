@@ -154,9 +154,10 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("1_un4ex")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/panel = SubResource("StyleBoxFlat_byxxs")
-current_tab = 0
+current_tab = 1
 
 [node name="Achievements" type="Control" parent="CanvasLayer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -173,7 +174,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_e8aav")
 layout_mode = 2
 
 [node name="Skins" type="Control" parent="CanvasLayer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -186,12 +186,13 @@ anchor_bottom = 1.0
 offset_left = -266.0
 grow_horizontal = 0
 grow_vertical = 2
-item_count = 5
+item_count = 6
 item_0/text = "Default"
 item_1/text = "𝓯𝓻𝓮𝓪𝓴𝔂"
 item_2/text = "Perfect"
 item_3/text = "Impossible"
 item_4/text = "Disoriented"
+item_5/text = "Pizza man"
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/TabContainer/Skins"]
 layout_mode = 1
@@ -203,8 +204,8 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/TabContainer/Skins/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(840, 2)
-render_target_update_mode = 0
+size = Vector2i(840, 431)
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer/TabContainer/Skins/SubViewportContainer/SubViewport"]
 

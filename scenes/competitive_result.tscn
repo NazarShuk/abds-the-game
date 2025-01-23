@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfp5hixfjeare"]
+
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_61uvx"]
+[ext_resource type="Script" path="res://scripts/competitive_result.gd" id="1_ee7pg"]
+[ext_resource type="AudioStream" uid="uid://b6wmg7d4bc4wg" path="res://sounds/loonboon.mp3" id="3_nrmhm"]
+
+[node name="competitive_result" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
+script = ExtResource("1_ee7pg")
+died_text = NodePath("CanvasLayer/arghg")
+collected_text = NodePath("CanvasLayer/arghg")
+do_achievement = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_61uvx")
+theme_override_font_sizes/font_size = 46
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="arghg" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_61uvx")
+theme_override_font_sizes/font_size = 46
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nrmhm")
+autoplay = true
+bus = &"Music"

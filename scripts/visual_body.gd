@@ -36,6 +36,8 @@ func pick_skin(skin_id = -1):
 	if picked_skin_id == 4:
 		disoriented.show()
 		picked_skin = true
+	if picked_skin_id == 5:
+		$Peppino.show()
 	
 	if picked_skin == false:
 		default.show()

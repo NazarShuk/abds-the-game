@@ -1,4 +1,5 @@
 extends Node3D
+class_name GameScene
 
 const PLAYER = preload("res://player.tscn")
 const LOGOS = preload("res://logos.tscn")
@@ -9,7 +10,7 @@ const END = preload("res://end.tscn")
 const IMPOSSIBLE_END = preload("res://impossible_end.tscn")
 const PERFECT_END = preload("res://perfect_end.tscn")
 const HUH_ENDING = preload("res://huh_ending.tscn")
-const HUH_ENDING_2 = preload("res://huh_ending_2.tscn")
+const HUH_ENDING_2 = preload("res://scenes/bossfight.tscn")
 const WORST_END = preload("res://worst_end.tscn")
 
 var peer
@@ -47,6 +48,8 @@ var players_singleton_ready = 0
 var players_singleton_required = -1
 
 @export var leahy_time = false
+
+@export var competitive = false
 
 func _enter_tree():
 	name = "MainGameScene"
@@ -103,8 +106,29 @@ func _on_book_collected(_amount):
 		if !Game.game_started:
 			start_da_game.rpc()
 			canPlayersMove = false
-	elif Game.collected_books >= Game.books_to_collect:
+	elif Game.collected_books >= Game.books_to_collect and not competitive and not leahy_time:
 		escape_mode.rpc()
+	
+	if leahy_time and Game.collected_books >= Game.books_to_collect:
+		ending_check()
+	
+	if competitive:
+		var teams = []
+		
+		for id in Game.players:
+			if not teams.has(Game.players[id].team):
+				teams.append(Game.players[id].team)
+		
+		for team in teams:
+			var total_books = 0
+			
+			for id in Game.players:
+				if Game.players[id].team == team:
+					total_books += Game.players[id].books_collected
+			
+			if total_books == Game.books_to_collect:
+				ending_check()
+				break
 
 func ending_check():
 	var total_deaths = 0
@@ -119,29 +143,49 @@ func ending_check():
 				do_achievements = false
 				break
 	
-	if do_achievements:
-		if total_deaths == 0:
-			# impossible ending
-			end_game.rpc("imp")
-		elif total_deaths <= 3:
-			# perfect run
-			end_game.rpc("perfect")
-		elif total_deaths > 3:
-			if !Game.game_params.get_param("vertical_camera"):
-				end_game.rpc("normal")
+	if not competitive:
+		if do_achievements:
+			if not leahy_time:
+				if total_deaths == 0:
+					# impossible ending
+					end_game.rpc("imp")
+				elif total_deaths <= 3:
+					# perfect run
+					end_game.rpc("perfect")
+				elif total_deaths > 3:
+					if !Game.game_params.get_param("vertical_camera"):
+						end_game.rpc("normal")
+					else:
+						end_game.rpc("disoriented")
 			else:
-				end_game.rpc("disoriented")
+				var time_left = $LeahyTime.time_left
+				
+				if time_left >= 100:
+					end_game.rpc("leahy_time_p")
+				elif time_left >= 75:
+					end_game.rpc("leahy_time_s")
+				elif time_left >= 50:
+					end_game.rpc("leahy_time_a")
+				elif time_left >= 30:
+					end_game.rpc("leahy_time_b")
+				elif time_left >= 15:
+					end_game.rpc("leahy_time_c")
+				else:
+					end_game.rpc("leahy_time_d")
+		else:
+			end_game.rpc("normal")
 	else:
-		end_game.rpc("normal")
+		end_game.rpc("competitive")
+		
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
-	
+	Game.competitive = competitive
 	
 	if multiplayer.has_multiplayer_peer() && multiplayer.is_server():
-			
-			
+		
 		if Input.is_action_just_pressed("jump"):
 			if is_pacer_intro:
 				$FakeFox/PacerTest/PacerStartTimer.stop()
@@ -153,18 +197,19 @@ func _process(_delta):
 	
 		players_in_lobby = Game.players.keys().size()
 		
-		if Game.game_started:
-			if !can_escape:
-				if !is_pacer:
-					collected_books_label.text = str(Game.collected_books) + " books collected out of " + str(Game.books_to_collect)
-					if is_bet:
-						collected_books_label.text += "\nBet: " + str(bet_books_left) + " left. Seconds left: " + str(floor($"Bet timer".time_left))
-				collected_books_label.do_shake = false
-			else:
-				collected_books_label.text = "Run."
-				collected_books_label.do_shake = true
-		else:
-			collected_books_label.text = "Find a ELA book!"
+		$CanvasLayer/Lobby/competitive.visible = players_in_lobby > 1
+	
+	if !Game.game_started:
+		if competitive and $Music0.get("parameters/switch_to_clip") != "competitive":
+			$Music0.set("parameters/switch_to_clip","competitive")
+		if not competitive and  $Music0.get("parameters/switch_to_clip") != "normal":
+			$Music0.set("parameters/switch_to_clip","normal")
+		
+		$CanvasLayer/Lobby/competitive_team_name.visible = competitive
+		$CanvasLayer/Lobby/competitive_team_name.editable = competitive
+		
+		if !multiplayer.is_server():
+			$CanvasLayer/Lobby/competitive.button_pressed = competitive
 	
 
 func _input(event):
@@ -214,7 +259,7 @@ func _on_peer_connected(id = 1):
 		"books_collected":0,
 		"is_dead":false,
 		"deaths":0,
-		"team":0,
+		"team": "",
 		"finished_pacer":true,
 		"escaped": false
 	}
@@ -357,18 +402,24 @@ func set_player_dead(id,is_dead,do_deaths):
 				if Game.players[pl_id].is_dead:
 					dead_players += 1
 			
-			var is_eveyone_dead = dead_players == Game.players.keys().size()
+			var is_eveyone_dead = dead_players == Game.players.keys().size() 
+			
+			
+			
+			
 			Game.info_text(get_node(str(id)).steam_name + " dissapeared. " + str(total_deaths) + "/" + str(Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)))
-			if !is_dp:
-				if total_deaths >= (Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)) or (can_escape and is_eveyone_dead):
-					if Game.collected_books == 1:
-						end_game.rpc("you suck")
-					elif Game.collected_books > 1:
-						end_game.rpc("worst")
-					elif Game.collected_books == 0:
-						end_game.rpc("dumb")
-			else:
-				end_game.rpc("none")
+			
+			if not competitive:
+				if !is_dp:
+					if total_deaths >= (Game.game_params.get_param("max_deaths") + (Game.game_params.get_param("deaths_per_player") * players_in_lobby)) or (can_escape and is_eveyone_dead and not leahy_time):
+						if Game.collected_books == 1:
+							end_game.rpc("you suck")
+						elif Game.collected_books > 1:
+							end_game.rpc("worst")
+						elif Game.collected_books == 0:
+							end_game.rpc("dumb")
+				else:
+					end_game.rpc("none")
 
 
 @rpc("any_peer","call_local")
@@ -377,10 +428,14 @@ func skibidi():
 		end_game.rpc("freaky")
 
 
+var team_won = ""
 
 @rpc("authority","call_local")
 func end_game(ending : String):
 	if multiplayer.is_server():
+		
+		var saved_players = Game.players.duplicate()
+		
 		end_game_ending = ending
 		players_singleton_required = Game.players.size() - 1
 		players_singleton_ready = 0
@@ -397,8 +452,7 @@ func end_game(ending : String):
 			print("all players disconnected")
 		
 		if Game.players.has(1):
-			set_singleton(Game.players[1].deaths,Game.players[1].books_collected,ending)
-		
+			set_singleton(Game.players[1].deaths,Game.players[1].books_collected,ending, team_won)
 
 @rpc("authority","call_remote")
 func ping_set_singleton():
@@ -407,13 +461,35 @@ func ping_set_singleton():
 @rpc("any_peer","call_local")
 func pong_set_singleton(id):
 	if multiplayer.is_server():
-		set_singleton.rpc_id(id,Game.players[id].deaths,Game.players[id].books_collected,end_game_ending)
+		
+		var winner_team = ""
+		if competitive:
+			var teams = []
+			for idx in Game.players:
+				var player = Game.players[idx]
+				if not teams.has(player.team):
+					teams.append(player.team)
+			
+			for team in teams:
+				var total_books = 0
+				for idx in Game.players:
+					var player = Game.players[idx]
+					if player.team == team:
+						total_books += player.books_collected
+				
+				if total_books == Game.books_to_collect:
+					winner_team = team
+					team_won = winner_team
+					break
+		
+		set_singleton.rpc_id(id,Game.players[id].deaths,Game.players[id].books_collected,end_game_ending, winner_team)
 		players_singleton_ready += 1
 
 @rpc("authority","call_local")
-func set_singleton(deaths,books,ending):
+func set_singleton(deaths,books,ending : String, competitive_team_won = ""):
 	GlobalVars.deaths = deaths
 	GlobalVars.books_collected = books
+	GlobalVars.competitive_team_won = competitive_team_won
 	Game.did_finish = true
 	
 	#peer.close()
@@ -447,6 +523,11 @@ func set_singleton(deaths,books,ending):
 		get_tree().change_scene_to_packed.call_deferred(DUMB_AHH_END)
 	elif ending == "disoriented":
 		get_tree().change_scene_to_packed.call_deferred(DISORIENTED_END)
+	elif ending == "competitive":
+		get_tree().change_scene_to_file.call_deferred("res://scenes/competitive_result.tscn")
+	elif ending.begins_with("leahy_time_"):
+		GlobalVars.leahy_time_rank = ending.replace("leahy_time_", "")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/pizza_end.tscn")
 	else:
 		get_tree().change_scene_to_packed(LOGOS)
 
@@ -483,6 +564,8 @@ func play_pacer_level_sound():
 
 var is_test_active: bool = false
 
+@export var pacer_lap = 0
+@export var pacer_level = 0
 
 func run_pacer_test() -> void:
 	var current_level: int = 1
@@ -497,7 +580,9 @@ func run_pacer_test() -> void:
 		var time_for_shuttle: float = INITIAL_TIME - (current_level - 1) * DECREMENT
 		print("Level: %d, Shuttle: %d, Time: %.1f seconds" % [current_level, current_shuttle, time_for_shuttle])
 		play_pacer_lap_sound.rpc()
-		collected_books_label.text = "Level " + str(current_level) + "\nLap " + str(total_laps)
+		
+		pacer_level = current_level
+		pacer_lap = total_laps
 		
 		for p in Game.players.keys():
 			var pl = Game.players[p]
@@ -619,10 +704,15 @@ func stop_pacer():
 func update_player_text():
 	var final_text = ""
 	for pl_id in Game.players.keys():
+		
+		if competitive and Game.players[pl_id].team != "":
+			final_text += "[%s] " % [Game.players[pl_id].team]
+		
 		if Game.players[pl_id].has("username"):
-			final_text += Game.players[pl_id].username + "\n"
+			final_text += Game.players[pl_id].username
 		else:
-			final_text += str(pl_id) + "\n"
+			final_text += str(pl_id)
+		final_text += "\n"
 	player_list_text.text = final_text
 
 var is_bet = false
@@ -701,7 +791,7 @@ func spawn_dropped_item(pos,cloned_item,item_id):
 		
 		add_item_to_dropped.rpc(dropped_item.get_path(),cloned_item)
 		
-		if item_id == 4:
+		if item_id == 4 and not competitive:
 			if randi_range(0,15) == 1:
 				start_da_pacer.rpc()
 
@@ -744,7 +834,6 @@ func escape_mode():
 
 @rpc("authority","call_local")
 func leahy_time_mode():
-	return # TODO
 	
 	if !can_escape: return
 	if leahy_time: return
@@ -754,9 +843,27 @@ func leahy_time_mode():
 	$CanvasLayer/Main/LeahyTime/AnimationPlayer.play("intro")
 	$leahytime.play()
 	
+	$bum.play()
+	
+	$LeahyTime.start()
 	if multiplayer.is_server():
-		$LeahyTime.start()
+		
+		for idx in Game.players:
+			Game.players[idx].books_collected = 0
+			Game.calculate_total_books()
 
 func _on_leahy_time_timeout() -> void:
 	if multiplayer.is_server():
 		end_game.rpc("worst")
+
+
+func _on_competitive_toggled(toggled_on: bool) -> void:
+	if multiplayer.is_server():
+		competitive = toggled_on
+
+@rpc("any_peer","call_local")
+func change_theme(team_name : String):
+	Game.players[multiplayer.get_remote_sender_id()].team = team_name.to_upper().strip_edges()
+
+func _on_competitive_team_name_text_changed(new_text: String) -> void:
+	change_theme.rpc_id(1, new_text)

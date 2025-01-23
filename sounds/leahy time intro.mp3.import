@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://be81ar381l6t3"
+path="res://.godot/imported/leahy time intro.mp3-174c877a0982ae30e000a9cb46d3e9bb.mp3str"
+
+[deps]
+
+source_file="res://sounds/leahy time intro.mp3"
+dest_files=["res://.godot/imported/leahy time intro.mp3-174c877a0982ae30e000a9cb46d3e9bb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
