@@ -11,6 +11,6 @@ func _ready():
 func _process(_delta):
 	if is_shown:
 		position.x = lerp(position.x,initial_x,0.1)
-		$Label.text = str(floor(distance))
+		$Label.text = str(floori(distance))
 	else:
 		position.x = lerp(position.x,-500.0,0.1)

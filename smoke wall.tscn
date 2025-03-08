@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ceo00cwwipkt0"]
 
 [ext_resource type="Shader" uid="uid://hrbkunmq0otv" path="res://smoke.tres" id="1_thmaj"]
-[ext_resource type="Script" path="res://scripts/smoke wall.gd" id="2_uq6gs"]
+[ext_resource type="Script" uid="uid://c1k74ixfv55xr" path="res://scripts/smoke wall.gd" id="2_uq6gs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_88wdr"]
 shader = ExtResource("1_thmaj")

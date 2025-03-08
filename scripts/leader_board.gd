@@ -24,15 +24,15 @@ func _on_http_request_request_completed(result: int, _response_code: int, _heade
 				w1.show()
 				
 				var mesh : TextMesh = w1.mesh
-				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
+				mesh.text = keys[key] + "\n" + str(floori(leaderboard[keys[key]])) + " books"
 			if key == 1:
 				w2.show()
 				
 				var mesh : TextMesh = w2.mesh
-				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
+				mesh.text = keys[key] + "\n" + str(floori(leaderboard[keys[key]])) + " books"
 			if key == 2:
 				w3.show()
 				var mesh : TextMesh = w3.mesh
-				mesh.text = keys[key] + "\n" + str(leaderboard[keys[key]]) + " books"
+				mesh.text = keys[key] + "\n" + str(floori(leaderboard[keys[key]])) + " books"
 	else:
 		hide()

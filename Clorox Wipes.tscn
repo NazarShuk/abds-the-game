@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://di8aki6p3dw1q"]
 
-[ext_resource type="Script" path="res://scripts/Clorox Wipes.gd" id="1_nsv1d"]
+[ext_resource type="Script" uid="uid://b6r6eeganlstg" path="res://scripts/Clorox Wipes.gd" id="1_nsv1d"]
 [ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="1_xus1o"]
 [ext_resource type="AudioStream" uid="uid://byyn5831b132x" path="res://clorox.mp3" id="3_7imtg"]
 [ext_resource type="Texture2D" uid="uid://b87kxq485sc1x" path="res://8ql00u.jpg" id="3_ens5w"]

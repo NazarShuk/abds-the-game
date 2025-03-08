@@ -1,6 +1,6 @@
 [gd_scene load_steps=54 format=3 uid="uid://btr7o125j5p5n"]
 
-[ext_resource type="Script" path="res://scripts/copy_the_skin.gd" id="1_lrttf"]
+[ext_resource type="Script" uid="uid://k3qorvtk1665" path="res://scripts/copy_the_skin.gd" id="1_lrttf"]
 [ext_resource type="Texture2D" uid="uid://b5wchjjmpd42c" path="res://images/L.png" id="3_gqdjk"]
 [ext_resource type="AudioStream" uid="uid://svkm1tu1alt6" path="res://impossible.mp3" id="3_he2hm"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="4_58vmn"]
@@ -801,9 +801,9 @@ tracks/20/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o6plu"]
 _data = {
-"RESET": SubResource("Animation_t2yii"),
-"new_animation": SubResource("Animation_86rcp"),
-"no_azzu": SubResource("Animation_4re4e")
+&"RESET": SubResource("Animation_t2yii"),
+&"new_animation": SubResource("Animation_86rcp"),
+&"no_azzu": SubResource("Animation_4re4e")
 }
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_d6nvt"]

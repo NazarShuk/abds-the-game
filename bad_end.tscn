@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://b7kb58x7l8qps"]
 
-[ext_resource type="Script" path="res://scripts/end.gd" id="1_5d8na"]
+[ext_resource type="Script" uid="uid://btrlod158wk22" path="res://scripts/end.gd" id="1_5d8na"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_3ibbu"]
-[ext_resource type="VideoStream" path="res://azzu_angry.ogv" id="2_sha3l"]
+[ext_resource type="VideoStream" uid="uid://uys0bd4y2ald" path="res://azzu_angry.ogv" id="2_sha3l"]
 [ext_resource type="AudioStream" uid="uid://cmxhw4erdw53v" path="res://Exhilarate (128kbps)_01.mp3" id="3_g3t6j"]
 [ext_resource type="AudioStream" uid="uid://o45sn5bdjobo" path="res://sounds/nobody came.mp3" id="4_ucvbn"]
 [ext_resource type="PackedScene" uid="uid://c0bsgfl8j3hnb" path="res://param_azzu.tscn" id="5_jvlh3"]
@@ -259,9 +259,9 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wyato"]
 _data = {
-"RESET": SubResource("Animation_046hh"),
-"bro died": SubResource("Animation_do4mw"),
-"bro died_no azzu": SubResource("Animation_ymq7n")
+&"RESET": SubResource("Animation_046hh"),
+&"bro died": SubResource("Animation_do4mw"),
+&"bro died_no azzu": SubResource("Animation_ymq7n")
 }
 
 [node name="End" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]

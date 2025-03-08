@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cy0pbd45qrxtp"]
 
-[ext_resource type="Script" path="res://scripts/logos.gd" id="1_n3k2k"]
+[ext_resource type="Script" uid="uid://qe3c1y38ymai" path="res://scripts/logos.gd" id="1_n3k2k"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_rr6mg"]
 
 [node name="Logos" type="Node2D"]

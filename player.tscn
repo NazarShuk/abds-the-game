@@ -1,52 +1,52 @@
 [gd_scene load_steps=200 format=3 uid="uid://dmiwtnuhovfv5"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_la8in"]
+[ext_resource type="Script" uid="uid://cr71283wvm1cg" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="2_q3hoo"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
 [ext_resource type="AudioStream" uid="uid://4ug2jt2muw6i" path="res://walk.mp3" id="5_muu2l"]
-[ext_resource type="Script" path="res://scripts/shake_control.gd" id="6_8er58"]
+[ext_resource type="Script" uid="uid://bjmvegw1rbswp" path="res://scripts/shake_control.gd" id="6_8er58"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="6_l1x2u"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="7_mv5hh"]
 [ext_resource type="AudioStream" uid="uid://d2e0x50n80346" path="res://jumpscare-154489 (1)_01.mp3" id="8_4ilia"]
-[ext_resource type="VideoStream" path="res://models/jumpscare.ogv" id="9_7mdnm"]
-[ext_resource type="Script" path="res://scripts/inventory_ui.gd" id="10_777lu"]
-[ext_resource type="Script" path="res://scripts/collected_books_label.gd" id="11_2xmp4"]
-[ext_resource type="Script" path="res://scripts/tv.gd" id="12_fxeha"]
+[ext_resource type="VideoStream" uid="uid://c670ocd6070mm" path="res://models/jumpscare.ogv" id="9_7mdnm"]
+[ext_resource type="Script" uid="uid://c7iddd72t5olk" path="res://scripts/inventory_ui.gd" id="10_777lu"]
+[ext_resource type="Script" uid="uid://bjjy1e2fcf8np" path="res://scripts/collected_books_label.gd" id="11_2xmp4"]
+[ext_resource type="Script" uid="uid://dsi2h6glv83gc" path="res://scripts/tv.gd" id="12_fxeha"]
 [ext_resource type="Texture2D" uid="uid://bwegysvwn7ypj" path="res://textures/tv/default.png" id="12_mo4yx"]
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://shop.mp3" id="12_u07an"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://the shop.png" id="12_xfb3j"]
 [ext_resource type="Texture2D" uid="uid://dqvqe10pt7j2x" path="res://textures/tv/banana.png" id="13_a3yed"]
 [ext_resource type="Texture2D" uid="uid://bk115vrsppgoa" path="res://textures/tv/static.png" id="13_wka5j"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://mtndew.png" id="14_sfn8x"]
-[ext_resource type="VideoStream" path="res://dont do that (1).ogv" id="15_dupy4"]
+[ext_resource type="VideoStream" uid="uid://cibqxuukqhvts" path="res://dont do that (1).ogv" id="15_dupy4"]
 [ext_resource type="Texture2D" uid="uid://dvds26hlxflho" path="res://textures/tv/book.png" id="15_g1aio"]
-[ext_resource type="VideoStream" path="res://fox_jump.ogv" id="16_a751i"]
-[ext_resource type="VideoStream" path="res://models/azzu_jumpscare.ogv" id="17_co3v2"]
+[ext_resource type="VideoStream" uid="uid://b7mo1biex67ii" path="res://fox_jump.ogv" id="16_a751i"]
+[ext_resource type="VideoStream" uid="uid://cmej75iscs2gc" path="res://models/azzu_jumpscare.ogv" id="17_co3v2"]
 [ext_resource type="Texture2D" uid="uid://bu3kykp0catod" path="res://textures/moneyminor.png" id="17_x5st2"]
 [ext_resource type="Texture2D" uid="uid://upa52bysxlmx" path="res://thing.svg" id="18_c15q6"]
-[ext_resource type="VideoStream" path="res://gainy.ogv" id="19_vcsq8"]
-[ext_resource type="Shader" path="res://vignette.gdshader" id="20_kprs4"]
-[ext_resource type="Script" path="res://scripts/Player_vignette.gd" id="21_jucw3"]
+[ext_resource type="VideoStream" uid="uid://dvdgk2vlicy7f" path="res://gainy.ogv" id="19_vcsq8"]
+[ext_resource type="Shader" uid="uid://rodgdwogfm2n" path="res://vignette.gdshader" id="20_kprs4"]
+[ext_resource type="Script" uid="uid://c6fk1nh1cunsh" path="res://scripts/Player_vignette.gd" id="21_jucw3"]
 [ext_resource type="Texture2D" uid="uid://b8r0120in7ti6" path="res://images/ixl.png" id="24_ocn25"]
 [ext_resource type="Texture2D" uid="uid://cilpn5pgdsjbk" path="res://models/3d/book.png" id="24_ufc4v"]
 [ext_resource type="AudioStream" uid="uid://ctyuoy5tau7hv" path="res://incorrct.mp3" id="24_yj6h8"]
 [ext_resource type="FontFile" uid="uid://c1qr0pnx3q0ub" path="res://Verdana.ttf" id="25_48n8b"]
 [ext_resource type="ArrayMesh" uid="uid://cbs8b83a63gka" path="res://models/3d/book.obj" id="25_mph3v"]
 [ext_resource type="Texture2D" uid="uid://dqlbymocvnh04" path="res://images/ixl_checkmark.png" id="26_3gci0"]
-[ext_resource type="Script" path="res://scripts/AnsweredAnimation.gd" id="26_216if"]
+[ext_resource type="Script" uid="uid://b4etd86s6v81a" path="res://scripts/AnsweredAnimation.gd" id="26_216if"]
 [ext_resource type="Texture2D" uid="uid://byu0k4uhhrlcn" path="res://models/golden_ticket.png" id="26_bhd5m"]
 [ext_resource type="FontFile" uid="uid://brrbdffmjpsrm" path="res://Verdana_bold.ttf" id="26_kvv47"]
 [ext_resource type="AudioStream" uid="uid://bkdgbgtv4tcoy" path="res://sounds/correct_new.mp3" id="27_xfgq1"]
 [ext_resource type="Texture2D" uid="uid://cb10q13033mpt" path="res://0b41253a4041ddb57004d633e4979430.jpg" id="28_k1c3m"]
-[ext_resource type="Script" path="res://scripts/spectator.gd" id="30_iahmv"]
-[ext_resource type="Script" path="res://scripts/lastbreaththing.gd" id="31_6rife"]
+[ext_resource type="Script" uid="uid://bma01248fokbw" path="res://scripts/spectator.gd" id="30_iahmv"]
+[ext_resource type="Script" uid="uid://cj2dgi0fbio0k" path="res://scripts/lastbreaththing.gd" id="31_6rife"]
 [ext_resource type="Texture2D" uid="uid://bbjlijtp7eoh4" path="res://textures/last_breath.jpg" id="31_gmk5u"]
-[ext_resource type="Script" path="res://scripts/toilet_jumpscare.gd" id="32_3qmes"]
+[ext_resource type="Script" uid="uid://dutooi3aqd07k" path="res://scripts/toilet_jumpscare.gd" id="32_3qmes"]
 [ext_resource type="Texture2D" uid="uid://v1vadjq7khtm" path="res://images/toilet.png" id="32_jmipm"]
 [ext_resource type="AudioStream" uid="uid://csydch7qv5p2m" path="res://sounds/last_breath.mp3" id="32_tixqx"]
 [ext_resource type="AudioStream" uid="uid://clbm6v7duehjt" path="res://sounds/invincible.mp3" id="33_lhoi0"]
-[ext_resource type="VideoStream" path="res://misuraca.ogv" id="36_rou35"]
+[ext_resource type="VideoStream" uid="uid://bmw0myvrmxno7" path="res://misuraca.ogv" id="36_rou35"]
 [ext_resource type="Texture2D" uid="uid://dmy478ab084mf" path="res://models/darel_mouth_open.png" id="41_bsrbc"]
 [ext_resource type="PackedScene" uid="uid://ch0saed6qmuta" path="res://models/3d/fruit snacks.glb" id="41_qfvdr"]
 [ext_resource type="Texture2D" uid="uid://dhfo4m0lnl5se" path="res://models/darel_mouth_closed.png" id="42_288w1"]
@@ -57,20 +57,20 @@
 [ext_resource type="PackedScene" uid="uid://di7po5ehmdivu" path="res://models/3d/Rubber Duck.glb" id="44_aekf8"]
 [ext_resource type="PackedScene" uid="uid://du3qk3pgny2hf" path="res://models/3d/mtndewfinal.glb" id="44_jqyrq"]
 [ext_resource type="AudioStream" uid="uid://bdxoptn6hof48" path="res://darel_death.mp3" id="44_yuw5a"]
-[ext_resource type="Script" path="res://scripts/Tip.gd" id="45_6blne"]
-[ext_resource type="Script" path="res://scripts/Menu.gd" id="45_ndhl0"]
+[ext_resource type="Script" uid="uid://ccig28igpydif" path="res://scripts/Tip.gd" id="45_6blne"]
+[ext_resource type="Script" uid="uid://mokadoj2tboo" path="res://scripts/Menu.gd" id="45_ndhl0"]
 [ext_resource type="AudioStream" uid="uid://10f2ypovtuab" path="res://sounds/whoosh.mp3" id="46_6m3r2"]
 [ext_resource type="PackedScene" uid="uid://cn4hro3g74jh5" path="res://models/3d/sunkist.glb" id="47_f82oh"]
-[ext_resource type="Script" path="res://scripts/Subtitle.gd" id="47_m8xrv"]
+[ext_resource type="Script" uid="uid://4f3d3ontd730" path="res://scripts/Subtitle.gd" id="47_m8xrv"]
 [ext_resource type="PackedScene" uid="uid://cmu1pxdeqr7en" path="res://models/3d/redbull3d.glb" id="48_wpr2r"]
 [ext_resource type="PackedScene" uid="uid://c3s7hfwdoljuc" path="res://models/3d/mtndewbajamod.glb" id="49_uh1ld"]
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="50_ulo8b"]
 [ext_resource type="PackedScene" uid="uid://byaexesg86uo0" path="res://sonicgummies.tscn" id="51_b4gs7"]
-[ext_resource type="Script" path="res://scripts/SomeoneDid.gd" id="51_vep60"]
-[ext_resource type="Script" path="res://scripts/LeahyApproaching.gd" id="52_cn57o"]
+[ext_resource type="Script" uid="uid://d2j4fvfjuufuc" path="res://scripts/SomeoneDid.gd" id="51_vep60"]
+[ext_resource type="Script" uid="uid://duq0v3pqwsa0p" path="res://scripts/LeahyApproaching.gd" id="52_cn57o"]
 [ext_resource type="Texture2D" uid="uid://b2r7lba4oyrdr" path="res://player_hand.png" id="53_0cocr"]
 [ext_resource type="AudioStream" uid="uid://gf4ovd7mf66p" path="res://parry-ultrakill.mp3" id="54_hj1a3"]
-[ext_resource type="Script" path="res://scripts/skibidiCamera.gd" id="64_5sp6g"]
+[ext_resource type="Script" uid="uid://4eptkc5h7qvv" path="res://scripts/skibidiCamera.gd" id="64_5sp6g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tu1hv"]
 
@@ -498,8 +498,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x8cwj"]
 _data = {
-"RESET": SubResource("Animation_3kw6p"),
-"freez": SubResource("Animation_4fugg")
+&"RESET": SubResource("Animation_3kw6p"),
+&"freez": SubResource("Animation_4fugg")
 }
 
 [sub_resource type="Environment" id="Environment_i6cs0"]
@@ -544,8 +544,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x1ff7"]
 _data = {
-"RESET": SubResource("Animation_kfnju"),
-"spin": SubResource("Animation_ftl0y")
+&"RESET": SubResource("Animation_kfnju"),
+&"spin": SubResource("Animation_ftl0y")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6dj7"]
@@ -593,8 +593,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wuc1l"]
 _data = {
-"RESET": SubResource("Animation_j8lhb"),
-"spin": SubResource("Animation_ir16p")
+&"RESET": SubResource("Animation_j8lhb"),
+&"spin": SubResource("Animation_ir16p")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgtva"]
@@ -700,8 +700,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_050yu"]
 _data = {
-"RESET": SubResource("Animation_hqr0y"),
-"fade": SubResource("Animation_hthes")
+&"RESET": SubResource("Animation_hqr0y"),
+&"fade": SubResource("Animation_hthes")
 }
 
 [sub_resource type="Animation" id="Animation_w67xc"]
@@ -737,8 +737,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ke47x"]
 _data = {
-"RESET": SubResource("Animation_w67xc"),
-"spin": SubResource("Animation_d40jq")
+&"RESET": SubResource("Animation_w67xc"),
+&"spin": SubResource("Animation_d40jq")
 }
 
 [sub_resource type="Animation" id="Animation_5cb8v"]
@@ -774,8 +774,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_31hlf"]
 _data = {
-"RESET": SubResource("Animation_5cb8v"),
-"spin": SubResource("Animation_ib3dm")
+&"RESET": SubResource("Animation_5cb8v"),
+&"spin": SubResource("Animation_ib3dm")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mp62"]
@@ -904,8 +904,8 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qkcp4"]
 _data = {
-"RESET": SubResource("Animation_rjchn"),
-"jumpscare": SubResource("Animation_xwtr6")
+&"RESET": SubResource("Animation_rjchn"),
+&"jumpscare": SubResource("Animation_xwtr6")
 }
 
 [sub_resource type="Animation" id="Animation_dkqts"]
@@ -989,8 +989,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w6llb"]
 _data = {
-"RESET": SubResource("Animation_dkqts"),
-"boom": SubResource("Animation_m84un")
+&"RESET": SubResource("Animation_dkqts"),
+&"boom": SubResource("Animation_m84un")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ol4fw"]
@@ -1170,8 +1170,8 @@ tracks/2/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b8gyo"]
 _data = {
-"RESET": SubResource("Animation_w14s4"),
-"ha": SubResource("Animation_mxvn3")
+&"RESET": SubResource("Animation_w14s4"),
+&"ha": SubResource("Animation_mxvn3")
 }
 
 [sub_resource type="Animation" id="Animation_kon6j"]
@@ -1231,8 +1231,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qaqna"]
 _data = {
-"RESET": SubResource("Animation_kon6j"),
-"textfadein": SubResource("Animation_jhcll")
+&"RESET": SubResource("Animation_kon6j"),
+&"textfadein": SubResource("Animation_jhcll")
 }
 
 [sub_resource type="Animation" id="Animation_bgcx7"]
@@ -1292,8 +1292,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2b5lc"]
 _data = {
-"RESET": SubResource("Animation_bgcx7"),
-"popup": SubResource("Animation_nsk8q")
+&"RESET": SubResource("Animation_bgcx7"),
+&"popup": SubResource("Animation_nsk8q")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiy5l"]
@@ -1427,10 +1427,10 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6yh5v"]
 _data = {
-"RESET": SubResource("Animation_3ftyq"),
-"pickup": SubResource("Animation_xktpx"),
-"static": SubResource("Animation_ulcmt"),
-"swing": SubResource("Animation_1hnpm")
+&"RESET": SubResource("Animation_3ftyq"),
+&"pickup": SubResource("Animation_xktpx"),
+&"static": SubResource("Animation_ulcmt"),
+&"swing": SubResource("Animation_1hnpm")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c30ru"]
@@ -1608,9 +1608,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0hlu0"]
 _data = {
-"RESET": SubResource("Animation_loa3q"),
-"parry": SubResource("Animation_8lpml"),
-"punch": SubResource("Animation_8586j")
+&"RESET": SubResource("Animation_loa3q"),
+&"parry": SubResource("Animation_8lpml"),
+&"punch": SubResource("Animation_8586j")
 }
 
 [sub_resource type="Environment" id="Environment_snoth"]
@@ -1933,7 +1933,7 @@ color = Color(1, 1, 1, 0)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Freezer"]
 root_node = NodePath("../../../..")
 libraries = {
-"": SubResource("AnimationLibrary_x8cwj")
+&"": SubResource("AnimationLibrary_x8cwj")
 }
 
 [node name="Shop" type="ColorRect" parent="CanvasLayer/Control"]
@@ -2057,7 +2057,7 @@ skeleton = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport/Meshes"]
 libraries = {
-"": SubResource("AnimationLibrary_x1ff7")
+&"": SubResource("AnimationLibrary_x1ff7")
 }
 autoplay = "spin"
 
@@ -2126,7 +2126,7 @@ mesh = SubResource("BoxMesh_k4vu1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport/MeshInstance3D"]
 libraries = {
-"": SubResource("AnimationLibrary_wuc1l")
+&"": SubResource("AnimationLibrary_wuc1l")
 }
 autoplay = "spin"
 
@@ -2466,7 +2466,7 @@ expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation"]
 libraries = {
-"": SubResource("AnimationLibrary_050yu")
+&"": SubResource("AnimationLibrary_050yu")
 }
 
 [node name="rewards panel" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect"]
@@ -2518,7 +2518,7 @@ skeleton = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport/Meshes"]
 libraries = {
-"": SubResource("AnimationLibrary_x1ff7")
+&"": SubResource("AnimationLibrary_x1ff7")
 }
 
 [node name="Label3" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
@@ -2590,7 +2590,7 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -0.145, -0.345)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport/Root Scene"]
 libraries = {
-"": SubResource("AnimationLibrary_ke47x")
+&"": SubResource("AnimationLibrary_ke47x")
 }
 autoplay = "spin"
 
@@ -2676,7 +2676,7 @@ render_target_update_mode = 0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport"]
 root_node = NodePath("../mtndewbajamod")
 libraries = {
-"": SubResource("AnimationLibrary_31hlf")
+&"": SubResource("AnimationLibrary_31hlf")
 }
 autoplay = "spin"
 
@@ -2742,10 +2742,10 @@ grow_horizontal = 0
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0.396889, 0.396889, 0.396889, 1)
-theme_override_colors/font_pressed_color = Color(0.194349, 0.194349, 0.194349, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.194349, 0.194349, 0.194349, 1)
 theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 46
 theme_override_styles/focus = SubResource("StyleBoxFlat_3mp62")
@@ -2947,7 +2947,7 @@ bus = &"Music"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/toilet"]
 libraries = {
-"": SubResource("AnimationLibrary_qkcp4")
+&"": SubResource("AnimationLibrary_qkcp4")
 }
 
 [node name="lastbreaththing" type="Control" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
@@ -3002,7 +3002,7 @@ bus = &"Dialogs"
 
 [node name="anim" type="AnimationPlayer" parent="CanvasLayer/Control/Last breath"]
 libraries = {
-"": SubResource("AnimationLibrary_w6llb")
+&"": SubResource("AnimationLibrary_w6llb")
 }
 
 [node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
@@ -3193,7 +3193,7 @@ expand_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
 libraries = {
-"": SubResource("AnimationLibrary_b8gyo")
+&"": SubResource("AnimationLibrary_b8gyo")
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
@@ -3235,7 +3235,7 @@ vertical_alignment = 1
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
 libraries = {
-"": SubResource("AnimationLibrary_qaqna")
+&"": SubResource("AnimationLibrary_qaqna")
 }
 
 [node name="Tip" type="ColorRect" parent="CanvasLayer/Control"]
@@ -3257,7 +3257,7 @@ script = ExtResource("45_6blne")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Tip"]
 libraries = {
-"": SubResource("AnimationLibrary_2b5lc")
+&"": SubResource("AnimationLibrary_2b5lc")
 }
 
 [node name="Label" type="RichTextLabel" parent="CanvasLayer/Control/Tip"]
@@ -3535,7 +3535,7 @@ transform = Transform3D(-1.31134e-08, 0.3, 0, -0.3, -1.31134e-08, 0, 0, 0, 0.3, 
 
 [node name="HandAnim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_6yh5v")
+&"": SubResource("AnimationLibrary_6yh5v")
 }
 playback_auto_capture_transition_type = 6
 playback_auto_capture_ease_type = 2
@@ -3594,7 +3594,7 @@ mesh = SubResource("QuadMesh_6r6kl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="VisualHand"]
 libraries = {
-"": SubResource("AnimationLibrary_0hlu0")
+&"": SubResource("AnimationLibrary_0hlu0")
 }
 
 [node name="Parry sound" type="AudioStreamPlayer" parent="."]

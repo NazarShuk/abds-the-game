@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://40h3xkvclt2r"]
 
-[ext_resource type="Script" path="res://models/door.gd" id="1_5tv56"]
+[ext_resource type="Script" uid="uid://o5yjke1tpyi5" path="res://models/door.gd" id="1_5tv56"]
 [ext_resource type="Texture2D" uid="uid://cyjrx1jiupvks" path="res://door1.png" id="2_680g5"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_ymgma"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dkenas21xnj0n"]
 
 [ext_resource type="PackedScene" uid="uid://brwcnkhfgbt32" path="res://models/3d/Fire Extinguisher.glb" id="1_bppgy"]
-[ext_resource type="Script" path="res://scripts/fire extinguisher pickup.gd" id="1_d5svp"]
+[ext_resource type="Script" uid="uid://hgihtlmckdvl" path="res://scripts/fire extinguisher pickup.gd" id="1_d5svp"]
 [ext_resource type="AudioStream" uid="uid://dn5727m67jxj" path="res://glass_big.mp3" id="3_pkan8"]
 [ext_resource type="AudioStream" uid="uid://b5a1jtn0e8tpf" path="res://sounds/vending_machine.wav" id="4_fxus8"]
 

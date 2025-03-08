@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://p571hu5y0daf"]
 
-[ext_resource type="Script" path="res://scripts/Achievements.gd" id="1_sbo0b"]
+[ext_resource type="Script" uid="uid://dxykivp7r21cn" path="res://scripts/Achievements.gd" id="1_sbo0b"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_22jl3"]
 [ext_resource type="AudioStream" uid="uid://10f2ypovtuab" path="res://sounds/whoosh.mp3" id="3_sckoe"]
 
@@ -14,6 +14,33 @@ border_color = Color(0, 0, 0, 1)
 border_blend = true
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_82sqr"]
+
+[sub_resource type="Animation" id="Animation_d61rw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Achievement:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Achievement:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1294, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_bbtpr"]
 resource_name = "show"
@@ -58,37 +85,10 @@ tracks/2/keys = {
 }
 tracks/2/use_blend = true
 
-[sub_resource type="Animation" id="Animation_d61rw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Achievement:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Achievement:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1294, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ptivd"]
 _data = {
-"RESET": SubResource("Animation_d61rw"),
-"show": SubResource("Animation_bbtpr")
+&"RESET": SubResource("Animation_d61rw"),
+&"show": SubResource("Animation_bbtpr")
 }
 
 [node name="AchievementsOverlay" type="CanvasLayer"]

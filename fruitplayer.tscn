@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c7mumnqeu2re3"]
 
-[ext_resource type="VideoStream" path="res://fruit.ogv" id="2_w7qqe"]
+[ext_resource type="VideoStream" uid="uid://cfkkh4q2uhu2i" path="res://fruit.ogv" id="2_w7qqe"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_lh7j4"]
 

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PosterCollection" load_steps=13 format=3 uid="uid://bw6pv0jsdtwyb"]
 
-[ext_resource type="Script" path="res://scripts/poster_type.gd" id="1_r7sn4"]
+[ext_resource type="Script" uid="uid://b4dc4t2byyr8a" path="res://scripts/poster_type.gd" id="1_r7sn4"]
 [ext_resource type="Texture2D" uid="uid://b3o2yvjymq6s7" path="res://textures/Graffiti/2Q.png" id="2_t5vud"]
 [ext_resource type="Texture2D" uid="uid://d3bywgiv1oooa" path="res://textures/Graffiti/9k.png" id="3_0muh4"]
 [ext_resource type="Texture2D" uid="uid://xhdmnn3llmpb" path="res://textures/Graffiti/Drawing-2.sketchpad.png" id="4_evgfu"]

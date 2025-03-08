@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://cnjd75clgu7jp"]
 
-[ext_resource type="Script" path="res://scripts/pillar_john.gd" id="1_gcuf5"]
+[ext_resource type="Script" uid="uid://w2n7v7nvx2if" path="res://scripts/pillar_john.gd" id="1_gcuf5"]
 [ext_resource type="Texture2D" uid="uid://cwlbfh1saye8m" path="res://models/3d/pillar_john_0.png" id="1_ore6o"]
 [ext_resource type="AudioStream" uid="uid://b35vuj7uve47l" path="res://sounds/meatphobia.mp3" id="3_w4c7g"]
 

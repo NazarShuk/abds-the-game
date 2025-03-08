@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://do3tadxmn4c6t" path="res://kitchen.jpg" id="16_6gl6p"]
 [ext_resource type="Texture2D" uid="uid://d2e456a8tfcqm" path="res://kitchen2.jpg" id="17_ofcpv"]
 [ext_resource type="Texture2D" uid="uid://bj0bq531dmiqe" path="res://FL-Miami-Free-Breaksfast-Daily-02.jpeg" id="18_kmi1o"]
-[ext_resource type="Script" path="res://scripts/fox.gd" id="19_dvopt"]
+[ext_resource type="Script" uid="uid://gebgnyiqqblc" path="res://scripts/fox.gd" id="19_dvopt"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="20_lb8yn"]
 [ext_resource type="AudioStream" uid="uid://b7pm5d3uiydah" path="res://pacer.mp3" id="21_puw5y"]
 [ext_resource type="Texture2D" uid="uid://bt328n4wphdlh" path="res://door.png" id="22_lxsml"]
@@ -133,8 +133,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t84kf"]
 _data = {
-"RESET": SubResource("Animation_qv3km"),
-"spin": SubResource("Animation_5u3k8")
+&"RESET": SubResource("Animation_qv3km"),
+&"spin": SubResource("Animation_5u3k8")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fllel"]
@@ -189,8 +189,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i50sg"]
 _data = {
-"RESET": SubResource("Animation_y8t72"),
-"spoin": SubResource("Animation_j4ahp")
+&"RESET": SubResource("Animation_y8t72"),
+&"spoin": SubResource("Animation_j4ahp")
 }
 
 [node name="Building" type="NavigationRegion3D"]

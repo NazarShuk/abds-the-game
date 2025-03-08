@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dfj2dgr8c3bpt"]
 
-[ext_resource type="Script" path="res://scripts/landmine.gd" id="1_q1mws"]
+[ext_resource type="Script" uid="uid://cxnufwl2htq5w" path="res://scripts/landmine.gd" id="1_q1mws"]
 [ext_resource type="Texture2D" uid="uid://sq46qgcbi57w" path="res://banana.png" id="1_xojxt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2g3b"]

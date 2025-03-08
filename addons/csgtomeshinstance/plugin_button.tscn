@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dl5svw3owhqeq"]
 
-[ext_resource type="Script" path="res://addons/csgtomeshinstance/plugin_button.gd" id="1"]
+[ext_resource type="Script" uid="uid://dexxs5hogqpbp" path="res://addons/csgtomeshinstance/plugin_button.gd" id="1"]
 
 [node name="PluginButton" type="Button"]
 shortcut_in_tooltip = false

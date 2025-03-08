@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://btj7odxogilms"]
 
-[ext_resource type="Script" path="res://scripts/Vending Machine.gd" id="1_033me"]
+[ext_resource type="Script" uid="uid://6hp4hixxnnhf" path="res://scripts/Vending Machine.gd" id="1_033me"]
 [ext_resource type="Texture2D" uid="uid://dcouwnrkmlr4s" path="res://vending machine.png" id="1_asg5w"]
 [ext_resource type="AudioStream" uid="uid://b5a1jtn0e8tpf" path="res://sounds/vending_machine.wav" id="3_v4ikw"]
 [ext_resource type="AudioStream" uid="uid://b8p7qhqxujv2s" path="res://sounds/vending_machine_beep.wav" id="4_tcev1"]

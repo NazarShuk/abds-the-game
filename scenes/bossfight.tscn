@@ -1,18 +1,18 @@
 [gd_scene load_steps=71 format=4 uid="uid://bf4w65ggasudb"]
 
 [ext_resource type="AudioStream" uid="uid://bo7mhyi3janiq" path="res://sounds/bossfight_intro.mp3" id="1_j0ce3"]
-[ext_resource type="Script" path="res://scripts/bossfight.gd" id="1_ofdhs"]
+[ext_resource type="Script" uid="uid://dqi28wn66hkpd" path="res://scripts/bossfight.gd" id="1_ofdhs"]
 [ext_resource type="AudioStream" uid="uid://dbkecvib8fxhs" path="res://sounds/bossfight_loop.mp3" id="2_eelj2"]
-[ext_resource type="Script" path="res://scripts/bossfight_player.gd" id="4_5m83j"]
+[ext_resource type="Script" uid="uid://b08353rwi8jr" path="res://scripts/bossfight_player.gd" id="4_5m83j"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="4_47x54"]
 [ext_resource type="AudioStream" uid="uid://5atq0pajnrbc" path="res://sounds/wip_phase2_intro.mp3" id="4_uudkr"]
 [ext_resource type="AudioStream" uid="uid://6but5h5kt0m4" path="res://sounds/wip_phase2_loop.mp3" id="5_03eyn"]
-[ext_resource type="Script" path="res://scripts/evil_darel.gd" id="6_0t86w"]
+[ext_resource type="Script" uid="uid://cc6n7gkqqckwa" path="res://scripts/evil_darel.gd" id="6_0t86w"]
 [ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="6_my35y"]
-[ext_resource type="Script" path="res://scripts/health_bar_darel.gd" id="6_sruot"]
+[ext_resource type="Script" uid="uid://dhk3qqoytplup" path="res://scripts/health_bar_darel.gd" id="6_sruot"]
 [ext_resource type="Texture2D" uid="uid://b38xixrxxfdw4" path="res://darel.png" id="7_le1ox"]
 [ext_resource type="Texture2D" uid="uid://upa52bysxlmx" path="res://thing.svg" id="8_78bcm"]
-[ext_resource type="Script" path="res://scripts/target_player_pos.gd" id="9_31kxd"]
+[ext_resource type="Script" uid="uid://dpdggb4di8juj" path="res://scripts/target_player_pos.gd" id="9_31kxd"]
 [ext_resource type="Texture2D" uid="uid://cn80fn1eny7en" path="res://models/3d/clorox gun_clorox wipes.png" id="9_fqspj"]
 [ext_resource type="Texture2D" uid="uid://b2r7lba4oyrdr" path="res://player_hand.png" id="10_4wjrs"]
 [ext_resource type="PackedScene" uid="uid://vd1k4fap01bk" path="res://scenes/clorox_pickup.tscn" id="11_01kyq"]
@@ -226,8 +226,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fa8k7"]
 _data = {
-"RESET": SubResource("Animation_rmym7"),
-"intro": SubResource("Animation_oieg5")
+&"RESET": SubResource("Animation_rmym7"),
+&"intro": SubResource("Animation_oieg5")
 }
 
 [sub_resource type="Animation" id="Animation_rmkvh"]
@@ -438,8 +438,8 @@ tracks/8/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p1s3m"]
 _data = {
-"RESET": SubResource("Animation_rmkvh"),
-"cutscene": SubResource("Animation_g4k8n")
+&"RESET": SubResource("Animation_rmkvh"),
+&"cutscene": SubResource("Animation_g4k8n")
 }
 
 [sub_resource type="QuadMesh" id="QuadMesh_vxkfx"]
@@ -725,10 +725,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mn4yr"]
 _data = {
-"RESET": SubResource("Animation_8uvyw"),
-"look_at_it": SubResource("Animation_rduh2"),
-"reload": SubResource("Animation_b85l5"),
-"shoot": SubResource("Animation_6bk6r")
+&"RESET": SubResource("Animation_8uvyw"),
+&"look_at_it": SubResource("Animation_rduh2"),
+&"reload": SubResource("Animation_b85l5"),
+&"shoot": SubResource("Animation_6bk6r")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_556e8"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bylupyln8p7m8"]
 
-[ext_resource type="Script" path="res://scripts/evil_leahy.gd" id="1_r8yjm"]
+[ext_resource type="Script" uid="uid://cu5asrsfprco7" path="res://scripts/evil_leahy.gd" id="1_r8yjm"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="1_xr5qm"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_ameqv"]
 [ext_resource type="AudioStream" uid="uid://xedna4anjn83" path="res://tas.mp3" id="4_t4c4j"]

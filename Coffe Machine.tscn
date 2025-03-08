@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ccge33gvh1ojc"]
 
-[ext_resource type="Script" path="res://scripts/Coffe Machine.gd" id="1_8krv7"]
+[ext_resource type="Script" uid="uid://bg4nxpg76smgo" path="res://scripts/Coffe Machine.gd" id="1_8krv7"]
 [ext_resource type="Texture2D" uid="uid://upqaoiqvget0" path="res://cofee machine.png" id="1_fhi1o"]
 [ext_resource type="AudioStream" uid="uid://gorr13qobjv7" path="res://cofee.mp3" id="2_12hxt"]
 

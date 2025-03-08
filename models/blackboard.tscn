@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://pt6p4fe3xury"]
 
-[ext_resource type="Script" path="res://models/blackboard.gd" id="1_86xi5"]
+[ext_resource type="Script" uid="uid://dg43htwd8geaw" path="res://models/blackboard.gd" id="1_86xi5"]
 [ext_resource type="Texture2D" uid="uid://vvklw85x26dt" path="res://models/blackboard/blackboard-_0009_Layer-1.png" id="1_iejud"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2mi58"]

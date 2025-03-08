@@ -15,11 +15,17 @@ func _process(delta: float) -> void:
 		if !game_scene.can_escape:
 			if !game_scene.is_pacer:
 				if not game_scene.competitive:
-					text = str(Game.collected_books) + " books collected out of " + str(Game.books_to_collect)
+					
+					var collected_books = str(Game.collected_books)
+					
+					if collected_books.split(".")[1] == "0":
+						collected_books = collected_books.split(".")[0]
+					
+					text = collected_books + " books collected out of " + str(floori(Game.books_to_collect))
 				else:
 					
 					get_books_collected_in_team(player.name.to_int())
-					text = "Team %s\n%s books collected out of %s" % [_team, _books_collected_in_team, Game.books_to_collect]
+					text = "Team %s\n%s books collected out of %s" % [_team, _books_collected_in_team, floori(Game.books_to_collect)]
 					
 				if game_scene.is_bet:
 					text += "\nBet: " + str(game_scene.bet_books_left) + " left. Seconds left: " + str(floor(game_scene.get_node("Bet timer").time_left))
@@ -29,7 +35,12 @@ func _process(delta: float) -> void:
 			if !game_scene.leahy_time:
 				text = "Run."
 			else:
-				text = str(Game.collected_books) + " books collected out of " + str(Game.books_to_collect)
+				var collected_books = str(Game.collected_books)
+				
+				if collected_books.split(".")[1] == "0":
+					collected_books = collected_books.split(".")[0]
+				
+				text = collected_books + " books collected out of " + str(floori(Game.books_to_collect))
 	else:
 		text = "Find an ELA book!"
 

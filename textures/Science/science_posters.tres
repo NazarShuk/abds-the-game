@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PosterCollection" load_steps=12 format=3 uid="uid://cps6dmcj083ka"]
 
-[ext_resource type="Script" path="res://scripts/poster_type.gd" id="1_p44lg"]
+[ext_resource type="Script" uid="uid://b4dc4t2byyr8a" path="res://scripts/poster_type.gd" id="1_p44lg"]
 [ext_resource type="Texture2D" uid="uid://b43pend6nvdjb" path="res://textures/Science/OIP1.png" id="2_wi7ad"]
 [ext_resource type="Texture2D" uid="uid://cbtt5yltht12n" path="res://textures/Science/OIP2.png" id="3_upend"]
 [ext_resource type="Texture2D" uid="uid://5oh6r32rre2e" path="res://textures/Science/OIP3.png" id="4_wtcdi"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=150 format=3 uid="uid://ymt1e0fvt8bg"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_y4eyb"]
-[ext_resource type="Script" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
+[ext_resource type="Script" uid="uid://c2sq3d02m016" path="res://scripts/game.gd" id="1_y4eyb"]
+[ext_resource type="Script" uid="uid://b81fr33wsu4q7" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
 [ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
@@ -10,10 +10,10 @@
 [ext_resource type="AudioStream" uid="uid://cvwobq8jsn8xc" path="res://failedme.mp3" id="6_8cxyt"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
 [ext_resource type="Texture2D" uid="uid://cwtwntla0bkcm" path="res://textures/leahytime.png" id="7_gd0qw"]
-[ext_resource type="Script" path="res://scripts/timer_progress.gd" id="8_6ddju"]
+[ext_resource type="Script" uid="uid://cyhxcsjody2hd" path="res://scripts/timer_progress.gd" id="8_6ddju"]
 [ext_resource type="Texture2D" uid="uid://c72tpajyecf6s" path="res://textures/jogn.png" id="8_58t2u"]
-[ext_resource type="Script" path="res://scripts/time_left.gd" id="8_evspy"]
-[ext_resource type="Script" path="res://scripts/Lobby.gd" id="8_mqq2e"]
+[ext_resource type="Script" uid="uid://tep0niribcoi" path="res://scripts/time_left.gd" id="8_evspy"]
+[ext_resource type="Script" uid="uid://0di5akfgox7w" path="res://scripts/Lobby.gd" id="8_mqq2e"]
 [ext_resource type="Texture2D" uid="uid://cuk8vbksretm7" path="res://textures/azzu.png" id="8_sxj4k"]
 [ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="9_gld5r"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="9_pvk13"]
@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://dk72xdfsaj16i" path="res://scenes/loading.tscn" id="10_uw2qm"]
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
-[ext_resource type="Script" path="res://scripts/Music2.gd" id="13_il7ji"]
+[ext_resource type="Script" uid="uid://cniokoa80fif2" path="res://scripts/Music2.gd" id="13_il7ji"]
 [ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
 [ext_resource type="AudioStream" uid="uid://d2kii8bhcdwvs" path="res://sounds/pixelland.mp3" id="16_e2t7m"]
 [ext_resource type="AudioStream" uid="uid://uw1c631w2s6n" path="res://sounds/escape_start.mp3" id="16_jhdn0"]
@@ -41,7 +41,7 @@
 [ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
 [ext_resource type="AudioStream" uid="uid://b56skyxnpwv64" path="res://sounds/leahy time_loop.mp3" id="24_4u2ak"]
 [ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
-[ext_resource type="Script" path="res://scripts/WelcomeLeahy.gd" id="26_0x6dq"]
+[ext_resource type="Script" uid="uid://fqqsje1cyhlr" path="res://scripts/WelcomeLeahy.gd" id="26_0x6dq"]
 [ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
 [ext_resource type="PackedScene" uid="uid://ksynis5kuf5a" path="res://bathroom_spawn.tscn" id="29_kjme3"]
 [ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
@@ -58,11 +58,11 @@
 [ext_resource type="PackedScene" uid="uid://chuhguxkuwyn1" path="res://models/3d/school_bus.glb" id="45_5hyb8"]
 [ext_resource type="AudioStream" uid="uid://dlu3b8bxaa7jm" path="res://models/bus.mp3" id="45_xyeqq"]
 [ext_resource type="PackedScene" uid="uid://bc3kpnykxfbph" path="res://gambling_wheel.tscn" id="50_jgq1w"]
-[ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="50_metmn"]
-[ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="51_7ffv4"]
+[ext_resource type="Script" uid="uid://c1l4hrlgxdg7h" path="res://addons/road-generator/nodes/road_manager.gd" id="50_metmn"]
+[ext_resource type="Script" uid="uid://cq8ls8mhyqi06" path="res://addons/road-generator/nodes/road_container.gd" id="51_7ffv4"]
 [ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="52_88bn0"]
-[ext_resource type="Script" path="res://scripts/camera_tv.gd" id="53_0rrcy"]
-[ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="53_5ce3w"]
+[ext_resource type="Script" uid="uid://cti4ocxtmhu24" path="res://scripts/camera_tv.gd" id="53_0rrcy"]
+[ext_resource type="Script" uid="uid://1wml5af1gebl" path="res://addons/road-generator/nodes/road_point.gd" id="53_5ce3w"]
 [ext_resource type="PackedScene" uid="uid://tiwq41uqylbi" path="res://scenes/exit.tscn" id="55_fvbsc"]
 [ext_resource type="PackedScene" uid="uid://d3cvm5kjh3vj2" path="res://scenes/music disable area.tscn" id="56_k28kr"]
 [ext_resource type="PackedScene" uid="uid://byuespbgm2uma" path="res://scenes/last_breath.tscn" id="56_p14hv"]
@@ -192,8 +192,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e226w"]
 _data = {
-"RESET": SubResource("Animation_8oj72"),
-"bomboklatz": SubResource("Animation_xnwpc")
+&"RESET": SubResource("Animation_8oj72"),
+&"bomboklatz": SubResource("Animation_xnwpc")
 }
 
 [sub_resource type="Animation" id="Animation_20rqs"]
@@ -253,8 +253,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3g3yf"]
 _data = {
-"RESET": SubResource("Animation_20rqs"),
-"new_animation": SubResource("Animation_ol4it")
+&"RESET": SubResource("Animation_20rqs"),
+&"new_animation": SubResource("Animation_ol4it")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjapy"]
@@ -341,8 +341,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wnclm"]
 _data = {
-"RESET": SubResource("Animation_c7x6i"),
-"fake dp ending": SubResource("Animation_hkhs3")
+&"RESET": SubResource("Animation_c7x6i"),
+&"fake dp ending": SubResource("Animation_hkhs3")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tyr0v"]
@@ -448,8 +448,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vlepg"]
 _data = {
-"RESET": SubResource("Animation_gsmih"),
-"intro": SubResource("Animation_hykiy")
+&"RESET": SubResource("Animation_gsmih"),
+&"intro": SubResource("Animation_hykiy")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ofv1g"]
@@ -566,7 +566,7 @@ clip_1/stream = ExtResource("17_yd2n0")
 clip_1/auto_advance = 0
 _transitions = {
 Vector2i(-1, -1): {
-"fade_beats": 3,
+"fade_beats": 3.0,
 "fade_mode": 4,
 "from_time": 0,
 "to_time": 0
@@ -585,7 +585,7 @@ clip_1/auto_advance = 1
 clip_1/next_clip = 1
 _transitions = {
 Vector2i(0, 0): {
-"fade_beats": 1,
+"fade_beats": 1.0,
 "fade_mode": 4,
 "from_time": 0,
 "to_time": 1
@@ -642,8 +642,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_exbfv"]
 _data = {
-"RESET": SubResource("Animation_d00yl"),
-"new_animation": SubResource("Animation_50nnp")
+&"RESET": SubResource("Animation_d00yl"),
+&"new_animation": SubResource("Animation_50nnp")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5h8sj"]
@@ -706,8 +706,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5fh0o"]
 _data = {
-"RESET": SubResource("Animation_n7unv"),
-"spin": SubResource("Animation_rwlcq")
+&"RESET": SubResource("Animation_n7unv"),
+&"spin": SubResource("Animation_rwlcq")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ekwb2"]
@@ -883,8 +883,8 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uvnkd"]
 _data = {
-"RESET": SubResource("Animation_hgnq6"),
-"pre": SubResource("Animation_yxcq5")
+&"RESET": SubResource("Animation_hgnq6"),
+&"pre": SubResource("Animation_yxcq5")
 }
 
 [sub_resource type="BoxMesh" id="BoxMesh_g8wa1"]
@@ -962,7 +962,7 @@ environment = SubResource("Environment_5hwxw")
 camera_attributes = SubResource("CameraAttributesPractical_u7eo5")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn", "res://puddle.tscn", "res://dropped_item.tscn", "res://player_sound.tscn", "res://smoke wall.tscn", "res://dropped_mtndew.tscn", "res://Clorox Wipes.tscn")
+_spawnable_scenes = PackedStringArray("uid://dmiwtnuhovfv5", "uid://c176sfrtxowxt", "uid://bio4x0p1tpo44", "uid://cpv1p60p4ivh3", "uid://ceo00cwwipkt0", "uid://g5kyanmqwlbw", "uid://di8aki6p3dw1q")
 spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -988,7 +988,7 @@ grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect"]
 libraries = {
-"": SubResource("AnimationLibrary_e226w")
+&"": SubResource("AnimationLibrary_e226w")
 }
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
@@ -1002,7 +1002,7 @@ grow_vertical = 2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect2"]
 root_node = NodePath("../../ColorRect2")
 libraries = {
-"": SubResource("AnimationLibrary_3g3yf")
+&"": SubResource("AnimationLibrary_3g3yf")
 }
 
 [node name="Main" type="Control" parent="CanvasLayer"]
@@ -1081,7 +1081,7 @@ grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Main/fake dp ending"]
 libraries = {
-"": SubResource("AnimationLibrary_wnclm")
+&"": SubResource("AnimationLibrary_wnclm")
 }
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main/fake dp ending"]
@@ -1133,7 +1133,7 @@ frame_progress = 0.58456
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Main/LeahyTime"]
 libraries = {
-"": SubResource("AnimationLibrary_vlepg")
+&"": SubResource("AnimationLibrary_vlepg")
 }
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Main/LeahyTime" node_paths=PackedStringArray("timer")]
@@ -1307,16 +1307,16 @@ grow_vertical = 2
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0.329158, 0.329158, 0.329158, 1)
-theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.650128, 0.650128, 0.650128, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/focus = SubResource("StyleBoxFlat_evicu")
@@ -1362,16 +1362,16 @@ grow_vertical = 0
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 66
 theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
@@ -1397,16 +1397,16 @@ grow_vertical = 0
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0.329412, 0.329412, 0.329412, 1)
-theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 66
 theme_override_styles/focus = SubResource("StyleBoxFlat_s00na")
@@ -1557,16 +1557,16 @@ grow_horizontal = 2
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
 theme_override_font_sizes/font_size = 24
 text = "Competitive mode"
@@ -1639,7 +1639,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_both1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FakeFox"]
 libraries = {
-"": SubResource("AnimationLibrary_exbfv")
+&"": SubResource("AnimationLibrary_exbfv")
 }
 
 [node name="PacerTest" type="AudioStreamPlayer3D" parent="FakeFox"]
@@ -2322,7 +2322,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_5sqpk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="colum"]
 libraries = {
-"": SubResource("AnimationLibrary_5fh0o")
+&"": SubResource("AnimationLibrary_5fh0o")
 }
 autoplay = "spin"
 
@@ -2383,7 +2383,7 @@ shape = SubResource("BoxShape3D_xghtw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pre_start_game_anim"]
 libraries = {
-"": SubResource("AnimationLibrary_uvnkd")
+&"": SubResource("AnimationLibrary_uvnkd")
 }
 
 [node name="Camera3D" type="Camera3D" parent="pre_start_game_anim"]

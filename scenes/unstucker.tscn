@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c7tnyc6xhuugv"]
 
-[ext_resource type="Script" path="res://scenes/unstucker.gd" id="1_3yqq2"]
+[ext_resource type="Script" uid="uid://bg1hdhxveng7k" path="res://scenes/unstucker.gd" id="1_3yqq2"]
 
 [node name="Unstucker" type="Node3D"]
 script = ExtResource("1_3yqq2")

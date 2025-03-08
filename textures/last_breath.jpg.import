@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbjlijtp7eoh4"
 path.s3tc="res://.godot/imported/last_breath.jpg-254e648e92c3e94412de18837d231c1e.s3tc.ctex"
-path.etc2="res://.godot/imported/last_breath.jpg-254e648e92c3e94412de18837d231c1e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/last_breath.jpg"
-dest_files=["res://.godot/imported/last_breath.jpg-254e648e92c3e94412de18837d231c1e.s3tc.ctex", "res://.godot/imported/last_breath.jpg-254e648e92c3e94412de18837d231c1e.etc2.ctex"]
+dest_files=["res://.godot/imported/last_breath.jpg-254e648e92c3e94412de18837d231c1e.s3tc.ctex"]
 
 [params]
 

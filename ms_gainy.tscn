@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://di30g2j26wvlq"]
 
-[ext_resource type="Script" path="res://scripts/gainy.gd" id="1_i6xwf"]
+[ext_resource type="Script" uid="uid://lf77pkkt8hed" path="res://scripts/gainy.gd" id="1_i6xwf"]
 [ext_resource type="Texture2D" uid="uid://be83fcuv2llo3" path="res://RAY_1032_crop-removebg-preview.png" id="2_pwjvv"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_mu1hk"]
 

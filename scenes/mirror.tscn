@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cdw7llih5p4hq"]
 
-[ext_resource type="Script" path="res://scripts/mirror.gd" id="1_2m73q"]
+[ext_resource type="Script" uid="uid://c7761gmw2qrb1" path="res://scripts/mirror.gd" id="1_2m73q"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_1rho3"]
 

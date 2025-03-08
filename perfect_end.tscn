@@ -1,12 +1,12 @@
 [gd_scene load_steps=46 format=3 uid="uid://don8cpjk8ev57"]
 
-[ext_resource type="Script" path="res://scripts/copy_the_skin.gd" id="1_8s45a"]
+[ext_resource type="Script" uid="uid://k3qorvtk1665" path="res://scripts/copy_the_skin.gd" id="1_8s45a"]
 [ext_resource type="AudioStream" uid="uid://bw0msc6kls5ph" path="res://AdhesiveWombat - Night Shade (128kbps)_01.mp3" id="3_d5bbh"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://player.png" id="3_luoly"]
 [ext_resource type="Texture2D" uid="uid://e481qnldgi3y" path="res://player_cool.png" id="3_m71re"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="3_tl41g"]
 [ext_resource type="PackedScene" uid="uid://c0bsgfl8j3hnb" path="res://param_azzu.tscn" id="4_h7cxy"]
-[ext_resource type="Script" path="res://scripts/camera_shake.gd" id="5_ln7wb"]
+[ext_resource type="Script" uid="uid://bjub5fclouj5k" path="res://scripts/camera_shake.gd" id="5_ln7wb"]
 [ext_resource type="Texture2D" uid="uid://bs2hbw6eckr2j" path="res://floor.png" id="5_t638u"]
 [ext_resource type="Texture2D" uid="uid://dai6qepdbfr8d" path="res://player_cool_back.png" id="7_ranqf"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="8_upipd"]
@@ -900,9 +900,9 @@ tracks/23/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o6plu"]
 _data = {
-"RESET": SubResource("Animation_t2yii"),
-"new_animation": SubResource("Animation_86rcp"),
-"no_azzu": SubResource("Animation_35d8d")
+&"RESET": SubResource("Animation_t2yii"),
+&"new_animation": SubResource("Animation_86rcp"),
+&"no_azzu": SubResource("Animation_35d8d")
 }
 
 [sub_resource type="QuadMesh" id="QuadMesh_6bygt"]

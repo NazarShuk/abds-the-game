@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PosterCollection" load_steps=10 format=3 uid="uid://b3ltkgk3oc380"]
 
-[ext_resource type="Script" path="res://scripts/poster_type.gd" id="1_i030n"]
+[ext_resource type="Script" uid="uid://b4dc4t2byyr8a" path="res://scripts/poster_type.gd" id="1_i030n"]
 [ext_resource type="Texture2D" uid="uid://dswc8gfxmuoyw" path="res://textures/Math/IMG_0106.jpg" id="2_0enqm"]
 [ext_resource type="Texture2D" uid="uid://d0icyf2i26oc0" path="res://textures/Math/OIP2.png" id="3_tih4j"]
 [ext_resource type="Texture2D" uid="uid://ccfpga5nmnhp7" path="res://textures/Math/OIP3.png" id="4_o7p5t"]

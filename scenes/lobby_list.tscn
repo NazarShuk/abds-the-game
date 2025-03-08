@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bc61qybxry7q8"]
 
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_e25xo"]
-[ext_resource type="Script" path="res://scripts/lobby_list.gd" id="2_k1f6m"]
+[ext_resource type="Script" uid="uid://c4vq48s3173wf" path="res://scripts/lobby_list.gd" id="2_k1f6m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0a7i"]
 bg_color = Color(1, 1, 1, 1)

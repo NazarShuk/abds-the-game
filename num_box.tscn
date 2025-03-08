@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://crlf7plpie2qb"]
 
-[ext_resource type="Script" path="res://scripts/num_box.gd" id="1_yatgq"]
+[ext_resource type="Script" uid="uid://dffxyou0wjsq" path="res://scripts/num_box.gd" id="1_yatgq"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_5yc3t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4hmf"]

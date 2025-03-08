@@ -12,6 +12,45 @@ ring_segments = 4
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2ewji"]
 data = PackedVector3Array(-0.3909, 0, -0.3117, 0, 0.25, -0.75, 0, 0, -0.5, -0.3909, 0, -0.3117, -0.5864, 0.25, -0.4676, 0, 0.25, -0.75, -0.5864, 0.25, -0.4676, 0, 0, -1, 0, 0.25, -0.75, -0.5864, 0.25, -0.4676, -0.7818, 0, -0.6235, 0, 0, -1, -0.7818, 0, -0.6235, 0, -0.25, -0.75, 0, 0, -1, -0.7818, 0, -0.6235, -0.5864, -0.25, -0.4676, 0, -0.25, -0.75, -0.5864, -0.25, -0.4676, 0, 0, -0.5, 0, -0.25, -0.75, -0.5864, -0.25, -0.4676, -0.3909, 0, -0.3117, 0, 0, -0.5, -0.4875, 0, 0.1113, -0.5864, 0.25, -0.4676, -0.3909, 0, -0.3117, -0.4875, 0, 0.1113, -0.7312, 0.25, 0.1669, -0.5864, 0.25, -0.4676, -0.7312, 0.25, 0.1669, -0.7818, 0, -0.6235, -0.5864, 0.25, -0.4676, -0.7312, 0.25, 0.1669, -0.9749, 0, 0.2225, -0.7818, 0, -0.6235, -0.9749, 0, 0.2225, -0.5864, -0.25, -0.4676, -0.7818, 0, -0.6235, -0.9749, 0, 0.2225, -0.7312, -0.25, 0.1669, -0.5864, -0.25, -0.4676, -0.7312, -0.25, 0.1669, -0.3909, 0, -0.3117, -0.5864, -0.25, -0.4676, -0.7312, -0.25, 0.1669, -0.4875, 0, 0.1113, -0.3909, 0, -0.3117, -0.2169, 0, 0.4505, -0.7312, 0.25, 0.1669, -0.4875, 0, 0.1113, -0.2169, 0, 0.4505, -0.3254, 0.25, 0.6757, -0.7312, 0.25, 0.1669, -0.3254, 0.25, 0.6757, -0.9749, 0, 0.2225, -0.7312, 0.25, 0.1669, -0.3254, 0.25, 0.6757, -0.4339, 0, 0.901, -0.9749, 0, 0.2225, -0.4339, 0, 0.901, -0.7312, -0.25, 0.1669, -0.9749, 0, 0.2225, -0.4339, 0, 0.901, -0.3254, -0.25, 0.6757, -0.7312, -0.25, 0.1669, -0.3254, -0.25, 0.6757, -0.4875, 0, 0.1113, -0.7312, -0.25, 0.1669, -0.3254, -0.25, 0.6757, -0.2169, 0, 0.4505, -0.4875, 0, 0.1113, 0.2169, 0, 0.4505, -0.3254, 0.25, 0.6757, -0.2169, 0, 0.4505, 0.2169, 0, 0.4505, 0.3254, 0.25, 0.6757, -0.3254, 0.25, 0.6757, 0.3254, 0.25, 0.6757, -0.4339, 0, 0.901, -0.3254, 0.25, 0.6757, 0.3254, 0.25, 0.6757, 0.4339, 0, 0.901, -0.4339, 0, 0.901, 0.4339, 0, 0.901, -0.3254, -0.25, 0.6757, -0.4339, 0, 0.901, 0.4339, 0, 0.901, 0.3254, -0.25, 0.6757, -0.3254, -0.25, 0.6757, 0.3254, -0.25, 0.6757, -0.2169, 0, 0.4505, -0.3254, -0.25, 0.6757, 0.3254, -0.25, 0.6757, 0.2169, 0, 0.4505, -0.2169, 0, 0.4505, 0.4875, 0, 0.1113, 0.3254, 0.25, 0.6757, 0.2169, 0, 0.4505, 0.4875, 0, 0.1113, 0.7312, 0.25, 0.1669, 0.3254, 0.25, 0.6757, 0.7312, 0.25, 0.1669, 0.4339, 0, 0.901, 0.3254, 0.25, 0.6757, 0.7312, 0.25, 0.1669, 0.9749, 0, 0.2225, 0.4339, 0, 0.901, 0.9749, 0, 0.2225, 0.3254, -0.25, 0.6757, 0.4339, 0, 0.901, 0.9749, 0, 0.2225, 0.7312, -0.25, 0.1669, 0.3254, -0.25, 0.6757, 0.7312, -0.25, 0.1669, 0.2169, 0, 0.4505, 0.3254, -0.25, 0.6757, 0.7312, -0.25, 0.1669, 0.4875, 0, 0.1113, 0.2169, 0, 0.4505, 0.3909, 0, -0.3117, 0.7312, 0.25, 0.1669, 0.4875, 0, 0.1113, 0.3909, 0, -0.3117, 0.5864, 0.25, -0.4676, 0.7312, 0.25, 0.1669, 0.5864, 0.25, -0.4676, 0.9749, 0, 0.2225, 0.7312, 0.25, 0.1669, 0.5864, 0.25, -0.4676, 0.7818, 0, -0.6235, 0.9749, 0, 0.2225, 0.7818, 0, -0.6235, 0.7312, -0.25, 0.1669, 0.9749, 0, 0.2225, 0.7818, 0, -0.6235, 0.5864, -0.25, -0.4676, 0.7312, -0.25, 0.1669, 0.5864, -0.25, -0.4676, 0.4875, 0, 0.1113, 0.7312, -0.25, 0.1669, 0.5864, -0.25, -0.4676, 0.3909, 0, -0.3117, 0.4875, 0, 0.1113, 0, 0, -0.5, 0.5864, 0.25, -0.4676, 0.3909, 0, -0.3117, 0, 0, -0.5, 0, 0.25, -0.75, 0.5864, 0.25, -0.4676, 0, 0.25, -0.75, 0.7818, 0, -0.6235, 0.5864, 0.25, -0.4676, 0, 0.25, -0.75, 0, 0, -1, 0.7818, 0, -0.6235, 0, 0, -1, 0.5864, -0.25, -0.4676, 0.7818, 0, -0.6235, 0, 0, -1, 0, -0.25, -0.75, 0.5864, -0.25, -0.4676, 0, -0.25, -0.75, 0.3909, 0, -0.3117, 0.5864, -0.25, -0.4676, 0, -0.25, -0.75, 0, 0, -0.5, 0.3909, 0, -0.3117)
 
+[sub_resource type="Animation" id="Animation_jr5d4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:mesh:outer_radius")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
 [sub_resource type="Animation" id="Animation_yfhrs"]
 resource_name = "scale"
 length = 3.0
@@ -66,49 +105,10 @@ tracks/3/keys = {
 "values": [1.0, 0.58, 1.0]
 }
 
-[sub_resource type="Animation" id="Animation_jr5d4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CPUParticles3D:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MeshInstance3D:mesh:outer_radius")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dc1ug"]
 _data = {
-"RESET": SubResource("Animation_jr5d4"),
-"scale": SubResource("Animation_yfhrs")
+&"RESET": SubResource("Animation_jr5d4"),
+&"scale": SubResource("Animation_yfhrs")
 }
 
 [sub_resource type="BoxMesh" id="BoxMesh_s5plq"]

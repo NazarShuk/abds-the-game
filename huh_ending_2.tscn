@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://br7nkod73qtbb"]
 
-[ext_resource type="Script" path="res://scripts/huh_ending_2.gd" id="1_viblg"]
+[ext_resource type="Script" uid="uid://bwvi7af2cev0g" path="res://scripts/huh_ending_2.gd" id="1_viblg"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_sht51"]
 [ext_resource type="Texture2D" uid="uid://dl6rl70itifqh" path="res://backrooms1.png" id="2_w5ovh"]
 [ext_resource type="AudioStream" uid="uid://clcwubcymwxpp" path="res://peace.mp3" id="3_6uujp"]
@@ -366,11 +366,11 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vtt1e"]
 _data = {
-"RESET": SubResource("Animation_yc00j"),
-"coolll": SubResource("Animation_udwgg"),
-"fight him": SubResource("Animation_pws8u"),
-"final": SubResource("Animation_hjy8e"),
-"nein": SubResource("Animation_s47re")
+&"RESET": SubResource("Animation_yc00j"),
+&"coolll": SubResource("Animation_udwgg"),
+&"fight him": SubResource("Animation_pws8u"),
+&"final": SubResource("Animation_hjy8e"),
+&"nein": SubResource("Animation_s47re")
 }
 
 [node name="huh ending" type="Node3D"]

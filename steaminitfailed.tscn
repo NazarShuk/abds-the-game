@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c4b54i310lcf2"]
 
-[ext_resource type="Script" path="res://scripts/steaminitfailed.gd" id="1_ev7h6"]
+[ext_resource type="Script" uid="uid://dh3t70jtxhpk2" path="res://scripts/steaminitfailed.gd" id="1_ev7h6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_rgk2e"]
 
 [node name="Steaminitfailed" type="Node2D"]

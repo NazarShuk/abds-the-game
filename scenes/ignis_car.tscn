@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=4 uid="uid://h1843b5qdeq1"]
 
-[ext_resource type="Script" path="res://scripts/ignis_car.gd" id="1_nhtjs"]
+[ext_resource type="Script" uid="uid://3obx6mpsamfm" path="res://scripts/ignis_car.gd" id="1_nhtjs"]
 [ext_resource type="AudioStream" uid="uid://c1ayha6oikahk" path="res://sounds/car.wav" id="2_3fyhd"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="3_aq58r"]
 

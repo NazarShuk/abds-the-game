@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cx7itjqsyc1xu"]
 
-[ext_resource type="Script" path="res://scripts/breaker.gd" id="1_m5dcq"]
+[ext_resource type="Script" uid="uid://c176vmbdhs6ta" path="res://scripts/breaker.gd" id="1_m5dcq"]
 [ext_resource type="AudioStream" uid="uid://i2dkw33jamoi" path="res://breaker.mp3" id="2_blw3u"]
 [ext_resource type="PackedScene" uid="uid://dpwcylt8vvrkv" path="res://models/3d/Fuse Box.glb" id="3_knyfq"]
 [ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="4_c6xd0"]
@@ -21,7 +21,7 @@ clip_1/auto_advance = 1
 clip_1/next_clip = 1
 _transitions = {
 Vector2i(0, 0): {
-"fade_beats": 5,
+"fade_beats": 5.0,
 "fade_mode": 3,
 "from_time": 3,
 "to_time": 1

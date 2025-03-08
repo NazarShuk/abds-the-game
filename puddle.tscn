@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://c176sfrtxowxt"]
 
-[ext_resource type="Script" path="res://scripts/puddle.gd" id="1_x4fni"]
+[ext_resource type="Script" uid="uid://t033a11bxtjw" path="res://scripts/puddle.gd" id="1_x4fni"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_don47"]
 height = 0.1
@@ -42,8 +42,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k5dnd"]
 _data = {
-"RESET": SubResource("Animation_tsour"),
-"grow": SubResource("Animation_xp1bw")
+&"RESET": SubResource("Animation_tsour"),
+&"grow": SubResource("Animation_xp1bw")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_luqud"]

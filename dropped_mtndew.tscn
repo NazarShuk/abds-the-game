@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=4 uid="uid://g5kyanmqwlbw"]
 
-[ext_resource type="Script" path="res://scripts/dropped_item.gd" id="1_cgbg8"]
+[ext_resource type="Script" uid="uid://d2dbk7b6m8kif" path="res://scripts/dropped_item.gd" id="1_cgbg8"]
 [ext_resource type="Texture2D" uid="uid://bn1d1mhc68uoh" path="res://models/3d/mtndewfinal_mtndew real.png" id="2_k3ev7"]
 [ext_resource type="AudioStream" uid="uid://bi0shhn4pj0ku" path="res://shart.mp3" id="3_7gpv2"]
-[ext_resource type="Script" path="res://scripts/audio_pitch_randomizer.gd" id="4_pn57m"]
+[ext_resource type="Script" uid="uid://dcc6s2sey36ya" path="res://scripts/audio_pitch_randomizer.gd" id="4_pn57m"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aee1h"]
 properties/0/path = NodePath(".:position")

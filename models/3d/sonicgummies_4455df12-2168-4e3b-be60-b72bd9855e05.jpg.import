@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcky4b3vwhtkd"
+uid="uid://dkpm1yxf174pk"
 path.s3tc="res://.godot/imported/sonicgummies_4455df12-2168-4e3b-be60-b72bd9855e05.jpg-743313e8998eb89d71b9e3a81d8254dd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "9e76520c921df9572cf397f440070a61"
 }
 
 [deps]

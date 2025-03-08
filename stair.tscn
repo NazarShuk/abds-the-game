@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=4 uid="uid://quhcmqoo0gtn"]
 
 [ext_resource type="Texture2D" uid="uid://bs2hbw6eckr2j" path="res://floor.png" id="1_fxao2"]
-[ext_resource type="Shader" path="res://stair.gdshader" id="1_tg8vu"]
+[ext_resource type="Shader" uid="uid://cbwuc75dmvtpb" path="res://stair.gdshader" id="1_tg8vu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n3qhb"]
 resource_name = "Material"

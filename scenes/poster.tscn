@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://bnvdkagkks0iq"]
 
-[ext_resource type="Script" path="res://scripts/poster.gd" id="1_66gga"]
+[ext_resource type="Script" uid="uid://d3736xfh80wef" path="res://scripts/poster.gd" id="1_66gga"]
 [ext_resource type="Texture2D" uid="uid://h5lb2aba25ss" path="res://textures/poster_default.png" id="1_xh3uk"]
-[ext_resource type="Script" path="res://scripts/poster_type.gd" id="2_35h6y"]
+[ext_resource type="Script" uid="uid://b4dc4t2byyr8a" path="res://scripts/poster_type.gd" id="2_35h6y"]
 [ext_resource type="Resource" uid="uid://mxnt171cuuuj" path="res://textures/Social studies/social_studies_posters.tres" id="3_hwxqg"]
 [ext_resource type="Resource" uid="uid://cps6dmcj083ka" path="res://textures/Science/science_posters.tres" id="4_s50nk"]
 [ext_resource type="Resource" uid="uid://b3ltkgk3oc380" path="res://textures/Math/math.tres" id="5_1iub5"]

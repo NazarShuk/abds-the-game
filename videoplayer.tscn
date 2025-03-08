@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://jrc22nnpwkws"]
 
-[ext_resource type="Script" path="res://scripts/videoplayer.gd" id="1_06eul"]
-[ext_resource type="VideoStream" path="res://models/the j.mp3.ogv" id="1_bptja"]
-[ext_resource type="Script" path="res://video/ProjectorVideo.gd" id="2_hhuvu"]
+[ext_resource type="Script" uid="uid://b1ctlloqbk3lg" path="res://scripts/videoplayer.gd" id="1_06eul"]
+[ext_resource type="VideoStream" uid="uid://bpsffgt4qw0ma" path="res://models/the j.mp3.ogv" id="1_bptja"]
+[ext_resource type="Script" uid="uid://bhbvvbgktp7mg" path="res://video/ProjectorVideo.gd" id="2_hhuvu"]
 [ext_resource type="Resource" uid="uid://d2q03npan0fw5" path="res://video/crib.tres" id="3_aiyy8"]
 [ext_resource type="Resource" uid="uid://ds1erinngqrf6" path="res://video/thej.tres" id="4_nyqwx"]
 

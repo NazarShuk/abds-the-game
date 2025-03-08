@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1ohb2c1ndch5"]
 
-[ext_resource type="Script" path="res://scripts/bossfight_part_2.gd" id="1_ehnyh"]
+[ext_resource type="Script" uid="uid://cb3u61pacbnu0" path="res://scripts/bossfight_part_2.gd" id="1_ehnyh"]
 [ext_resource type="AudioStream" uid="uid://5atq0pajnrbc" path="res://sounds/wip_phase2_intro.mp3" id="3_4h1of"]
 [ext_resource type="AudioStream" uid="uid://6but5h5kt0m4" path="res://sounds/wip_phase2_loop.mp3" id="4_n2bxh"]
 

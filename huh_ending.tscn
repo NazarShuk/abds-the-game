@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bvkj7j0buxl2p"]
 
-[ext_resource type="Script" path="res://scripts/end.gd" id="1_x7t01"]
-[ext_resource type="VideoStream" path="res://freaky_ending.ogv" id="3_we8h2"]
+[ext_resource type="Script" uid="uid://btrlod158wk22" path="res://scripts/end.gd" id="1_x7t01"]
+[ext_resource type="VideoStream" uid="uid://dce4mbgvs6j15" path="res://freaky_ending.ogv" id="3_we8h2"]
 [ext_resource type="AudioStream" uid="uid://b2mnanqgnou1g" path="res://freaky_ending.mp3" id="4_jg1lo"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="4_t1lvy"]
 

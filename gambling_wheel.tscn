@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=4 uid="uid://bc3kpnykxfbph"]
 
-[ext_resource type="Script" path="res://scripts/wheel.gd" id="1_i41kv"]
+[ext_resource type="Script" uid="uid://o061x0tq56n2" path="res://scripts/wheel.gd" id="1_i41kv"]
 [ext_resource type="PackedScene" uid="uid://ch0saed6qmuta" path="res://models/3d/fruit snacks.glb" id="2_00s78"]
 [ext_resource type="PackedScene" uid="uid://ba2vqcug0hgbe" path="res://models/3d/pizza.glb" id="3_hlb0a"]
 [ext_resource type="PackedScene" uid="uid://du3qk3pgny2hf" path="res://models/3d/mtndewfinal.glb" id="4_s5ys2"]

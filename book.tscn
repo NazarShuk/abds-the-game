@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://v2iinasnnnjg"]
 
-[ext_resource type="Script" path="res://scripts/book.gd" id="1_v570l"]
+[ext_resource type="Script" uid="uid://m0yaa0yspm0" path="res://scripts/book.gd" id="1_v570l"]
 [ext_resource type="Texture2D" uid="uid://cilpn5pgdsjbk" path="res://models/3d/book.png" id="2_kekwu"]
 [ext_resource type="ArrayMesh" uid="uid://cbs8b83a63gka" path="res://models/3d/book.obj" id="2_t20i5"]
 
@@ -65,8 +65,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vdsb6"]
 _data = {
-"RESET": SubResource("Animation_tnv3v"),
-"spin": SubResource("Animation_4iryo")
+&"RESET": SubResource("Animation_tnv3v"),
+&"spin": SubResource("Animation_4iryo")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4c7m"]

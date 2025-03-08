@@ -174,8 +174,8 @@ func _physics_process(delta):
 		
 		$HandTree.set("parameters/time_scale/scale", run_multiplier * speed_multiplier)
 		
-		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floor(shop_timer.time_left)) + "s left"
-		$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds/Label".text = str(floor(shop_timer.time_left))
+		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floori(shop_timer.time_left)) + "s left"
+		$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds/Label".text = str(floori(shop_timer.time_left))
 		
 		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits)
 		$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore/Label".text = str(credits)
@@ -992,7 +992,7 @@ func control_text_setters():
 	controls_text.text = final_text
 
 func format_time(timer_path,succes_string):
-	var time_left = floor(get_node(timer_path).time_left)
+	var time_left = floori(get_node(timer_path).time_left)
 	if time_left > 0:
 		return str(time_left) + "s until available"
 	else:

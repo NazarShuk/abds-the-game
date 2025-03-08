@@ -1,9 +1,9 @@
 [gd_scene load_steps=62 format=3 uid="uid://cye1siquj1g35"]
 
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="1_17gtv"]
-[ext_resource type="Script" path="res://scripts/copy_the_skin.gd" id="1_rp8v3"]
+[ext_resource type="Script" uid="uid://k3qorvtk1665" path="res://scripts/copy_the_skin.gd" id="1_rp8v3"]
 [ext_resource type="AudioStream" uid="uid://ck1s4rpwaeb4g" path="res://sounds/AdhesiveWombat - Storm Crusher [WoWNeJdHFTA].mp3" id="3_21bb3"]
-[ext_resource type="Script" path="res://scripts/flashbang_rect.gd" id="3_yj7jo"]
+[ext_resource type="Script" uid="uid://b76tmwmc274um" path="res://scripts/flashbang_rect.gd" id="3_yj7jo"]
 [ext_resource type="PackedScene" uid="uid://cwq81kfmp7a4f" path="res://models/Convertible.glb" id="4_a5gvu"]
 [ext_resource type="PackedScene" uid="uid://c0bsgfl8j3hnb" path="res://param_azzu.tscn" id="5_ng0j5"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_pk24k"]
@@ -612,9 +612,9 @@ tracks/8/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_88r7y"]
 _data = {
-"RESET": SubResource("Animation_kb86r"),
-"theEnd": SubResource("Animation_snlji"),
-"theEnd_noazzu": SubResource("Animation_ub0uq")
+&"RESET": SubResource("Animation_kb86r"),
+&"theEnd": SubResource("Animation_snlji"),
+&"theEnd_noazzu": SubResource("Animation_ub0uq")
 }
 
 [sub_resource type="QuadMesh" id="QuadMesh_e40yl"]

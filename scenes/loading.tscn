@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dk72xdfsaj16i"]
 
-[ext_resource type="Script" path="res://scripts/loading.gd" id="1_shfsy"]
+[ext_resource type="Script" uid="uid://b8y6jst5wk0by" path="res://scripts/loading.gd" id="1_shfsy"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_0kul7"]
 
 [node name="Loading" type="ColorRect"]

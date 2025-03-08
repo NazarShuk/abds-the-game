@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dabuuhhrl22km"]
 
-[ext_resource type="Script" path="res://scripts/fox.gd" id="1_7a5un"]
+[ext_resource type="Script" uid="uid://gebgnyiqqblc" path="res://scripts/fox.gd" id="1_7a5un"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="2_e6wkd"]
 [ext_resource type="AudioStream" uid="uid://b7pm5d3uiydah" path="res://pacer.mp3" id="3_gj3ac"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="4_u5ux6"]
@@ -46,8 +46,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t84kf"]
 _data = {
-"RESET": SubResource("Animation_qv3km"),
-"spin": SubResource("Animation_5u3k8")
+&"RESET": SubResource("Animation_qv3km"),
+&"spin": SubResource("Animation_5u3k8")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8gy6y"]

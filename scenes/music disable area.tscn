@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d3cvm5kjh3vj2"]
 
-[ext_resource type="Script" path="res://scenes/music_disable_area.gd" id="1_d7tdf"]
+[ext_resource type="Script" uid="uid://c30qb56ctuofd" path="res://scenes/music_disable_area.gd" id="1_d7tdf"]
 
 [node name="MusicDisableArea" type="Area3D"]
 script = ExtResource("1_d7tdf")
