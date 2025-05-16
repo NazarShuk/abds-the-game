@@ -9,6 +9,18 @@ var picked_skin = 0
 var books_collected = 0
 var deaths = 0
 
+enum Quest_type {
+	BOOK_COLLECT,
+	SHOP_CREDITS,
+	PACER_LAPS,
+	WALK_METERS,
+	
+	
+	NONE = -1 # quest not loaded in
+}
+
+
+
 func _ready():
 	if FileAccess.file_exists(FILE_PATH):
 		var game_save = FileAccess.open(FILE_PATH,FileAccess.READ)
@@ -49,7 +61,7 @@ func set_val(val_name,val):
 	game_save.store_var(deaths)
 	game_save.store_var(books_collected)
 	game_save.close()
-	
+
 func save_all():
 	var game_save = FileAccess.open(FILE_PATH,FileAccess.WRITE)
 	
@@ -66,3 +78,6 @@ func show_achievement(text : String):
 	formatted_text = text.capitalize()
 	
 	$Achievement/MarginContainer/Panel/Label2.text = formatted_text
+
+func _exit_tree() -> void:
+	save_all()

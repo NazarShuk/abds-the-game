@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var game : Node3D
+@onready var game : Node3D = get_tree().get_first_node_in_group("game")
 
 func _process(_delta: float) -> void:
 	visible = game.can_escape and not game.leahy_time

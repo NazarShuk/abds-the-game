@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://bv7cybujaqr5" path="res://models/cafeteriaTable.png" id="1_cg0i4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x4whs"]
-transparency = 1
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
 albedo_texture = ExtResource("1_cg0i4")
 
 [sub_resource type="QuadMesh" id="QuadMesh_5o3cc"]

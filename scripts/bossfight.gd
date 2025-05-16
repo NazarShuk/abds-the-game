@@ -38,7 +38,7 @@ func _ready() -> void:
 	await get_tree().create_timer((28.5 - 14.2) * multiplier, false).timeout
 	do_bossfight = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$"azzu cutscene/Camera3D".global_position = $BossfightPlayer/Head.global_position
 	if !$"azzu cutscene/AnimationPlayer".is_playing():
 		$"azzu cutscene/Camera3D".global_rotation = $BossfightPlayer/Head.global_rotation

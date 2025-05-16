@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cbleh18h4irph"]
+
+[ext_resource type="Script" uid="uid://di37pnadiaxw8" path="res://scripts/phone_pickup.gd" id="1_16sn6"]
+[ext_resource type="Texture2D" uid="uid://wq4r13cqghmf" path="res://textures/phone.png" id="2_16sn6"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_62k3l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hlo4g"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("2_16sn6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eenwp"]
+size = Vector3(0.638916, 0.914551, 0.221069)
+
+[node name="PhonePickup" type="StaticBody3D" groups=["phone_pickup"]]
+script = ExtResource("1_16sn6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.60574, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_62k3l")
+surface_material_override/0 = SubResource("StandardMaterial3D_hlo4g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 2.98023e-08, -4.47035e-08, 0, 1, 1.49012e-08, -2.98023e-08, -1.49012e-08, 1, -0.0294418, 0.00697329, 0.0656891)
+shape = SubResource("BoxShape3D_eenwp")

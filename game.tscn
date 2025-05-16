@@ -1,12 +1,9 @@
-[gd_scene load_steps=150 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=92 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" uid="uid://c2sq3d02m016" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" uid="uid://b81fr33wsu4q7" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
-[ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="3_ancut"]
-[ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://udv-WLKo_400x400.jpg" id="3_jr10u"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://volatile_reaction.mp3" id="4_m78sl"]
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
-[ext_resource type="AudioStream" uid="uid://cs288kbxaml26" path="res://download (2)_01.mp3" id="5_x5ors"]
 [ext_resource type="AudioStream" uid="uid://cvwobq8jsn8xc" path="res://failedme.mp3" id="6_8cxyt"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
 [ext_resource type="Texture2D" uid="uid://cwtwntla0bkcm" path="res://textures/leahytime.png" id="7_gd0qw"]
@@ -17,55 +14,24 @@
 [ext_resource type="Texture2D" uid="uid://cuk8vbksretm7" path="res://textures/azzu.png" id="8_sxj4k"]
 [ext_resource type="PackedScene" uid="uid://crlf7plpie2qb" path="res://num_box.tscn" id="9_gld5r"]
 [ext_resource type="PackedScene" uid="uid://dgidt8jumvknp" path="res://check_box.tscn" id="9_pvk13"]
-[ext_resource type="PackedScene" uid="uid://v2iinasnnnjg" path="res://book.tscn" id="10_5h2pt"]
-[ext_resource type="PackedScene" uid="uid://dk72xdfsaj16i" path="res://scenes/loading.tscn" id="10_uw2qm"]
 [ext_resource type="AudioStream" uid="uid://dc5v2n6scyahu" path="res://bum_01.mp3" id="13_2rhtw"]
 [ext_resource type="Texture2D" uid="uid://cfaexru6iblxb" path="res://fox_crop.jpg" id="13_iflne"]
 [ext_resource type="Script" uid="uid://cniokoa80fif2" path="res://scripts/Music2.gd" id="13_il7ji"]
-[ext_resource type="PackedScene" uid="uid://bylupyln8p7m8" path="res://evil leahy.tscn" id="15_5ova3"]
+[ext_resource type="Texture2D" uid="uid://cop2rccne3feg" path="res://ela book.png" id="14_56gn1"]
+[ext_resource type="Script" uid="uid://budoocxf3hlxo" path="res://scripts/lobby_book.gd" id="15_avmo2"]
 [ext_resource type="AudioStream" uid="uid://d2kii8bhcdwvs" path="res://sounds/pixelland.mp3" id="16_e2t7m"]
 [ext_resource type="AudioStream" uid="uid://uw1c631w2s6n" path="res://sounds/escape_start.mp3" id="16_jhdn0"]
-[ext_resource type="PackedScene" uid="uid://xxyguo1ps1gc" path="res://school.tscn" id="17_3oefh"]
-[ext_resource type="PackedScene" uid="uid://45erl4lj8ygx" path="res://scenes/leader_board.tscn" id="17_625id"]
-[ext_resource type="PackedScene" uid="uid://bisqhfkbyp0ql" path="res://book_spawn.tscn" id="17_e7v8m"]
 [ext_resource type="AudioStream" uid="uid://biy40pusiwx17" path="res://sounds/escape_loop.mp3" id="17_on1kb"]
 [ext_resource type="AudioStream" uid="uid://8tx5cmjo3v77" path="res://sounds/pixelland_competitive.mp3" id="17_yd2n0"]
-[ext_resource type="PackedScene" uid="uid://1khjygrnpih" path="res://land_mine_spawn.tscn" id="18_ba1ao"]
-[ext_resource type="PackedScene" uid="uid://ccrw2mwm3obt1" path="res://player_spawn.tscn" id="19_57qlr"]
-[ext_resource type="PackedScene" uid="uid://dabuuhhrl22km" path="res://mr_fox.tscn" id="20_kw6s4"]
-[ext_resource type="PackedScene" uid="uid://bd6avbb065m7b" path="res://leahy_respawn_pos.tscn" id="20_rxfji"]
+[ext_resource type="AudioStream" uid="uid://j7kahrnc3ahf" path="res://sea_shanty.mp3" id="18_dhpj7"]
 [ext_resource type="AudioStream" uid="uid://dvadaniflxexc" path="res://pacer_songs/pacer_intro.mp3" id="21_kuvoj"]
 [ext_resource type="AudioStream" uid="uid://baxilhywlt8r3" path="res://pacer_songs/pacer_music.mp3" id="22_3b7ci"]
-[ext_resource type="PackedScene" uid="uid://dpyou6w048r5m" path="res://mr_azzu.tscn" id="22_xuer2"]
 [ext_resource type="AudioStream" uid="uid://be81ar381l6t3" path="res://sounds/leahy time intro.mp3" id="23_dnqnd"]
 [ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
 [ext_resource type="AudioStream" uid="uid://b56skyxnpwv64" path="res://sounds/leahy time_loop.mp3" id="24_4u2ak"]
 [ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
-[ext_resource type="Script" uid="uid://fqqsje1cyhlr" path="res://scripts/WelcomeLeahy.gd" id="26_0x6dq"]
-[ext_resource type="PackedScene" uid="uid://dfj2dgr8c3bpt" path="res://landmine.tscn" id="28_dmjcx"]
-[ext_resource type="PackedScene" uid="uid://ksynis5kuf5a" path="res://bathroom_spawn.tscn" id="29_kjme3"]
-[ext_resource type="PackedScene" uid="uid://di30g2j26wvlq" path="res://ms_gainy.tscn" id="29_u1jmm"]
-[ext_resource type="Texture2D" uid="uid://ce1wqx8rpkmv0" path="res://McCollum_crop.jpg" id="33_o0kd1"]
-[ext_resource type="PackedScene" uid="uid://ccge33gvh1ojc" path="res://Coffe Machine.tscn" id="34_m1kl1"]
-[ext_resource type="PackedScene" uid="uid://bnid1ktqxhfa7" path="res://shop.tscn" id="35_ynn12"]
-[ext_resource type="PackedScene" uid="uid://cx7itjqsyc1xu" path="res://breaker.tscn" id="36_j44h3"]
-[ext_resource type="AudioStream" uid="uid://bes1lq4e8lc48" path="res://power_off.mp3" id="38_ahlvj"]
-[ext_resource type="PackedScene" uid="uid://cnjd75clgu7jp" path="res://scenes/pillar_john.tscn" id="40_7hksy"]
-[ext_resource type="ArrayOccluder3D" uid="uid://dj2vhfp47eps5" path="res://game.occ" id="40_ba0mq"]
-[ext_resource type="PackedScene" uid="uid://dsqshh6157cwh" path="res://bucket.tscn" id="42_8jmcj"]
-[ext_resource type="PackedScene" uid="uid://kfniphc0hjb6" path="res://misuraca.tscn" id="43_t45wj"]
-[ext_resource type="PackedScene" uid="uid://jrc22nnpwkws" path="res://videoplayer.tscn" id="44_jjv51"]
-[ext_resource type="PackedScene" uid="uid://chuhguxkuwyn1" path="res://models/3d/school_bus.glb" id="45_5hyb8"]
-[ext_resource type="AudioStream" uid="uid://dlu3b8bxaa7jm" path="res://models/bus.mp3" id="45_xyeqq"]
-[ext_resource type="PackedScene" uid="uid://bc3kpnykxfbph" path="res://gambling_wheel.tscn" id="50_jgq1w"]
-[ext_resource type="Script" uid="uid://c1l4hrlgxdg7h" path="res://addons/road-generator/nodes/road_manager.gd" id="50_metmn"]
-[ext_resource type="Script" uid="uid://cq8ls8mhyqi06" path="res://addons/road-generator/nodes/road_container.gd" id="51_7ffv4"]
-[ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="52_88bn0"]
-[ext_resource type="Script" uid="uid://cti4ocxtmhu24" path="res://scripts/camera_tv.gd" id="53_0rrcy"]
-[ext_resource type="Script" uid="uid://1wml5af1gebl" path="res://addons/road-generator/nodes/road_point.gd" id="53_5ce3w"]
-[ext_resource type="PackedScene" uid="uid://tiwq41uqylbi" path="res://scenes/exit.tscn" id="55_fvbsc"]
-[ext_resource type="PackedScene" uid="uid://d3cvm5kjh3vj2" path="res://scenes/music disable area.tscn" id="56_k28kr"]
-[ext_resource type="PackedScene" uid="uid://byuespbgm2uma" path="res://scenes/last_breath.tscn" id="56_p14hv"]
+[ext_resource type="PackedScene" uid="uid://6t2hpss7soa2" path="res://models/3d/SCHOOL BUS.glb" id="57_56gn1"]
+[ext_resource type="PackedScene" uid="uid://daj05mmyg1iwj" path="res://models/Road block.glb" id="58_avmo2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kvbmb"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -82,14 +48,21 @@ sky = SubResource("Sky_vv5pd")
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_exposure = 1.25
 ssil_enabled = true
+ssil_radius = 3.03
 sdfgi_use_occlusion = true
+sdfgi_energy = 0.0
 glow_enabled = true
 glow_intensity = 0.5
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_emission = Color(0.277528, 0.277528, 0.277528, 1)
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_u7eo5"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_56gn1"]
+auto_exposure_scale = 0.2
+dof_blur_far_distance = 33.41
+dof_blur_far_transition = 193.67
+dof_blur_near_enabled = true
+dof_blur_near_distance = 1.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3nj22"]
 properties/0/path = NodePath(".:canPlayersMove")
@@ -134,6 +107,15 @@ properties/12/replication_mode = 2
 properties/13/path = NodePath(".:pacer_level")
 properties/13/spawn = true
 properties/13/replication_mode = 2
+properties/14/path = NodePath(".:selected_map")
+properties/14/spawn = true
+properties/14/replication_mode = 2
+properties/15/path = NodePath(".:selected_mode")
+properties/15/spawn = true
+properties/15/replication_mode = 2
+properties/16/path = NodePath(".:pacer_available")
+properties/16/spawn = true
+properties/16/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_8oj72"]
 length = 0.001
@@ -548,6 +530,95 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 bg_color = Color(1, 1, 1, 1)
 border_color = Color(0, 0, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo4nb"]
+bg_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="Animation" id="Animation_avmo2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(179, 119)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_56gn1"]
+resource_name = "open"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.01),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(179, 765), Vector2(179, 119)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_avmo2"]
+_data = {
+&"RESET": SubResource("Animation_avmo2"),
+&"open": SubResource("Animation_56gn1")
+}
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_u6ine"]
 properties/0/path = NodePath("playerListText:text")
 properties/0/spawn = true
@@ -646,234 +717,297 @@ _data = {
 &"new_animation": SubResource("Animation_50nnp")
 }
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5h8sj"]
-albedo_texture = ExtResource("3_jr10u")
-
-[sub_resource type="QuadMesh" id="QuadMesh_pjpdc"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_1eh6s"]
-size = Vector3(3.34937, 8.0752, 59.4199)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kas3n"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqqde"]
-transparency = 1
-albedo_color = Color(0.345098, 0.52549, 1, 0.705882)
-
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_y2xjx"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_r2nia"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i348w"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 0, 0, 0.454902)
+emission_enabled = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_5t0v6"]
-size = Vector3(5.19806, 1.8877, 628.311)
+[sub_resource type="QuadMesh" id="QuadMesh_56gn1"]
+material = SubResource("StandardMaterial3D_i348w")
+size = Vector2(0.065, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_r32xh"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5sqpk"]
-albedo_texture = ExtResource("33_o0kd1")
-
-[sub_resource type="Animation" id="Animation_n7unv"]
+[sub_resource type="Animation" id="Animation_ple6s"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath("Road block:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_rwlcq"]
-resource_name = "spin"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_5fh0o"]
-_data = {
-&"RESET": SubResource("Animation_n7unv"),
-&"spin": SubResource("Animation_rwlcq")
-}
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ekwb2"]
-size = Vector3(2.38672, 3.2959, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_xghtw"]
-size = Vector3(56.8828, 208.609, 58.9055)
-
-[sub_resource type="Animation" id="Animation_hgnq6"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(1.80295, 247.654, -12.6281)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D:position")
+tracks/1/path = NodePath("Road block3:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.265, 12.045)]
+"values": [Vector3(-3.7908, 247.654, -3.79979)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("SCHOOL BUS:position")
+tracks/2/path = NodePath("Road block2:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(193.036, 133.372, 2.05351)]
+"values": [Vector3(7.42198, 247.654, -21.4963)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("SCHOOL BUS:rotation")
+tracks/3/path = NodePath("Road block4:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(4.37112e-08, -3.14159, -3.69549e-06)]
+"values": [Vector3(12.7699, 247.654, -29.9366)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("SCHOOL BUS:scale")
+tracks/4/path = NodePath("Road block5:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.8811, 0.8811, 0.8811)]
+"values": [Vector3(18.0323, 247.654, -38.2419)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath(".:process_mode")
+tracks/5/path = NodePath("Road block6:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"update": 0,
+"values": [Vector3(-9.42906, 247.654, 5.09876)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Camera3D:fov")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [59.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SCHOOL BUS:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5708, -0.549779, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SCHOOL BUS:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.73, 247.625, -13.676)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Camera3D:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -0.00181469)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Camera3D:far")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [27.95]
 }
 
-[sub_resource type="Animation" id="Animation_yxcq5"]
-resource_name = "pre"
-length = 15.0
+[sub_resource type="Animation" id="Animation_jo4nb"]
+resource_name = "fall"
+length = 4.0
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:rotation")
-tracks/0/interp = 2
+tracks/0/path = NodePath("Road block:position")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.9, 2.6, 3.3, 3.9, 4, 4.1, 4.2, 5.5, 5.6, 6, 7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.764454, -1.21649, 0), Vector3(0.467748, -1.48702, 0), Vector3(0.136136, -1.22522, 0), Vector3(0.0575959, -1.00705, 0), Vector3(0.0575959, -1.00705, 0), Vector3(0.0575959, -1.00705, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0), Vector3(0, 0, 0)]
+"values": [Vector3(1.80295, 247.654, -12.6281), Vector3(18.7812, 247.654, -39.4239)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D:position")
+tracks/1/path = NodePath("Road block3:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(4, 4.1, 6, 7, 8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 1.265, 12.045), Vector3(16.215, 3.335, 8.77), Vector3(7.595, 3.335, 8.77), Vector3(6.46, 3.335, 7.985), Vector3(6.46, 1.48, 5.765)]
+"values": [Vector3(-3.7908, 247.654, -3.79979), Vector3(13.1875, 247.654, -30.5956), Vector3(30.2225, 247.654, -57.4811)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("SCHOOL BUS:position")
-tracks/2/interp = 2
+tracks/2/path = NodePath("Road block2:position")
+tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 4, 4.1, 11.5, 11.9, 15),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(193.036, 133.372, 2.05351), Vector3(16.181, 0.097, 8.694), Vector3(16.181, 0.0970001, 8.694), Vector3(16.181, 0.0970001, 8.694), Vector3(16.181, 0.0970001, 8.694), Vector3(-239.362, 232.718, 8.694)]
+"values": [Vector3(7.42198, 247.654, -21.4963), Vector3(24.4003, 247.654, -48.2921)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("SCHOOL BUS:rotation")
-tracks/3/interp = 2
+tracks/3/path = NodePath("Road block4:position")
+tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 4, 4.1, 11.5, 11.9, 15),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, -3.14159, -3.69549e-06), Vector3(4.37112e-08, 3.14159, -3.69549e-06)]
+"values": [Vector3(12.7699, 247.654, -29.9366), Vector3(29.7482, 247.654, -56.7325)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("SCHOOL BUS:scale")
-tracks/4/interp = 2
+tracks/4/path = NodePath("Road block5:position")
+tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 4, 4.1, 11.5, 11.9, 14.8, 15),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0.8811, 0.8811, 0.8811), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+"values": [Vector3(18.0323, 247.654, -38.2419), Vector3(35.0106, 247.654, -65.0378)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath(".:process_mode")
+tracks/5/path = NodePath("Road block6:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 4]
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-9.42906, 247.654, 5.09876), Vector3(7.54921, 247.654, -21.6971), Vector3(24.5843, 247.654, -48.5826)]
 }
-tracks/6/type = "method"
+tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Camera3D")
-tracks/6/interp = 1
+tracks/6/path = NodePath("Camera3D:fov")
+tracks/6/interp = 2
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(15),
+"times": PackedFloat32Array(0, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [59.0, 58.5, 59.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SCHOOL BUS:rotation")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.25, 1.36, 1.67, 2.46, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.5708, -0.549779, 0), Vector3(-1.5708, -0.549779, 0), Vector3(-1.0821, -0.549779, 0), Vector3(-0.0349066, -0.549779, 0), Vector3(0, -0.549779, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SCHOOL BUS:position")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(1.25, 1.36, 1.65, 2.56, 2.99),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(2.73, 247.625, -13.676), Vector3(2.73, 247.625, -13.676), Vector3(2.73, 245.645, -13.676), Vector3(2.73, 198.745, -13.676), Vector3(2.73, 0, -13.676)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Camera3D:rotation")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(2.2, 2.36),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -0.00181469), Vector3(-1.0821, 0, -0.00174533)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Camera3D:far")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(1.82, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [27.95, 494.5]
+}
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(4),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -881,73 +1015,105 @@ tracks/6/keys = {
 }]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_uvnkd"]
-_data = {
-&"RESET": SubResource("Animation_hgnq6"),
-&"pre": SubResource("Animation_yxcq5")
+[sub_resource type="Animation" id="Animation_ra4rb"]
+resource_name = "goo"
+length = 1.5
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Road block:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.80295, 247.654, -12.6281), Vector3(7.45336, 247.654, -21.5458)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Road block3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-3.7908, 247.654, -3.79979), Vector3(1.80295, 247.654, -12.6281)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Road block2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(7.42198, 247.654, -21.4963), Vector3(13.0555, 247.654, -30.3874)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Road block4:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(12.7699, 247.654, -29.9366), Vector3(18.578, 247.654, -39.1032)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Road block5:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(18.0323, 247.654, -38.2419), Vector3(24.1586, 247.654, -47.9107)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Road block6:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-9.42906, 247.654, 5.09876), Vector3(-3.7908, 247.654, -3.79979)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Camera3D:fov")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [59.0, 58.5, 59.0]
 }
 
-[sub_resource type="BoxMesh" id="BoxMesh_g8wa1"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ple6s"]
+_data = {
+&"RESET": SubResource("Animation_ple6s"),
+&"fall": SubResource("Animation_jo4nb"),
+&"goo": SubResource("Animation_ra4rb")
+}
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7n5ys"]
-albedo_color = Color(0, 0, 0, 1)
-metallic = 0.43
-
-[sub_resource type="QuadMesh" id="QuadMesh_tacpp"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1g0i"]
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 0.5
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_mk6dc"]
-viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D2/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x6vmi"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_mk6dc")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_qrmti"]
-viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D3/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8pjv"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_qrmti")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_1qssw"]
-viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D4/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kv31t"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_1qssw")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_t62ku"]
-viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D5/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rem78"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_t62ku")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_aft8m"]
-viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D6/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xitqq"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_aft8m")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_wkfb2"]
-viewport_path = NodePath("CameraTv/MeshInstance3D/MeshInstance3D7/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0nsfl"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_wkfb2")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_03v77"]
-size = Vector3(30.033, 10.98, 22.3167)
-
-[node name="Game" type="Node3D" node_paths=PackedStringArray("school")]
+[node name="Game" type="Node3D" groups=["game"]]
 script = ExtResource("1_y4eyb")
-school = NodePath("School")
 
 [node name="Lighting and stuff" type="Node" parent="."]
 script = ExtResource("2_uakk8")
@@ -959,7 +1125,7 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting and stuff"]
 environment = SubResource("Environment_5hwxw")
-camera_attributes = SubResource("CameraAttributesPractical_u7eo5")
+camera_attributes = SubResource("CameraAttributesPractical_56gn1")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dmiwtnuhovfv5", "uid://c176sfrtxowxt", "uid://bio4x0p1tpo44", "uid://cpv1p60p4ivh3", "uid://ceo00cwwipkt0", "uid://g5kyanmqwlbw", "uid://di8aki6p3dw1q")
@@ -1232,8 +1398,8 @@ visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 81.0
-offset_bottom = 157.0
+offset_top = 123.0
+offset_bottom = 162.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_1xl1k")
@@ -1550,9 +1716,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -118.5
-offset_top = 77.0
+offset_top = 153.0
 offset_right = 118.5
-offset_bottom = 114.0
+offset_bottom = 190.0
 grow_horizontal = 2
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
@@ -1577,19 +1743,190 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -112.0
-offset_top = 114.0
-offset_right = 111.0
-offset_bottom = 145.0
+offset_left = -111.5
+offset_top = 191.0
+offset_right = 111.5
+offset_bottom = 222.0
 grow_horizontal = 2
 placeholder_text = "Team name"
 max_length = 4
 
+[node name="TopContainer" type="HBoxContainer" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -122.0
+offset_top = 78.0
+offset_right = 122.0
+offset_bottom = 118.0
+grow_horizontal = 2
+
+[node name="map_button" type="Button" parent="CanvasLayer/Lobby/TopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Large map"
+expand_icon = true
+
+[node name="mode_button" type="Button" parent="CanvasLayer/Lobby/TopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Normal mode"
+
+[node name="map_choose" type="Panel" parent="CanvasLayer/Lobby"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jo4nb")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Lobby/map_choose"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -461.0
+offset_top = -241.0
+offset_right = 461.0
+offset_bottom = 241.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Lobby/map_choose/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -113.5
+offset_right = 113.5
+offset_bottom = 39.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 32
+text = "Choose the map"
+horizontal_alignment = 1
+
+[node name="horizontal" type="HBoxContainer" parent="CanvasLayer/Lobby/map_choose/Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 112.0
+offset_top = -112.0
+offset_right = -112.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Lobby/map_choose"]
+libraries = {
+&"": SubResource("AnimationLibrary_avmo2")
+}
+
+[node name="mode_choose" type="Panel" parent="CanvasLayer/Lobby"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jo4nb")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Lobby/mode_choose"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -461.0
+offset_top = -241.0
+offset_right = 461.0
+offset_bottom = 241.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Lobby/mode_choose/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -113.5
+offset_right = 113.5
+offset_bottom = 39.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 32
+text = "Choose the mode"
+horizontal_alignment = 1
+
+[node name="horizontal" type="HBoxContainer" parent="CanvasLayer/Lobby/mode_choose/Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 112.0
+offset_top = -112.0
+offset_right = -112.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Lobby/mode_choose"]
+libraries = {
+&"": SubResource("AnimationLibrary_avmo2")
+}
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Lobby"]
 replication_config = SubResource("SceneReplicationConfig_u6ine")
 
-[node name="Loading" parent="CanvasLayer/Lobby" instance=ExtResource("10_uw2qm")]
+[node name="book" type="TextureRect" parent="CanvasLayer/Lobby"]
 layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 12.5664
+scale = Vector2(50, 50)
+pivot_offset = Vector2(256, 256)
+texture = ExtResource("14_56gn1")
+script = ExtResource("15_avmo2")
+
+[node name="cancel_button" type="Button" parent="CanvasLayer/Lobby"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -15.5
+offset_right = 30.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 32
+text = "Cancel"
+flat = true
 
 [node name="Music0" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_vbqm1")
@@ -1597,10 +1934,10 @@ autoplay = true
 bus = &"Music"
 
 [node name="Music1" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_ancut")
+stream = ExtResource("18_dhpj7")
 bus = &"Music"
 
-[node name="Music2" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("game")]
+[node name="Music2" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("game") groups=["main_music"]]
 stream = ExtResource("4_m78sl")
 bus = &"Music"
 script = ExtResource("13_il7ji")
@@ -1621,12 +1958,6 @@ bus = &"Music"
 [node name="leahytime" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_s44qs")
 bus = &"Music"
-
-[node name="LeaderBoard" parent="." instance=ExtResource("17_625id")]
-
-[node name="EvilLeahy" parent="." instance=ExtResource("15_5ova3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3.494, 1.07576, -23.905)
-visible = false
 
 [node name="FakeFox" type="MeshInstance3D" parent="." groups=["localface"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 51.7988, 1.45983, -190.962)
@@ -1670,927 +2001,65 @@ stream = ExtResource("24_s8xkw")
 volume_db = 7.0
 bus = &"Dialogs"
 
-[node name="book1" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, 1.078, -69.722)
-
-[node name="book2" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, -15.2905, -69.722)
-change_pos_on_game_start = true
-
-[node name="book3" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, -15.2905, -69.722)
-change_pos_on_game_start = true
-
-[node name="book4" parent="." groups=["book_1"] instance=ExtResource("10_5h2pt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92877, -15.2905, -69.722)
-change_pos_on_game_start = true
-
-[node name="WelcomeLeahy" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.53895, 0, -1.74614, 0, 3.08144, 0, 1.74614, 0, 2.53895, 3.26805, 1.44916, -11.6121)
-material_override = SubResource("StandardMaterial3D_5h8sj")
-mesh = SubResource("QuadMesh_pjpdc")
-skeleton = NodePath("AudioStreamPlayer3D")
-script = ExtResource("26_0x6dq")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="WelcomeLeahy"]
-stream = ExtResource("5_x5ors")
-autoplay = true
-max_distance = 10.0
-bus = &"Dialogs"
-
-[node name="School" parent="." instance=ExtResource("17_3oefh")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 24.5635, 0, -137.18)
-
-[node name="BookSpawns" type="Node3D" parent="School"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
-
-[node name="Book Spawn" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.606, 1.27832, -34.7769)
-
-[node name="Book Spawn2" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.7622, 1.27832, -34.6517)
-
-[node name="Book Spawn3" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.1722, 1.27832, -34.4013)
-
-[node name="Book Spawn4" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.3369, 1.27832, -34.7769)
-
-[node name="Book Spawn5" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.503, 1.27832, -44.4184)
-
-[node name="Book Spawn6" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.2065, 1.27832, -44.0428)
-
-[node name="Book Spawn7" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.6919, 1.27832, -55.1869)
-
-[node name="Book Spawn8" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.0178, 1.27832, -55.3121)
-
-[node name="Book Spawn9" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.45852, 1.27832, -55.0662)
-
-[node name="Book Spawn10" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.7265, 1.27832, -67.9975)
-
-[node name="Book Spawn11" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.8805, 1.27832, -93.4658)
-
-[node name="Book Spawn12" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93257, 1.27832, -118.42)
-
-[node name="Book Spawn13" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1069, 1.27832, -126.184)
-
-[node name="Book Spawn14" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.6559, 1.27832, -126.935)
-
-[node name="Book Spawn15" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.4501, 1.27832, -126.184)
-
-[node name="Book Spawn16" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.0865, 1.27832, -145.842)
-
-[node name="Book Spawn17" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4604, 1.27832, -166.628)
-
-[node name="Book Spawn18" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.6131, 1.27832, -168.757)
-
-[node name="Book Spawn19" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.2358, 1.27832, -141.71)
-
-[node name="Book Spawn20" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10502, 1.27832, -143.564)
-
-[node name="Book Spawn21" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.03207, 1.27832, -183.891)
-
-[node name="Book Spawn22" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.95913, 1.27832, -227.231)
-
-[node name="Book Spawn23" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.7625, 1.27832, -223.059)
-
-[node name="Book Spawn24" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92.7847, 1.27832, -225.609)
-
-[node name="Book Spawn25" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.9564, 1.27832, -197.334)
-
-[node name="Book Spawn26" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.4199, 1.27832, -157.47)
-
-[node name="Book Spawn27" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.0035, 1.27832, -126.414)
-
-[node name="Book Spawn28" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.346, 1.27832, -124.096)
-
-[node name="Book Spawn29" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.4836, 1.27832, -160.251)
-
-[node name="Book Spawn30" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.7754, 1.27832, -195.016)
-
-[node name="Book Spawn31" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.8113, 1.27832, -83.3955)
-
-[node name="Book Spawn32" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5609, 1.27832, -41.4485)
-
-[node name="Book Spawn33" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.5901, 1.27832, -55.2222)
-
-[node name="Book Spawn34" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124.913, 1.27832, -54.9717)
-
-[node name="Book Spawn35" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.944, 1.27832, -44.078)
-
-[node name="Book Spawn36" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.9436, 1.27832, -34.078)
-
-[node name="Book Spawn37" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.2241, 1.27832, -87.9513)
-
-[node name="Book Spawn43" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4897, 1.27832, -160.75)
-
-[node name="Book Spawn44" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3525, 1.27832, -184.546)
-
-[node name="Book Spawn45" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0713, 1.27832, -75.3781)
-
-[node name="Book Spawn38" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.979, 1.27832, -106.6)
-
-[node name="Book Spawn39" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.511, 1.27832, -169.662)
-
-[node name="Book Spawn40" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1963, 1.27832, -15.1114)
-
-[node name="Book Spawn42" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3338, 1.27832, -18.802)
-
-[node name="Book Spawn46" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.4944, 1.27832, -18.4766)
-
-[node name="Book Spawn47" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.6182, 1.27832, -18.802)
-
-[node name="Book Spawn48" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.5034, 1.27832, -19.9951)
-
-[node name="Book Spawn49" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.3863, 1.27832, -21.622)
-
-[node name="Book Spawn50" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.391, 1.27832, -24.442)
-
-[node name="Book Spawn51" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.9288, 1.27832, -61.7745)
-
-[node name="Book Spawn52" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.1536, 1.27832, -69.5952)
-
-[node name="Book Spawn53" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.3475, 1.27832, -24.5601)
-
-[node name="Book Spawn54" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.89, 1.27832, -28.9869)
-
-[node name="Book Spawn55" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122.631, 1.27832, -28.6917)
-
-[node name="Book Spawn56" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.29, 1.27832, -17.6248)
-
-[node name="Book Spawn57" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.7, 1.27832, -9.06631)
-
-[node name="Book Spawn58" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.288, 1.27832, -65.7292)
-
-[node name="Book Spawn59" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.09, 1.27832, -64.5487)
-
-[node name="Book Spawn60" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.8072, 1.27832, -68.6804)
-
-[node name="Book Spawn61" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.7377, 1.27832, -237.225)
-
-[node name="Book Spawn62" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2394, 1.27832, -234.99)
-
-[node name="Book Spawn63" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5666, 1.27832, -233.161)
-
-[node name="Book Spawn64" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.8937, 1.27832, -239.51)
-
-[node name="Book Spawn65" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.654, 1.27832, -245.809)
-
-[node name="Book Spawn66" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.782, 1.27832, -240.545)
-
-[node name="Book Spawn67" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.786, 1.27832, -204.142)
-
-[node name="Book Spawn68" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.419, 1.27832, -157.028)
-
-[node name="Book Spawn69" parent="School/BookSpawns" instance=ExtResource("17_e7v8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.207, 1.27832, -224.739)
-
-[node name="LandMineSpawns" type="Node3D" parent="School"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
-
-[node name="LandMine Spawn" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13273, 1.27832, -33.4708)
-
-[node name="LandMine Spawn2" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39368, 1.27832, -61.3339)
-
-[node name="LandMine Spawn7" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.2306, 1.27832, -126.932)
-
-[node name="LandMine Spawn8" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.1057, 1.27832, -126.448)
-
-[node name="LandMine Spawn9" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3002, 1.27832, -120.408)
-
-[node name="LandMine Spawn10" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.4819, 1.27832, -128.381)
-
-[node name="LandMine Spawn11" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.8371, 1.27832, -106.878)
-
-[node name="LandMine Spawn12" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6632, 1.27832, -74.0183)
-
-[node name="LandMine Spawn13" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.9274, 1.27832, -48.6489)
-
-[node name="LandMine Spawn14" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.8844, 1.27832, -33.6688)
-
-[node name="LandMine Spawn15" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.227, 1.27832, -33.9105)
-
-[node name="LandMine Spawn16" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.2742, 1.27832, -34.1521)
-
-[node name="LandMine Spawn17" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.6568, 1.27832, -55.6557)
-
-[node name="LandMine Spawn18" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.59, 1.27832, -54.4476)
-
-[node name="LandMine Spawn20" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.0396, 1.27832, -35.0088)
-
-[node name="LandMine Spawn21" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.2654, 1.27832, -55.389)
-
-[node name="LandMine Spawn22" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3347, 1.27832, -34.0227)
-
-[node name="LandMine Spawn23" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.3366, 1.27832, -38.2959)
-
-[node name="LandMine Spawn24" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.6138, 1.27832, -126.72)
-
-[node name="LandMine Spawn28" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.53471, 1.27832, -201.378)
-
-[node name="LandMine Spawn29" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.05146, 1.27832, -150.156)
-
-[node name="LandMine Spawn30" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.7296, 1.27832, -222.882)
-
-[node name="LandMine Spawn31" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.8777, 1.27832, -224.331)
-
-[node name="LandMine Spawn32" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.858, 1.27832, -223.606)
-
-[node name="LandMine Spawn33" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.1733, 1.27832, -170.21)
-
-[node name="LandMine Spawn34" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.1733, 1.27832, -203.054)
-
-[node name="LandMine Spawn35" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.3899, 1.27832, -128.985)
-
-[node name="LandMine Spawn36" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.7032, 1.27832, -126.041)
-
-[node name="LandMine Spawn37" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.4699, 1.27832, -47.2158)
-
-[node name="LandMine Spawn38" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.56982, 1.27832, -27.0565)
-
-[node name="LandMine Spawn39" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.655, 1.27832, -34.3048)
-
-[node name="LandMine Spawn40" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.183, 1.27832, -44.0447)
-
-[node name="LandMine Spawn41" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 147.817, 1.27832, -60.8063)
-
-[node name="LandMine Spawn42" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.366, 1.27832, -127.173)
-
-[node name="LandMine Spawn43" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.6382, 1.27832, -124.002)
-
-[node name="LandMine Spawn44" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.6233, 1.27832, -222.534)
-
-[node name="LandMine Spawn52" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.95766, 1.27832, -128.298)
-
-[node name="LandMine Spawn53" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57758, 1.27832, -91.7855)
-
-[node name="LandMine Spawn54" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01054, 1.27832, -110.691)
-
-[node name="LandMine Spawn55" parent="School/LandMineSpawns" instance=ExtResource("18_ba1ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.413, 1.27832, -68.5873)
-
-[node name="PlayerSpawns" type="Node3D" parent="School"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
-
-[node name="PlayerSpawn" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.30137, 0, -48.4325)
-
-[node name="PlayerSpawn2" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.97046, 0, -103.698)
-
-[node name="PlayerSpawn3" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7771, 0, -127.028)
-
-[node name="PlayerSpawn4" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.9201, 0, -137.618)
-
-[node name="PlayerSpawn5" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.4223, 0, -177.238)
-
-[node name="PlayerSpawn6" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.82187, 0, -188.718)
-
-[node name="PlayerSpawn7" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.1476, 0, -223.161)
-
-[node name="PlayerSpawn8" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.4167, 0, -208.528)
-
-[node name="PlayerSpawn9" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.2912, 0, -127.263)
-
-[node name="PlayerSpawn10" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.2776, 0, -34.066)
-
-[node name="PlayerSpawn11" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.978, 0, -78.8634)
-
-[node name="PlayerSpawn12" parent="School/PlayerSpawns" instance=ExtResource("19_57qlr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.7667, 0, -172.886)
-
-[node name="LeahyPenaltyPos" type="Node3D" parent="School"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
-
-[node name="LeahyRespawnPos" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7587, 0.846554, -34.7027)
-
-[node name="LeahyRespawnPos2" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.946, 0.846554, -54.8791)
-
-[node name="LeahyRespawnPos3" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.7563, 0.846554, -34.5725)
-
-[node name="LeahyRespawnPos4" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75003, 0.846554, -64.5016)
-
-[node name="LeahyRespawnPos5" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.21874, 0.846554, -125.245)
-
-[node name="LeahyRespawnPos6" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.0975, 0.846554, -125.777)
-
-[node name="LeahyRespawnPos7" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.2663, 0.846554, -158.008)
-
-[node name="LeahyRespawnPos8" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5013, 0.846554, -155.599)
-
-[node name="LeahyRespawnPos9" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.19352, 0.846554, -176.801)
-
-[node name="LeahyRespawnPos10" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15727, 0.846554, -220.892)
-
-[node name="LeahyRespawnPos11" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1573, 0.846554, -219.892)
-
-[node name="LeahyRespawnPos12" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.4533, 0.846554, -222.783)
-
-[node name="LeahyRespawnPos13" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.7305, 0.846554, -187.607)
-
-[node name="LeahyRespawnPos14" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.4895, 0.846554, -141.588)
-
-[node name="LeahyRespawnPos15" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.0953, 0.846554, -92.9189)
-
-[node name="LeahyRespawnPos16" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.3556, 0.846554, -56.0807)
-
-[node name="LeahyRespawnPos17" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.439, 0.846554, -54.7142)
-
-[node name="LeahyRespawnPos18" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.967, 0.846554, -55.3215)
-
-[node name="LeahyRespawnPos19" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.69, 0.846554, -34.8244)
-
-[node name="LeahyRespawnPos20" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102.69, 0.846554, -33.8244)
-
-[node name="LeahyRespawnPos21" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.7691, 0.846554, -34.4317)
-
-[node name="LeahyRespawnPos22" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.30357, 0.846554, -38.5312)
-
-[node name="LeahyRespawnPos23" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6193, 0.846554, -96.5968)
-
-[node name="LeahyRespawnPos24" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.0007, 0.846554, -104.307)
-
-[node name="LeahyRespawnPos25" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5982, 0.846554, -108.403)
-
-[node name="LeahyRespawnPos26" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3843, 0.846554, -87.6822)
-
-[node name="LeahyRespawnPos27" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.0709, 0.846554, -68.6482)
-
-[node name="LeahyRespawnPos28" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.774, 0.846554, -90.0915)
-
-[node name="LeahyRespawnPos29" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.109, 0.846554, -107.921)
-
-[node name="LeahyRespawnPos30" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.275, 0.846554, -123.1)
-
-[node name="LeahyRespawnPos31" parent="School/LeahyPenaltyPos" instance=ExtResource("20_rxfji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.761, 0.846554, -178.274)
-
-[node name="Bathroom spawns" type="Node3D" parent="School"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
-
-[node name="Bathroom spawn" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.2967, 0, -41.1336)
-
-[node name="Bathroom spawn5" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8249, 0, -138.525)
-
-[node name="Bathroom spawn6" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2333, 0, -138.691)
-
-[node name="Bathroom spawn7" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.0083, 0, -144.785)
-
-[node name="Bathroom spawn8" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.2159, 0, -145.322)
-
-[node name="Bathroom spawn9" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.2167, 0, -240.212)
-
-[node name="Bathroom spawn10" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 103.81, 0, -239.632)
-
-[node name="Bathroom spawn2" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.4932, 0, -48.7337)
-
-[node name="Bathroom spawn3" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -40.3144)
-
-[node name="Bathroom spawn4" parent="School/Bathroom spawns" instance=ExtResource("29_kjme3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.0906, 0, -49.0816)
-
-[node name="Pacer" type="Node3D" parent="School"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
-
-[node name="Pacer target" type="Area3D" parent="School/Pacer" groups=["pacer target"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8435, 0, -177.237)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="School/Pacer/Pacer target"]
-shape = SubResource("BoxShape3D_1eh6s")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="School/Pacer/Pacer target"]
-transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
-mesh = SubResource("BoxMesh_kas3n")
-surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
-
-[node name="Pacer target2" type="Area3D" parent="School/Pacer" groups=["pacer target"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.7666, 0, -177.237)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="School/Pacer/Pacer target2"]
-shape = SubResource("BoxShape3D_1eh6s")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="School/Pacer/Pacer target2"]
-transform = Transform3D(3.385, 0, 0, 0, 5.59, 0, 0, 0, 59.102, 0, 0, 0)
-mesh = SubResource("BoxMesh_kas3n")
-surface_material_override/0 = SubResource("StandardMaterial3D_iqqde")
-
-[node name="Landmine" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 14.3858, 0, -16.696)
-
-[node name="Landmine2" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -44.2364, -7.62939e-06, -12.169)
-
-[node name="Landmine3" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 61.3664, -1.52588e-05, -9.28299)
-
-[node name="Landmine5" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 114.896, -7.62939e-06, 17.006)
-
-[node name="Landmine6" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 18.2789, -7.62939e-06, 33.067)
-
-[node name="Landmine7" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -40.6216, -7.62939e-06, -41.6539)
-
-[node name="Landmine8" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -87.7715, 0, -101.304)
-
-[node name="Landmine9" parent="School" instance=ExtResource("28_dmjcx")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 102.907, 7.62939e-06, -83.1467)
-
-[node name="Bucket" parent="School" instance=ExtResource("42_8jmcj")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 95.2963, 0.545469, -3.71399)
-
-[node name="Bucket2" parent="School" instance=ExtResource("42_8jmcj")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 82.9779, 0.545469, -3.71399)
-
-[node name="Bucket3" parent="School" instance=ExtResource("42_8jmcj")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 12.6996, 0.545469, 2.60501)
-
-[node name="Bucket4" parent="School" instance=ExtResource("42_8jmcj")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -66.0308, 0.545469, 2.60503)
-
-[node name="Pillar john special" type="Node3D" parent="School"]
-
-[node name="Pillar john" parent="School/Pillar john special" node_paths=PackedStringArray("game") instance=ExtResource("40_7hksy")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 105.42, 4.50884, -69.0286)
-game = NodePath("../../..")
-
-[node name="Mr Fox" parent="." instance=ExtResource("20_kw6s4")]
-transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 52.285, 1.24168, -174.032)
-
-[node name="Mr_Azzu" parent="." instance=ExtResource("22_xuer2")]
-transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, -52.9102, 1.20217, -71.9323)
-
 [node name="PacerPos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.2904, 1.13443, -166.413)
 
-[node name="shop" parent="." instance=ExtResource("35_ynn12")]
+[node name="Ground" type="StaticBody3D" parent="."]
 
-[node name="shop2" parent="." instance=ExtResource("35_ynn12")]
-transform = Transform3D(-3.31387e-07, 0, 1, 0, 1.84917, 0, -7.58123, 0, -4.37114e-08, -39.0735, 1.48291, -44.5872)
-
-[node name="Border" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Border"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 50.303, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("WorldBoundaryShape3D_y2xjx")
-
-[node name="Ms_Gainy" parent="." instance=ExtResource("29_u1jmm")]
-transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 48.4402, 1.40347, -25.6176)
-
-[node name="WorldBorder" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBorder"]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -124.77, 0, 0)
-shape = SubResource("WorldBoundaryShape3D_r2nia")
-
-[node name="WorldBorder2" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldBorder2"]
-transform = Transform3D(4.37114e-08, -1, -8.74228e-08, -1, -4.37114e-08, 0, -3.82137e-15, 8.74228e-08, -1, 173.645, 0, 0)
-shape = SubResource("WorldBoundaryShape3D_r2nia")
-
-[node name="WorldBorder3" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldBorder3"]
-transform = Transform3D(-5.73206e-15, 1.31134e-07, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, 1.31134e-07, 173.645, 0, -286.284)
-shape = SubResource("WorldBoundaryShape3D_r2nia")
-
-[node name="WorldBorder4" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldBorder4"]
-transform = Transform3D(-5.73206e-15, 1.31134e-07, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, 1.31134e-07, 5.82036e-08, 2.09903, 13.0405)
-shape = SubResource("BoxShape3D_5t0v6")
-
-[node name="colum" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 44.6088, 1.39165, -40.1648)
-mesh = SubResource("SphereMesh_r32xh")
-surface_material_override/0 = SubResource("StandardMaterial3D_5sqpk")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="colum"]
-libraries = {
-&"": SubResource("AnimationLibrary_5fh0o")
-}
-autoplay = "spin"
-
-[node name="CoffeMachine" parent="." instance=ExtResource("34_m1kl1")]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 24.4491, 1.31584, -55.4625)
-
-[node name="Breaker" parent="." instance=ExtResource("36_j44h3")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 50.7154, 1.2029, -1.13751)
-yellow_light = Color(1, 1, 0.447059, 1)
-red_light = Color(0.999748, 0.245733, 0.188282, 1)
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Breaker"]
-stream = ExtResource("38_ahlvj")
-bus = &"Dialogs"
-
-[node name="BreakerRoomClosedDoor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.9667, 1.76222, -9.7487)
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BreakerRoomClosedDoor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.188477, 0)
-shape = SubResource("BoxShape3D_ekwb2")
-
-[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
-occluder = ExtResource("40_ba0mq")
-bake_mask = 4294442495
-
-[node name="Mr_Misuraca" parent="." instance=ExtResource("43_t45wj")]
-transform = Transform3D(1.165, 0, -2.01784, 0, 2.33, 0, 2.01784, 0, 1.165, -67.4405, 1.24283, -168.649)
-
-[node name="Videoplayer" parent="." node_paths=PackedStringArray("audio_player", "game") instance=ExtResource("44_jjv51")]
-transform = Transform3D(12.3627, 0, 0, 0, 5.688, 0, 0, 0, 1, -25.9642, 4.66635, -194.005)
-audio_player = NodePath("../Music2")
-game = NodePath("..")
 
 [node name="pre_start_game_anim" type="Node3D" parent="."]
 
-[node name="SCHOOL BUS" parent="pre_start_game_anim" instance=ExtResource("45_5hyb8")]
-transform = Transform3D(-0.8811, -3.2561e-06, -2.23375e-06, -3.2561e-06, 0.8811, -3.85139e-08, 2.23375e-06, -3.85057e-08, -0.8811, 193.036, 133.372, 2.05351)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="pre_start_game_anim/SCHOOL BUS"]
-transform = Transform3D(4.10849e-06, -1.13494, -4.24378e-06, -4.95946e-08, -4.24379e-06, 1.13494, -1.13494, -4.10849e-06, -4.961e-08, 8.49295, 3.05176e-05, 0)
-stream = ExtResource("45_xyeqq")
-autoplay = true
-max_distance = 100.0
-bus = &"Dialogs"
-
-[node name="pl spawn" type="Node3D" parent="pre_start_game_anim/SCHOOL BUS"]
-transform = Transform3D(3.69764e-07, -0.102145, -3.81941e-07, -4.46352e-09, -3.81941e-07, 0.102145, -0.102145, -3.69764e-07, -4.4649e-09, 10.4682, 2.51967, 3.88426)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="pre_start_game_anim/SCHOOL BUS"]
-transform = Transform3D(3.69764e-07, -0.102145, -3.81941e-07, -4.46352e-09, -3.81941e-07, 0.102145, -0.102145, -3.69764e-07, -4.4649e-09, 8.49295, 3.05176e-05, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="pre_start_game_anim/SCHOOL BUS/StaticBody3D"]
-transform = Transform3D(1, 0, -8.13152e-20, 1.02318e-11, 1, -7.10537e-15, 6.77626e-21, 3.5528e-15, 1, 3.8147e-06, 48.7429, 28.9525)
-shape = SubResource("BoxShape3D_xghtw")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="pre_start_game_anim"]
-libraries = {
-&"": SubResource("AnimationLibrary_uvnkd")
-}
-
 [node name="Camera3D" type="Camera3D" parent="pre_start_game_anim"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.265, 12.045)
+transform = Transform3D(0.999998, 0.00181469, 0, -0.00181469, 0.999998, 0, 0, 0, 1, 0, 250, 0)
 cull_mask = 1048573
-far = 141.72
+h_offset = 1.0
+fov = 59.0
+far = 27.95
 
 [node name="Camera3D2" type="Node3D" parent="pre_start_game_anim/Camera3D"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 2.98023e-08, 2.98023e-08, 0, 1, 0, 0, 0)
 
-[node name="Carpool" type="Node3D" parent="."]
+[node name="SCHOOL BUS" parent="pre_start_game_anim" instance=ExtResource("57_56gn1")]
+transform = Transform3D(0.085264, 0.0522499, 1.89144e-07, 0, -3.61999e-07, 0.1, 0.0522499, -0.085264, -3.08655e-07, 2.73, 247.625, -13.676)
 
-[node name="RoadManager" type="Node3D" parent="Carpool"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0292773, 24.7135)
-script = ExtResource("50_metmn")
+[node name="CPUParticles3D" type="CPUParticles3D" parent="pre_start_game_anim"]
+transform = Transform3D(-2.18557e-08, 0.5, 0.866025, -1, -4.37114e-08, 0, 3.78552e-08, -0.866025, 0.5, -5.985, 250, 0)
+amount = 100
+mesh = SubResource("QuadMesh_56gn1")
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 10)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 25.0
 
-[node name="Road_001" type="Node3D" parent="Carpool/RoadManager"]
-script = ExtResource("51_7ffv4")
-material_resource = ExtResource("52_88bn0")
-use_lowpoly_preview = true
-edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_006")])
-edge_rp_local_dirs = Array[int]([1, 0])
+[node name="Road block6" parent="pre_start_game_anim" instance=ExtResource("58_avmo2")]
+transform = Transform3D(8.51753, 0, 13.4427, 0, 15.914, 0, -13.4427, 0, 8.51753, -9.42906, 247.654, 5.09876)
 
-[node name="RP_001" type="Node3D" parent="Carpool/RoadManager/Road_001"]
-script = ExtResource("53_5ce3w")
-traffic_dir = Array[int]([2, 2, 1, 1])
-lanes = Array[int]([2, 4, 4, 2])
-next_pt_init = NodePath("../RP_002")
+[node name="Road block3" parent="pre_start_game_anim" instance=ExtResource("58_avmo2")]
+transform = Transform3D(8.51753, 0, 13.4427, 0, 15.914, 0, -13.4427, 0, 8.51753, -3.7908, 247.654, -3.79979)
 
-[node name="RP_002" type="Node3D" parent="Carpool/RoadManager/Road_001"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8147e-06, 0, 112.144)
-script = ExtResource("53_5ce3w")
-traffic_dir = Array[int]([2, 2, 1, 1])
-lanes = Array[int]([2, 4, 4, 2])
-prior_pt_init = NodePath("../RP_001")
-next_pt_init = NodePath("../RP_003")
-prior_mag = 16.0
-next_mag = 115.778
+[node name="Road block" parent="pre_start_game_anim" instance=ExtResource("58_avmo2")]
+transform = Transform3D(8.51753, 0, 13.4427, 0, 15.914, 0, -13.4427, 0, 8.51753, 1.80295, 247.654, -12.6281)
 
-[node name="RP_003" type="Node3D" parent="Carpool/RoadManager/Road_001"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 309.4, 0, 192.451)
-script = ExtResource("53_5ce3w")
-traffic_dir = Array[int]([2, 2, 1, 1])
-lanes = Array[int]([2, 4, 4, 2])
-prior_pt_init = NodePath("../RP_002")
-next_pt_init = NodePath("../RP_004")
-prior_mag = 346.323
-next_mag = 63.0862
+[node name="Road block2" parent="pre_start_game_anim" instance=ExtResource("58_avmo2")]
+transform = Transform3D(8.51753, 0, 13.4427, 0, 15.914, 0, -13.4427, 0, 8.51753, 7.42198, 247.654, -21.4963)
 
-[node name="RP_004" type="Node3D" parent="Carpool/RoadManager/Road_001"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 349.849, 0, -128.798)
-script = ExtResource("53_5ce3w")
-traffic_dir = Array[int]([2, 2, 1, 1])
-lanes = Array[int]([2, 4, 4, 2])
-prior_pt_init = NodePath("../RP_003")
-next_pt_init = NodePath("../RP_005")
-prior_mag = 321.162
-next_mag = 43.1027
+[node name="Road block4" parent="pre_start_game_anim" instance=ExtResource("58_avmo2")]
+transform = Transform3D(8.51753, 0, 13.4427, 0, 15.914, 0, -13.4427, 0, 8.51753, 12.7699, 247.654, -29.9366)
 
-[node name="RP_005" type="Node3D" parent="Carpool/RoadManager/Road_001"]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 38.9049, 0, -160.798)
-script = ExtResource("53_5ce3w")
-traffic_dir = Array[int]([2, 2, 1, 1])
-lanes = Array[int]([2, 4, 4, 2])
-prior_pt_init = NodePath("../RP_004")
-next_pt_init = NodePath("../RP_006")
-prior_mag = 253.036
-next_mag = 46.9643
+[node name="Road block5" parent="pre_start_game_anim" instance=ExtResource("58_avmo2")]
+transform = Transform3D(8.51753, 0, 13.4427, 0, 15.914, 0, -13.4427, 0, 8.51753, 18.0323, 247.654, -38.2419)
 
-[node name="RP_006" type="Node3D" parent="Carpool/RoadManager/Road_001"]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.0588188, 0, 0.0548329)
-script = ExtResource("53_5ce3w")
-traffic_dir = Array[int]([2, 2, 1, 1])
-lanes = Array[int]([2, 4, 4, 2])
-prior_pt_init = NodePath("../RP_005")
-prior_mag = 111.375
-next_mag = 111.375
-
-[node name="wheel" parent="." node_paths=PackedStringArray("game") instance=ExtResource("50_jgq1w")]
-game = NodePath("..")
-
-[node name="CameraTv" type="MeshInstance3D" parent="." node_paths=PackedStringArray("subviewports")]
-transform = Transform3D(-1.85835e-07, 0, 0.256015, 0, 1.8242, 0, -4.25141, 0, -1.11908e-08, 25.5962, 1.55983, -45.0694)
-mesh = SubResource("BoxMesh_g8wa1")
-surface_material_override/0 = SubResource("StandardMaterial3D_7n5ys")
-script = ExtResource("53_0rrcy")
-subviewports = [NodePath("MeshInstance3D/MeshInstance3D2/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D3/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D4/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D5/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D6/SubViewport"), NodePath("MeshInstance3D/MeshInstance3D7/SubViewport")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraTv"]
-transform = Transform3D(0.924324, 0, 0, 0, 0.885954, 0, -1.7053e-13, 0, 1, 0, 0, 0.502617)
-mesh = SubResource("QuadMesh_tacpp")
-surface_material_override/0 = SubResource("StandardMaterial3D_f1g0i")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
-transform = Transform3D(0.265029, 0, -7.77156e-16, 0, 0.431563, 0, 2.84217e-14, 0, 0.495691, -0.34033, 0.259355, 0.00791836)
-mesh = SubResource("QuadMesh_tacpp")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_x6vmi")
-
-[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D2"]
-use_occlusion_culling = true
-size = Vector2i(128, 128)
-
-[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D2/SubViewport"]
-transform = Transform3D(-0.737277, 0.16344, -0.655522, 0, 0.970296, 0.241922, 0.67559, 0.178364, -0.715377, 41.5819, 1.90116, -132.948)
-fov = 125.0
-far = 60.45
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
-transform = Transform3D(0.265029, 0, -9.99201e-16, 0, 0.431563, 0, 2.84217e-14, 0, 0.495691, -0.00493431, 0.259355, 0.0079174)
-mesh = SubResource("QuadMesh_tacpp")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_j8pjv")
-
-[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D3"]
-use_occlusion_culling = true
-size = Vector2i(128, 128)
-
-[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D3/SubViewport"]
-transform = Transform3D(0.707107, 0.171065, -0.686103, 0, 0.970296, 0.241922, 0.707107, -0.171065, 0.686103, 62.4222, 1.90116, -122.209)
-current = true
-fov = 125.0
-far = 41.1
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
-transform = Transform3D(0.265029, 0, -1.11022e-15, 0, 0.431563, 0, 4.26326e-14, 0, 0.495691, 0.324688, 0.259355, 0.0079174)
-mesh = SubResource("QuadMesh_tacpp")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_kv31t")
-
-[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D4"]
-use_occlusion_culling = true
-size = Vector2i(128, 128)
-
-[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D4/SubViewport"]
-transform = Transform3D(-0.737277, 0.16344, -0.655522, 1.19055e-08, 0.970296, 0.241922, 0.67559, 0.178364, -0.715377, -89.7101, 7.35151, -162.659)
-current = true
-fov = 125.0
-far = 45.5
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
-transform = Transform3D(0.265029, 0, -7.77156e-16, 0, 0.431197, 0, 2.84217e-14, 0, 0.495691, -0.34033, -0.227257, 0.00791836)
-mesh = SubResource("QuadMesh_tacpp")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_rem78")
-
-[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D5"]
-use_occlusion_culling = true
-size = Vector2i(128, 128)
-
-[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D5/SubViewport"]
-transform = Transform3D(0.461749, 0.214587, -0.860663, 1.19055e-08, 0.970296, 0.241922, 0.887011, -0.111707, 0.448033, 11.0534, 16.4704, -141.884)
-current = true
-fov = 94.5
-far = 104.6
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
-transform = Transform3D(0.265029, 0, -9.99201e-16, 0, 0.431197, 0, 2.84217e-14, 0, 0.495691, -0.00493431, -0.227257, 0.0079174)
-mesh = SubResource("QuadMesh_tacpp")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_xitqq")
-
-[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D6"]
-use_occlusion_culling = true
-size = Vector2i(128, 128)
-
-[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D6/SubViewport"]
-transform = Transform3D(-0.5373, 0.204035, -0.818339, 0, 0.970296, 0.241922, 0.843391, 0.129985, -0.52134, 28.3872, 2.17531, -226.769)
-current = true
-fov = 94.0
-far = 103.25
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="CameraTv/MeshInstance3D"]
-transform = Transform3D(0.265029, 0, -1.11022e-15, 0, 0.431197, 0, 4.26326e-14, 0, 0.495691, 0.324688, -0.227257, 0.0079174)
-mesh = SubResource("QuadMesh_tacpp")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_0nsfl")
-
-[node name="SubViewport" type="SubViewport" parent="CameraTv/MeshInstance3D/MeshInstance3D7"]
-use_occlusion_culling = true
-size = Vector2i(128, 128)
-
-[node name="Camera3D" type="Camera3D" parent="CameraTv/MeshInstance3D/MeshInstance3D7/SubViewport"]
-transform = Transform3D(-0.737277, 0.16344, -0.655522, 1.19055e-08, 0.970296, 0.241922, 0.67559, 0.178364, -0.715377, 120.033, 6.36005, -196.57)
-current = true
-fov = 82.5
-far = 66.05
-
-[node name="Exit" parent="." node_paths=PackedStringArray("game") instance=ExtResource("55_fvbsc")]
-visible = false
-game = NodePath("..")
-
-[node name="MusicDisableArea" parent="." node_paths=PackedStringArray("music") instance=ExtResource("56_k28kr")]
-transform = Transform3D(1, 7.45058e-09, 2.98023e-08, -7.45058e-09, 1, 7.45058e-09, 0, 0, 1, -81.0968, 2.86102e-06, -69.79)
-music = [NodePath("../Music1"), NodePath("../Music2"), NodePath("../escape")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MusicDisableArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0256577, 5.11938, 0.964539)
-shape = SubResource("BoxShape3D_03v77")
-
-[node name="LastBreath" parent="." instance=ExtResource("56_p14hv")]
-
-[node name="LastBreath2" parent="." instance=ExtResource("56_p14hv")]
-transform = Transform3D(0.59046, -0.0555892, 0.566274, 0.00510732, 0.816562, 0.074834, -0.568974, -0.0503587, 0.588331, -30.7387, 1.48911, -234.903)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="pre_start_game_anim"]
+libraries = {
+&"": SubResource("AnimationLibrary_ple6s")
+}
+autoplay = "goo"
 
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="timeout" from="LeahyTime" to="." method="_on_leahy_time_timeout"]
@@ -2599,6 +2068,9 @@ transform = Transform3D(0.59046, -0.0555892, 0.566274, 0.00510732, 0.816562, 0.0
 [connection signal="pressed" from="CanvasLayer/Lobby/Button8" to="." method="disconenct_btn"]
 [connection signal="toggled" from="CanvasLayer/Lobby/competitive" to="." method="_on_competitive_toggled"]
 [connection signal="text_changed" from="CanvasLayer/Lobby/competitive_team_name" to="." method="_on_competitive_team_name_text_changed"]
+[connection signal="pressed" from="CanvasLayer/Lobby/TopContainer/map_button" to="." method="_on_map_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Lobby/TopContainer/mode_button" to="." method="_on_mode_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Lobby/cancel_button" to="." method="reload_game"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]

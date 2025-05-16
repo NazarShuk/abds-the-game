@@ -8,12 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://RAY_1092_crop-removebg-preview.png" id="4_ek1eu"]
 [ext_resource type="Script" uid="uid://ugcbratch5i2" path="res://scripts/azzu_btn.gd" id="5_r8edv"]
 [ext_resource type="PackedScene" uid="uid://bc61qybxry7q8" path="res://scenes/lobby_list.tscn" id="6_ubrxb"]
-[ext_resource type="PackedScene" uid="uid://dk72xdfsaj16i" path="res://scenes/loading.tscn" id="8_a8ujo"]
 [ext_resource type="AudioStream" uid="uid://d2kii8bhcdwvs" path="res://sounds/pixelland.mp3" id="9_tg2di"]
-[ext_resource type="Script" uid="uid://b3xynmffulaf2" path="res://scripts/disclaimer.gd" id="11_b2lg3"]
-[ext_resource type="Texture2D" uid="uid://2j57mbmxm5y6" path="res://images/spech.jpg" id="12_v3kau"]
+[ext_resource type="Texture2D" uid="uid://cop2rccne3feg" path="res://ela book.png" id="11_j7ex8"]
 [ext_resource type="Texture2D" uid="uid://bs2hbw6eckr2j" path="res://floor.png" id="13_8tcig"]
 [ext_resource type="Texture2D" uid="uid://dppqsqvhn47mm" path="res://pages-from-1262-m16_site-submittal_2017-06-08-page-0011.jpg" id="14_1uws6"]
+[ext_resource type="Script" uid="uid://bvcukq71xib0h" path="res://scripts/menu_camera.gd" id="16_5pajh"]
+[ext_resource type="AudioStream" uid="uid://c6npmx7cksqg6" path="res://sounds/ricoshet.mp3" id="17_j7ex8"]
 [ext_resource type="Texture2D" uid="uid://dvgm7yqf1y040" path="res://models/walls2.png" id="21_qjel6"]
 [ext_resource type="Material" uid="uid://8yareg4uwv67" path="res://school.tres" id="36_l8nvw"]
 [ext_resource type="PackedScene" uid="uid://40h3xkvclt2r" path="res://models/door.tscn" id="37_vnbjd"]
@@ -21,151 +21,55 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wa7vu"]
 texture = ExtResource("4_ek1eu")
 
-[sub_resource type="Animation" id="Animation_b4xpo"]
+[sub_resource type="Animation" id="Animation_5pajh"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
+tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect2/Label:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TextureRect:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("TextureRect2:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_0ndba"]
-resource_name = "disclaimer"
-length = 2.0
+[sub_resource type="Animation" id="Animation_7b55j"]
+resource_name = "new_animation"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect2/Label:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 1.4, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(1.4, 2),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(2),
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"queue_free"
 }]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("TextureRect:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("TextureRect2:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_jmham"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5pajh"]
 _data = {
-&"RESET": SubResource("Animation_b4xpo"),
-&"disclaimer": SubResource("Animation_0ndba")
+&"RESET": SubResource("Animation_5pajh"),
+&"new_animation": SubResource("Animation_7b55j")
 }
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ot3ig"]
@@ -598,79 +502,36 @@ theme_override_fonts/font = ExtResource("1_r45wx")
 theme_override_font_sizes/font_size = 15
 text = "Refresh"
 
-[node name="Loading" parent="CanvasLayer" instance=ExtResource("8_a8ujo")]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="percent" type="Label" parent="CanvasLayer/Loading"]
-layout_mode = 1
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect"]
+libraries = {
+&"": SubResource("AnimationLibrary_5pajh")
+}
+autoplay = "new_animation"
+
+[node name="book" type="TextureRect" parent="CanvasLayer"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.0
-offset_top = 26.0
-offset_right = 88.0
-offset_bottom = 71.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_r45wx")
-theme_override_font_sizes/font_size = 20
-text = "0%"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Disclaimer" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("11_b2lg3")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Disclaimer"]
-libraries = {
-"": SubResource("AnimationLibrary_jmham")
-}
-autoplay = "disclaimer"
-
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Disclaimer"]
-layout_mode = 0
-offset_left = 157.0
-offset_top = 213.0
-offset_right = 1099.0
-offset_bottom = 544.0
-texture = ExtResource("12_v3kau")
-expand_mode = 1
-flip_h = true
-
-[node name="Label" type="Label" parent="CanvasLayer/Disclaimer/TextureRect2"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -48.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_r45wx")
-theme_override_font_sizes/font_size = 29
-text = "Disclaimer
-This game was not made to harass or offend anyone
-Do not take it seriously :)"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Disclaimer"]
-layout_mode = 0
-offset_left = 919.0
-offset_top = 404.0
-offset_right = 1098.0
-offset_bottom = 583.0
-texture = ExtResource("4_ek1eu")
-expand_mode = 3
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(256, 256)
+texture = ExtResource("11_j7ex8")
 
 [node name="School" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.5635, 0, -137.18)
@@ -1070,6 +931,7 @@ skeleton = NodePath("")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.265, 12.045)
+script = ExtResource("16_5pajh")
 
 [node name="Lighting and stuff" type="Node" parent="."]
 
@@ -1081,6 +943,9 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting and stuff"]
 environment = SubResource("Environment_5uman")
 camera_attributes = SubResource("CameraAttributesPractical_5m8kt")
+
+[node name="Ricoshet" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_j7ex8")
 
 [connection signal="pressed" from="CanvasLayer/Control/Debug/host local" to="." method="_on_host_local_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Debug/connect local" to="." method="_on_connect_local_pressed"]

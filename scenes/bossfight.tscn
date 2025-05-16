@@ -145,7 +145,7 @@ script/source = "extends Camera3D
 @export var head : Node3D
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	global_transform = head.global_transform
 "
 
@@ -496,7 +496,7 @@ const CLOROX_BOSSIFIGHT_EDITION = preload(\"res://scenes/clorox_bossifight_editi
 
 var bullets = 25
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	global_position = head.global_position
 	global_rotation = head.global_rotation
@@ -1033,7 +1033,7 @@ bus = &"Dialogs"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="intro"]
 libraries = {
-"": SubResource("AnimationLibrary_fa8k7")
+&"": SubResource("AnimationLibrary_fa8k7")
 }
 
 [node name="target_player_pos" type="Node3D" parent="intro"]
@@ -1078,7 +1078,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9615, 1.2794, -175.191)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="azzu cutscene"]
 libraries = {
-"": SubResource("AnimationLibrary_p1s3m")
+&"": SubResource("AnimationLibrary_p1s3m")
 }
 
 [node name="battle bus" parent="azzu cutscene" instance=ExtResource("18_r5h2x")]
@@ -1111,7 +1111,7 @@ head = NodePath("../BossfightPlayer/Head")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="clorox gun"]
 libraries = {
-"": SubResource("AnimationLibrary_mn4yr")
+&"": SubResource("AnimationLibrary_mn4yr")
 }
 
 [node name="what" type="Node3D" parent="clorox gun"]

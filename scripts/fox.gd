@@ -1,4 +1,4 @@
-extends "res://scripts/teacher.gd"
+extends Teacher
 
 const DROPPED_MTNDEW = preload("res://dropped_mtndew.tscn")
 

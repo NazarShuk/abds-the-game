@@ -1,8 +1,6 @@
 extends Node3D
 
 var peer
-@onready var loading: ColorRect = $CanvasLayer/Loading
-
 
 func _ready() -> void:
 	$AudioStreamPlayer.play(GlobalVars.menu_music_duration)
@@ -23,7 +21,8 @@ func _on_play_pressed():
 func _on_lobby_list_lobby_clicked(lobby_id):
 	peer = ClassDB.instantiate("SteamMultiplayerPeer")
 	GlobalVars.is_steam_peer = true
-	loading.show()
+	await show_transition()
+	
 	var err = peer.connect_lobby(lobby_id)
 	print_rich("[color=orange]connecting via steam to lobby ", lobby_id)
 	print("connect lobby err: ", err)
@@ -35,7 +34,7 @@ func _on_lobby_list_lobby_clicked(lobby_id):
 		
 
 func host_lobby():
-	loading.show()
+	await show_transition()
 	
 	if SteamManager.steam_api:
 		peer = ClassDB.instantiate("SteamMultiplayerPeer")
@@ -51,7 +50,7 @@ func host_lobby():
 		print_rich("[color=green]opening game with an offline peer")
 		load_main_game()
 
-func _on_lobby_created(connect, lobby_id):
+func _on_lobby_created(_connect, lobby_id):
 	if connect:
 		Game.lobby_id = lobby_id
 		SteamManager.steam_api.setLobbyData(lobby_id,"name",str(SteamManager.steam_name) + "'s lobby")
@@ -83,8 +82,23 @@ func _on_refresh_pressed() -> void:
 
 func _exit_tree() -> void:
 	GlobalVars.menu_music_duration = $AudioStreamPlayer.get_playback_position()
-	
 
 func load_main_game():
 	multiplayer.multiplayer_peer = peer
 	get_tree().change_scene_to_packed.call_deferred(GlobalVars.game_scene)
+
+func show_transition():
+	$CanvasLayer/book.show()
+	$Ricoshet.play()
+	$AudioStreamPlayer.stop()
+	
+	var tween = create_tween()
+	tween.set_parallel()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	
+	tween.tween_property($CanvasLayer/book, "scale", Vector2(50, 50), 1)
+	tween.tween_property($CanvasLayer/book, "rotation_degrees", 360 * 2, 1)
+	await tween.finished
+
+func _on_cancel_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

@@ -6,5 +6,5 @@ extends ProgressBar
 func _ready() -> void:
 	max_value = max
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	value = 300 - timer.time_left

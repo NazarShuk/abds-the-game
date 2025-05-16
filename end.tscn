@@ -835,7 +835,7 @@ autostart = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../CanvasLayer/Control")
 libraries = {
-"": SubResource("AnimationLibrary_88r7y")
+&"": SubResource("AnimationLibrary_88r7y")
 }
 
 [node name="paramAzzu" parent="AnimationPlayer" instance=ExtResource("5_ng0j5")]

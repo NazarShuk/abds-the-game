@@ -1,4 +1,4 @@
-extends "res://scripts/teacher.gd"
+extends Teacher
 
 @onready var unstucker = $Unstucker
 
@@ -17,7 +17,7 @@ func _on_pregame_started():
 	if !Game.game_params.get_param("ms_gainy"):
 		queue_free()
 
-func _on_book_collected(amount):
+func _on_book_collected(_amount):
 	target_player = null
 
 func _physics_process(_delta):

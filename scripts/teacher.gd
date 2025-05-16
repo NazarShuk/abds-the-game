@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Teacher
 
 const WATER_PARTICLES = preload("res://water_particles.tscn")
 
@@ -18,6 +19,8 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		area_3d.area_entered.connect(_on_area_entered)
 		area_3d.area_exited.connect(_on_area_exited)
+	
+	add_to_group("teacher")
 
 func _on_area_entered(area : Area3D):
 	if area.name == "puddle":
@@ -51,7 +54,15 @@ func _physics_process(_delta: float) -> void:
 		
 		navigation()
 		
+		phone_suspension()
+		
 		move_and_slide()
+
+func phone_suspension():
+	for player : Player in get_tree().get_nodes_in_group("player"):
+		if can_see(self, player):
+			if player.phone_open and not player.pending_suspension:
+				player.pend_suspension.rpc_id(int(player.name))
 
 func add_speed_multiplier(multiplier : float, duration : float):
 	speed_multiplier += multiplier
@@ -120,7 +131,7 @@ func play_sound_rpc(stream_path : String,volume_db : float = 0, bus : String = "
 
 @rpc("any_peer","call_local")
 func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
-	var sound = get_node(sound_path)
+	var sound = get_node_or_null(sound_path)
 	if sound:
 		sound.stream = load(stream_path)
 		sound.bus = bus
@@ -128,3 +139,27 @@ func actually_play_sound(sound_path, stream_path : String,volume_db : float = 0,
 		sound.volume_db = volume_db
 		sound.global_position = pos
 		sound.play()
+
+func can_see(observer: Node3D, target: Node3D) -> bool:
+	var from     = observer.global_transform.origin
+	var to       = target.global_transform.origin
+	var space    = observer.get_world_3d().direct_space_state
+
+	# --- set up a ray‐query
+	var qr = PhysicsRayQueryParameters3D.new()
+	qr.from           = from
+	qr.to             = to
+	qr.exclude        = [observer]       # don’t hit yourself
+	# qr.collision_mask = 0xffffffff     # (optional) limit to certain layers
+
+	# --- do the cast
+	var result : Dictionary = space.intersect_ray(qr)
+	# result is a Dictionary with keys like "position","normal","collider" if you hit something,
+	# or an empty Dictionary if you hit nothing.
+
+	if result.keys().size() == 0:
+		# no collider at all between you and the target
+		# if your target has no PhysicsBody/CollisionShape, this is still “visible”
+		return true
+	# otherwise see if the very first thing I hit was my target
+	return result["collider"] == target

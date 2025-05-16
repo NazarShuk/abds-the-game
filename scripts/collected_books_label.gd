@@ -9,7 +9,7 @@ var _team = ""
 func _ready() -> void:
 	game_scene = player.get_parent()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	if Game.game_started:
 		if !game_scene.can_escape:

@@ -2,7 +2,6 @@ extends Node
 
 const api_url = "https://script.google.com/macros/s/AKfycbwwbWjvbwCQxZcnXEikI96x1sYPKr6lxIpzs0IFw4M0WolIjuSBZbG36cQVDBnQPDSK/exec"
 
-
 var steam_error : String
 var steam_error_code : int
 var firstTime = true

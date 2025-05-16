@@ -1,7 +1,10 @@
 extends StaticBody3D
 
-@export var game : Node3D
+var game : Node3D
 var fly_up = false
+
+func _ready() -> void:
+	game = get_tree().get_first_node_in_group("game")
 
 func _process(_delta: float) -> void:
 	var player = Game.get_closest_node_in_group(global_position, "player")

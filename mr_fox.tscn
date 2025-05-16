@@ -87,7 +87,7 @@ bus = &"Dialogs"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_t84kf")
+&"": SubResource("AnimationLibrary_t84kf")
 }
 autoplay = "spin"
 

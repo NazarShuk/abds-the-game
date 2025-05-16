@@ -1,10 +1,10 @@
 extends Node3D
 
 @export var videos : Array[ProjectorVideo]
-@export var audio_player : AudioStreamPlayer
+@onready var audio_player : AudioStreamPlayer = get_tree().get_first_node_in_group("main_music")
 
 @onready var initial_clip = audio_player.stream
-@export var game : Node3D
+@onready var game : Node3D = get_tree().get_first_node_in_group("game")
 
 var time_left = 100
 var is_playing = false

@@ -1,7 +1,110 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy0pbd45qrxtp"]
+[gd_scene load_steps=9 format=3 uid="uid://cy0pbd45qrxtp"]
 
 [ext_resource type="Script" uid="uid://qe3c1y38ymai" path="res://scripts/logos.gd" id="1_n3k2k"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_rr6mg"]
+[ext_resource type="AudioStream" uid="uid://b35vuj7uve47l" path="res://sounds/meatphobia.mp3" id="3_a730m"]
+[ext_resource type="AudioStream" uid="uid://cjr2378pmi6ud" path="res://sounds/bwamp.mp3" id="3_qc4r5"]
+[ext_resource type="AudioStream" uid="uid://yrwq7ufys6il" path="res://sounds/bam.mp3" id="4_h03ul"]
+
+[sub_resource type="Animation" id="Animation_qc4r5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [""]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Label:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sa752"]
+resource_name = "animat"
+length = 4.0
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_qc4r5")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": ["nshis presents", "(it's still loading...)"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Label:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.11, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Label:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qc4r5"]
+_data = {
+&"RESET": SubResource("Animation_qc4r5"),
+&"animat": SubResource("Animation_sa752")
+}
 
 [node name="Logos" type="Node2D"]
 script = ExtResource("1_n3k2k")
@@ -27,8 +130,84 @@ offset_right = 164.0
 offset_bottom = 18.5
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(164, 18)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_rr6mg")
 theme_override_font_sizes/font_size = 31
-text = "it load"
 horizontal_alignment = 1
+
+[node name="Warning" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/Warning"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.0
+offset_top = -139.0
+offset_right = 148.0
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_rr6mg")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[shake]Disclaimer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="RichTextLabel" parent="CanvasLayer/Warning"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -357.0
+offset_top = -46.0
+offset_right = 357.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_rr6mg")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[shake]This game was [color=red]NOT[/color] made to harass or offend anyone.
+Do not take anything in this seriously :)
+
+[font_size=18]click anywhere to proceed"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Warning"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="meat" type="AudioStreamPlayer" parent="CanvasLayer/Warning"]
+stream = ExtResource("3_a730m")
+
+[node name="bam" type="AudioStreamPlayer" parent="CanvasLayer/Warning"]
+stream = ExtResource("4_h03ul")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qc4r5")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="CanvasLayer/Warning/Button" to="." method="_on_button_pressed"]

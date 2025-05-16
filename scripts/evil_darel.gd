@@ -1,4 +1,4 @@
-extends "res://scripts/teacher.gd"
+extends Teacher
 class_name EvilDarel
 
 var health = 100
@@ -9,7 +9,7 @@ signal damaged
 
 var do_chase = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	if OS.has_feature("debug"):
 		if Input.is_action_just_pressed("debug") and not bossfight.phase_2:

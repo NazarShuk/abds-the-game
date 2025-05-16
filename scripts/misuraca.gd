@@ -1,4 +1,4 @@
-extends "res://scripts/teacher.gd"
+extends Teacher
 
 @onready var unstucker = $Unstucker
 

@@ -885,14 +885,14 @@ albedo_texture = ExtResource("20_to2tx")
 transparency = 1
 albedo_texture = ExtResource("20_oa3pa")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i348w"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lvlcr"]
 transparency = 1
 cull_mode = 2
 albedo_color = Color(0, 0, 0, 0.454902)
 emission_enabled = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_cu5wm"]
-material = SubResource("StandardMaterial3D_i348w")
+material = SubResource("StandardMaterial3D_lvlcr")
 size = Vector2(0.065, 1)
 
 [node name="PerfectEnd" type="Node3D" node_paths=PackedStringArray("died_text", "collected_text")]
@@ -987,7 +987,7 @@ expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_o6plu")
+&"": SubResource("AnimationLibrary_o6plu")
 }
 autoplay = "new_animation"
 

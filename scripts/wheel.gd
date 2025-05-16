@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var cylinder = $Cylinder
 
-@export var game : Node3D
+var game : Node3D
 
 var rotate_speed = 1.0
 var target_speed = 1.0
@@ -76,6 +76,8 @@ var rewards = [
 func _ready():
 	Game.on_book_collected.connect(remove_fence)
 	Game.on_pre_game_started.connect(_on_pregame_started)
+	
+	game = get_tree().get_first_node_in_group("game")
 
 func _on_pregame_started():
 	if !Game.game_params.get_param("wheel"):

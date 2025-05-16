@@ -1,4 +1,4 @@
-extends "res://scripts/teacher.gd"
+extends Teacher
 
 var SPEED = 15
 

@@ -1,4 +1,4 @@
-extends "res://scripts/teacher.gd"
+extends Teacher
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var unstucker = $Unstucker
@@ -110,7 +110,10 @@ func ai(delta):
 								clst_dist = dst
 								clst_bathroom = bathroom
 						
-						update_target_location(clst_bathroom.global_position)
+						if clst_bathroom:
+							update_target_location(clst_bathroom.global_position)
+						else:
+							baja_blasted = false
 						
 						if clst_dist < 5 && baja_timer <= 15:
 							baja_timer += delta

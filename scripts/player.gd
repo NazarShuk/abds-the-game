@@ -38,6 +38,8 @@ var cam_fov = 75
 var can_cam_move = true
 @export var steam_name : String = "Loading..."
 
+@export var pending_suspension = false
+var pending_suspension_meter = 0.0
 var is_suspended = false
 
 var is_on_top = false
@@ -55,7 +57,7 @@ var can_use_shop = true
 
 @export var controls_text : Label
 
-var parent = null
+var parent : GameScene = null
 
 @onready var leahy_approaching = $CanvasLayer/Control/LeahyApproaching
 
@@ -75,6 +77,19 @@ var baja_previous_pos = Vector3()
 var last_breath = false
 
 @onready var tv: Control = $CanvasLayer/Control/TV
+
+var camera_wobble = Vector2.ZERO
+var wobble_time = 0
+
+var hand_vel_xy := Vector2()
+var hand_vel := Vector2()
+var spot_vel := Vector3()
+
+const SPRING_STIFFNESS := 75.0
+const SPRING_DAMPING   :=  8.0
+
+var has_phone = false
+@export var phone_open = false
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -98,11 +113,13 @@ func _ready():
 		if Settings.render_distance:
 			camera_3d.far = Settings.render_distance
 		
-		GuiManager.show_tip_once("movement_controls","[color=green]Movement[/color]\nWASD to move, LeftShift to run (consumes stamina), Space to look behind, M to open the minimap")
+		GuiManager.show_tip_once("movement_controls","[color=green]Movement[/color]\nWASD to move, LeftShift to run (consumes stamina), Space to look behind, TAB to open the minimap")
 		
 		inventory.resize(max_slots)
 		for i in range(max_slots):
 			inventory[i] = -1
+		
+		$nametag.hide()
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
@@ -154,13 +171,20 @@ func _physics_process(delta):
 		
 		if Input.is_action_just_pressed("open_minimap"):
 			if !is_shop_open:
-				is_minimap_open = !is_minimap_open
-				if is_minimap_open:
-					$Minimap.process_mode = Node.PROCESS_MODE_INHERIT
-					GuiManager.show_cursor()
-				else:
-					$Minimap.process_mode = Node.PROCESS_MODE_DISABLED
-					GuiManager.hide_cursor()
+				is_minimap_open = true
+				$Minimap.process_mode = Node.PROCESS_MODE_INHERIT
+				
+				$Minimap_sound.play()
+		
+		if Input.is_action_just_released("open_minimap"):
+			if !is_shop_open:
+				is_minimap_open = false
+				$Minimap.process_mode = Node.PROCESS_MODE_DISABLED
+		
+		
+		if is_minimap_open:
+			minimap_cam.global_position.x = global_position.x
+			minimap_cam.global_position.z = global_position.z
 		
 		can_cam_move = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 		
@@ -188,14 +212,14 @@ func _physics_process(delta):
 			leahy_dst = -1
 		
 		if closest_leahy:
-			if Game.game_started:
+			if Game.game_started and not parent.selected_mode == "scary":
 				if (10 - leahy_dst) > 0:
 					var strength = 1/leahy_dst+0.01
-					camera_3d.h_offset = randf_range(-strength,strength) / 5
-					camera_3d.v_offset = randf_range(-strength,strength) / 5
+					camera_3d.h_offset = camera_wobble.x + randf_range(-strength,strength) / 5
+					camera_3d.v_offset = camera_wobble.y + randf_range(-strength,strength) / 5
 				else:
-					camera_3d.h_offset = 0
-					camera_3d.v_offset = 0
+					camera_3d.h_offset = camera_wobble.x
+					camera_3d.v_offset = camera_wobble.y
 				
 				if closest_leahy.target_player_name and !parent.can_escape:
 					if global_position.y < 3.7:
@@ -211,6 +235,12 @@ func _physics_process(delta):
 						leahy_approaching.is_shown = false
 				else:
 					leahy_approaching.is_shown = false
+			else:
+				camera_3d.h_offset = camera_wobble.x
+				camera_3d.v_offset = camera_wobble.y
+		else:
+			camera_3d.h_offset = camera_wobble.x
+			camera_3d.v_offset = camera_wobble.y
 		
 		if global_position.z > 15 && !is_freaky:
 			if !Game.game_started:
@@ -223,7 +253,11 @@ func _physics_process(delta):
 		movement_function(delta)
 		
 		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
-		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
+		
+		if not phone_open:
+			camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
+		else:
+			camera_3d.fov = lerp(camera_3d.fov, float(90), delta * 10)
 		
 		
 		camera_3d.current = true
@@ -233,29 +267,115 @@ func _physics_process(delta):
 			$CanvasLayer/Control.do_shake = true
 		else:
 			$CanvasLayer/Control.do_shake = false
+		
+		camera_wobble_function(delta)
+		
+		var curr_xy = Vector2(
+			$HandOrientation.global_rotation.x,
+			$HandOrientation.global_rotation.y
+		)
+		var target_xy = Vector2(
+			$"Camera target".global_rotation.x * 0.5,
+			$"Camera target".global_rotation.y
+		)
+		# compute wrapped difference per axis
+		var diff_xy = Vector2(
+			shortest_angle_diff(curr_xy.x, target_xy.x),
+			shortest_angle_diff(curr_xy.y, target_xy.y)
+		)
+
+		hand_vel_xy += diff_xy * SPRING_STIFFNESS * delta
+		hand_vel_xy *= exp(-SPRING_DAMPING * delta)
+		curr_xy += hand_vel_xy * delta
+
+		$HandOrientation.global_position = global_position
+		$HandOrientation.global_rotation.x = curr_xy.x
+		$HandOrientation.global_rotation.y = curr_xy.y
+
+		# --- spotlight ---
+		var spot_curr   = $SpotLight3D.global_rotation
+		var spot_target = $"Camera target".global_rotation
+		var spot_diff = Vector3(
+			shortest_angle_diff(spot_curr.x, spot_target.x),
+			shortest_angle_diff(spot_curr.y, spot_target.y),
+			shortest_angle_diff(spot_curr.z, spot_target.z)
+		)
+
+		spot_vel += spot_diff * SPRING_STIFFNESS * delta * 0.5
+		spot_vel *= exp(-SPRING_DAMPING * delta)
+		spot_curr += spot_vel * delta
+
+		$SpotLight3D.global_rotation = spot_curr
+		$SpotLight3D.global_position = $"Camera target".global_position
+		
+		$CanvasLayer/Control/pending_suspension.visible = pending_suspension
+		
+		if Input.is_action_just_pressed("push_to_talk"):
+			if has_phone:
+				if not phone_open:
+					$Phone/AnimationPlayer.play("get_da_phone")
+					phone_open = true
+					GuiManager.show_cursor()
+					$CanvasLayer/Control/TextureRect.hide()
+					$Phone/phon.play()
+				else:
+					phone_open = false
+					$Phone/AnimationPlayer.play_backwards("get_da_phone")
+					GuiManager.hide_cursor()
+					$CanvasLayer/Control/TextureRect.show()
+					$Phone/phon.stop()
+					
+		
+		$CanvasLayer/Control/phone_indicator.visible = has_phone
+		if phone_open:
+			$"Camera target".rotation.x = lerp($"Camera target".rotation.x, 0.0, delta * 5)
+		
+		var secondary_alpha = $CanvasLayer/Control/Vignette2.material.get("shader_parameter/SecondaryAlpha")
+		$CanvasLayer/Control/Vignette2.material.set("shader_parameter/SecondaryAlpha", lerp(secondary_alpha, float(pending_suspension_meter) / 100.0, delta * 50))
+		
+		if pending_suspension_meter > 5:
+			$focus.volume_db = min(0, -40  + pending_suspension_meter)
+		else:
+			$focus.volume_db = -80
+# anywhere at top of your script
+func shortest_angle_diff(from: float, to: float) -> float:
+	# wrap (to – from) into [–π, π]
+	return fposmod(to - from + PI, TAU) - PI
+
+func camera_wobble_function(delta : float):
+	wobble_time += delta * velocity.length()
+	if !is_moving or phone_open or !can_move or !can_cam_move:
+		wobble_time = 0
+	
+	camera_wobble.x = lerp(camera_wobble.x, sin(wobble_time) * 0.25, delta * 20)
+	camera_wobble.y = lerp(camera_wobble.y, abs(cos(wobble_time)) * 0.25, delta * 20)
 
 var vertical_angle = 0.0
 var max_vertical_angle = 89.0  # You can adjust this as needed.
 
+
 func _input(event):
 	if !is_multiplayer_authority():
 		return
-
+	
+	
 	if event is InputEventMouseMotion:
 		if can_move:
 			if can_cam_move:
+				
 				rotate_y(deg_to_rad(event.relative.x * -0.3))
+				
 				if Game.game_params.get_param("vertical_camera"):
 					# funni
 					rotate_x(deg_to_rad(event.relative.y * -0.3))
 				
-				if parent.do_vertical_camera_normal:
-					# Calculate new vertical angle
-					vertical_angle -= event.relative.y * 0.3
-					vertical_angle = clamp(vertical_angle, -max_vertical_angle, max_vertical_angle)
-					
-					# Set the new rotation by using Euler angles
-					rotation.x = deg_to_rad(vertical_angle)
+				# Calculate new vertical angle
+				vertical_angle -= event.relative.y * 0.3
+				vertical_angle = clamp(vertical_angle, -max_vertical_angle, max_vertical_angle)
+				
+				# Set the new rotation by using Euler angles
+				if !phone_open:
+					$"Camera target".rotation.x = deg_to_rad(vertical_angle)
 	
 	if event is InputEventKey:
 			if event.pressed:
@@ -404,7 +524,7 @@ func _on_revive_timer_timeout():
 		global_position = get_tree().get_nodes_in_group("player_spawn").pick_random().global_position
 		parent.set_player_dead.rpc(name.to_int(), false,false)
 	else:
-		global_position = Vector3(45, 1.2, -43)
+		global_position = get_tree().get_first_node_in_group("suspension_place").global_position
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 	$"CanvasLayer/Control/Died thing".hide()
 	AudioServer.set_bus_mute(1, false)
@@ -616,15 +736,24 @@ func die(cause, do_die = true):
 	is_ragdolled = true
 	apply_random_rotation()
 	
+	if phone_open:
+		phone_open = false
+		
+		$Phone/AnimationPlayer.play_backwards("get_da_phone")
+		GuiManager.hide_cursor()
+		$CanvasLayer/Control/TextureRect.show()
+		$Phone/phon.stop()
+	
+	if Game.game_params.get_param("silent_lunch"):
+		if pending_suspension:
+			$CanvasLayer/Control/silentLunch.show()
+			$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
+			is_suspended = true
+			$"Silent Lunch".start(15)
+			pending_suspension = false
+	
 	if cause == "leahy":
 		$"CanvasLayer/Control/Died thing/jumpscare".play()
-		if Game.game_params.get_param("silent_lunch"):
-			var chance = randi_range(0, 2)
-			if chance == 0:
-				$CanvasLayer/Control/silentLunch.show()
-				$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
-				is_suspended = true
-				$"Silent Lunch".start(15)
 	elif cause == "wall":
 		$"CanvasLayer/Control/Died thing/jumpscare3".play()
 	elif cause == "fox":
@@ -1200,11 +1329,19 @@ func _on_pp_timeout_timeout():
 				spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 			baja_previous_pos = pos
 
+func play_interact_anim():
+	if get_selected_item() == -1:
+		$Camera3D/interact_hand/AnimationPlayer.play("interact")
+		await get_tree().create_timer(0.25, false).timeout
+
 func interaction_functions():
 	if Input.is_action_just_pressed("interact"):
+		var collider = ray.get_collider()
 		if ray.get_collider() != null:
-			if ray.get_collider().is_in_group("vending_machines"):
-				var vending_machine = ray.get_collider()
+			
+			
+			if collider.is_in_group("vending_machines"):
+				var vending_machine = collider
 				
 				if vending_machine.uses_left > 0:
 					if Game.game_started:
@@ -1212,67 +1349,84 @@ func interaction_functions():
 					else:
 						add_item(2)
 					vending_machine.use_vending_machine.rpc()
+					
 				else:
 					GuiManager.show_tip_once("vending_broke","[color=green]Vending Machines[/color]\nVending machines will [b]break[/b] after being used way too much. [b]Mr.Misuraca[/b] will come and [b]fix them.[/b]")
 			
-		if ray.get_collider() != null and Game.game_started:
-			if ray.get_collider().is_in_group("shop"):
+		if collider != null and Game.game_started:
+			if collider.is_in_group("shop"):
+				await play_interact_anim()
 				open_shop()
-			if ray.get_collider().is_in_group("coffee_machine"):
+			if collider.is_in_group("coffee_machine"):
 				if !can_use_coffee: return
+				await play_interact_anim()
 				add_speed_boost(1, 6)
-				ray.get_collider().play_sound.rpc()
+				collider.play_sound.rpc()
 				can_use_coffee = false
 				$"Coffee timeout".start(20)
-			if ray.get_collider().name == "Breaker":
+			if collider.name == "Breaker":
 				if !can_use_breaker: return
 				
+				await play_interact_anim()
 				
-				ray.get_collider().toggle_power.rpc()
+				collider.toggle_power.rpc()
 				
 				can_use_breaker = false
 				$BreakerTimeout.start(60)
-			if ray.get_collider().is_in_group("mr_misuraca"):
+			if collider.is_in_group("mr_misuraca"):
 				if !Game.competitive:
+					await play_interact_anim()
 					open_gambling()
 				else:
 					Game.rpc_info_text("Bets are disabled in competitive mode")
 			
-			if ray.get_collider().is_in_group("dropped_item"):
-				if ray.get_collider():
-					ray.get_collider().remove_item.rpc()
-					add_item(ray.get_collider().item)
+			if collider.is_in_group("dropped_item"):
+				if collider:
+					await play_interact_anim()
+					collider.remove_item.rpc()
+					add_item(collider.item)
 			
-			if ray.get_collider().is_in_group("video_player"):
-				ray.get_collider().play.rpc()
+			if collider.is_in_group("video_player"):
+				await play_interact_anim()
+				collider.play.rpc()
 			
-			if ray.get_collider().name == "fire":
-				ray.get_collider().get_parent().break_glass.rpc()
-				if ray.get_collider().get_parent().can_pickup:
+			if collider.name == "fire":
+				await play_interact_anim()
+				collider.get_parent().break_glass.rpc()
+				if collider.get_parent().can_pickup:
 					add_item(9)
 				
-			if ray.get_collider().name == "wheel":
-				ray.get_collider().get_parent().spin.rpc()
+			if collider.name == "wheel":
+				await play_interact_anim()
+				collider.get_parent().spin.rpc()
 				
-			if ray.get_collider().is_in_group("freezer"):
-				global_position.x = ray.get_collider().global_position.x
-				global_position.z = ray.get_collider().global_position.z
+			if collider.is_in_group("freezer"):
+				await play_interact_anim()
+				global_position.x = collider.global_position.x
+				global_position.z = collider.global_position.z
 				can_move = false
-				global_rotation.y = -ray.get_collider().global_rotation.y
+				global_rotation.y = -collider.global_rotation.y
 				parent.set_player_dead.rpc(name.to_int(), true,false)
 				is_in_freezer = true
 				$CanvasLayer/Control/Freezer/AnimationPlayer.play("freez")
 				
 				$freezerDeath.start()
-			if ray.get_collider().is_in_group("last_breath"):
-				ray.get_collider().queue_free()
+			if collider.is_in_group("last_breath"):
+				await play_interact_anim()
+				collider.queue_free()
 				last_breath = true
-			if ray.get_collider().is_in_group("ignis_car"):
-				print("the ignis")
-				ray.get_collider().enter_car.rpc(name.to_int())
+			if collider.is_in_group("phone_pickup"):
+				await play_interact_anim()
+				collider.remove.rpc()
+				has_phone = true
 				
-			if ray.get_collider().is_in_group("toilet"):
+			if collider.is_in_group("ignis_car"):
+				await play_interact_anim()
+				collider.enter_car.rpc(name.to_int())
+				
+			if collider.is_in_group("toilet"):
 				if !can_toilet_tp : return
+				await play_interact_anim()
 				var spawns = get_tree().get_nodes_in_group("bathroom_spawn")
 				
 				var farthest_dst = -1
@@ -1288,19 +1442,23 @@ func interaction_functions():
 				global_position = farthest_obj.global_position
 				await Game.sleep(2)
 				play_sound("res://flush.mp3",5)
-			if ray.get_collider():
-				if ray.get_collider().is_in_group("blackboard"):
-					ray.get_collider().open_ui()
+			if collider:
+				if collider.is_in_group("blackboard"):
+					await play_interact_anim()
+					collider.open_ui()
 			
 			
-			if ray.get_collider():
-				if ray.get_collider().is_in_group("water fountain"):
+			if collider:
+				if collider.is_in_group("water fountain"):
+					await play_interact_anim()
 					if get_selected_item() == 7:
 						hand.get_node("Bucket 7/Bucket/water").show()
 					else:
 						stamina = 100
-			if ray.get_collider():
-				if ray.get_collider().is_in_group("bucket"):
+					
+			if collider:
+				if collider.is_in_group("bucket"):
+					await play_interact_anim()
 					add_item(7)
 
 func item_use_functions():
@@ -1420,3 +1578,20 @@ func add_speed_boost(multiplier : float, duration : float):
 	speed_multiplier += multiplier
 	await Game.sleep(duration)
 	speed_multiplier -= multiplier
+
+@rpc("any_peer", "call_local")
+func pend_suspension():
+	if pending_suspension_meter >= 100:
+		pending_suspension = true
+		pending_suspension_meter = 0
+	else:
+		pending_suspension_meter += 1
+
+func _on_pending_suspension_timeout() -> void:
+	if pending_suspension_meter >= 1:
+		pending_suspension_meter -= 1
+
+@rpc("any_peer", "call_local")
+func lobotomy():
+	$lobotomy.play()
+	die("lobotomy")

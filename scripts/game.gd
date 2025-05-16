@@ -1,27 +1,16 @@
 extends Node3D
 class_name GameScene
 
-const PLAYER = preload("res://player.tscn")
-const LOGOS = preload("res://logos.tscn")
-const BAD_END = preload("res://bad_end.tscn")
-const DISORIENTED_END = preload("res://disoriented_end.tscn")
-const DUMB_AHH_END = preload("res://dumb_ahh_end.tscn")
-const END = preload("res://end.tscn")
-const IMPOSSIBLE_END = preload("res://impossible_end.tscn")
-const PERFECT_END = preload("res://perfect_end.tscn")
-const HUH_ENDING = preload("res://huh_ending.tscn")
-const HUH_ENDING_2 = preload("res://scenes/bossfight.tscn")
-const WORST_END = preload("res://worst_end.tscn")
 
 var peer
 
-@onready var collected_books_label = $CanvasLayer/Main/CollectedBooksLabel
 @export var players_in_lobby = 0
 
 @export var canPlayersMove = true
 
 @export var leahy_look : bool
 
+@export var pacer_available = true
 @export var is_pacer = false
 @export var pacer_deadly = false
 var is_pacer_intro = false
@@ -32,8 +21,6 @@ var is_pacer_intro = false
 var players_spawned = false
 
 @export var is_in_lobby = false
-
-@export var school : Node3D
 
 var do_vertical_camera_normal = false
 
@@ -51,9 +38,49 @@ var players_singleton_required = -1
 
 @export var competitive = false
 
+const maps = {
+	"large": {
+		"scene": "res://school.tscn",
+		"icon": preload("res://textures/large map.png"),
+		"pacer": true
+	},
+	"small": {
+		"scene": "res://old_school.tscn",
+		"icon": preload("res://textures/small map.png"),
+		"pacer": false
+	}
+}
+@export var selected_map = "large"
+
+var modes = {
+	"normal": {
+		"function": "normal_mode"
+	},
+	"scary": {
+		"function": "scary_mode"
+	}
+}
+
+func normal_mode():
+	pass
+
+func scary_mode():
+	for breaker in get_tree().get_nodes_in_group("breaker"):
+		breaker.queue_free()
+	
+	Game.environment.background_energy_multiplier = 0
+	Game.sun.light_energy = 0
+	$Music2.bus = "Mute Bus"
+	$Music1.bus = "Mute Bus"
+	
+	AudioServer.set_bus_effect_enabled(2,1, true)
+
+@export var selected_mode = "normal"
+
 func _enter_tree():
 	name = "MainGameScene"
-
+func _exit_tree() -> void:
+	AudioServer.set_bus_effect_enabled(2,1, false)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,6 +88,10 @@ func _ready():
 	Game.environment = Game.world_environment.environment
 	Game.sun = $"Lighting and stuff/DirectionalLight3D"
 	Game.on_book_collected.connect(_on_book_collected)
+	
+	Game.environment.background_energy_multiplier = 1
+	Game.sun.light_energy = 1
+	Game.environment.volumetric_fog_density = 0
 	
 	if Settings.render_distance:
 		$pre_start_game_anim/Camera3D.far = Settings.render_distance
@@ -75,6 +106,40 @@ func _ready():
 	$Music0.play(GlobalVars.menu_music_duration)
 	GuiManager.reset_cursor()
 	GuiManager.show_cursor()
+	
+	for key in maps:
+		var map = maps[key]
+		
+		var button = Button.new()
+		button.text = key.capitalize()
+		button.icon = map.icon
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		button.expand_icon = true
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		button.pressed.connect(func ():
+			selected_map = key
+			$CanvasLayer/Lobby/map_choose/AnimationPlayer.play_backwards("open")
+		)
+		
+		$CanvasLayer/Lobby/map_choose/Panel/horizontal.add_child(button)
+	
+	for key in modes:
+		var mode = modes[key]
+		
+		var button = Button.new()
+		button.text = key.capitalize()
+		#button.icon = map.icon
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		button.expand_icon = true
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		button.pressed.connect(func ():
+			selected_mode = key
+			$CanvasLayer/Lobby/mode_choose/AnimationPlayer.play_backwards("open")
+		)
+		
+		$CanvasLayer/Lobby/mode_choose/Panel/horizontal.add_child(button)
 
 
 func prepare_multiplayer():
@@ -92,7 +157,7 @@ func _on_network_session_failed(_steam_id: int, _reason: int, _connection_state:
 func _on_disconnected_from_server():
 	if !Game.did_finish:
 		print_rich("[color=red] disconnected from server with no ending")
-		get_tree().change_scene_to_packed.call_deferred(LOGOS)
+		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 
 func _on_book_collected(_amount):
 	if !multiplayer.is_server(): return
@@ -177,7 +242,6 @@ func ending_check():
 	else:
 		end_game.rpc("competitive")
 		
-		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -210,7 +274,11 @@ func _process(_delta):
 		
 		if !multiplayer.is_server():
 			$CanvasLayer/Lobby/competitive.button_pressed = competitive
-	
+		
+		$CanvasLayer/Lobby/TopContainer/map_button.text = selected_map.capitalize() + " map"
+		$CanvasLayer/Lobby/TopContainer/map_button.icon = maps[selected_map].icon
+		$CanvasLayer/Lobby/TopContainer/mode_button.text = selected_mode.capitalize() + " mode"
+		#$CanvasLayer/Lobby/TopContainer/mode_button.icon = maps[selected_map].icon
 
 func _input(event):
 	if event.is_action_type():
@@ -228,8 +296,10 @@ func _on_connected_to_server():
 	if !multiplayer.is_server():
 		$CanvasLayer/Lobby/ConfigPanel.hide()
 	
-	$CanvasLayer/Lobby/Loading.hide()
-	
+	if get_node_or_null("CanvasLayer/Lobby/book"):
+		$CanvasLayer/Lobby/book.remove()
+	if get_node_or_null("CanvasLayer/Lobby/cancel_button"):
+		$CanvasLayer/Lobby/cancel_button.queue_free()
 
 @rpc("any_peer","call_local")
 func receive_steam_usr(id,username):
@@ -249,7 +319,10 @@ func _on_peer_connected(id = 1):
 			$CanvasLayer/Lobby/Label4/reset_to_default.show()
 			$CanvasLayer/Lobby/Label4/gameConfigClient.hide()
 			is_in_lobby = true
-			$CanvasLayer/Lobby/Loading.hide()
+			if get_node_or_null("CanvasLayer/Lobby/book"):
+				$CanvasLayer/Lobby/book.remove()
+			if get_node_or_null("CanvasLayer/Lobby/cancel_button"):
+				$CanvasLayer/Lobby/cancel_button.queue_free()
 	else:
 		peer.disconnect_peer(id)
 	
@@ -315,16 +388,15 @@ func request_to_start_game(id):
 
 func spawn_players():
 	if !OS.has_feature("debug"):
-		await Game.sleep(8)
+		await Game.sleep(3)
 	for pl_id in Game.players.keys():
-		var player = PLAYER.instantiate()
+		var player = load("res://player.tscn").instantiate()
 
 		player.set_multiplayer_authority(pl_id)
 		player.name = str(pl_id)
-
+		
 		call_deferred("add_child",player,false)
 		await get_tree().process_frame
-		player.global_position = $"pre_start_game_anim/SCHOOL BUS/pl spawn".global_position + Vector3(randf_range(-3,3),0,randf_range(-3,3))
 		
 	players_spawned = true
 
@@ -337,9 +409,18 @@ func set_fog_density(density):
 func pre_start_game():
 	$CanvasLayer/Lobby.hide()
 	$CanvasLayer/Main.show()
-	$pre_start_game_anim/AnimationPlayer.play("pre")
+	$pre_start_game_anim/AnimationPlayer.play("fall")
 	$Music1.play()
 	$Music0.stop()
+	
+	var school : Node3D = load(maps[selected_map].scene).instantiate()
+	add_child(school)
+	
+	pacer_available = maps[selected_map].pacer
+	if maps[selected_map].pacer:
+		current_pacer_target = $"School/Pacer/Pacer target"
+	
+	call(modes[selected_mode].function)
 
 
 func _on_peer_disconnect(id):
@@ -494,13 +575,13 @@ func set_singleton(deaths,books,ending : String, competitive_team_won = ""):
 	
 	#peer.close()
 	if ending == "normal":
-		get_tree().change_scene_to_packed.call_deferred(END)
+		get_tree().change_scene_to_packed.call_deferred(load("res://end.tscn"))
 	elif ending == "worst":
-		get_tree().change_scene_to_packed.call_deferred(BAD_END)
+		get_tree().change_scene_to_packed.call_deferred(load("res://bad_end.tscn"))
 	elif ending == "perfect":
-		get_tree().change_scene_to_packed.call_deferred(PERFECT_END)
+		get_tree().change_scene_to_packed.call_deferred(load("res://perfect_end.tscn"))
 	elif ending == "imp":
-		get_tree().change_scene_to_packed.call_deferred(IMPOSSIBLE_END)
+		get_tree().change_scene_to_packed.call_deferred(load("res://impossible_end.tscn"))
 	elif ending == "freaky":
 		var can_bossfight = false
 		
@@ -514,25 +595,25 @@ func set_singleton(deaths,books,ending : String, competitive_team_won = ""):
 								pass
 		
 		if !can_bossfight:
-			get_tree().change_scene_to_packed.call_deferred(HUH_ENDING)
+			get_tree().change_scene_to_packed.call_deferred(load("res://huh_ending.tscn"))
 		else:
-			get_tree().change_scene_to_packed.call_deferred(HUH_ENDING_2)
+			get_tree().change_scene_to_packed.call_deferred(load("res://scenes/bossfight.tscn"))
 	elif ending == "you suck":
-		get_tree().change_scene_to_packed.call_deferred(WORST_END)
+		get_tree().change_scene_to_packed.call_deferred(load("res://worst_end.tscn"))
 	elif ending == "dumb":
-		get_tree().change_scene_to_packed.call_deferred(DUMB_AHH_END)
+		get_tree().change_scene_to_packed.call_deferred(load("res://dumb_ahh_end.tscn"))
 	elif ending == "disoriented":
-		get_tree().change_scene_to_packed.call_deferred(DISORIENTED_END)
+		get_tree().change_scene_to_packed.call_deferred(load("res://disoriented_end.tscn"))
 	elif ending == "competitive":
 		get_tree().change_scene_to_file.call_deferred("res://scenes/competitive_result.tscn")
 	elif ending.begins_with("leahy_time_"):
 		GlobalVars.leahy_time_rank = ending.replace("leahy_time_", "")
 		get_tree().change_scene_to_file.call_deferred("res://scenes/pizza_end.tscn")
 	else:
-		get_tree().change_scene_to_packed(LOGOS)
+		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 
 
-@onready var current_pacer_target = $"School/Pacer/Pacer target"
+var current_pacer_target
 
 func switch_pacer_target():
 	if current_pacer_target.get_path() == $"School/Pacer/Pacer target".get_path():
@@ -542,6 +623,7 @@ func switch_pacer_target():
 
 @rpc("any_peer","call_local")
 func check_if_finished_pacer_lap(id,target_path):
+	if !pacer_available: return
 	if multiplayer.is_server():
 		print(target_path,current_pacer_target.get_path())
 		if target_path == current_pacer_target.get_path():
@@ -556,10 +638,12 @@ func set_pacer_target_visibility(target_path,visibility):
 
 @rpc("authority","call_local")
 func play_pacer_lap_sound():
+	if !pacer_available: return
 	$FakeFox/PacerLap.play()
 
 @rpc("authority","call_local")
 func play_pacer_level_sound():
+	if !pacer_available: return
 	$FakeFox/PacerLevel.play()
 
 var is_test_active: bool = false
@@ -568,6 +652,7 @@ var is_test_active: bool = false
 @export var pacer_level = 0
 
 func run_pacer_test() -> void:
+	if !pacer_available: return
 	var current_level: int = 1
 	var current_shuttle: int = 1
 	var total_laps: int = 0
@@ -625,6 +710,8 @@ func run_pacer_test() -> void:
 
 @rpc("any_peer","call_local")
 func start_da_pacer(id = -1):
+	if !pacer_available: return
+	
 	if is_pacer: return
 	if is_pacer_intro: return
 	
@@ -632,8 +719,11 @@ func start_da_pacer(id = -1):
 	$FakeFox/PacerTest.play()
 	$Music2.stop()
 	$FakeFox.show()
-	$"Mr Fox".hide()
-	$"Mr Fox".mute = true
+	
+	var mr_fox = get_tree().get_first_node_in_group("mr_fox")
+	if mr_fox:
+		mr_fox.hide()
+		mr_fox.mute = true
 	
 	# Server only
 	if multiplayer.is_server():
@@ -657,6 +747,7 @@ func start_da_pacer(id = -1):
 		GuiManager.show_tip_once.rpc("pacer_test","[color=green]Pacer test[/color]\nEvery lap go to the [b]blue targets[/b]. You will get a notebook [b]every 10 laps.[/b] If [b]any[/b] player fails, the test is over.", 10)
 
 func _on_pacer_start_timer_timeout():
+	if !pacer_available: return
 	canPlayersMove = true
 	is_pacer = true
 	Game.info_text("Pacer test started!")
@@ -669,6 +760,7 @@ func _on_pacer_start_timer_timeout():
 
 @rpc("authority","call_local")
 func after_pacer_intro_end():
+	if !pacer_available: return
 	$FakeFox/PacerTest.stop()
 	$FakeFox/PacerMusic.play()
 
@@ -677,12 +769,15 @@ func _on_pacer_start_timer_2_timeout():
 
 @rpc("authority","call_local")
 func stop_pacer():
+	if !pacer_available: return
 	$FakeFox/PacerTest.stop()
 	$Music2.play()
 	$FakeFox.hide()
 	$FakeFox/AnimationPlayer.speed_scale = 1
-	$"Mr Fox".show()
-	$"Mr Fox".mute = false
+	var mr_fox = get_tree().get_first_node_in_group("mr_fox")
+	if mr_fox:
+		mr_fox.show()
+		mr_fox.mute = false
 	$FakeFox/PacerMusic.stop()
 	
 	if multiplayer.is_server():
@@ -808,7 +903,7 @@ func give_item_to_everyone(item_id):
 		get_node(str(pl)).choose_item.rpc_id(pl,item_id,true)
 
 func reload_game():
-	get_tree().change_scene_to_packed(LOGOS)
+	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
 
 @rpc("authority","call_local")
 func escape_mode():
@@ -867,3 +962,13 @@ func change_theme(team_name : String):
 
 func _on_competitive_team_name_text_changed(new_text: String) -> void:
 	change_theme.rpc_id(1, new_text)
+
+
+func _on_map_button_pressed() -> void:
+	if !multiplayer.is_server(): return
+	$CanvasLayer/Lobby/map_choose/AnimationPlayer.play("open")
+
+
+func _on_mode_button_pressed() -> void:
+	if !multiplayer.is_server(): return
+	$CanvasLayer/Lobby/mode_choose/AnimationPlayer.play("open")

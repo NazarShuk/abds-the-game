@@ -9,7 +9,7 @@ extends Control
 func _enter_tree() -> void:
 	set_multiplayer_authority(player.name.to_int())
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	visible = player.parent.leahy_time
 
 func switch(anim, duration = 2):

@@ -2,7 +2,7 @@ extends Label
 
 @export var timer : Timer
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	text = format_time(timer.time_left)
 
 func format_time(seconds: float) -> String:
