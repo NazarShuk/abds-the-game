@@ -1,6 +1,6 @@
 extends Node2D
 
-const main_game_path = "res://game.tscn"
+const main_game_path = "res://scenes/game.tscn"
 
 var accepted_the_thing = false
 

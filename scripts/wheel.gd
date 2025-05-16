@@ -151,7 +151,7 @@ func give_reward(what_name):
 
 @rpc("any_peer","call_local")
 func spawn_puddle(pos):
-	var puddle = load("res://puddle.tscn").instantiate()
+	var puddle = load("res://scenes/puddle.tscn").instantiate()
 	add_child(puddle,true)
 	puddle.global_position = pos
 

@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3 uid="uid://di8aki6p3dw1q"]
+
+[ext_resource type="Script" uid="uid://b6r6eeganlstg" path="res://scripts/Clorox Wipes.gd" id="1_nsv1d"]
+[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://textures/clorox wipes.png" id="1_xus1o"]
+[ext_resource type="AudioStream" uid="uid://byyn5831b132x" path="res://sounds/clorox.mp3" id="3_7imtg"]
+[ext_resource type="Texture2D" uid="uid://b87kxq485sc1x" path="res://textures/8ql00u.jpg" id="3_ens5w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kekv5"]
+cull_mode = 2
+albedo_texture = ExtResource("1_xus1o")
+
+[sub_resource type="QuadMesh" id="QuadMesh_qmkcc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqjc8"]
+cull_mode = 2
+albedo_texture = ExtResource("3_ens5w")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ad21e"]
+size = Vector3(2.44141, 2.29492, 0.31665)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_bsow3"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a3e5m"]
+albedo_texture = ExtResource("1_xus1o")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p466y"]
+
+[node name="CloroxWipes" type="StaticBody3D"]
+script = ExtResource("1_nsv1d")
+
+[node name="wipe" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.43, 0, 0, 0, 2.43, 0, 0, 0, 2.43, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_kekv5")
+mesh = SubResource("QuadMesh_qmkcc")
+
+[node name="hand" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.43, 0, 0, 0, 2.43, 0, 0, 0, 2.43, 0, 0, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_uqjc8")
+mesh = SubResource("QuadMesh_qmkcc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ad21e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_bsow3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+material_override = SubResource("StandardMaterial3D_a3e5m")
+mesh = SubResource("PlaneMesh_p466y")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_7imtg")
+volume_db = 5.0
+max_db = 6.0
+autoplay = true
+max_distance = 25.0
+bus = &"Dialogs"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

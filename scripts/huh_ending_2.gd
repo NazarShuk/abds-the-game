@@ -11,7 +11,7 @@ func _ready():
 		get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())
 	
 func go_back():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 func anim_back():
 	$CanvasLayer/AnimationPlayer.play("nein")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://p571hu5y0daf"]
 
 [ext_resource type="Script" uid="uid://dxykivp7r21cn" path="res://scripts/Achievements.gd" id="1_sbo0b"]
-[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="2_22jl3"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://fonts/Ldfcomicsans-jj7l.ttf" id="2_22jl3"]
 [ext_resource type="AudioStream" uid="uid://10f2ypovtuab" path="res://sounds/whoosh.mp3" id="3_sckoe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6280r"]

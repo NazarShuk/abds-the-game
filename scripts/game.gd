@@ -40,12 +40,12 @@ var players_singleton_required = -1
 
 const maps = {
 	"large": {
-		"scene": "res://school.tscn",
+		"scene": "res://scenes/school.tscn",
 		"icon": preload("res://textures/large map.png"),
 		"pacer": true
 	},
 	"small": {
-		"scene": "res://old_school.tscn",
+		"scene": "res://scenes/old_school.tscn",
 		"icon": preload("res://textures/small map.png"),
 		"pacer": false
 	}
@@ -157,7 +157,7 @@ func _on_network_session_failed(_steam_id: int, _reason: int, _connection_state:
 func _on_disconnected_from_server():
 	if !Game.did_finish:
 		print_rich("[color=red] disconnected from server with no ending")
-		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 func _on_book_collected(_amount):
 	if !multiplayer.is_server(): return
@@ -390,7 +390,7 @@ func spawn_players():
 	if !OS.has_feature("debug"):
 		await Game.sleep(3)
 	for pl_id in Game.players.keys():
-		var player = load("res://player.tscn").instantiate()
+		var player = load("res://scenes/player.tscn").instantiate()
 
 		player.set_multiplayer_authority(pl_id)
 		player.name = str(pl_id)
@@ -575,13 +575,13 @@ func set_singleton(deaths,books,ending : String, competitive_team_won = ""):
 	
 	#peer.close()
 	if ending == "normal":
-		get_tree().change_scene_to_packed.call_deferred(load("res://end.tscn"))
+		get_tree().change_scene_to_packed.call_deferred(load("res://scenes/end.tscn"))
 	elif ending == "worst":
-		get_tree().change_scene_to_packed.call_deferred(load("res://bad_end.tscn"))
+		get_tree().change_scene_to_packed.call_deferred(load("res://scenes/bad_end.tscn"))
 	elif ending == "perfect":
-		get_tree().change_scene_to_packed.call_deferred(load("res://perfect_end.tscn"))
+		get_tree().change_scene_to_packed.call_deferred(load("res://scenes/perfect_end.tscn"))
 	elif ending == "imp":
-		get_tree().change_scene_to_packed.call_deferred(load("res://impossible_end.tscn"))
+		get_tree().change_scene_to_packed.call_deferred(load("res://scenes/impossible_end.tscn"))
 	elif ending == "freaky":
 		var can_bossfight = false
 		
@@ -595,22 +595,22 @@ func set_singleton(deaths,books,ending : String, competitive_team_won = ""):
 								pass
 		
 		if !can_bossfight:
-			get_tree().change_scene_to_packed.call_deferred(load("res://huh_ending.tscn"))
+			get_tree().change_scene_to_packed.call_deferred(load("res://scenes/huh_ending.tscn"))
 		else:
 			get_tree().change_scene_to_packed.call_deferred(load("res://scenes/bossfight.tscn"))
 	elif ending == "you suck":
-		get_tree().change_scene_to_packed.call_deferred(load("res://worst_end.tscn"))
+		get_tree().change_scene_to_packed.call_deferred(load("res://scenes/worst_end.tscn"))
 	elif ending == "dumb":
-		get_tree().change_scene_to_packed.call_deferred(load("res://dumb_ahh_end.tscn"))
+		get_tree().change_scene_to_packed.call_deferred(load("res://scenes/dumb_ahh_end.tscn"))
 	elif ending == "disoriented":
-		get_tree().change_scene_to_packed.call_deferred(load("res://disoriented_end.tscn"))
+		get_tree().change_scene_to_packed.call_deferred(load("res://scenes/disoriented_end.tscn"))
 	elif ending == "competitive":
 		get_tree().change_scene_to_file.call_deferred("res://scenes/competitive_result.tscn")
 	elif ending.begins_with("leahy_time_"):
 		GlobalVars.leahy_time_rank = ending.replace("leahy_time_", "")
 		get_tree().change_scene_to_file.call_deferred("res://scenes/pizza_end.tscn")
 	else:
-		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 
 var current_pacer_target
@@ -879,7 +879,7 @@ func _on_bet_timer_timeout(overwrite : bool = false,won : bool = false):
 @rpc("any_peer","call_local")
 func spawn_dropped_item(pos,cloned_item,item_id):
 	if multiplayer.is_server():
-		var dropped_item = load("res://dropped_item.tscn").instantiate()
+		var dropped_item = load("res://scenes/dropped_item.tscn").instantiate()
 		add_child(dropped_item,true)
 		dropped_item.global_position = pos
 		dropped_item.item = item_id
@@ -903,7 +903,7 @@ func give_item_to_everyone(item_id):
 		get_node(str(pl)).choose_item.rpc_id(pl,item_id,true)
 
 func reload_game():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 @rpc("authority","call_local")
 func escape_mode():

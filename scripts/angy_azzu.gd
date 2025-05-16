@@ -7,4 +7,4 @@ func _process(delta):
 		get_viewport().warp_mouse($CanvasLayer/TextureRect2.global_position + Vector2(80,78))
 
 func end():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")

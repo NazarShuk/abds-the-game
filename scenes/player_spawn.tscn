@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccrw2mwm3obt1"]
+
+[ext_resource type="Script" uid="uid://da35th0k52diw" path="res://scripts/hideble_object.gd" id="1_aw6wm"]
+[ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://textures/player.png" id="1_wdr2h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2v55y"]
+albedo_texture = ExtResource("1_wdr2h")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r502t"]
+
+[node name="PlayerSpawn" type="Node3D" groups=["player_spawn"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78315, 0, -37.0128)
+script = ExtResource("1_aw6wm")
+node_to_hide = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+material_override = SubResource("StandardMaterial3D_2v55y")
+mesh = SubResource("PlaneMesh_r502t")

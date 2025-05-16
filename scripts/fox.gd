@@ -1,6 +1,6 @@
 extends Teacher
 
-const DROPPED_MTNDEW = preload("res://dropped_mtndew.tscn")
+const DROPPED_MTNDEW = preload("res://scenes/dropped_mtndew.tscn")
 
 @onready var unstucker = $Unstucker
 @export var mute : bool

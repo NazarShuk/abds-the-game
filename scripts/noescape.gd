@@ -9,7 +9,7 @@ func _ready():
 	initialSize = DisplayServer.window_get_size()
 
 func _on_video_stream_player_finished():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 	
 	
 	

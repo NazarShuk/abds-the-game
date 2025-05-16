@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bisqhfkbyp0ql"]
+
+[ext_resource type="Script" uid="uid://da35th0k52diw" path="res://scripts/hideble_object.gd" id="1_hqcxg"]
+[ext_resource type="Texture2D" uid="uid://cop2rccne3feg" path="res://textures/ela book.png" id="1_p055g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efm3w"]
+albedo_color = Color(0, 1, 1, 1)
+albedo_texture = ExtResource("1_p055g")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hmfb7"]
+
+[node name="Node3D" type="Node3D" groups=["book_spawn"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1069, 1.27832, -16.746)
+script = ExtResource("1_hqcxg")
+node_to_hide = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 100, 0)
+material_override = SubResource("StandardMaterial3D_efm3w")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_hmfb7")

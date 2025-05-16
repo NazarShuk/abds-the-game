@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://vd1k4fap01bk"]
 
 [ext_resource type="Script" uid="uid://ppvhxp37y6w7" path="res://scripts/clorox_pickup.gd" id="1_hpsrw"]
-[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="1_ylm82"]
+[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://textures/clorox wipes.png" id="1_ylm82"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_rscui"]
 

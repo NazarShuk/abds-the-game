@@ -12,14 +12,14 @@ config_version=5
 
 config/name="Alostn Bridge Diddle School"
 config/description="ABDS the game"
-run/main_scene="res://logos.tscn"
+run/main_scene="res://scenes/logos.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 run/max_fps=60
 boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/show_image=false
 boot_splash/fullsize=false
-boot_splash/image="res://azzuNotFound.png"
-config/icon="res://azzuNotFound.png"
+boot_splash/image="res://textures/azzuNotFound.png"
+config/icon="res://textures/azzuNotFound.png"
 config/windows_native_icon="res://favicon.ico"
 
 [audio]

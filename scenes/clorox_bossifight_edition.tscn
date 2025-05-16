@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://c2vmxxh2ektax"]
 
 [ext_resource type="Script" uid="uid://bggl3c7bfsntm" path="res://scripts/clorox_bossifight_edition.gd" id="1_u618g"]
-[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://clorox wipes.png" id="2_ojfjk"]
-[ext_resource type="AudioStream" uid="uid://byyn5831b132x" path="res://clorox.mp3" id="3_iccb5"]
+[ext_resource type="Texture2D" uid="uid://dq2ibmuiqrty" path="res://textures/clorox wipes.png" id="2_ojfjk"]
+[ext_resource type="AudioStream" uid="uid://byyn5831b132x" path="res://sounds/clorox.mp3" id="3_iccb5"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_uidvk"]
 

@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Teacher
 
-const WATER_PARTICLES = preload("res://water_particles.tscn")
+const WATER_PARTICLES = preload("res://scenes/water_particles.tscn")
 
 const push_force = 1.0
 
@@ -34,12 +34,12 @@ func _on_area_entered(area : Area3D):
 		water.queue_free()
 	elif area.name == "Door":
 		area.get_parent().set_open.rpc(true)
-		play_sound("res://door_open.mp3")
+		play_sound("res://sounds/door_open.mp3")
 
 func _on_area_exited(area : Area3D):
 	if area.name == "Door":
 		area.get_parent().set_open.rpc(false)
-		play_sound("res://door_close.mp3")
+		play_sound("res://sounds/door_close.mp3")
 
 func _physics_process(_delta: float) -> void:
 	if multiplayer.is_server():
@@ -119,7 +119,7 @@ func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dial
 func play_sound_rpc(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
 	if !multiplayer.is_server(): return
 	
-	var a = load("res://player_sound.tscn").instantiate()
+	var a = load("res://scenes/player_sound.tscn").instantiate()
 	get_parent().add_child(a,true)
 	
 	var audio_stream : AudioStream = load(stream_path)

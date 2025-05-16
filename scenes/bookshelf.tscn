@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj1a61mbxbdva"]
+
+[ext_resource type="Texture2D" uid="uid://dyralb4qcsj31" path="res://textures/seamless-pattern-with-bookshelves-nice-stack-of-books-texture-for-book-store-library-school-vector.jpg" id="1_w0xkt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l32fm"]
+albedo_texture = ExtResource("1_w0xkt")
+uv1_scale = Vector3(0.77, 0.77, 0.77)
+uv1_offset = Vector3(0, 0.155, 0)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_world_triplanar = true
+
+[node name="Bookshelf" type="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.751514, 0)
+use_collision = true
+size = Vector3(1, 1.5, 1)
+material = SubResource("StandardMaterial3D_l32fm")

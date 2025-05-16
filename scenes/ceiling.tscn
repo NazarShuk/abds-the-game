@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt0ilj3jsmx21"]
+
+[ext_resource type="Material" uid="uid://8yareg4uwv67" path="res://textures/school.tres" id="1_als54"]
+
+[node name="CSGBox3D" type="CSGBox3D" groups=["ceiling"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3839, 3.12499, -10.8415)
+layers = 4
+size = Vector3(76.5219, 0.183838, 251.495)
+material = ExtResource("1_als54")

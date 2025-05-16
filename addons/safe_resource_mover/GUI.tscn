@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2diw32x4wc8f"]
+
+[ext_resource type="Script" uid="uid://re7dakmcu840" path="res://addons/safe_resource_mover/gui.gd" id="1_35d6a"]
+
+[node name="Gui" type="Control" node_paths=PackedStringArray("input", "submit_btn", "result")]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_35d6a")
+input = NodePath("LineEdit")
+submit_btn = NodePath("Button")
+result = NodePath("Label")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_right = 233.0
+offset_bottom = 31.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 233.0
+offset_right = 286.0
+offset_bottom = 31.0
+text = "check"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 286.0
+offset_bottom = 159.0

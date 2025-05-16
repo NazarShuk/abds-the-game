@@ -11,7 +11,7 @@ func _ready():
 			if label.text == "freaky ending":
 				label.text = "𝓯𝓻𝓮𝓪𝓴𝔂 ending"
 			label.add_theme_color_override("font_color",Color.BLACK)
-			label.add_theme_font_override("font",load("res://Ldfcomicsans-jj7l.ttf"))
+			label.add_theme_font_override("font",load("res://fonts/Ldfcomicsans-jj7l.ttf"))
 			label.add_theme_font_size_override("font_size",32)
 			
 			achievement_list.add_child(label)
@@ -33,7 +33,7 @@ func _ready():
 		skin_list.set_item_disabled(5,true)
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 func _on_item_list_item_selected(index):
 	Achievements.picked_skin = index

@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://dfj2dgr8c3bpt"]
+
+[ext_resource type="Script" uid="uid://cxnufwl2htq5w" path="res://scripts/landmine.gd" id="1_q1mws"]
+[ext_resource type="Texture2D" uid="uid://sq46qgcbi57w" path="res://textures/banana.png" id="1_xojxt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2g3b"]
+transparency = 1
+albedo_texture = ExtResource("1_xojxt")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_08p7a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_psole"]
+size = Vector3(2.87207, 2.48438, 2.52051)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_olxoe"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Landmine" type="Area3D" groups=["landmine"]]
+script = ExtResource("1_q1mws")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0232404, 0)
+material_override = SubResource("StandardMaterial3D_a2g3b")
+mesh = SubResource("PlaneMesh_08p7a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_psole")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_olxoe")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

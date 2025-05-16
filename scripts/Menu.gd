@@ -31,4 +31,4 @@ func toggle_menu():
 func _on_disconnect_btn_pressed():
 	$Main/DisconnectBtn.disabled = true
 	get_tree().paused = false
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")

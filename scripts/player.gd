@@ -434,7 +434,7 @@ func _on_area_3d_area_entered(area):
 			die("misuraca")
 	elif area.name == "Door":
 		area.get_parent().set_open.rpc(true)
-		play_sound("res://door_open.mp3")
+		play_sound("res://sounds/door_open.mp3")
 		
 	elif area.is_in_group("pacer target"):
 		parent.check_if_finished_pacer_lap.rpc(name,area.get_path())
@@ -480,7 +480,7 @@ func _on_area_3d_area_exited(area):
 	
 	if area.name == "Door":
 		area.get_parent().set_open.rpc(false)
-		play_sound("res://door_close.mp3")
+		play_sound("res://sounds/door_close.mp3")
 
 
 func _on_timer_timeout():
@@ -664,7 +664,7 @@ func pick_random_weighted(items_chances: Dictionary) -> Variant:
 @rpc("any_peer", "call_local")
 func spawn_clorox(pos, rot, launcher):
 	if multiplayer.is_server():
-		var packed_clorox = load("res://Clorox Wipes.tscn")
+		var packed_clorox = load("res://scenes/Clorox Wipes.tscn")
 		var clorox: StaticBody3D = packed_clorox.instantiate()
 		
 		get_parent().add_child(clorox)
@@ -680,7 +680,7 @@ func spawn_clorox(pos, rot, launcher):
 func shart():
 	var sp = AudioStreamPlayer3D.new()
 
-	sp.stream = load("res://shart.mp3")
+	sp.stream = load("res://sounds/shart.mp3")
 	sp.bus = "Dialogs"
 	get_parent().add_child(sp)
 	sp.global_position = global_position
@@ -795,7 +795,7 @@ func _on_anti_wall_walk_timeout():
 func squeak():
 	var sp = AudioStreamPlayer.new()
 
-	sp.stream = load("res://squeak.mp3")
+	sp.stream = load("res://sounds/squeak.mp3")
 	sp.bus = "Dialogs"
 	get_parent().add_child(sp)
 	sp.play()
@@ -901,7 +901,7 @@ func _on_buy_book_pressed():
 		Achievements.books_collected += 1
 		Achievements.save_all()
 		
-		play_sound("res://money.mp3",0,"shop")
+		play_sound("res://sounds/money.mp3",0,"shop")
 
 @rpc("any_peer","call_local")
 func buy_book_rpc(pname, id):
@@ -960,7 +960,7 @@ func play_sound(stream_path : String,volume_db : float = 0, bus : String = "Dial
 func play_sound_rpc(stream_path : String,volume_db : float = 0, bus : String = "Dialogs", max_distance : float = 20,pos = Vector3()):
 	if !multiplayer.is_server(): return
 	
-	var a = load("res://player_sound.tscn").instantiate()
+	var a = load("res://scenes/player_sound.tscn").instantiate()
 	get_parent().add_child(a,true)
 	
 	var audio_stream : AudioStream = load(stream_path)
@@ -1261,7 +1261,7 @@ func movement_function(delta):
 								if !$Banana.is_stopped():
 									$Banana.start($Banana.time_left + 0.5)
 								
-								play_sound("res://parry-ultrakill.mp3")
+								play_sound("res://sounds/parry-ultrakill.mp3")
 								
 					velocity.x *= 0.99
 					velocity.z *= 0.99
@@ -1304,7 +1304,7 @@ func throw_item(item_id):
 @rpc("any_peer","call_local")
 func spawn_smoke(pos):
 	if multiplayer.is_server():
-		var smoke = load("res://smoke wall.tscn").instantiate()
+		var smoke = load("res://scenes/smoke wall.tscn").instantiate()
 		get_tree().get_first_node_in_group("school_navigation").add_child(smoke,true)
 		smoke.global_position = pos
 		smoke.navigation_mesh = get_tree().get_first_node_in_group("school_navigation")
@@ -1312,7 +1312,7 @@ func spawn_smoke(pos):
 @rpc("any_peer","call_local")
 func spawn_puddle(pos):
 	if multiplayer.is_server():
-		var puddle = load("res://puddle.tscn").instantiate()
+		var puddle = load("res://scenes/puddle.tscn").instantiate()
 		get_parent().add_child(puddle,true)
 		puddle.global_position = pos
 
@@ -1441,7 +1441,7 @@ func interaction_functions():
 				$CanvasLayer/Control/toilet.show()
 				global_position = farthest_obj.global_position
 				await Game.sleep(2)
-				play_sound("res://flush.mp3",5)
+				play_sound("res://sounds/flush.mp3",5)
 			if collider:
 				if collider.is_in_group("blackboard"):
 					await play_interact_anim()
@@ -1484,13 +1484,13 @@ func item_use_functions():
 		elif get_selected_item() == 6:
 			remove_item(selected_slot)
 			add_speed_boost(2, 3)
-			play_sound("res://redbull.mp3")
+			play_sound("res://sounds/redbull.mp3")
 		elif get_selected_item() == 7:
 			
 			if hand.get_node("Bucket 7/Bucket/water").visible:
 				hand.get_node("Bucket 7/Bucket/water").visible = false
 				remove_item(selected_slot)
-				play_sound("res://water.mp3")
+				play_sound("res://sounds/water.mp3")
 				
 				spawn_puddle.rpc(Vector3(global_position.x,0,global_position.z))
 		elif get_selected_item() == 8:
@@ -1502,7 +1502,7 @@ func item_use_functions():
 		elif get_selected_item() == 9:
 			remove_item(selected_slot)
 			spawn_smoke.rpc(global_position)
-			play_sound("res://fire extinguisher.mp3")
+			play_sound("res://sounds/fire extinguisher.mp3")
 		elif get_selected_item() == 10:
 			remove_item(selected_slot)
 			add_speed_boost(3,5)

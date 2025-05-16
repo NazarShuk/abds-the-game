@@ -9,7 +9,7 @@ var school : Node3D
 
 var do_bossfight = false
 
-const PART2 = preload("res://bossfight_part2.tscn")
+const PART2 = preload("res://scenes/bossfight_part2.tscn")
 @onready var evil_darel: EvilDarel = $EvilDarel
 
 var multiplier = 1

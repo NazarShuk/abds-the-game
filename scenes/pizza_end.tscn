@@ -3,7 +3,7 @@
 [ext_resource type="AudioStream" uid="uid://b5ac70vcvn86h" path="res://sounds/rank_screen.mp3" id="1_1p38w"]
 [ext_resource type="Script" uid="uid://32lo3ik2y4g5" path="res://scripts/pizza_end.gd" id="1_hi3bu"]
 [ext_resource type="Texture2D" uid="uid://c827yx2dosybs" path="res://textures/rank-Recovered.png" id="2_kd4fv"]
-[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://Ldfcomicsans-jj7l.ttf" id="3_gcay3"]
+[ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://fonts/Ldfcomicsans-jj7l.ttf" id="3_gcay3"]
 [ext_resource type="AudioStream" uid="uid://cwf058yjsivpj" path="res://sounds/rank_thing.mp3" id="4_iummc"]
 [ext_resource type="Texture2D" uid="uid://o7epm8bl1c26" path="res://textures/ranks.png" id="4_wk8yu"]
 

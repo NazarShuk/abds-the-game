@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://btj7odxogilms"]
+
+[ext_resource type="Script" uid="uid://6hp4hixxnnhf" path="res://scripts/Vending Machine.gd" id="1_033me"]
+[ext_resource type="Texture2D" uid="uid://dcouwnrkmlr4s" path="res://textures/vending machine.png" id="1_asg5w"]
+[ext_resource type="AudioStream" uid="uid://b5a1jtn0e8tpf" path="res://sounds/vending_machine.wav" id="3_v4ikw"]
+[ext_resource type="AudioStream" uid="uid://b8p7qhqxujv2s" path="res://sounds/vending_machine_beep.wav" id="4_tcev1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_boo68"]
+albedo_texture = ExtResource("1_asg5w")
+uv1_scale = Vector3(3.145, 2, 1)
+uv1_offset = Vector3(0.91, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_17ab0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6xbun"]
+size = Vector3(1.38281, 2.80127, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8rito"]
+properties/0/path = NodePath(".:uses_left")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="VendingMachine" type="StaticBody3D" groups=["vending_machines"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.810454, 0)
+script = ExtResource("1_033me")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["vending_machine"]]
+transform = Transform3D(1.405, 0, 0, 0, 2.81, 0, 0, 0, 1, 0, 0.597213, 0)
+material_override = SubResource("StandardMaterial3D_boo68")
+mesh = SubResource("BoxMesh_17ab0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["vending_machine"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.597412, 0)
+shape = SubResource("BoxShape3D_6xbun")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+visible = false
+light_color = Color(1, 0, 0, 1)
+light_energy = 16.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8rito")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_v4ikw")
+max_distance = 20.0
+bus = &"Dialogs"
+
+[node name="beep" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_tcev1")
+max_distance = 20.0
+bus = &"Dialogs"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

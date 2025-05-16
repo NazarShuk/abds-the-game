@@ -39,21 +39,21 @@ func _on_sfx_slider_changed(value):
 	
 	if cangoof:
 		var audio = AudioStreamPlayer.new()
-		audio.stream = load("res://goofball.mp3")
+		audio.stream = load("res://sounds/goofball.mp3")
 		audio.bus = "Dialogs"
 		add_child(audio)
 		audio.play(0.19)
 		cangoof = false
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 func _on_goofball_timer_timeout():
 	cangoof = true
 
 
 func _on_button_2_pressed():
-		get_tree().change_scene_to_file.call_deferred("res://noescape.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/noescape.tscn")
 
 func _on_better_lighting_toggle_toggled(toggled_on):
 	Settings.better_lighting = toggled_on

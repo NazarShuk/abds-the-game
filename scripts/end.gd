@@ -29,11 +29,11 @@ func _exit_tree() -> void:
 	GuiManager.reset_cursor()
 
 func _on_timer_timeout():
-	get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 func _input(_event):
 	if Input.is_action_just_pressed("escape"):
-		get_tree().change_scene_to_file.call_deferred("res://logos.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")
 
 func submit_to_leaderboard():
 	if OS.has_feature("debug"): return

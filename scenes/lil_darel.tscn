@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7aceaiulp2j6"]
+
+[ext_resource type="Texture2D" uid="uid://jtxxltvntbtu" path="res://models/lil_darel.png" id="1_00po0"]
+[ext_resource type="Script" uid="uid://by1k4e6yn5dpj" path="res://scripts/lil_darel.gd" id="1_pmb7i"]
+[ext_resource type="AudioStream" uid="uid://ddqullgs6xhpe" path="res://sounds/screams.mp3" id="3_y6kxt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jx7ai"]
+size = Vector3(1, 1, 0.59375)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p2733"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("1_00po0")
+
+[sub_resource type="QuadMesh" id="QuadMesh_bp6k4"]
+
+[node name="LilDarel" type="CharacterBody3D" groups=["lil darel"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_pmb7i")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_jx7ai")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_p2733")
+mesh = SubResource("QuadMesh_bp6k4")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+use_3d_avoidance = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 25.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_y6kxt")
+autoplay = true
+max_distance = 50.0
+bus = &"Dialogs"
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_jx7ai")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

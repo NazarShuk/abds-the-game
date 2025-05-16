@@ -10,10 +10,10 @@ func _ready() -> void:
 		_on_host_local_pressed()
 
 func _on_achievements_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://achievements.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/achievements.tscn")
 
 func _on_settings_pressed():
-	get_tree().change_scene_to_file.call_deferred("res://settings.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/settings.tscn")
 
 func _on_play_pressed():
 	host_lobby()
