@@ -1,7 +1,7 @@
 extends Node3D
 class_name Bossfight
 
-const SCHOOL = preload("res://school.tscn")
+const SCHOOL = preload("res://scenes/school.tscn")
 @onready var music: AudioStreamPlayer = $music
 
 var school : Node3D

@@ -48,6 +48,11 @@ const maps = {
 		"scene": "res://scenes/old_school.tscn",
 		"icon": preload("res://textures/small map.png"),
 		"pacer": false
+	},
+	"tutorial": {
+		"scene": "res://scenes/tutorial_map.tscn",
+		"icon": preload("res://textures/icon.svg"),
+		"pacer": false,
 	}
 }
 @export var selected_map = "large"
