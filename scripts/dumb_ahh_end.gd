@@ -32,7 +32,7 @@ func _exit_tree() -> void:
 	GuiManager.reset_cursor()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(delta):
 	if audio_player:
 		var capture : AudioEffectCapture = AudioServer.get_bus_effect(2,0)
 		var buff : PackedVector2Array = capture.get_buffer(capture.get_frames_available())
@@ -49,8 +49,8 @@ func _process(_delta):
 		$AzzuHandle/TextureRect.scale.x = 1 - (maxAmplitude / 5)
 		$AzzuHandle/TextureRect.scale.y = 1 + (maxAmplitude / 5)
 	
-	$ColorRect.color = lerp($ColorRect.color,target_bg_color,0.01)
-	$bg.pitch_scale = lerp($bg.pitch_scale,float(target_bg_pitch),0.005)
+	$ColorRect.color = lerp($ColorRect.color,target_bg_color, delta)
+	$bg.pitch_scale = lerp($bg.pitch_scale,float(target_bg_pitch), delta / 2)
 	
 
 func _on_http_request_request_completed(result, _response_code, _headers, body):

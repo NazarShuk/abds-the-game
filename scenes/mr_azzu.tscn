@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dpyou6w048r5m"]
 
 [ext_resource type="Script" uid="uid://cugfd0bqgtud8" path="res://scripts/azzu.gd" id="1_s00pa"]
-[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/RAY_1092_crop-removebg-preview.png" id="2_q42rl"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/teacher_azzu.png" id="2_q42rl"]
 [ext_resource type="AudioStream" uid="uid://bwlexvmpwptwm" path="res://sounds/download_01.mp3" id="3_r52kj"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="4_tv4dh"]
 
@@ -33,7 +33,7 @@ properties/3/path = NodePath(".:target_player_name")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Mr_Azzu" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_azzu"]]
+[node name="Mr_Azzu" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_azzu", "teachers"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17

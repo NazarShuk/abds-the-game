@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2k7rhvtilj63"]
+
+[ext_resource type="Script" uid="uid://bf8ervbr2rkvr" path="res://scripts/evil_neil.gd" id="1_yhsvs"]
+[ext_resource type="Texture2D" uid="uid://bsi3o7m8w5oy1" path="res://textures/neil_stare.JPG" id="2_rg84a"]
+[ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_k1jsn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rg84a"]
+size = Vector3(0.0175781, 0.865234, 0.0390625)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k1jsn"]
+size = Vector3(1.12891, 0.964357, 0.706787)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_k1jsn"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:target_player_name")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="EvilNeil" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_yhsvs")
+nav_agent = NodePath("NavigationAgent3D")
+area_3d = NodePath("EvilNeil")
+DEFAULT_SPEED = 7.0
+speed = 7.0
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+use_3d_avoidance = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.329195, 0)
+pixel_size = 0.001
+shaded = true
+texture = ExtResource("2_rg84a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_rg84a")
+
+[node name="EvilNeil" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EvilNeil"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.374757, 0)
+shape = SubResource("BoxShape3D_k1jsn")
+
+[node name="Unstucker" parent="." instance=ExtResource("3_k1jsn")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_k1jsn")

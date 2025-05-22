@@ -1,21 +1,34 @@
-[gd_scene load_steps=230 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=247 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" uid="uid://cr71283wvm1cg" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://textures/player.png" id="2_q3hoo"]
+[ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="2_qmsq4"]
+[ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="3_5vs2b"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
+[ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="4_a7i4v"]
+[ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="5_b5l0c"]
 [ext_resource type="AudioStream" uid="uid://4ug2jt2muw6i" path="res://sounds/walk.mp3" id="5_muu2l"]
+[ext_resource type="Script" uid="uid://ccheuq747fx8o" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="6_2a33p"]
 [ext_resource type="Script" uid="uid://bjmvegw1rbswp" path="res://scripts/shake_control.gd" id="6_8er58"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://fonts/Ldfcomicsans-jj7l.ttf" id="6_l1x2u"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://textures/udv-WLKo_400x400.jpg" id="7_mv5hh"]
+[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="7_reqs7"]
+[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="8_2yjfb"]
 [ext_resource type="AudioStream" uid="uid://d2e0x50n80346" path="res://sounds/jumpscare-154489 (1)_01.mp3" id="8_4ilia"]
 [ext_resource type="VideoStream" uid="uid://c670ocd6070mm" path="res://models/jumpscare.ogv" id="9_7mdnm"]
+[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="9_dnnjp"]
 [ext_resource type="Script" uid="uid://c7iddd72t5olk" path="res://scripts/inventory_ui.gd" id="10_777lu"]
+[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="10_wqna8"]
 [ext_resource type="Script" uid="uid://bjjy1e2fcf8np" path="res://scripts/collected_books_label.gd" id="11_2xmp4"]
+[ext_resource type="Texture2D" uid="uid://bkko8hh2qdiq0" path="res://textures/leahy fact.png" id="11_jx8is"]
+[ext_resource type="Script" uid="uid://cayou08qvockf" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="11_l7gmo"]
 [ext_resource type="Script" uid="uid://dsi2h6glv83gc" path="res://scripts/tv.gd" id="12_fxeha"]
+[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="12_kft7l"]
 [ext_resource type="Texture2D" uid="uid://bwegysvwn7ypj" path="res://textures/tv/default.png" id="12_mo4yx"]
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://sounds/shop.mp3" id="12_u07an"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://textures/the shop.png" id="12_xfb3j"]
+[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="13_2s4os"]
 [ext_resource type="Texture2D" uid="uid://dqvqe10pt7j2x" path="res://textures/tv/banana.png" id="13_a3yed"]
 [ext_resource type="Texture2D" uid="uid://bk115vrsppgoa" path="res://textures/tv/static.png" id="13_wka5j"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://textures/mtndew.png" id="14_sfn8x"]
@@ -72,6 +85,7 @@
 [ext_resource type="AudioStream" uid="uid://gf4ovd7mf66p" path="res://sounds/parry-ultrakill.mp3" id="54_hj1a3"]
 [ext_resource type="Script" uid="uid://ca5ckveogmge1" path="res://scripts/gainy_fact.gd" id="55_feeoa"]
 [ext_resource type="Script" uid="uid://4eptkc5h7qvv" path="res://scripts/skibidiCamera.gd" id="64_5sp6g"]
+[ext_resource type="VideoStream" uid="uid://b55xw6bkj2o0u" path="res://video/neil_kill_2.ogv" id="65_5vs2b"]
 [ext_resource type="AudioStream" uid="uid://bt1amrersr6lj" path="res://sounds/pluck.mp3" id="70_ym00c"]
 [ext_resource type="VideoStream" uid="uid://bifx8y5anihia" path="res://video/soup_dance.ogv" id="73_feeoa"]
 [ext_resource type="Script" uid="uid://drrwh2d1pt30e" path="res://scripts/emotes.gd" id="73_m6nxt"]
@@ -83,6 +97,45 @@
 [ext_resource type="AudioStream" uid="uid://c6setym4camlr" path="res://sounds/focus.mp3" id="80_cy2ki"]
 [ext_resource type="AudioStream" uid="uid://bvi0vvhkwnje7" path="res://sounds/lobotomy.mp3" id="82_7c55y"]
 [ext_resource type="AudioStream" uid="uid://4smsew31ujv7" path="res://sounds/flashbang.mp3" id="83_hoal8"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_2em0j"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("6_2a33p")
+pre_blur_processor_stage = ExtResource("5_b5l0c")
+camera_rotation_component = ExtResource("3_5vs2b")
+camera_movement_component = ExtResource("2_qmsq4")
+object_movement_component = ExtResource("4_a7i4v")
+debug = false
+metadata/_custom_type_script = "uid://ccheuq747fx8o"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_qe2k6"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("11_l7gmo")
+tile_max_x_stage = ExtResource("12_kft7l")
+tile_max_y_stage = ExtResource("13_2s4os")
+construct_stage = ExtResource("8_2yjfb")
+neighbor_max_stage = ExtResource("9_dnnjp")
+blur_stage = ExtResource("7_reqs7")
+overlay_stage = ExtResource("10_wqna8")
+perpen_error_threshold = 0.5
+sample_step_multiplier = 8
+step_exponent_modifier = 1.0
+JFA_pass_count = 3
+debug = false
+metadata/_custom_type_script = "uid://cayou08qvockf"
+
+[sub_resource type="Compositor" id="Compositor_edwuo"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2em0j"), SubResource("CompositorEffect_qe2k6")])
 
 [sub_resource type="Animation" id="Animation_vihdy"]
 length = 0.001
@@ -328,39 +381,39 @@ _data = {
 albedo_texture = ExtResource("3_rutws")
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8c5nr"]
-properties/0/path = NodePath(".:position")
+properties/0/path = NodePath("nametag:text")
 properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:visible")
 properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("nametag:text")
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:steam_name")
 properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath(".:visible")
+properties/2/replication_mode = 2
+properties/3/path = NodePath("walking:volume_db")
 properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath(".:steam_name")
+properties/3/replication_mode = 2
+properties/4/path = NodePath("walking:pitch_scale")
 properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath("walking:volume_db")
+properties/4/replication_mode = 2
+properties/5/path = NodePath(".:is_dead")
 properties/5/spawn = true
-properties/5/replication_mode = 1
-properties/6/path = NodePath("walking:pitch_scale")
+properties/5/replication_mode = 2
+properties/6/path = NodePath("CollisionShape3D:disabled")
 properties/6/spawn = true
-properties/6/replication_mode = 1
-properties/7/path = NodePath(".:is_dead")
+properties/6/replication_mode = 2
+properties/7/path = NodePath(".:phone_open")
 properties/7/spawn = true
 properties/7/replication_mode = 2
-properties/8/path = NodePath("CollisionShape3D:disabled")
+properties/8/path = NodePath(".:pending_suspension")
 properties/8/spawn = true
 properties/8/replication_mode = 2
-properties/9/path = NodePath(".:phone_open")
+properties/9/path = NodePath(".:player_position")
 properties/9/spawn = true
-properties/9/replication_mode = 2
-properties/10/path = NodePath(".:pending_suspension")
+properties/9/replication_mode = 1
+properties/10/path = NodePath(".:player_rotation")
 properties/10/spawn = true
-properties/10/replication_mode = 2
+properties/10/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofe5t"]
 shader = ExtResource("20_kprs4")
@@ -395,9 +448,6 @@ shader_parameter/SecondaryAlpha = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oicg1"]
 bg_color = Color(0.2484, 0.2484, 0.2484, 1)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xxveq"]
-load_path = "res://.godot/imported/leahy fact.png-268b6c01dbc42bf7ba54e6f19cc45a57.ctex"
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bgiyt"]
 viewport_path = NodePath("SubViewport")
@@ -1766,6 +1816,39 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(-0.44855, -1.12225, 0.280998)]
 }
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HandOrientation/Hand:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.5, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HandOrientation/Hand:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.5, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HandOrientation/Hand:scale:z")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.500001, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_xktpx"]
 resource_name = "pickup"
@@ -1794,6 +1877,39 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(-0.44855, -1.12225, 1.12748), Vector3(-0.44855, -1.12225, 0.280998), Vector3(-0.44855, -1.12225, 0.280998)]
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HandOrientation/Hand:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.001, -0.15, 0, 0.1, 0.00751935, 0.5, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.2)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HandOrientation/Hand:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.001, -0.15, 0, 0.1, -0.00528087, 0.5, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.2)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HandOrientation/Hand:scale:z")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.001, -0.15, 0, 0.1, 0.00111924, 0.500001, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.2)
 }
 
 [sub_resource type="Animation" id="Animation_ulcmt"]
@@ -1882,11 +1998,18 @@ input_1/auto_advance = false
 input_1/break_loop_at_end = false
 input_1/reset = true
 
+[sub_resource type="Curve" id="Curve_qmsq4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_rfxu8"]
+fadeout_time = 0.3
+fadeout_curve = SubResource("Curve_qmsq4")
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_3tsj5"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4knu2"]
+graph_offset = Vector2(-22.9092, 216.463)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_c30ru")
 "nodes/Animation 3/position" = Vector2(280, 420)
 nodes/Static/node = SubResource("AnimationNodeAnimation_v72pr")
@@ -2370,13 +2493,10 @@ controls_text = NodePath("CanvasLayer/Control/ControlsText")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43934, -0.0894957)
 target_position = Vector3(0, 0, -2.5)
 
-[node name="Camera target" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 cull_mask = 1044477
-far = 250.0
+compositor = SubResource("Compositor_edwuo")
 
 [node name="interact_hand" type="Sprite3D" parent="Camera3D"]
 transform = Transform3D(0.0932012, -0.0265374, -0.024684, 0.0333998, 0.089332, 0.0300706, 0.0140707, -0.0362706, 0.092122, 0.105, -0.065, -0.275)
@@ -2409,6 +2529,7 @@ replication_config = SubResource("SceneReplicationConfig_8c5nr")
 shape = SubResource("CapsuleShape3D_tu1hv")
 
 [node name="walking" type="AudioStreamPlayer3D" parent="."]
+visible = false
 stream = ExtResource("5_muu2l")
 autoplay = true
 bus = &"Dialogs"
@@ -2482,6 +2603,7 @@ autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
+visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -2596,7 +2718,7 @@ offset_left = 33.0
 offset_top = 160.0
 offset_right = 309.0
 offset_bottom = 301.0
-texture = SubResource("CompressedTexture2D_xxveq")
+texture = ExtResource("11_jx8is")
 script = ExtResource("52_cn57o")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/LeahyApproaching"]
@@ -3934,6 +4056,17 @@ stream = ExtResource("36_rou35")
 expand = true
 bus = &"Non Mute"
 
+[node name="jumpscare8" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("65_5vs2b")
+expand = true
+bus = &"Non Mute"
+
 [node name="darel death" type="ColorRect" parent="CanvasLayer/Control/Died thing"]
 visible = false
 layout_mode = 1
@@ -4098,7 +4231,7 @@ handle_input_locally = false
 scaling_3d_scale = 0.25
 gui_disable_input = true
 size = Vector2i(174, 171)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/GainyFact/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
@@ -4281,6 +4414,8 @@ script = ExtResource("51_vep60")
 [node name="Menu" type="ColorRect" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
 process_mode = 3
 visible = false
+z_index = 999
+z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4357,6 +4492,7 @@ top_level = true
 
 [node name="Hand" type="Node3D" parent="HandOrientation"]
 transform = Transform3D(0.262506, 0.127588, -0.405971, 0.124941, 0.432868, 0.21683, 0.406793, -0.215283, 0.195379, 0.513, 0.3, -0.78)
+visible = false
 
 [node name="Fruit Snacks" type="Node3D" parent="HandOrientation/Hand"]
 visible = false
@@ -4436,13 +4572,13 @@ transform = Transform3D(-1.31134e-08, 0.3, 0, -0.3, -1.31134e-08, 0, 0, 0, 0.3, 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="HandOrientation"]
 replication_config = SubResource("SceneReplicationConfig_ym00c")
 
+[node name="MultiplayerItem" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.433013, 0.25, 0, -0.25, 0.433013, 0.312539, -0.150203, -0.0858938)
+
 [node name="HandAnim" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_6yh5v")
 }
-playback_auto_capture_transition_type = 6
-playback_auto_capture_ease_type = 2
-playback_default_blend_time = 0.1
 
 [node name="HandTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_4knu2")
@@ -4593,12 +4729,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 visible = false
 
 [node name="hand" type="Sprite3D" parent="Phone"]
-transform = Transform3D(0.0939693, -0.034202, -2.31677e-10, 0.0319303, 0.0877279, 0.0358368, -0.0122569, -0.0336756, 0.093358, 0.1, 0.364, -0.294)
+transform = Transform3D(0.0939693, -0.034202, 1.20973e-09, 0.0319303, 0.0877279, 0.0358368, -0.0122569, -0.0336756, 0.093358, 0.1, 0.364, -0.294)
 pixel_size = 0.001
 texture = ExtResource("53_0cocr")
 
 [node name="phone" type="Sprite3D" parent="Phone/hand"]
-transform = Transform3D(8.92708, 3.2492, 4.12902e-06, -3.03338, 8.33415, -3.4045, -1.16441, 3.19918, 8.86901, -0.265, 1.205, 0.215)
+transform = Transform3D(8.92708, 3.2492, 3.95604e-06, -3.03338, 8.33415, -3.4045, -1.16441, 3.19918, 8.86901, -0.265, 1.205, 0.215)
 pixel_size = 0.001
 texture_filter = 0
 texture = ExtResource("76_ee2o4")

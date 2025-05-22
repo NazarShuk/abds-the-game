@@ -85,7 +85,7 @@ func _exit_tree() -> void:
 
 func load_main_game():
 	multiplayer.multiplayer_peer = peer
-	get_tree().change_scene_to_packed.call_deferred(GlobalVars.game_scene)
+	get_tree().change_scene_to_file.call_deferred("res://scenes/game.tscn")
 
 func show_transition():
 	$CanvasLayer/book.show()

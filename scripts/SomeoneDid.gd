@@ -7,12 +7,12 @@ var shake_strength = 5
 func _ready():
 	Game.on_info_text.connect(_on_info_text)
 
-func _process(_delta):
+func _process(delta):
 	var clr:Color = get("theme_override_colors/font_color")
-	set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),0.01))
+	set("theme_override_colors/font_color",clr.lerp(Color(0,0,0,0),delta))
 	
 	var outline_color = get("theme_override_colors/font_outline_color")
-	set("theme_override_colors/font_outline_color",outline_color.lerp(Color(0,0,0,0),0.01))
+	set("theme_override_colors/font_outline_color",outline_color.lerp(Color(0,0,0,0),delta))
 	if shake:
 		position = initial_pos + Vector2(randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength))
 	

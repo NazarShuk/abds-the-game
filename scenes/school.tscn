@@ -11387,7 +11387,16 @@ libraries = {
 autoplay = "spin"
 
 [node name="ignis car" parent="AdditionalStuff" instance=ExtResource("85_2gqud")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9.53674e-06, 2.35742, -143.798)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 74.7544, 1.18506, 98.2061)
+
+[node name="ignis car2" parent="AdditionalStuff" instance=ExtResource("85_2gqud")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 78.8772, 1.18506, 98.2061)
+
+[node name="ignis car3" parent="AdditionalStuff" instance=ExtResource("85_2gqud")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 83.4176, 1.18506, 98.2061)
+
+[node name="ignis car4" parent="AdditionalStuff" instance=ExtResource("85_2gqud")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 87.5926, 1.18506, 98.2061)
 
 [node name="GameStuff" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.563, 0, -137.18)

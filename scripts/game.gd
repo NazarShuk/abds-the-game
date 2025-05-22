@@ -51,7 +51,7 @@ const maps = {
 	},
 	"tutorial": {
 		"scene": "res://scenes/tutorial_map.tscn",
-		"icon": preload("res://textures/icon.svg"),
+		"icon": preload("res://textures/tutorial_map.png"),
 		"pacer": false,
 	}
 }
@@ -63,8 +63,18 @@ var modes = {
 	},
 	"scary": {
 		"function": "scary_mode"
+	},
+	"neil":{
+		"function": "neil_mode"
 	}
 }
+
+func neil_mode():
+	for teacher in get_tree().get_nodes_in_group("teachers"):
+		teacher.queue_free()
+	
+	var neil = load("res://scenes/evil_neil.tscn").instantiate()
+	add_child(neil)
 
 func normal_mode():
 	pass
@@ -145,6 +155,9 @@ func _ready():
 		)
 		
 		$CanvasLayer/Lobby/mode_choose/Panel/horizontal.add_child(button)
+	
+	if GuiManager.saved_tips.size() == 0:
+		$CanvasLayer/Lobby/tutorial_prompt/AnimationPlayer.play("open")
 
 
 func prepare_multiplayer():
@@ -460,7 +473,8 @@ func start_da_game():
 	if multiplayer.is_server():
 		if Game.lobby_id:
 			SteamManager.steam_api.setLobbyJoinable(Game.lobby_id,false)
-			leahy_look = true
+		
+		leahy_look = true
 
 func _on_timer_timeout():
 	$Music2.play()
@@ -977,3 +991,10 @@ func _on_map_button_pressed() -> void:
 func _on_mode_button_pressed() -> void:
 	if !multiplayer.is_server(): return
 	$CanvasLayer/Lobby/mode_choose/AnimationPlayer.play("open")
+
+func _on_tutorial_yes_pressed() -> void:
+	selected_map = "tutorial"
+	pre_start_game_btn()
+
+func _on_tutorial_no_pressed() -> void:
+	$CanvasLayer/Lobby/tutorial_prompt/AnimationPlayer.play_backwards("open")

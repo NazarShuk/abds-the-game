@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://boglohqddplk7" path="res://scripts/Quit_btn.gd" id="2_375t8"]
 [ext_resource type="Script" uid="uid://cskgdthsjdj52" path="res://scripts/debug_only.gd" id="2_an0wb"]
 [ext_resource type="Theme" uid="uid://dtcdh6y0ncv0o" path="res://textures/main_theme.tres" id="3_tkbml"]
-[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/RAY_1092_crop-removebg-preview.png" id="4_ek1eu"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/teacher_azzu.png" id="4_ek1eu"]
 [ext_resource type="Script" uid="uid://ugcbratch5i2" path="res://scripts/azzu_btn.gd" id="5_r8edv"]
 [ext_resource type="PackedScene" uid="uid://bc61qybxry7q8" path="res://scenes/lobby_list.tscn" id="6_ubrxb"]
 [ext_resource type="AudioStream" uid="uid://d2kii8bhcdwvs" path="res://sounds/pixelland.mp3" id="9_tg2di"]
@@ -299,12 +299,12 @@ sky_horizon_color = Color(1, 1, 1, 1)
 ground_bottom_color = Color(1, 1, 1, 1)
 ground_horizon_color = Color(1, 1, 1, 1)
 
-[sub_resource type="Sky" id="Sky_cheki"]
+[sub_resource type="Sky" id="Sky_j7ex8"]
 sky_material = SubResource("ProceduralSkyMaterial_3wvnd")
 
 [sub_resource type="Environment" id="Environment_5uman"]
 background_mode = 2
-sky = SubResource("Sky_cheki")
+sky = SubResource("Sky_j7ex8")
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_exposure = 1.25
 ssil_enabled = true
@@ -503,7 +503,6 @@ theme_override_font_sizes/font_size = 15
 text = "Refresh"
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -946,6 +945,7 @@ camera_attributes = SubResource("CameraAttributesPractical_5m8kt")
 
 [node name="Ricoshet" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_j7ex8")
+bus = &"Dialogs"
 
 [connection signal="pressed" from="CanvasLayer/Control/Debug/host local" to="." method="_on_host_local_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Debug/connect local" to="." method="_on_connect_local_pressed"]

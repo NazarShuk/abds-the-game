@@ -1,169 +1,112 @@
-[gd_scene load_steps=28 format=3 uid="uid://c6ir5pmxmbuqj"]
+[gd_scene load_steps=10 format=4 uid="uid://c6ir5pmxmbuqj"]
 
 [ext_resource type="Script" uid="uid://d1p7ov0dq4opq" path="res://scripts/visual_body.gd" id="1_gd1u8"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://textures/player.png" id="2_j1e57"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://textures/player_back.png" id="3_lqmnm"]
-[ext_resource type="Texture2D" uid="uid://cbdunl7jdeyq" path="res://textures/freaky.png" id="9_1ha42"]
-[ext_resource type="Texture2D" uid="uid://dta0u30sd2fbk" path="res://textures/freaky_back.png" id="10_7q8jk"]
-[ext_resource type="Texture2D" uid="uid://e481qnldgi3y" path="res://textures/player_cool.png" id="11_vp0dv"]
-[ext_resource type="Texture2D" uid="uid://dai6qepdbfr8d" path="res://textures/player_cool_back.png" id="12_63rua"]
-[ext_resource type="Texture2D" uid="uid://2dp4oh8akf5w" path="res://textures/peppinoplayer.png" id="12_fa2ah"]
-[ext_resource type="Texture2D" uid="uid://crc1l85w1qk0v" path="res://textures/peppinoplayer_back.png" id="12_n8wqb"]
-[ext_resource type="Texture2D" uid="uid://hdblcb4bt73n" path="res://textures/impossibleend.png" id="13_f1d0l"]
-[ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://textures/impossibleend_back.png" id="14_ovixm"]
-[ext_resource type="Texture2D" uid="uid://dcgs0fxmh71wv" path="res://models/player_dirty.png" id="15_s8f6t"]
-[ext_resource type="Texture2D" uid="uid://blwkn3dly2c54" path="res://models/player_back_dirty.png" id="16_khb05"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbngv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vlg3x"]
-albedo_texture = ExtResource("2_j1e57")
+[sub_resource type="ArrayMesh" id="ArrayMesh_l57n2"]
+resource_name = "player_armature_Plane"
+_surfaces = [{
+"aabb": AABB(-1, -1.542, -6.7403e-08, 2, 3.084, 1e-05),
+"attribute_data": PackedByteArray("AABAPwAAgD4AAIA/AAAAAAAAgD8AAAA+AABgPwAAAAAAAIA/AACAPgAAID8AAIA+AABAPwAAAAAAAEA/AADAPgAAgD8AAMA+AAAgPwAAAAAAACA/AAAAPwAAwD4AAAA/AADAPgAAgD4AACA/AAAgPwAAYD8AACA/AACAPwAAAD8AAIA/AAAgPwAAgD8AAEA/AACAPwAAYD8AAGA/AACAPwAAgD8AAIA/AABAPwAAgD8AAEA/AABgPwAAID8AAIA/AABAPwAAQD8AAAA/AACAPwAAwD4AAIA/AAAAPwAAQD8AAIA+AACAPwAAgD4AAGA/AAAAPgAAgD8AAAAAAABgPwAAAAAAAIA/AAAAAAAAQD8AAIA+AAAgPwAAgD4AAAA/AAAAAAAAID8AAAAAAAAAPwAAAAAAAMA+AAAAAAAAgD4AAMA+AAAAPgAAAD8AAAAAAADAPgAAAAAAAIA+AAAAAAAAAD4AAAAAAAAAAAAAAD4AAAAAAAAAAAAAYD8AAAA+AABgPwAAgD4AAEA/AAAAPgAAYD8AAMA+AAAgPwAAAD4AACA/AADAPgAAAD8AAAA+AAAAPwAAgD4AAAA/AADAPgAAwD4AAMA+AACAPgAAAD4AAIA+AACAPgAAgD4AAMA+AAAAPgAAAD4AAAA+AACAPgAAAD4AAMA+AAAAPgAAAD8AAAA+AAAgPwAAAD4AAEA/AAAAPwAAAD8AAMA+AAAgPwAAgD4AAEA/AAAAPgAAYD8AAMA+AABAPwAAwD4AAGA/AAAAPwAAID8AAAA/AABgPwAAQD8AAAA/AAAgPwAAQD8AAEA/AAAgPwAAYD8AAAA/AAAgPwAAYD8AAGA/AABAPwAAYD8AAGA/"),
+"bone_aabbs": [AABB(-1, -1.542, -6.7403e-08, 2, 3.084, 1.01011e-05), AABB(-1, -1.542, -6.7403e-08, 2, 3.084, 1.01011e-05), AABB(-1, -1.542, -6.7403e-08, 2, 3.084, 1.01011e-05)],
+"format": 34359745559,
+"index_count": 384,
+"index_data": PackedByteArray("LwABAAIALwADAAEAMAAvAAIAMAACAAQAMQADAC8AMQAGAAMAAAAvADAAAAAxAC8AMgAwAAQAMgAEAAgABwAAADAABwAwADIAMwAGADEAMwAJAAYABQAxAAAABQAzADEANAAAAAcANAAFAAAANQAJADMANQApAAkANgAzAAUANgA1ADMANwAFADQANwA2AAUAKAApADUAKAAqACkADAA1ADYADAAoADUAOAA2ADcAOAAMADYAOQAqACgAOQArACoAOgAoAAwAOgA5ACgAOwAMADgAOwA6AAwAPAArADkAPAAsACsALQAsADwALQAuACwAJwAtADwAPQA8ADkAJwA8AD0APQA5ADoAJgAnAD0APgA9ADoAJgA9AD4APgA6ADsAJQAmAD4AJQA+AD8APwA+ADsAJAAlAD8APwA7ACMAJAA/AEAAQAA/ACMAIwA7ADgAIQAkAEAAIwA4AAsACwA4ADcAQAAjACIAIgAjAAsAIQBAAEEAQQBAACIAHwAhAEEACwA3AEIAQgA3ADQAIgALAEMAQwALAEIAQQAiAEQARAAiAEMAHwBBAEUARQBBAEQAIAAfAEUAIABFAB4AHgBFAB0ARQBEAB0AHgAdABwARABDAEYAHQBEAEYAHAAdAEcAHQBGAEcAHABHABoARgBDAEgAQwBCAEgARwBGABsARgBIABsAGgBHAEkARwAbAEkAGgBJABkASABCAAoAQgA0AAoACgA0AAcASAAKAA0AGwBIAA0ACgAHAEoADQAKAEoASgAHADIAGwANAEsASQAbAEsADQBKAEwASwANAEwASgAyAE0ATABKAE0ATQAyAAgATQAIAA8ADgBNAA8ATABNAA4ADgAPABAASwBMABgAGABMAA4ASQBLAE4ATgBLABgAGQBJAE4AGQBOABcATwAOABAAGAAOAE8ATwAQABEATgAYABYAFwBOABYAFgAYAE8AFwAWABUAUABPABEAFgBPAFAAFQAWAFAAUAARABIAFQBQABMAEwBQABIAEwASABQA"),
+"lods": [1e-10, PackedByteArray("AAABAAIAAAADAAEABAAAAAIABQADAAAABQAGAAMABwAAAAQABQAAAAcACAAHAAQABQAJAAYACgAHAAgACgAFAAcACwAJAAUACwAFAAoADAAJAAsADQAKAAgADQALAAoADQAIAA4ADgAIAA8ADgAPABAADgAQABEADgARABIAEwASABQAEwAOABIAFQAOABMAFQAWAA4AFwAWABUAFgAYAA4AFwAYABYAGAANAA4AGQAYABcAGgAYABkAGwANABgAGgAbABgAHAAbABoACwANABsAHAAdABsAHQALABsAHgAdABwAHgAfAB0AIAAfAB4AHwAhAB0AHQAiAAsAHQAhACIAIgAjAAsAIQAjACIAJAAjACEAJAAlACMAJQAmACMAIwAMAAsAJgAnACMAIwAoAAwAIwAnACgADAAoAAkAKAApAAkAKAAqACkAJwAqACgAJwArACoALAArACcAJwAtACwALQAuACwA")],
+"material": SubResource("StandardMaterial3D_tbngv"),
+"primitive": 3,
+"skin_data": PackedByteArray("AgABAAAAAACLtqg5yw8AAAIAAQAAAAAAaNoVHoAHAAACAAEAAAAAAEvHByqrDgAAAgABAAAAAAB/4oUZ+QMAAAIAAQAAAAAAtZ2nR6EaAAACAAEAAAAAAM3YECYgAQAAAgABAAAAAABz7osRAAAAAAEAAgAAAAAADJb7Q/clAAABAAIAAAAAADp1tVgOMgAAAgABAAAAAAAE/foCAAAAAAEAAAACAAAAyIjqcUsFAAABAAAAAgAAAMiI6nFLBQAAAgABAAAAAADN2BAmIAEAAAEAAAACAAAA84SremAAAAABAAAAAgAAAPGAkW18EQAAAQAAAAIAAABsfrpW2CoAAAEAAAACAAAARYAxaocVAAABAAAAAgAAAKeA5XJxDAAAAQAAAAIAAAB3ggl4fgUAAAEAAAACAAAAOoM5eooCAAABAAAAAgAAAAaDqHlQAwAAAQAAAAIAAACBg/t6ggEAAAEAAAACAAAAcYOieuoBAAABAAAAAgAAALuDnHumAAAAAQAAAAIAAAAOg6p4RgQAAAEAAAACAAAA0YPbe1EAAAABAAAAAgAAALuDnHumAAAAAQAAAAAAAAC8g0J8AAAAAAEAAAACAAAAgYP7eoIBAAABAAAAAgAAAHGDonrqAQAAAQAAAAIAAAA6gzl6igIAAAEAAAACAAAAd4IJeH4FAAABAAAAAgAAAAaDqHlQAwAAAQAAAAIAAACngOVycQwAAAEAAAACAAAAKILecvcKAAABAAAAAgAAAG6FSmNGFwAAAQAAAAIAAABFgDFqhxUAAAEAAAACAAAAbH66VtgqAAABAAIAAAAAADp1tVgOMgAAAgABAAAAAAC1nadHoRoAAAIAAQAAAAAAcvWMCgAAAAACAAAAAAAAAP//AAAAAAAAAgABAAAAAAAE/foCAAAAAAIAAQAAAAAAc+6LEQAAAAACAAEAAAAAAH/ihRn5AwAAAgABAAAAAABLxwcqqw4AAAIAAQAAAAAAaNoVHoAHAAACAAEAAAAAAJPQJyRECwAAAgABAAAAAAAppjFDpBYAAAIAAQAAAAAAGeMYGswCAAABAAIAAAAAAC+AwVEOLgAAAgABAAAAAABy9YwKAAAAAAEAAgAAAAAAN7/bKesWAAACAAAAAAAAAP//AAAAAAAAAgAAAAAAAAD//wAAAAAAAAEAAAAAAAAA//8AAAAAAAABAAIAAAAAADe/2ynrFgAAAgABAAAAAAAZ4xgazAIAAAIAAQAAAAAAi7aoOcsPAAABAAIAAAAAAAyW+0P3JQAAAgABAAAAAACT0CckRAsAAAIAAQAAAAAAKaYxQ6QWAAABAAIAAAAAAC+AwVEOLgAAAQAAAAIAAABpgWFbNCMAAAEAAAACAAAA8YCRbXwRAAABAAAAAgAAALGBWXXzCAAAAAABAAAAAAD/f/9/AAAAAAEAAAACAAAA84SremAAAAABAAAAAgAAAA6DqnhGBAAAAQAAAAIAAADkgix57gMAAAEAAAACAAAAIISpezQAAAABAAAAAgAAAOOD33s8AAAAAQAAAAAAAAAxg818AAAAAAEAAAAAAAAA1YMpfAAAAAABAAAAAgAAAG6FSmNGFwAAAQAAAAIAAAAghKl7NAAAAAEAAAACAAAAKILecvcKAAABAAAAAgAAAGmBYVs0IwAAAQAAAAIAAADjg997PAAAAAEAAAACAAAAsYFZdfMIAAABAAAAAgAAAOSCLHnuAwAA"),
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 81,
+"vertex_data": PackedByteArray("AAAAP0JgRT8svxAzAACAP0JgxT8sv5AzAACAPzIIlD/CHlkzAABAP0JgxT8sv5AzAACAP0JgRT8svxAzAACAPkJgRT8svxAzAAAAP0JgxT8sv5AzAAAAP0JgxT4sv5AyAACAP0JgxT4sv5AyAACAPkJgxT8sv5AzAACAPgAAAAAAAACAAACAvgAAAAAAAACAAACAvkJgRT8svxAzAACAPkJgxb4sv5CyAABAP0Jgxb4sv5CyAACAPwAAAAAAAACAAACAP0Jgxb4sv5CyAACAP0JgRb8svxCzAACAPzIIlL/CHlmzAABAP0Jgxb8sv5CzAACAP0Jgxb8sv5CzAAAAP0Jgxb8sv5CzAAAAPzIIlL/CHlmzAACAPkJgxb8sv5CzAAAAP0JgRb8svxCzAAAAAEJgxb8sv5CzAACAvkJgxb8sv5CzAAAAAEJgRb8svxCzAAAAv0Jgxb8sv5CzAAAAvzIIlL/CHlmzAABAv0Jgxb8sv5CzAACAvzIIlL/CHlmzAACAv0Jgxb8sv5CzAACAv0JgRb8svxCzAAAAv0Jgxb4sv5CyAAAAvwAAAAAAAACAAACAv0Jgxb4sv5CyAACAvwAAAAAAAACAAACAv0JgxT4sv5AyAACAv0JgRT8svxAzAACAvjIIlD/CHlkzAAAAAEJgxT8sv5AzAACAvkJgxT8sv5AzAAAAv0JgxT8sv5AzAABAv0JgxT8sv5AzAACAvzIIlD/CHlkzAACAv0JgxT8sv5AzAABAPzIIlD/CHlkzAABAP0JgRT8svxAzAAAAPzIIlD/CHlkzAABAP0JgxT4sv5AyAACAPjIIlD/CHlkzAACAPkJgxT4sv5AyAAAAADIIlD/CHlkzAAAAAEJgRT8svxAzAAAAAEJgxT4sv5AyAACAvkJgxT4sv5AyAAAAvzIIlD/CHlkzAAAAv0JgRT8svxAzAAAAv0JgxT4sv5AyAABAvzIIlD/CHlkzAABAv0JgRT8svxAzAABAv0JgxT4sv5AyAABAvwAAAAAAAACAAABAv0Jgxb4sv5CyAABAv0JgRb8svxCzAAAAAAAAAAAAAACAAACAvkJgxb4sv5CyAAAAv0JgRb8svxCzAABAvzIIlL/CHlmzAACAvkJgRb8svxCzAACAvjIIlL/CHlmzAAAAAEJgxb4sv5CyAAAAADIIlL/CHlmzAAAAPwAAAAAAAACAAACAPkJgRb8svxCzAAAAP0Jgxb4sv5CyAABAPwAAAAAAAACAAACAPjIIlL/CHlmzAABAP0JgRb8svxCzAABAPzIIlL/CHlmz/3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+/")
+}]
+blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w88l"]
-albedo_texture = ExtResource("3_lqmnm")
+[sub_resource type="Skin" id="Skin_eaxk0"]
+resource_name = "Skin"
+bind_count = 3
+bind/0/name = &"Bone"
+bind/0/bone = -1
+bind/0/pose = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+bind/1/name = &"Bone.001"
+bind/1/bone = -1
+bind/1/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bind/2/name = &"Bone.002"
+bind/2/bone = -1
+bind/2/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ej76l"]
-albedo_texture = ExtResource("9_1ha42")
+[sub_resource type="Shader" id="Shader_l57n2"]
+code = "shader_type spatial;
+render_mode cull_disabled;
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kaku0"]
-albedo_texture = ExtResource("10_7q8jk")
+uniform sampler2D front_texture : source_color;
+uniform sampler2D back_texture : source_color;
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xof50"]
-albedo_texture = ExtResource("11_vp0dv")
+void fragment() {
+    vec4 front_color = texture(front_texture, UV);
+    vec4 back_color = texture(back_texture, UV);
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4rnbe"]
-albedo_texture = ExtResource("12_63rua")
+    // Use FRONT_FACING to determine which side we're looking at
+    // FRONT_FACING is true when looking at the front face (based on winding order)
+    if (FRONT_FACING) {
+        ALBEDO = front_color.rgb;
+        ALPHA = front_color.a;
+    } else {
+        ALBEDO = back_color.rgb;
+        ALPHA = back_color.a;
+    }
+}"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l3sff"]
-albedo_texture = ExtResource("13_f1d0l")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eaxk0"]
+render_priority = 0
+shader = SubResource("Shader_l57n2")
+shader_parameter/front_texture = ExtResource("2_j1e57")
+shader_parameter/back_texture = ExtResource("3_lqmnm")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftxcc"]
-albedo_texture = ExtResource("14_ovixm")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1vlt"]
-albedo_texture = ExtResource("15_s8f6t")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wjd3x"]
-albedo_texture = ExtResource("16_khb05")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fo1i"]
-albedo_texture = ExtResource("12_fa2ah")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1fe3l"]
-albedo_texture = ExtResource("12_n8wqb")
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qkhwy"]
-properties/0/path = NodePath("Default:visible")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_u1g5n"]
+properties/0/path = NodePath(".:skin")
 properties/0/spawn = true
 properties/0/replication_mode = 2
-properties/1/path = NodePath("Freaky:visible")
+properties/1/path = NodePath(".:head_rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 2
-properties/2/path = NodePath("Perfect:visible")
-properties/2/spawn = true
-properties/2/replication_mode = 2
-properties/3/path = NodePath("Impossible:visible")
-properties/3/spawn = true
-properties/3/replication_mode = 2
-properties/4/path = NodePath("Disoriented:visible")
-properties/4/spawn = true
-properties/4/replication_mode = 2
-properties/5/path = NodePath("Peppino:visible")
-properties/5/spawn = true
-properties/5/replication_mode = 2
 
 [node name="visual_body" type="Node3D"]
 script = ExtResource("1_gd1u8")
 
-[node name="Default" type="Node3D" parent="."]
-visible = false
+[node name="Armature_001" type="Node3D" parent="."]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Default"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_vlg3x")
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature_001"]
+bones/0/name = "Bone"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+bones/0/enabled = true
+bones/0/position = Vector3(0, 0, 0)
+bones/0/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "Bone.001"
+bones/1/parent = -1
+bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/1/enabled = true
+bones/1/position = Vector3(0, 0, 0)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/name = "Bone.002"
+bones/2/parent = 1
+bones/2/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+bones/2/enabled = true
+bones/2/position = Vector3(0, 0.7, 0)
+bones/2/rotation = Quaternion(0, 0, 0, 1)
+bones/2/scale = Vector3(1, 1, 1)
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Default"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_3w88l")
-
-[node name="Freaky" type="Node3D" parent="."]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Freaky"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_ej76l")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Freaky"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_kaku0")
-
-[node name="Perfect" type="Node3D" parent="."]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Perfect"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_xof50")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Perfect"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_4rnbe")
-
-[node name="Impossible" type="Node3D" parent="."]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Impossible"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_l3sff")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Impossible"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_ftxcc")
-
-[node name="Disoriented" type="Node3D" parent="."]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Disoriented"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_b1vlt")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Disoriented"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_wjd3x")
-
-[node name="Peppino" type="Node3D" parent="."]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Peppino"]
-transform = Transform3D(-1, 0, 5.96046e-08, 0, 1.54168, 0, -5.96046e-08, 0, -1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_8fo1i")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Peppino"]
-transform = Transform3D(1, 0, -1.47027e-07, 0, 1.54168, 0, 1.47027e-07, 0, 1, 0, 0, 0)
-mesh = SubResource("QuadMesh_orlgu")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_1fe3l")
+[node name="Plane" type="MeshInstance3D" parent="Armature_001/Skeleton3D"]
+mesh = SubResource("ArrayMesh_l57n2")
+skin = SubResource("Skin_eaxk0")
+surface_material_override/0 = SubResource("ShaderMaterial_eaxk0")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_qkhwy")
+replication_config = SubResource("SceneReplicationConfig_u1g5n")

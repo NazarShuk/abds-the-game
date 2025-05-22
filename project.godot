@@ -14,7 +14,6 @@ config/name="Alostn Bridge Diddle School"
 config/description="ABDS the game"
 run/main_scene="res://scenes/logos.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-run/max_fps=60
 boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/show_image=false
 boot_splash/fullsize=false
@@ -51,7 +50,7 @@ mouse_cursor/custom_image="uid://djlehyq2xco8v"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dev_time_tracker/plugin.cfg")
+enabled=PackedStringArray("res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/dev_time_tracker/plugin.cfg")
 
 [filesystem]
 

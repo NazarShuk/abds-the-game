@@ -1,9 +1,9 @@
-[gd_scene load_steps=92 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=91 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" uid="uid://c2sq3d02m016" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" uid="uid://b81fr33wsu4q7" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
 [ext_resource type="AudioStream" uid="uid://cxxdcuypo3v8k" path="res://sounds/volatile_reaction.mp3" id="4_m78sl"]
-[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/RAY_1092_crop-removebg-preview.png" id="5_wpkks"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/teacher_azzu.png" id="5_wpkks"]
 [ext_resource type="AudioStream" uid="uid://cvwobq8jsn8xc" path="res://sounds/failedme.mp3" id="6_8cxyt"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://fonts/Ldfcomicsans-jj7l.ttf" id="7_1xl1k"]
 [ext_resource type="Texture2D" uid="uid://cwtwntla0bkcm" path="res://textures/leahytime.png" id="7_gd0qw"]
@@ -39,12 +39,12 @@ sky_horizon_color = Color(1, 1, 1, 1)
 ground_bottom_color = Color(1, 1, 1, 1)
 ground_horizon_color = Color(1, 1, 1, 1)
 
-[sub_resource type="Sky" id="Sky_vv5pd"]
+[sub_resource type="Sky" id="Sky_wljb1"]
 sky_material = SubResource("ProceduralSkyMaterial_kvbmb")
 
 [sub_resource type="Environment" id="Environment_5hwxw"]
 background_mode = 2
-sky = SubResource("Sky_vv5pd")
+sky = SubResource("Sky_wljb1")
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_exposure = 1.25
 ssil_enabled = true
@@ -56,13 +56,6 @@ glow_intensity = 0.5
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_emission = Color(0.277528, 0.277528, 0.277528, 1)
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_56gn1"]
-auto_exposure_scale = 0.2
-dof_blur_far_distance = 33.41
-dof_blur_far_transition = 193.67
-dof_blur_near_enabled = true
-dof_blur_near_distance = 1.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3nj22"]
 properties/0/path = NodePath(".:canPlayersMove")
@@ -1125,7 +1118,6 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting and stuff"]
 environment = SubResource("Environment_5hwxw")
-camera_attributes = SubResource("CameraAttributesPractical_56gn1")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dmiwtnuhovfv5", "uid://c176sfrtxowxt", "uid://bio4x0p1tpo44", "uid://cpv1p60p4ivh3", "uid://ceo00cwwipkt0", "uid://g5kyanmqwlbw", "uid://di8aki6p3dw1q")
@@ -1318,7 +1310,6 @@ grow_vertical = 0
 show_percentage = false
 script = ExtResource("8_6ddju")
 timer = NodePath("../../../../LeahyTime")
-max = 150.0
 
 [node name="TimeLeft" type="Label" parent="CanvasLayer/Main/LeahyTime/ProgressBar" node_paths=PackedStringArray("timer")]
 layout_mode = 1
@@ -1887,6 +1878,77 @@ libraries = {
 &"": SubResource("AnimationLibrary_avmo2")
 }
 
+[node name="tutorial_prompt" type="Panel" parent="CanvasLayer/Lobby"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jo4nb")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Lobby/tutorial_prompt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -461.0
+offset_top = 405.0
+offset_right = 461.0
+offset_bottom = 535.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Lobby/tutorial_prompt/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -387.0
+offset_top = 15.0
+offset_right = 389.0
+offset_bottom = 54.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 24
+text = "It looks like this it's your first time playing. Do you want to do the tutorial?"
+horizontal_alignment = 1
+
+[node name="horizontal" type="HBoxContainer" parent="CanvasLayer/Lobby/tutorial_prompt/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 269.0
+offset_top = 63.0
+offset_right = -269.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="yes" type="Button" parent="CanvasLayer/Lobby/tutorial_prompt/Panel/horizontal"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 32
+text = "Yes"
+
+[node name="no" type="Button" parent="CanvasLayer/Lobby/tutorial_prompt/Panel/horizontal"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_1xl1k")
+theme_override_font_sizes/font_size = 32
+text = "No"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Lobby/tutorial_prompt"]
+libraries = {
+&"": SubResource("AnimationLibrary_avmo2")
+}
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CanvasLayer/Lobby"]
 replication_config = SubResource("SceneReplicationConfig_u6ine")
 
@@ -2070,6 +2132,8 @@ autoplay = "goo"
 [connection signal="text_changed" from="CanvasLayer/Lobby/competitive_team_name" to="." method="_on_competitive_team_name_text_changed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/TopContainer/map_button" to="." method="_on_map_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/TopContainer/mode_button" to="." method="_on_mode_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Lobby/tutorial_prompt/Panel/horizontal/yes" to="." method="_on_tutorial_yes_pressed"]
+[connection signal="pressed" from="CanvasLayer/Lobby/tutorial_prompt/Panel/horizontal/no" to="." method="_on_tutorial_no_pressed"]
 [connection signal="pressed" from="CanvasLayer/Lobby/cancel_button" to="." method="reload_game"]
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]

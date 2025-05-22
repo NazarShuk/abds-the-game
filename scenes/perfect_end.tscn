@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://bjub5fclouj5k" path="res://scripts/camera_shake.gd" id="5_ln7wb"]
 [ext_resource type="Texture2D" uid="uid://bs2hbw6eckr2j" path="res://textures/floor.png" id="5_t638u"]
 [ext_resource type="Texture2D" uid="uid://dai6qepdbfr8d" path="res://textures/player_cool_back.png" id="7_ranqf"]
-[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/RAY_1092_crop-removebg-preview.png" id="8_upipd"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/teacher_azzu.png" id="8_upipd"]
 [ext_resource type="Texture2D" uid="uid://dvgm7yqf1y040" path="res://models/walls2.png" id="9_1t8pw"]
 [ext_resource type="PackedScene" uid="uid://40h3xkvclt2r" path="res://models/door.tscn" id="10_ov155"]
 [ext_resource type="Material" uid="uid://8yareg4uwv67" path="res://textures/school.tres" id="11_2va8n"]

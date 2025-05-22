@@ -3,20 +3,26 @@ extends Node3D
 @export var videos : Array[ProjectorVideo]
 @onready var audio_player : AudioStreamPlayer = get_tree().get_first_node_in_group("main_music")
 
-@onready var initial_clip = audio_player.stream
+var initial_clip
 @onready var game : Node3D = get_tree().get_first_node_in_group("game")
 
 var time_left = 100
 var is_playing = false
 
+func _ready() -> void:
+	if audio_player:
+		initial_clip = audio_player.stream
+
 @rpc("any_peer","call_local")
 func play():
+	if !audio_player: return
 	if multiplayer.is_server() and !game.escape:
 		set_video.rpc(randi_range(0,videos.size() - 1))
 
 
 @rpc("authority","call_local")
 func set_video(idx):
+	if !audio_player: return
 	var video = videos[idx]
 	$SubViewport/VideoStreamPlayer.stream = video.video_file
 	$SubViewport/VideoStreamPlayer.play()
@@ -28,6 +34,7 @@ func set_video(idx):
 	is_playing = true
 
 func _process(delta: float) -> void:
+	if !audio_player: return
 	if time_left > 0 and is_playing:
 		time_left -= delta * audio_player.pitch_scale
 	elif is_playing:

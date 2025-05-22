@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://di30g2j26wvlq"]
 
 [ext_resource type="Script" uid="uid://lf77pkkt8hed" path="res://scripts/gainy.gd" id="1_i6xwf"]
-[ext_resource type="Texture2D" uid="uid://be83fcuv2llo3" path="res://textures/RAY_1032_crop-removebg-preview.png" id="2_pwjvv"]
+[ext_resource type="Texture2D" uid="uid://be83fcuv2llo3" path="res://textures/teacher_gainey.png" id="2_pwjvv"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_mu1hk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5qd5"]
@@ -38,7 +38,7 @@ albedo_texture = ExtResource("2_pwjvv")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ga2k1"]
 
-[node name="Ms_Gainy" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["ms_gainy"]]
+[node name="Ms_Gainy" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["ms_gainy", "teachers"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17

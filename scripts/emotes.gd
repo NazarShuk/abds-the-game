@@ -15,7 +15,7 @@ func _ready() -> void:
 	if is_multiplayer_authority() == false:
 		$CanvasLayer/SubViewportContainer/SubViewport/Camera3D.queue_free()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !is_multiplayer_authority(): return
 	
 	if Input.is_action_just_pressed("forward") or Input.is_action_just_pressed("back") or Input.is_action_just_pressed("left") or Input.is_action_just_pressed("right"):

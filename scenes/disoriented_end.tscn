@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://k354e4e4cj30" path="res://sounds/man_throws_up.mp3" id="4_x5jpe"]
 [ext_resource type="PackedScene" uid="uid://cwq81kfmp7a4f" path="res://models/Convertible.glb" id="5_eg475"]
 [ext_resource type="Texture2D" uid="uid://dcgs0fxmh71wv" path="res://models/player_dirty.png" id="5_pgtjo"]
-[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/RAY_1092_crop-removebg-preview.png" id="6_tqsv1"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/teacher_azzu.png" id="6_tqsv1"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://textures/player.png" id="8_qwlnb"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://textures/player_back.png" id="9_426go"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="10_aywex"]

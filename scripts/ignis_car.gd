@@ -19,11 +19,13 @@ func _process(delta: float) -> void:
 	if !local_player: return
 	if player_in_car:
 		local_player.global_position = $PlayerTarget.global_position
+		local_player.is_in_car = true
 		local_player.get_node("CollisionShape3D").disabled = true
 		
 		if Input.is_action_just_pressed("jump"):
 			leave_car.rpc(multiplayer.get_unique_id())
 			local_player.get_node("CollisionShape3D").disabled = false
+			local_player.is_in_car = false
 	
 	$CanvasLayer.visible = player_in_car
 	

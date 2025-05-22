@@ -1,8 +1,6 @@
 extends CharacterBody3D
 class_name BossfightPlayer
 
-const CLOROX_BOSSFIGHT_EDITION = preload("res://scenes/clorox_bossifight_edition.tscn")
-
 # Player movement parameters
 @export var SPEED = 6.0
 @export var JUMP_VELOCITY = 4.5
@@ -19,11 +17,9 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var target_fov = 75
 
-@export var target_player_pos : Node3D
 
-var has_clorox = false
-
-var push_force = Vector3.ZERO
+var camera_wobble = Vector2.ZERO
+var wobble_time = 0
 
 func _ready():
 	# Capture mouse cursor
@@ -47,11 +43,6 @@ func _unhandled_input(event):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta):
-	
-	if target_player_pos and target_player_pos.do_target:
-		global_position = target_player_pos.global_position
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
 	# Add gravity
 	if not is_on_floor():
@@ -85,41 +76,16 @@ func _physics_process(delta):
 		target_fov = 75
 	
 	camera.fov = lerp(camera.fov, float(target_fov), delta * 2.5)
-	
-	velocity += push_force
-	push_force = push_force.lerp(Vector3.ZERO, delta * 100)
+	camera.h_offset = camera_wobble.x
+	camera.v_offset = camera_wobble.y
 	
 	move_and_slide()
 	
-	$Head/clorox.visible = has_clorox
-	
-	if Input.is_action_just_pressed("use_item") and has_clorox:
-		var clorox = CLOROX_BOSSFIGHT_EDITION.instantiate()
-		get_parent().add_child(clorox)
-		clorox.global_position = global_position
-		clorox.global_rotation = global_rotation
-		has_clorox = false
-	
-	if get_parent().is_in_group("bossfight2"):
-		if global_position.y < -30:
-			get_parent().respawn()
+	camera_wobble_function(delta)
 
 
-func _on_area_3d_area_entered(area: Area3D) -> void:
-	if area.name == "darel":
-		get_tree().reload_current_scene()
+func camera_wobble_function(delta : float):
+	wobble_time += delta * velocity.length()
 	
-	if get_parent().is_in_group("bossfight2"):
-		if area.is_in_group("clorox_bossfight"):
-			get_parent().respawn()
-		
-		if area.is_in_group("leahyboss"):
-			# Calculate push direction from leahyboss to the player (self)
-			var push_direction = global_position - area.global_position
-			
-			# Normalize the direction and add upward force
-			push_direction = -push_direction.normalized()
-			
-			# Apply the force to self (the player)
-			var push_strength = 10.0  # Adjust this value for stronger/weaker push
-			push_force += push_direction * push_strength
+	camera_wobble.x = lerp(camera_wobble.x, sin(wobble_time) * 0.25, delta * 20)
+	camera_wobble.y = lerp(camera_wobble.y, abs(cos(wobble_time)) * 0.25, delta * 20)

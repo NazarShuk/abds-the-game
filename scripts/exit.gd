@@ -3,9 +3,11 @@ extends Area3D
 @onready var game : Node3D = get_tree().get_first_node_in_group("game")
 
 func _process(_delta: float) -> void:
+	if !game: return
 	visible = game.can_escape and not game.leahy_time
 
 func _on_area_entered(area: Area3D) -> void:
+	if !game: return
 	if multiplayer.is_server():
 		if area.is_in_group("player_area"):
 			if game.can_escape and not game.leahy_time:

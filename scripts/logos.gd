@@ -23,28 +23,13 @@ func _ready():
 	
 	GlobalVars.is_steam_peer = false
 	
-	if GlobalVars.firstTime:
+	if GlobalVars.firstTime and not OS.is_debug_build():
 		$AnimationPlayer.play("animat")
+		await Game.sleep(2)
 	
-	if not GlobalVars.game_scene:
-		ResourceLoader.load_threaded_request(main_game_path)
-		var loading = true
-		
-		while loading:
-			await Game.sleep(0.01)
-			var progress = []
-			
-			ResourceLoader.load_threaded_get_status(main_game_path,progress)
-			
-			if progress[0] == 1:
-				GlobalVars.game_scene = ResourceLoader.load_threaded_get(main_game_path)
-				loading = false
-	
-	await Game.sleep(0.5)
-	
-	if GlobalVars.firstTime:
+	if GlobalVars.firstTime and not OS.is_debug_build():
 		$CanvasLayer/Warning.show()
-		$CanvasLayer/Warning/meat.play()		
+		$CanvasLayer/Warning/meat.play()
 		while accepted_the_thing == false:
 			await get_tree().create_timer(0.01).timeout
 		

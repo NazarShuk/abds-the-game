@@ -85,7 +85,7 @@ func _on_pregame_started():
 
 func _process(delta):
 	if multiplayer.is_server():
-		target_speed = lerp(float(target_speed), float(rotate_speed), 0.1)
+		target_speed = lerp(float(target_speed), float(rotate_speed), delta)
 		
 		if is_idle:
 			cylinder.rotate(Vector3(1,0,0),target_speed * delta)

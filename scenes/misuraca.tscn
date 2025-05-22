@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://kfniphc0hjb6"]
 
 [ext_resource type="Script" uid="uid://bd7i07e3udvp7" path="res://scripts/misuraca.gd" id="1_il38w"]
-[ext_resource type="Texture2D" uid="uid://dbo74xllmx2vx" path="res://textures/RAY_1063_crop-removebg-preview.png" id="2_td6or"]
+[ext_resource type="Texture2D" uid="uid://dbo74xllmx2vx" path="res://textures/teacher_misuraca.png" id="2_td6or"]
 [ext_resource type="PackedScene" uid="uid://c7tnyc6xhuugv" path="res://scenes/unstucker.tscn" id="3_ybphd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgjck"]
@@ -38,7 +38,7 @@ properties/3/path = NodePath(".:target_player_name")
 properties/3/spawn = true
 properties/3/replication_mode = 2
 
-[node name="Mr_Misuraca" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_misuraca"]]
+[node name="Mr_Misuraca" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_misuraca", "teachers"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17

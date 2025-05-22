@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 	if gainy:
 		time += delta * 5
 		
-		if gainy.target_player && gainy.target_player_name == player.steam_name:
+		if gainy.target_player_name == player.steam_name:
 			scale_transition = lerp(scale_transition, 1.0, delta * 10)
 		else:
 			scale_transition = lerp(scale_transition, 0.0, delta * 10)

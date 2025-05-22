@@ -24,6 +24,5 @@ var leahy_time_rank = "d"
 
 var current_skin = Node.new()
 
-var game_scene = null
 
 var is_steam_peer = false

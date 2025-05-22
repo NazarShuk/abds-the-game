@@ -73,6 +73,8 @@ func target_players():
 	if target_player:
 		if "steam_name" in target_player:
 			target_player_name = target_player.steam_name
+	else:
+		target_player_name = ""
 
 func update_target_location(target_location):
 	if typeof(target_location) == TYPE_VECTOR3:

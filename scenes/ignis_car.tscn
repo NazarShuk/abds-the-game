@@ -484,6 +484,7 @@ skeleton = NodePath("")
 [node name="car" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamPlaylist_ef4q5")
 autoplay = true
+bus = &"Dialogs"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_w5m0e")

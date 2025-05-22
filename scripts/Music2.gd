@@ -12,9 +12,9 @@ func _power_changed(power_on):
 	else:
 		stop()
 
-func _process(_delta):
+func _process(delta):
 	
-	pitch_scale = lerp(pitch_scale,pitch_target,0.01)
+	pitch_scale = lerp(pitch_scale,pitch_target, delta)
 	var final_pitch = 1.0
 	
 	if !game.escape:

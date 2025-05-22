@@ -19,7 +19,7 @@ func _ready():
 	$CanvasLayer/Label2.text = str(Achievements.books_collected) + " books collected"
 	$CanvasLayer/Label3.text = str(Achievements.deaths) + " times died" 
 	
-	$visual_body.pick_skin()
+	$visual_body.skin = Achievements.picked_skin
 	
 	if Achievements.achievements.has("freaky_ending") == false:
 		skin_list.set_item_disabled(1,true)
@@ -39,4 +39,4 @@ func _on_item_list_item_selected(index):
 	Achievements.picked_skin = index
 	Achievements.save_all()
 	
-	$visual_body.pick_skin(index)
+	$visual_body.skin = index

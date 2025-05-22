@@ -8,9 +8,9 @@ var initial_x
 func _ready():
 	initial_x = position.x
 
-func _process(_delta):
+func _process(delta):
 	if is_shown:
-		position.x = lerp(position.x,initial_x,0.1)
+		position.x = lerp(position.x,initial_x, delta * 5)
 		$Label.text = str(floori(distance))
 	else:
-		position.x = lerp(position.x,-500.0,0.1)
+		position.x = lerp(position.x,-500.0, delta * 5)

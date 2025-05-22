@@ -3,7 +3,7 @@ extends CanvasLayer
 @export var player : Player
 var can_hitman = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$hitman_app.disabled = !can_hitman
 
 func _on_hitman_app_pressed() -> void:
@@ -42,19 +42,19 @@ func _on_hitman_app_pressed() -> void:
 func eliminate(node_path : String, eliminator : int):
 	if !multiplayer.is_server(): return
 	
-	var player = Game.players.get(eliminator)
-	if !player: return
+	var pl = Game.players.get(eliminator)
+	if !pl: return
 	
 	var node = get_node_or_null(node_path)
 	if !node: return
 	
 	if node is Teacher:
 		node.add_speed_multiplier(-node.speed_multiplier, 10)
-		Game.info_text(player.username + " eliminated " + node.name)
+		Game.info_text(pl.username + " eliminated " + node.name)
 		play_boom.rpc($hitman/AudioStreamPlayer.get_path())
 	elif node is Player:
 		node.lobotomy.rpc_id(int(node.name))
-		Game.info_text(player.username + " lobotomized " + node.steam_name)
+		Game.info_text(pl.username + " lobotomized " + node.steam_name)
 	
 @rpc("any_peer", "call_local")
 func play_boom(path: String):

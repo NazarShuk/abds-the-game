@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://hdblcb4bt73n" path="res://textures/impossibleend.png" id="17_ncsmr"]
 [ext_resource type="Texture2D" uid="uid://d1myp1gcenl1q" path="res://textures/impossibleend_back.png" id="18_4pfu2"]
 [ext_resource type="Texture2D" uid="uid://dcgs0fxmh71wv" path="res://models/player_dirty.png" id="19_tjn5n"]
-[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/RAY_1092_crop-removebg-preview.png" id="20_oa3pa"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/teacher_azzu.png" id="20_oa3pa"]
 [ext_resource type="Texture2D" uid="uid://blwkn3dly2c54" path="res://models/player_back_dirty.png" id="20_to2tx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o7hl2"]

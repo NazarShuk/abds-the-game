@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b76tmwmc274um" path="res://scripts/flashbang_rect.gd" id="3_yj7jo"]
 [ext_resource type="PackedScene" uid="uid://cwq81kfmp7a4f" path="res://models/Convertible.glb" id="4_a5gvu"]
 [ext_resource type="PackedScene" uid="uid://c0bsgfl8j3hnb" path="res://scenes/param_azzu.tscn" id="5_ng0j5"]
-[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/RAY_1092_crop-removebg-preview.png" id="5_pk24k"]
+[ext_resource type="Texture2D" uid="uid://com2rxbfj52s" path="res://textures/teacher_azzu.png" id="5_pk24k"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://textures/player.png" id="6_k5egw"]
 [ext_resource type="Texture2D" uid="uid://uaunmtvsd4j4" path="res://textures/player_back.png" id="7_chqw2"]
 [ext_resource type="Texture2D" uid="uid://b87kxq485sc1x" path="res://textures/8ql00u.jpg" id="7_xypwu"]

@@ -91,6 +91,11 @@ const SPRING_DAMPING   :=  8.0
 var has_phone = false
 @export var phone_open = false
 
+var is_in_car = false
+
+@export var player_position : Vector3 = Vector3.ZERO
+@export var player_rotation : Vector3 = Vector3.ZERO
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	$nametag.text = SteamManager.steam_name
@@ -106,253 +111,70 @@ func _ready():
 	if is_multiplayer_authority():
 		GuiManager.hide_cursor()
 		
-		$visual_body.pick_skin()
+		$visual_body.skin = Achievements.picked_skin
+		
 		GlobalVars.current_skin = $visual_body.duplicate()
 		$visual_body.hide()
 		
 		if Settings.render_distance:
 			camera_3d.far = Settings.render_distance
 		
-		GuiManager.show_tip_once("movement_controls","[color=green]Movement[/color]\nWASD to move, LeftShift to run (consumes stamina), Space to look behind, TAB to open the minimap")
 		
 		inventory.resize(max_slots)
 		for i in range(max_slots):
 			inventory[i] = -1
 		
 		$nametag.hide()
+		
+		hand.show()
+
+func _process(delta: float) -> void:
+	if !is_multiplayer_authority(): return
+	
+	camera_effects(delta)
+	
+	inventory_controls()
+	
+	debug_keybinds()
+	
+	update_item_weights()
+	
+	dropped_items_physics()
+	
+	control_text_setters()
+	
+	minimap_controls()
+	
+	shop_ui_updates()
+	
+	leahy_effects()
+	
+	ui_updates(delta)
+	
+	hand_and_spotlight(delta)
+	
+	freaky_ending_check()
+	
+	phone(delta)
+	
+	interaction_functions()
+	item_give_functions()
+	item_use_functions()
+	
+	$visual_body.head_rotation = -$Camera3D.global_rotation.x / 4
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
-		if !get_tree(): return
-		
-		if Input.is_action_just_released("zoom_in"):
-			
-			var slot = selected_slot + 1
-			if slot > inventory.size() - 1:
-				slot = 0
-			
-			select_item(slot)
-		if Input.is_action_just_released("zoom_out"):
-			var slot = selected_slot - 1
-			if slot < 0:
-				slot = inventory.size() - 1
-			select_item(slot)
-		
-		
-		if Input.is_action_just_pressed("submit") and is_shop_open:
-			_on_submit_button_pressed() 
-		
-		if Input.is_action_just_pressed("debug") and OS.has_feature("debug"):
-			buy_book_rpc.rpc(steam_name, name.to_int())
-		if Input.is_action_just_pressed("revive") and OS.has_feature("debug"):
-			add_speed_boost(2,1)
-		
-		if Input.is_action_just_pressed("revive"):
-			if is_dead_of_dariel:
-				_on_revive_timer_timeout()
-		
-		update_item_weights()
-		
-		for index in range(get_slide_collision_count()):
-			var collision = get_slide_collision(index)
-			var collider = collision.get_collider()
-			
-			# If the collider is a RigidBody
-			if collider is RigidBody3D:
-				# Calculate the push direction
-				var push_direction = collision.get_normal()
-				
-				# Apply the force to the RigidBody
-				collider.push_item.rpc(push_direction,push_force)
-				
-		control_text_setters()
-		
-		$CanvasLayer/Control/Minimap.visible = is_minimap_open
-		
-		if Input.is_action_just_pressed("open_minimap"):
-			if !is_shop_open:
-				is_minimap_open = true
-				$Minimap.process_mode = Node.PROCESS_MODE_INHERIT
-				
-				$Minimap_sound.play()
-		
-		if Input.is_action_just_released("open_minimap"):
-			if !is_shop_open:
-				is_minimap_open = false
-				$Minimap.process_mode = Node.PROCESS_MODE_DISABLED
-		
-		
-		if is_minimap_open:
-			minimap_cam.global_position.x = global_position.x
-			minimap_cam.global_position.z = global_position.z
-		
-		can_cam_move = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
-		
-		minimap_cam.size = lerp(minimap_cam.size,float(minimap_zoom),0.25)
-		minimap_zoom = clamp(minimap_zoom,5,95)
-
-		
-		SPEED = clamp(OG_SPEED * speed_multiplier * run_multiplier,0,99999)
-		if !parent.leahy_look:
-			cam_fov = 75 + (speed_multiplier * run_multiplier) * 15
-		
-		$HandTree.set("parameters/time_scale/scale", run_multiplier * speed_multiplier)
-		
-		$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floori(shop_timer.time_left)) + "s left"
-		$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds/Label".text = str(floori(shop_timer.time_left))
-		
-		$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits)
-		$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore/Label".text = str(credits)
-		
-		
-		var closest_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
-		if closest_leahy:
-			leahy_dst = global_position.distance_to(closest_leahy.global_position)
-		else:
-			leahy_dst = -1
-		
-		if closest_leahy:
-			if Game.game_started and not parent.selected_mode == "scary":
-				if (10 - leahy_dst) > 0:
-					var strength = 1/leahy_dst+0.01
-					camera_3d.h_offset = camera_wobble.x + randf_range(-strength,strength) / 5
-					camera_3d.v_offset = camera_wobble.y + randf_range(-strength,strength) / 5
-				else:
-					camera_3d.h_offset = camera_wobble.x
-					camera_3d.v_offset = camera_wobble.y
-				
-				if closest_leahy.target_player_name and !parent.can_escape:
-					if global_position.y < 3.7:
-						if closest_leahy.target_player_name == steam_name:
-							if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
-								leahy_approaching.is_shown = true
-								leahy_approaching.distance = leahy_dst
-							else:
-								leahy_approaching.is_shown = false
-						else:
-							leahy_approaching.is_shown = false
-					else:
-						leahy_approaching.is_shown = false
-				else:
-					leahy_approaching.is_shown = false
-			else:
-				camera_3d.h_offset = camera_wobble.x
-				camera_3d.v_offset = camera_wobble.y
-		else:
-			camera_3d.h_offset = camera_wobble.x
-			camera_3d.v_offset = camera_wobble.y
-		
-		if global_position.z > 15 && !is_freaky:
-			if !Game.game_started:
-				is_freaky = true
-				parent.skibidi.rpc()
-			else:
-				global_position.z = 0
-				GuiManager.show_tip("Whoops, sorry about that.", 5)
-		
 		movement_function(delta)
-		
-		progress_bar.value = lerp(progress_bar.value, float(stamina), 0.2)
-		
-		if not phone_open:
-			camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), 0.1),1,140)
-		else:
-			camera_3d.fov = lerp(camera_3d.fov, float(90), delta * 10)
-		
-		
-		camera_3d.current = true
-		camera_3d.global_transform = $"Camera target".global_transform
-		
-		if parent.can_escape and not is_dead:
-			$CanvasLayer/Control.do_shake = true
-		else:
-			$CanvasLayer/Control.do_shake = false
-		
-		camera_wobble_function(delta)
-		
-		var curr_xy = Vector2(
-			$HandOrientation.global_rotation.x,
-			$HandOrientation.global_rotation.y
-		)
-		var target_xy = Vector2(
-			$"Camera target".global_rotation.x * 0.5,
-			$"Camera target".global_rotation.y
-		)
-		# compute wrapped difference per axis
-		var diff_xy = Vector2(
-			shortest_angle_diff(curr_xy.x, target_xy.x),
-			shortest_angle_diff(curr_xy.y, target_xy.y)
-		)
+	else:
+		global_position = lerp(global_position, player_position, delta * 25)
+		global_rotation.x = lerp_angle(global_rotation.x, player_rotation.x, delta * 25)
+		global_rotation.y = lerp_angle(global_rotation.y, player_rotation.y, delta * 25)
+		global_rotation.z = lerp_angle(global_rotation.z, player_rotation.z, delta * 25)
 
-		hand_vel_xy += diff_xy * SPRING_STIFFNESS * delta
-		hand_vel_xy *= exp(-SPRING_DAMPING * delta)
-		curr_xy += hand_vel_xy * delta
-
-		$HandOrientation.global_position = global_position
-		$HandOrientation.global_rotation.x = curr_xy.x
-		$HandOrientation.global_rotation.y = curr_xy.y
-
-		# --- spotlight ---
-		var spot_curr   = $SpotLight3D.global_rotation
-		var spot_target = $"Camera target".global_rotation
-		var spot_diff = Vector3(
-			shortest_angle_diff(spot_curr.x, spot_target.x),
-			shortest_angle_diff(spot_curr.y, spot_target.y),
-			shortest_angle_diff(spot_curr.z, spot_target.z)
-		)
-
-		spot_vel += spot_diff * SPRING_STIFFNESS * delta * 0.5
-		spot_vel *= exp(-SPRING_DAMPING * delta)
-		spot_curr += spot_vel * delta
-
-		$SpotLight3D.global_rotation = spot_curr
-		$SpotLight3D.global_position = $"Camera target".global_position
-		
-		$CanvasLayer/Control/pending_suspension.visible = pending_suspension
-		
-		if Input.is_action_just_pressed("push_to_talk"):
-			if has_phone:
-				if not phone_open:
-					$Phone/AnimationPlayer.play("get_da_phone")
-					phone_open = true
-					GuiManager.show_cursor()
-					$CanvasLayer/Control/TextureRect.hide()
-					$Phone/phon.play()
-				else:
-					phone_open = false
-					$Phone/AnimationPlayer.play_backwards("get_da_phone")
-					GuiManager.hide_cursor()
-					$CanvasLayer/Control/TextureRect.show()
-					$Phone/phon.stop()
-					
-		
-		$CanvasLayer/Control/phone_indicator.visible = has_phone
-		if phone_open:
-			$"Camera target".rotation.x = lerp($"Camera target".rotation.x, 0.0, delta * 5)
-		
-		var secondary_alpha = $CanvasLayer/Control/Vignette2.material.get("shader_parameter/SecondaryAlpha")
-		$CanvasLayer/Control/Vignette2.material.set("shader_parameter/SecondaryAlpha", lerp(secondary_alpha, float(pending_suspension_meter) / 100.0, delta * 50))
-		
-		if pending_suspension_meter > 5:
-			$focus.volume_db = min(0, -40  + pending_suspension_meter)
-		else:
-			$focus.volume_db = -80
-# anywhere at top of your script
-func shortest_angle_diff(from: float, to: float) -> float:
-	# wrap (to – from) into [–π, π]
-	return fposmod(to - from + PI, TAU) - PI
-
-func camera_wobble_function(delta : float):
-	wobble_time += delta * velocity.length()
-	if !is_moving or phone_open or !can_move or !can_cam_move:
-		wobble_time = 0
-	
-	camera_wobble.x = lerp(camera_wobble.x, sin(wobble_time) * 0.25, delta * 20)
-	camera_wobble.y = lerp(camera_wobble.y, abs(cos(wobble_time)) * 0.25, delta * 20)
 
 var vertical_angle = 0.0
 var max_vertical_angle = 89.0  # You can adjust this as needed.
-
 
 func _input(event):
 	if !is_multiplayer_authority():
@@ -375,7 +197,7 @@ func _input(event):
 				
 				# Set the new rotation by using Euler angles
 				if !phone_open:
-					$"Camera target".rotation.x = deg_to_rad(vertical_angle)
+					camera_3d.rotation.x = deg_to_rad(vertical_angle)
 	
 	if event is InputEventKey:
 			if event.pressed:
@@ -388,7 +210,223 @@ func _input(event):
 						select_item(event.as_text_keycode().to_int() - 1)
 					else:
 						select_item(0)
+
+func shortest_angle_diff(from: float, to: float) -> float:
+	return fposmod(to - from + PI, TAU) - PI
+
+func camera_wobble_function(delta : float):
+	wobble_time += delta * velocity.length()
+	if !is_moving or phone_open or !can_move or !can_cam_move or parent.leahy_look or !is_on_floor():
+		wobble_time = 0
 	
+	camera_wobble.x = lerp(camera_wobble.x, sin(wobble_time) * 0.25, delta * 20)
+	camera_wobble.y = lerp(camera_wobble.y, abs(cos(wobble_time)) * 0.25, delta * 20)
+
+func inventory_controls():
+	if Input.is_action_just_released("zoom_in"):
+		
+		var slot = selected_slot + 1
+		if slot > inventory.size() - 1:
+			slot = 0
+		
+		select_item(slot)
+	if Input.is_action_just_released("zoom_out"):
+		var slot = selected_slot - 1
+		if slot < 0:
+			slot = inventory.size() - 1
+		select_item(slot)
+
+func debug_keybinds():
+	if Input.is_action_just_pressed("debug") and OS.has_feature("debug"):
+		buy_book_rpc.rpc(steam_name, name.to_int())
+	if Input.is_action_just_pressed("revive") and OS.has_feature("debug"):
+		add_speed_boost(4,1)
+
+func dropped_items_physics():
+	for index in range(get_slide_collision_count()):
+		var collision = get_slide_collision(index)
+		var collider = collision.get_collider()
+		
+		# If the collider is a RigidBody
+		if collider is RigidBody3D:
+			# Calculate the push direction
+			var push_direction = collision.get_normal()
+			
+			# Apply the force to the RigidBody
+			collider.push_item.rpc(push_direction,push_force)
+
+func minimap_controls():
+	$CanvasLayer/Control/Minimap.visible = is_minimap_open
+	
+	if Input.is_action_just_pressed("open_minimap"):
+		if !is_shop_open:
+			is_minimap_open = true
+			$Minimap.process_mode = Node.PROCESS_MODE_INHERIT
+			
+			$Minimap_sound.play()
+	
+	if Input.is_action_just_released("open_minimap"):
+		if !is_shop_open:
+			is_minimap_open = false
+			$Minimap.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	
+	if is_minimap_open:
+		minimap_cam.global_position.x = global_position.x
+		minimap_cam.global_position.z = global_position.z
+	
+	can_cam_move = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
+	
+	minimap_cam.size = lerp(minimap_cam.size,float(minimap_zoom),0.25)
+	minimap_zoom = clamp(minimap_zoom,5,95)
+
+func leahy_effects():
+	var closest_leahy = Game.get_closest_node_in_group(global_position,"evil_leahy")
+	if closest_leahy:
+		leahy_dst = global_position.distance_to(closest_leahy.global_position)
+	else:
+		leahy_dst = -1
+	
+	if closest_leahy:
+		if Game.game_started and not parent.selected_mode == "scary":
+			if (10 - leahy_dst) > 0:
+				var strength = 1/leahy_dst+0.01
+				camera_3d.h_offset = camera_wobble.x + randf_range(-strength,strength) / 5
+				camera_3d.v_offset = camera_wobble.y + randf_range(-strength,strength) / 5
+			else:
+				camera_3d.h_offset = camera_wobble.x
+				camera_3d.v_offset = camera_wobble.y
+			
+			if closest_leahy.target_player_name and !parent.can_escape:
+				if global_position.y < 3.7:
+					if closest_leahy.target_player_name == steam_name:
+						if (closest_leahy.appeased == false && closest_leahy.absent == false && closest_leahy.baja_blasted == false):
+							leahy_approaching.is_shown = true
+							leahy_approaching.distance = leahy_dst
+						else:
+							leahy_approaching.is_shown = false
+					else:
+						leahy_approaching.is_shown = false
+				else:
+					leahy_approaching.is_shown = false
+			else:
+				leahy_approaching.is_shown = false
+		else:
+			camera_3d.h_offset = camera_wobble.x
+			camera_3d.v_offset = camera_wobble.y
+	else:
+		camera_3d.h_offset = camera_wobble.x
+		camera_3d.v_offset = camera_wobble.y
+
+func shop_ui_updates():
+	if Input.is_action_just_pressed("submit") and is_shop_open:
+		_on_submit_button_pressed() 
+	
+	$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floori(shop_timer.time_left)) + "s left"
+	$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds/Label".text = str(floori(shop_timer.time_left))
+	
+	$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits)
+	$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore/Label".text = str(credits)
+
+func camera_effects(delta):
+	if !parent.leahy_look:
+		cam_fov = 75 + (speed_multiplier * run_multiplier) * 15
+	
+	if not phone_open:
+		camera_3d.fov = clamp(lerp(camera_3d.fov, float(cam_fov), delta * 15),1,140)
+	else:
+		camera_3d.fov = lerp(camera_3d.fov, float(90), delta * 10)
+	
+	camera_3d.current = true
+	
+	camera_wobble_function(delta)
+
+func phone(delta):
+	$CanvasLayer/Control/pending_suspension.visible = pending_suspension
+	
+	if Input.is_action_just_pressed("push_to_talk"):
+		if has_phone:
+			if not phone_open:
+				$Phone/AnimationPlayer.play("get_da_phone")
+				phone_open = true
+				GuiManager.show_cursor()
+				$CanvasLayer/Control/TextureRect.hide()
+				$Phone/phon.play()
+			else:
+				phone_open = false
+				$Phone/AnimationPlayer.play_backwards("get_da_phone")
+				GuiManager.hide_cursor()
+				$CanvasLayer/Control/TextureRect.show()
+				$Phone/phon.stop()
+				
+	
+	$CanvasLayer/Control/phone_indicator.visible = has_phone
+	if phone_open:
+		camera_3d.rotation.x = lerp(camera_3d.rotation.x, 0.0, delta * 5)
+	
+	var secondary_alpha = $CanvasLayer/Control/Vignette2.material.get("shader_parameter/SecondaryAlpha")
+	$CanvasLayer/Control/Vignette2.material.set("shader_parameter/SecondaryAlpha", lerp(secondary_alpha, float(pending_suspension_meter) / 100.0, delta * 50))
+	
+	if pending_suspension_meter > 5:
+		$focus.volume_db = min(0, -40  + pending_suspension_meter)
+	else:
+		$focus.volume_db = -80
+
+func hand_and_spotlight(delta):
+	$HandTree.set("parameters/time_scale/scale", run_multiplier * speed_multiplier)
+	
+	var curr_xy = Vector2(
+		$HandOrientation.global_rotation.x,
+		$HandOrientation.global_rotation.y
+	)
+	var target_xy = Vector2(
+		camera_3d.global_rotation.x * 0.5,
+		camera_3d.global_rotation.y
+	)
+	# compute wrapped difference per axis
+	var diff_xy = Vector2(
+		shortest_angle_diff(curr_xy.x, target_xy.x),
+		shortest_angle_diff(curr_xy.y, target_xy.y)
+	)
+	hand_vel_xy += diff_xy * SPRING_STIFFNESS * delta
+	hand_vel_xy *= exp(-SPRING_DAMPING * delta)
+	curr_xy += hand_vel_xy * delta
+	$HandOrientation.global_position = global_position
+	$HandOrientation.global_rotation.x = curr_xy.x
+	$HandOrientation.global_rotation.y = curr_xy.y
+	# --- spotlight ---
+	var spot_curr   = $SpotLight3D.global_rotation
+	var spot_target = camera_3d.global_rotation
+	var spot_diff = Vector3(
+		shortest_angle_diff(spot_curr.x, spot_target.x),
+		shortest_angle_diff(spot_curr.y, spot_target.y),
+		shortest_angle_diff(spot_curr.z, spot_target.z)
+	)
+	spot_vel += spot_diff * SPRING_STIFFNESS * delta * 0.5
+	spot_vel *= exp(-SPRING_DAMPING * delta)
+	spot_curr += spot_vel * delta
+	
+	$SpotLight3D.global_rotation = spot_curr
+	$SpotLight3D.global_position = camera_3d.global_position
+
+func ui_updates(delta):
+	progress_bar.value = lerp(progress_bar.value, float(stamina), delta * 5)
+	
+	
+	if parent.can_escape and not is_dead:
+		$CanvasLayer/Control.do_shake = true
+	else:
+		$CanvasLayer/Control.do_shake = false
+
+func freaky_ending_check():
+	if parent.selected_map != "tutorial":
+		if global_position.z > 15 && !is_freaky:
+			if !Game.game_started:
+				is_freaky = true
+				parent.skibidi.rpc()
+			else:
+				global_position.z = 0
+				GuiManager.show_tip("Whoops, sorry about that.", 5)
 
 func toilet_tp_timeout():
 	await Game.sleep(60)
@@ -441,6 +479,8 @@ func _on_area_3d_area_entered(area):
 	elif area.name == "darel ball":
 		die("darel")
 		area.get_parent().queue_free()
+	elif area.name == "EvilNeil" and Game.game_started == true:
+		die("neil")
 
 func landmine_slip():
 	velocity.y += 5
@@ -596,11 +636,11 @@ func select_item(slot: int):
 	
 	# Hide all items first
 	for i in hand.get_children().size():
-		set_item_vis.rpc(i, false)
+		set_item_vis(i, false)
 	
 	# Show selected item if any
 	if selected_slot != -1 and inventory[selected_slot] != -1:
-		set_item_vis.rpc(inventory[selected_slot], true)
+		set_item_vis(inventory[selected_slot], true)
 		$HandTree.set("parameters/pickup/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		
 # Get currently selected item ID
@@ -609,9 +649,31 @@ func get_selected_item() -> int:
 		return inventory[selected_slot]
 	return -1
 
-@rpc("any_peer","call_local")
 func set_item_vis(item : int,vis : bool):
 	hand.get_child(item).visible = vis
+	
+	if vis:
+		var cloned_item = hand.get_child(item).get_child(0).get_path()
+		kinematic_set_item_vis.rpc(vis, cloned_item, $MultiplayerItem.get_path())
+	else:
+		kinematic_set_item_vis.rpc(false, "", $MultiplayerItem.get_path())
+
+@rpc("any_peer", "call_local")
+func kinematic_set_item_vis(vis: bool, item_path : String, multiplayer_item_path : String):
+	if !vis:
+		if !get_node_or_null(multiplayer_item_path): return
+		for child in get_node(multiplayer_item_path).get_children():
+			child.queue_free()
+		return
+	
+	if !get_node_or_null(item_path): return
+	if !get_node_or_null(multiplayer_item_path): return
+	
+	var item = get_node(item_path).duplicate()
+	var multiplayer_item = get_node(multiplayer_item_path)
+	
+	multiplayer_item.add_child(item)
+	item.position = Vector3.ZERO
 
 var item_weights = {}
 
@@ -764,6 +826,8 @@ func die(cause, do_die = true):
 		$"CanvasLayer/Control/Died thing/jumpscare6".play()
 	elif cause == "misuraca":
 		$"CanvasLayer/Control/Died thing/jumpscare7".play()
+	elif cause == "neil":
+		$"CanvasLayer/Control/Died thing/jumpscare8".play()
 	elif cause == "darel":
 		$"CanvasLayer/Control/Died thing/darel death".show()
 		$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer".play("ha")
@@ -1180,6 +1244,10 @@ func _on_gamblebtn_3_pressed():
 var is_in_freezer = false
 
 func movement_function(delta):
+	player_position = global_position
+	player_rotation = global_rotation
+	
+	SPEED = clamp(OG_SPEED * speed_multiplier * run_multiplier,0,99999)
 	
 	if not is_on_floor() and not is_dead:
 		velocity.y -= gravity * delta
@@ -1190,9 +1258,9 @@ func movement_function(delta):
 		is_on_top = false
 	
 	if Input.is_action_pressed("jump"):
-		$"Camera target".rotation_degrees.y = 180
+		camera_3d.rotation_degrees.y = 180
 	else:
-		$"Camera target".rotation_degrees.y = 0
+		camera_3d.rotation_degrees.y = 0
 	
 	
 	if Input.is_action_just_pressed("sprint"):
@@ -1266,6 +1334,9 @@ func movement_function(delta):
 					velocity.x *= 0.99
 					velocity.z *= 0.99
 				
+				if is_in_car:
+					velocity = Vector3.ZERO
+				
 				move_and_slide()
 				
 				# Update is_moving based on actual movement
@@ -1274,12 +1345,7 @@ func movement_function(delta):
 					$HandTree.set("parameters/Transition/transition_request","static")
 				else:
 					$HandTree.set("parameters/Transition/transition_request","swing")
-				
-				
-				
-				interaction_functions()
-				item_give_functions()
-				item_use_functions()
+
 	
 	if Input.is_action_just_pressed("throw"):
 		if get_selected_item() != -1:
@@ -1288,11 +1354,12 @@ func movement_function(delta):
 		remove_item(selected_slot)
 		
 	if parent.leahy_look:
-		var target = Game.get_closest_node_in_group(global_position,"enemies")
+		var target = Game.get_closest_node_in_group(global_position, "enemies")
 		
 		if target:
 			look_at(target.global_position)
 			global_rotation_degrees.x = 0
+			camera_3d.global_rotation_degrees.x = 0
 			global_rotation_degrees.z = 0
 			
 			cam_fov = 10
@@ -1468,7 +1535,7 @@ func item_use_functions():
 			add_speed_boost(1, 3)
 		elif get_selected_item() == 1:
 			remove_item(selected_slot)
-			spawn_clorox.rpc($RayCast3D.global_position, $"Camera target".global_rotation, name.to_int())
+			spawn_clorox.rpc($RayCast3D.global_position, camera_3d.global_rotation, name.to_int())
 		elif get_selected_item() == 2:
 			remove_item(selected_slot)
 			velocity.y += 20

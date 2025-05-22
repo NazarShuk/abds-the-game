@@ -61,7 +61,7 @@ properties/0/replication_mode = 1
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj8a2"]
 size = Vector3(1, 1, 0.389648)
 
-[node name="Mr Fox" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_fox"]]
+[node name="Mr Fox" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "area_3d") groups=["mr_fox", "teachers"]]
 transform = Transform3D(2.33, 0, 0, 0, 2.33, 0, 0, 0, 2.33, 0, 0, 0)
 collision_layer = 17
 collision_mask = 17
