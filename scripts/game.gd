@@ -405,8 +405,7 @@ func request_to_start_game(id):
 				pre_start_game_btn()
 
 func spawn_players():
-	if !OS.has_feature("debug"):
-		await Game.sleep(3)
+	await Game.sleep(3.5)
 	for pl_id in Game.players.keys():
 		var player = load("res://scenes/player.tscn").instantiate()
 
@@ -431,14 +430,29 @@ func pre_start_game():
 	$Music1.play()
 	$Music0.stop()
 	
-	var school : Node3D = load(maps[selected_map].scene).instantiate()
-	add_child(school)
+	ResourceLoader.load_threaded_request(maps[selected_map].scene)
+	
+	while true:
+		var progress = []
+		var status = ResourceLoader.load_threaded_get_status(maps[selected_map].scene, progress)
+		
+		if status == ResourceLoader.THREAD_LOAD_LOADED:
+			var school_scene = ResourceLoader.load_threaded_get(maps[selected_map].scene)
+			var school : Node3D = school_scene.instantiate()
+			add_child(school)
+			break
+		elif status == ResourceLoader.THREAD_LOAD_FAILED:
+			print("Failed to load scene")
+			break
+		
+		await get_tree().process_frame
 	
 	pacer_available = maps[selected_map].pacer
 	if maps[selected_map].pacer:
 		current_pacer_target = $"School/Pacer/Pacer target"
 	
 	call(modes[selected_mode].function)
+	
 
 
 func _on_peer_disconnect(id):
@@ -863,8 +877,7 @@ func depression_ending():
 		canPlayersMove = false
 		is_dp = true
 		for el in get_tree().get_nodes_in_group("evil_leahy"):
-			el.SPEED += 30
-
+			el.add_speed_multiplier(10, 100)
 
 func loose_notebooks(books_loss):
 	for p in Game.players.keys():

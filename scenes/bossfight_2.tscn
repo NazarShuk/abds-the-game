@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=3 uid="uid://b30elca73qou7"]
+
+[ext_resource type="AudioStream" uid="uid://wbrocolifoof" path="res://sounds/bossfight_new_part2.mp3" id="1_1afen"]
+[ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_or13o"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pg6n8"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(1, 1, 1, 1)
+ground_bottom_color = Color(1, 1, 1, 1)
+ground_horizon_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Sky" id="Sky_vv5pd"]
+sky_material = SubResource("ProceduralSkyMaterial_pg6n8")
+
+[sub_resource type="Environment" id="Environment_1afen"]
+background_mode = 2
+sky = SubResource("Sky_vv5pd")
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_exposure = 1.25
+ssil_enabled = true
+ssil_radius = 3.03
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_energy = 0.0
+glow_enabled = true
+glow_intensity = 0.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_emission = Color(0.277528, 0.277528, 0.277528, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i348w"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 0, 0, 0.454902)
+emission_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_pg6n8"]
+material = SubResource("StandardMaterial3D_i348w")
+size = Vector2(0.065, 1)
+
+[sub_resource type="Animation" id="Animation_1afen"]
+resource_name = "intro"
+length = 5.0
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_or13o"]
+_data = {
+&"intro": SubResource("Animation_1afen")
+}
+
+[node name="Bossfight2" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_bake_mode = 1
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1afen")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.3153, 0)
+emitting = false
+amount = 100
+mesh = SubResource("QuadMesh_pg6n8")
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 10)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 25.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.782608, 0.506799, 0.361496, 0, 0.580703, -0.814116, -0.622515, 0.637133, 0.454463, 4.39807, 0, 4.12206)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_1afen")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_or13o")
+}
+autoplay = "intro"
+
+[node name="visual_body" parent="." instance=ExtResource("2_or13o")]
+transform = Transform3D(-1, 0, -8.74228e-08, -8.44439e-08, 0.258819, 0.965926, 2.26267e-08, 0.965926, -0.258819, 0, 0, 0)

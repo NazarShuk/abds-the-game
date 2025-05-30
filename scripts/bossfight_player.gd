@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name BossfightPlayer
 
+const CLOROX = preload("uid://c2vmxxh2ektax")
+
 # Player movement parameters
 @export var SPEED = 6.0
 @export var JUMP_VELOCITY = 4.5
@@ -21,10 +23,50 @@ var target_fov = 75
 var camera_wobble = Vector2.ZERO
 var wobble_time = 0
 
+var cloroxes_left = 3
+
 func _ready():
 	# Capture mouse cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _process(delta: float) -> void:
+	cloroxes()
+
+func cloroxes():
+	if cloroxes_left >= 3:
+		$CanvasLayer/item3.show()
+	else:
+		$CanvasLayer/item3.hide()
 	
+	if cloroxes_left >= 2:
+		$CanvasLayer/item2.show()
+	else:
+		$CanvasLayer/item2.hide()
+		
+	if cloroxes_left >= 1:
+		$CanvasLayer/item.show()
+	else:
+		$CanvasLayer/item.hide()
+	
+	if Input.is_action_just_pressed("use_item"):
+		if cloroxes_left > 0:
+			cloroxes_left -= 1
+			$Head/Hands/AnimationPlayer.play("clorox_use")
+			await get_tree().create_timer(0.4, false).timeout
+			var clorox = CLOROX.instantiate()
+			add_sibling(clorox)
+			clorox.global_position = camera.global_position
+			clorox.global_rotation = camera.global_rotation
+			
+			await $Head/Hands/AnimationPlayer.animation_finished
+			if cloroxes_left > 0:
+				$Head/Hands/AnimationPlayer.play("clorox_open")
+	
+	if Input.is_action_pressed("jump"):
+		head.rotation_degrees.y = 180
+	else:
+		head.rotation_degrees.y = 0
+
 func _unhandled_input(event):
 	# Handle mouse movement
 	if event is InputEventMouseMotion:
@@ -47,11 +89,8 @@ func _physics_process(delta):
 	# Add gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
-	# Handle jump
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
+	
+	
 	# Get input direction
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -86,6 +125,8 @@ func _physics_process(delta):
 
 func camera_wobble_function(delta : float):
 	wobble_time += delta * velocity.length()
+	if velocity.length() <= 0.1 or not is_on_floor():
+		wobble_time = 0
 	
-	camera_wobble.x = lerp(camera_wobble.x, sin(wobble_time) * 0.25, delta * 20)
-	camera_wobble.y = lerp(camera_wobble.y, abs(cos(wobble_time)) * 0.25, delta * 20)
+	camera_wobble.x = lerp(camera_wobble.x, sin(wobble_time) * 0.1, delta * 20)
+	camera_wobble.y = lerp(camera_wobble.y, abs(cos(wobble_time)) * 0.1, delta * 20)

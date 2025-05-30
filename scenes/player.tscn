@@ -1,34 +1,22 @@
-[gd_scene load_steps=247 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=232 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" uid="uid://cr71283wvm1cg" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://textures/player.png" id="2_q3hoo"]
-[ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="2_qmsq4"]
-[ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="3_5vs2b"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
-[ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="4_a7i4v"]
-[ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="5_b5l0c"]
 [ext_resource type="AudioStream" uid="uid://4ug2jt2muw6i" path="res://sounds/walk.mp3" id="5_muu2l"]
-[ext_resource type="Script" uid="uid://ccheuq747fx8o" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="6_2a33p"]
 [ext_resource type="Script" uid="uid://bjmvegw1rbswp" path="res://scripts/shake_control.gd" id="6_8er58"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://fonts/Ldfcomicsans-jj7l.ttf" id="6_l1x2u"]
 [ext_resource type="Texture2D" uid="uid://be5xxj6avo7nd" path="res://textures/udv-WLKo_400x400.jpg" id="7_mv5hh"]
-[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="7_reqs7"]
-[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="8_2yjfb"]
 [ext_resource type="AudioStream" uid="uid://d2e0x50n80346" path="res://sounds/jumpscare-154489 (1)_01.mp3" id="8_4ilia"]
 [ext_resource type="VideoStream" uid="uid://c670ocd6070mm" path="res://models/jumpscare.ogv" id="9_7mdnm"]
-[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="9_dnnjp"]
 [ext_resource type="Script" uid="uid://c7iddd72t5olk" path="res://scripts/inventory_ui.gd" id="10_777lu"]
-[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="10_wqna8"]
 [ext_resource type="Script" uid="uid://bjjy1e2fcf8np" path="res://scripts/collected_books_label.gd" id="11_2xmp4"]
 [ext_resource type="Texture2D" uid="uid://bkko8hh2qdiq0" path="res://textures/leahy fact.png" id="11_jx8is"]
-[ext_resource type="Script" uid="uid://cayou08qvockf" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="11_l7gmo"]
 [ext_resource type="Script" uid="uid://dsi2h6glv83gc" path="res://scripts/tv.gd" id="12_fxeha"]
-[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="12_kft7l"]
 [ext_resource type="Texture2D" uid="uid://bwegysvwn7ypj" path="res://textures/tv/default.png" id="12_mo4yx"]
 [ext_resource type="AudioStream" uid="uid://02jhvxp2h73l" path="res://sounds/shop.mp3" id="12_u07an"]
 [ext_resource type="Texture2D" uid="uid://db37ryx01gug" path="res://textures/the shop.png" id="12_xfb3j"]
-[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="13_2s4os"]
 [ext_resource type="Texture2D" uid="uid://dqvqe10pt7j2x" path="res://textures/tv/banana.png" id="13_a3yed"]
 [ext_resource type="Texture2D" uid="uid://bk115vrsppgoa" path="res://textures/tv/static.png" id="13_wka5j"]
 [ext_resource type="Texture2D" uid="uid://b455oqpjbnaya" path="res://textures/mtndew.png" id="14_sfn8x"]
@@ -97,45 +85,6 @@
 [ext_resource type="AudioStream" uid="uid://c6setym4camlr" path="res://sounds/focus.mp3" id="80_cy2ki"]
 [ext_resource type="AudioStream" uid="uid://bvi0vvhkwnje7" path="res://sounds/lobotomy.mp3" id="82_7c55y"]
 [ext_resource type="AudioStream" uid="uid://4smsew31ujv7" path="res://sounds/flashbang.mp3" id="83_hoal8"]
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_2em0j"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("6_2a33p")
-pre_blur_processor_stage = ExtResource("5_b5l0c")
-camera_rotation_component = ExtResource("3_5vs2b")
-camera_movement_component = ExtResource("2_qmsq4")
-object_movement_component = ExtResource("4_a7i4v")
-debug = false
-metadata/_custom_type_script = "uid://ccheuq747fx8o"
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_qe2k6"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("11_l7gmo")
-tile_max_x_stage = ExtResource("12_kft7l")
-tile_max_y_stage = ExtResource("13_2s4os")
-construct_stage = ExtResource("8_2yjfb")
-neighbor_max_stage = ExtResource("9_dnnjp")
-blur_stage = ExtResource("7_reqs7")
-overlay_stage = ExtResource("10_wqna8")
-perpen_error_threshold = 0.5
-sample_step_multiplier = 8
-step_exponent_modifier = 1.0
-JFA_pass_count = 3
-debug = false
-metadata/_custom_type_script = "uid://cayou08qvockf"
-
-[sub_resource type="Compositor" id="Compositor_edwuo"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2em0j"), SubResource("CompositorEffect_qe2k6")])
 
 [sub_resource type="Animation" id="Animation_vihdy"]
 length = 0.001
@@ -2496,7 +2445,6 @@ target_position = Vector3(0, 0, -2.5)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 cull_mask = 1044477
-compositor = SubResource("Compositor_edwuo")
 
 [node name="interact_hand" type="Sprite3D" parent="Camera3D"]
 transform = Transform3D(0.0932012, -0.0265374, -0.024684, 0.0333998, 0.089332, 0.0300706, 0.0140707, -0.0362706, 0.092122, 0.105, -0.065, -0.275)
@@ -4411,12 +4359,18 @@ vertical_alignment = 1
 autowrap_mode = 2
 script = ExtResource("51_vep60")
 
-[node name="Menu" type="ColorRect" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
+[node name="stamina flash" type="Timer" parent="CanvasLayer/Control"]
+wait_time = 0.25
+autostart = true
+
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Menu" type="ColorRect" parent="MenuLayer" node_paths=PackedStringArray("player")]
 process_mode = 3
 visible = false
 z_index = 999
 z_as_relative = false
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4425,9 +4379,9 @@ grow_vertical = 2
 pivot_offset = Vector2(20, 20)
 color = Color(0, 0, 0, 0.556863)
 script = ExtResource("45_ndhl0")
-player = NodePath("../../..")
+player = NodePath("../..")
 
-[node name="Main" type="ColorRect" parent="CanvasLayer/Control/Menu"]
+[node name="Main" type="ColorRect" parent="MenuLayer/Menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -4441,7 +4395,7 @@ offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Menu/Main"]
+[node name="Label" type="Label" parent="MenuLayer/Menu/Main"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -4453,7 +4407,7 @@ theme_override_font_sizes/font_size = 56
 text = "Menu"
 horizontal_alignment = 1
 
-[node name="ContinueBtn" type="Button" parent="CanvasLayer/Control/Menu/Main"]
+[node name="ContinueBtn" type="Button" parent="MenuLayer/Menu/Main"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -4468,7 +4422,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Continue"
 
-[node name="DisconnectBtn" type="Button" parent="CanvasLayer/Control/Menu/Main"]
+[node name="DisconnectBtn" type="Button" parent="MenuLayer/Menu/Main"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -4482,10 +4436,6 @@ offset_bottom = 40.0001
 grow_horizontal = 2
 grow_vertical = 2
 text = "Disconnect"
-
-[node name="stamina flash" type="Timer" parent="CanvasLayer/Control"]
-wait_time = 0.25
-autostart = true
 
 [node name="HandOrientation" type="Node3D" parent="."]
 top_level = true
@@ -4729,12 +4679,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 visible = false
 
 [node name="hand" type="Sprite3D" parent="Phone"]
-transform = Transform3D(0.0939693, -0.034202, 1.20973e-09, 0.0319303, 0.0877279, 0.0358368, -0.0122569, -0.0336756, 0.093358, 0.1, 0.364, -0.294)
+transform = Transform3D(0.0939693, -0.034202, -7.5943e-10, 0.0319303, 0.0877279, 0.0358368, -0.0122569, -0.0336756, 0.093358, 0.1, 0.364, -0.294)
 pixel_size = 0.001
 texture = ExtResource("53_0cocr")
 
 [node name="phone" type="Sprite3D" parent="Phone/hand"]
-transform = Transform3D(8.92708, 3.2492, 3.95604e-06, -3.03338, 8.33415, -3.4045, -1.16441, 3.19918, 8.86901, -0.265, 1.205, 0.215)
+transform = Transform3D(8.92708, 3.2492, 4.04993e-06, -3.03338, 8.33415, -3.4045, -1.16441, 3.19918, 8.86901, -0.265, 1.205, 0.215)
 pixel_size = 0.001
 texture_filter = 0
 texture = ExtResource("76_ee2o4")
@@ -4853,9 +4803,9 @@ volume_db = -5.0
 [connection signal="visibility_changed" from="CanvasLayer/Control/toilet" to="CanvasLayer/Control/toilet" method="_on_visibility_changed"]
 [connection signal="timeout" from="CanvasLayer/Control/Tip/Timer" to="CanvasLayer/Control/Tip" method="_on_timer_timeout"]
 [connection signal="gui_input" from="CanvasLayer/Control/Minimap/TextureRect" to="." method="_on_texture_rect_gui_input"]
-[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/ContinueBtn" to="CanvasLayer/Control/Menu" method="toggle_menu"]
-[connection signal="pressed" from="CanvasLayer/Control/Menu/Main/DisconnectBtn" to="CanvasLayer/Control/Menu" method="_on_disconnect_btn_pressed"]
 [connection signal="timeout" from="CanvasLayer/Control/stamina flash" to="." method="_on_stamina_flash_timeout"]
+[connection signal="pressed" from="MenuLayer/Menu/Main/ContinueBtn" to="MenuLayer/Menu" method="toggle_menu"]
+[connection signal="pressed" from="MenuLayer/Menu/Main/DisconnectBtn" to="MenuLayer/Menu" method="_on_disconnect_btn_pressed"]
 [connection signal="timeout" from="emotes/Timer" to="emotes" method="_on_timer_timeout"]
 [connection signal="pressed" from="Phone/CanvasLayer/hitman_app" to="Phone/CanvasLayer" method="_on_hitman_app_pressed"]
 [connection signal="timeout" from="Phone/CanvasLayer/hitman/Timer" to="Phone/CanvasLayer" method="_on_hitman_timer_timeout"]

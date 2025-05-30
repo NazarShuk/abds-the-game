@@ -127,6 +127,7 @@ func _ready():
 		$nametag.hide()
 		
 		hand.show()
+		$MultiplayerItem.hide()
 
 func _process(delta: float) -> void:
 	if !is_multiplayer_authority(): return

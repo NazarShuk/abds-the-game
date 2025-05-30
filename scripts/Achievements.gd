@@ -41,6 +41,14 @@ func _ready():
 		if !achievements.has("disoriented_ending"):
 			achievements["disoriented_ending"] = false
 			save_all()
+		
+		if !achievements.has("bossfight_spared"):
+			achievements["bossfight_spared"] = false
+			save_all()
+		
+		if !achievements.has("bossfight_killed"):
+			achievements["bossfight_killed"] = false
+			save_all()
 
 func check_achievement(achievement_name):
 	if achievements.has(achievement_name):

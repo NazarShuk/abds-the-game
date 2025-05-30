@@ -712,14 +712,14 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_y2xjx"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i348w"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wljb1"]
 transparency = 1
 cull_mode = 2
 albedo_color = Color(0, 0, 0, 0.454902)
 emission_enabled = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_56gn1"]
-material = SubResource("StandardMaterial3D_i348w")
+material = SubResource("StandardMaterial3D_wljb1")
 size = Vector2(0.065, 1)
 
 [sub_resource type="Animation" id="Animation_ple6s"]
@@ -1896,9 +1896,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -461.0
-offset_top = 405.0
+offset_top = -241.0
 offset_right = 461.0
-offset_bottom = 535.0
+offset_bottom = -111.0
 grow_horizontal = 2
 grow_vertical = 2
 

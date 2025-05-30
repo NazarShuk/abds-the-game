@@ -6,13 +6,13 @@
 radius = 0.812615
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aee1h"]
-properties/0/path = NodePath(".:position")
+properties/0/path = NodePath(".:item")
 properties/0/spawn = true
 properties/0/replication_mode = 2
-properties/1/path = NodePath(".:rotation")
+properties/1/path = NodePath(".:pos")
 properties/1/spawn = true
 properties/1/replication_mode = 2
-properties/2/path = NodePath(".:item")
+properties/2/path = NodePath(".:rot")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
@@ -24,8 +24,8 @@ script = ExtResource("1_abqcx")
 shape = SubResource("SphereShape3D_gbdem")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_interval = 0.2
-delta_interval = 0.2
+replication_interval = 0.1
+delta_interval = 0.1
 replication_config = SubResource("SceneReplicationConfig_aee1h")
 
 [node name="Timer" type="Timer" parent="."]

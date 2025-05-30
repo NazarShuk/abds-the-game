@@ -24,8 +24,9 @@ func _process(delta: float) -> void:
 		
 		if Input.is_action_just_pressed("jump"):
 			leave_car.rpc(multiplayer.get_unique_id())
-			local_player.get_node("CollisionShape3D").disabled = false
-			local_player.is_in_car = false
+			# Don't set these here - let the RPC handle it
+			# local_player.get_node("CollisionShape3D").disabled = false
+			# local_player.is_in_car = false
 	
 	$CanvasLayer.visible = player_in_car
 	
@@ -56,9 +57,16 @@ func leave_car(driver_id):
 			driver = -1
 		client_car.rpc_id(driver_id,false)
 
-@rpc("authority","call_local")
+@rpc("any_peer","call_local")
 func client_car(do_enter):
 	player_in_car = do_enter
+	
+	# Handle player state changes here instead
+	var local_player = Game.get_player_by_id(multiplayer.get_unique_id())
+	if local_player:
+		if not do_enter:  # Player is leaving the car
+			local_player.get_node("CollisionShape3D").disabled = false
+			local_player.is_in_car = false
 
 @rpc("any_peer","call_local")
 func push_item(push_direction,push_force):

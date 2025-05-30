@@ -657,7 +657,7 @@ autostart = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../CanvasLayer/Control")
 libraries = {
-"": SubResource("AnimationLibrary_88r7y")
+&"": SubResource("AnimationLibrary_88r7y")
 }
 autoplay = "theEnd"
 

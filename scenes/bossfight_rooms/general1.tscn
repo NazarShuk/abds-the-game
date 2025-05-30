@@ -1,0 +1,286 @@
+[gd_scene load_steps=22 format=3 uid="uid://bwrtr2vxfx786"]
+
+[ext_resource type="Script" uid="uid://be4adntfa1u41" path="res://scenes/bossfight_rooms/room.gd" id="1_loo08"]
+[ext_resource type="Texture2D" uid="uid://bs2hbw6eckr2j" path="res://textures/floor.png" id="2_elepa"]
+[ext_resource type="Texture2D" uid="uid://dvgm7yqf1y040" path="res://models/walls2.png" id="3_kisxq"]
+[ext_resource type="PackedScene" uid="uid://dkenas21xnj0n" path="res://scenes/fire extinguisher pickup.tscn" id="4_loo08"]
+[ext_resource type="PackedScene" uid="uid://dj1d6i6p2fxdx" path="res://scenes/freezer.tscn" id="5_elepa"]
+[ext_resource type="PackedScene" uid="uid://bc3kpnykxfbph" path="res://scenes/gambling_wheel.tscn" id="6_elepa"]
+[ext_resource type="PackedScene" uid="uid://bnid1ktqxhfa7" path="res://scenes/shop.tscn" id="7_kisxq"]
+[ext_resource type="PackedScene" uid="uid://btj7odxogilms" path="res://scenes/Vending Machine.tscn" id="8_anb1q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shs12"]
+albedo_texture = ExtResource("2_elepa")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_shs12"]
+material = SubResource("StandardMaterial3D_shs12")
+size = Vector3(10, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_shs12"]
+size = Vector3(10, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5k2kt"]
+material = SubResource("StandardMaterial3D_shs12")
+size = Vector3(10, 0.25, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5n3d5"]
+albedo_texture = ExtResource("3_kisxq")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_jsqrf"]
+material = SubResource("StandardMaterial3D_5n3d5")
+size = Vector3(0.25, 4, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_27to4"]
+size = Vector3(0.25, 4, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5n3d5"]
+material = SubResource("StandardMaterial3D_5n3d5")
+size = Vector3(0.25, 4, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jsqrf"]
+size = Vector3(0.25, 4, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r777w"]
+size = Vector3(3.30664, 4.48633, 1)
+
+[sub_resource type="Animation" id="Animation_r777w"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Handle:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Handle:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Handle:scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Handle:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_5k2kt"]
+resource_name = "appear"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Handle:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.001, -0.25, 0, 0.25, 0, 1, -1, 1, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Handle:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.001, -0.25, 0, 0.25, 0, 1, -1, 1, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Handle:scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.001, -0.25, 0, 0.25, 0, 1, -1, 1, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Handle:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-5, -0.25, 0, 0.25, 0, 0, -1.305, 1.91, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r777w"]
+_data = {
+&"RESET": SubResource("Animation_r777w"),
+&"appear": SubResource("Animation_5k2kt")
+}
+
+[node name="Room" type="Node3D"]
+script = ExtResource("1_loo08")
+
+[node name="Handle" type="Node3D" parent="."]
+
+[node name="Base" type="Node3D" parent="Handle"]
+
+[node name="floor" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/floor"]
+mesh = SubResource("BoxMesh_shs12")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/floor"]
+shape = SubResource("BoxShape3D_shs12")
+
+[node name="floor_special" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.85, 10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/floor_special"]
+mesh = SubResource("BoxMesh_5k2kt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/floor_special"]
+shape = SubResource("BoxShape3D_shs12")
+
+[node name="walls" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/walls"]
+mesh = SubResource("BoxMesh_jsqrf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/walls"]
+shape = SubResource("BoxShape3D_27to4")
+
+[node name="walls2" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/walls2"]
+mesh = SubResource("BoxMesh_jsqrf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/walls2"]
+shape = SubResource("BoxShape3D_27to4")
+
+[node name="walls3" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/walls3"]
+mesh = SubResource("BoxMesh_5n3d5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/walls3"]
+shape = SubResource("BoxShape3D_jsqrf")
+
+[node name="walls4" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/walls4"]
+mesh = SubResource("BoxMesh_5n3d5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/walls4"]
+shape = SubResource("BoxShape3D_jsqrf")
+
+[node name="walls5" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/walls5"]
+mesh = SubResource("BoxMesh_5n3d5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/walls5"]
+shape = SubResource("BoxShape3D_jsqrf")
+
+[node name="walls6" type="StaticBody3D" parent="Handle/Base"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle/Base/walls6"]
+mesh = SubResource("BoxMesh_5n3d5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/walls6"]
+shape = SubResource("BoxShape3D_jsqrf")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Handle/Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 5)
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Handle/Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 10)
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Handle/Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 15)
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="enter" type="Area3D" parent="Handle/Base"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Base/enter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.74316, 0)
+shape = SubResource("BoxShape3D_r777w")
+
+[node name="FireExtinguisherPickup" parent="Handle" instance=ExtResource("4_loo08")]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 4.43609, 1.81134, 10.0184)
+
+[node name="Freezer" parent="Handle" instance=ExtResource("5_elepa")]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -3.5412, 2.36127e-19, 19.5915)
+
+[node name="wheel" parent="Handle" instance=ExtResource("6_elepa")]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, -3.79923, 0.494339, 11.3253)
+
+[node name="shop" parent="Handle" instance=ExtResource("7_kisxq")]
+transform = Transform3D(-3.57628e-07, 0, -1, 0, 1.84917, 0, 7.58123, 0, -5.96046e-08, 4.8552, 1.76676, 15.5525)
+
+[node name="VendingMachine" parent="Handle" instance=ExtResource("8_anb1q")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 1.09384, 0.810454, 3.17605)
+
+[node name="VendingMachine2" parent="Handle" instance=ExtResource("8_anb1q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8141, 0.810454, 3.17605)
+
+[node name="VendingMachine3" parent="Handle" instance=ExtResource("8_anb1q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.47669, 0.810454, 7.82336)
+
+[node name="VendingMachine4" parent="Handle" instance=ExtResource("8_anb1q")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 0.0131, 0.810454, 8.68349)
+
+[node name="VendingMachine5" parent="Handle" instance=ExtResource("8_anb1q")]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 1.91044, 0.810454, 16.352)
+
+[node name="VendingMachine6" parent="Handle" instance=ExtResource("8_anb1q")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 3.40023, 0.810454, 15.4919)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_r777w")
+}
+autoplay = "appear"
+
+[connection signal="body_entered" from="Handle/Base/enter" to="." method="_on_enter_body_entered"]

@@ -26,6 +26,10 @@ var skins = {
 	5: {
 		"front": "uid://2dp4oh8akf5w",
 		"back": "uid://crc1l85w1qk0v"
+	},
+	6: {
+		"front": "uid://b38xixrxxfdw4",
+		"back": "uid://b38xixrxxfdw4"
 	}
 }
 

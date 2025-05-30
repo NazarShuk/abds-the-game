@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var speed : float = 5
+@export var speed : float = 10
 @export var damage : int = 10
 
 func _process(delta: float) -> void:

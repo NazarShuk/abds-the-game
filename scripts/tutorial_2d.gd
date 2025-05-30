@@ -82,10 +82,7 @@ func show_dialog(character_name : String, dialog : String, icon: Texture2D, spee
 		await get_tree().create_timer(wait_time, false).timeout
 		
 	
-	await get_tree().create_timer(1, false).timeout
-	
-	while !Input.is_anything_pressed():
-		await get_tree().create_timer(0.01, false).timeout
+	await get_tree().create_timer(2, false).timeout
 	
 	$Dialog/AnimationPlayer.play_backwards("open_anim")
 	await $Dialog/AnimationPlayer.animation_finished

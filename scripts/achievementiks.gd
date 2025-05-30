@@ -31,6 +31,9 @@ func _ready():
 		skin_list.set_item_disabled(4,true)
 	if Achievements.achievements.has("leahy_time_p rank") == false:
 		skin_list.set_item_disabled(5,true)
+	
+	if Achievements.achievements.get("bossfight_spared", false) == true:
+		skin_list.add_item("Darel.png")
 
 func _on_button_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/logos.tscn")

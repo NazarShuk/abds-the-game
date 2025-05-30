@@ -33,17 +33,20 @@ func start_emoting_local(emote: String):
 	emoting = true
 	$CanvasLayer.show()
 	
-	start_emote.rpc(emote, $SubViewport/CanvasLayer/video.get_path(), $audio.get_path(), self.get_path())
+	start_emote.rpc(emote, $SubViewport/CanvasLayer/video.get_path(), $audio.get_path(), self.get_path(), player.get_node("visual_body").get_path())
 	$Timer.start(emotes[emote].audio.get_length())
 
 @rpc("authority", "call_local")
-func start_emote(emote : String, video_path : String, audio_path: String, emote_path: String):
+func start_emote(emote : String, video_path : String, audio_path: String, emote_path: String, body_path : String):
 	var video = get_node_or_null(video_path)
 	if !video: return
 	var audio = get_node_or_null(audio_path)
 	if !audio: return
 	var emote_node = get_node_or_null(emote_path)
 	if !emote_node: return
+	var visual_body = get_node_or_null(body_path)
+	if !visual_body: return
+	
 	
 	video.stream = emotes[emote].video
 	audio.stream = emotes[emote].audio
@@ -52,9 +55,11 @@ func start_emote(emote : String, video_path : String, audio_path: String, emote_
 	video.play()
 	
 	emote_node.show()
+	
+	visual_body.hide()
 
 func stop_emoting_local():
-	stop_emoting.rpc($SubViewport/CanvasLayer/video.get_path(), $audio.get_path(), self.get_path())
+	stop_emoting.rpc($SubViewport/CanvasLayer/video.get_path(), $audio.get_path(), self.get_path(), player.get_node("visual_body").get_path())
 	AudioServer.set_bus_solo(8, false)
 	$CanvasLayer.hide()
 	$Timer.stop()
@@ -62,17 +67,20 @@ func stop_emoting_local():
 	emoting = false
 
 @rpc("authority", "call_local")
-func stop_emoting(video_path : String, audio_path: String, emote_path: String):
+func stop_emoting(video_path : String, audio_path: String, emote_path: String, body_path : String):
 	var video = get_node_or_null(video_path)
 	if !video: return
 	var audio = get_node_or_null(audio_path)
 	if !audio: return
 	var emote_node = get_node_or_null(emote_path)
 	if !emote_node: return
+	var visual_body = get_node_or_null(body_path)
+	if !visual_body: return
 	
 	emote_node.hide()
 	audio.stop()
 	video.stop()
+	visual_body.hide()
 
 
 func _exit_tree() -> void:

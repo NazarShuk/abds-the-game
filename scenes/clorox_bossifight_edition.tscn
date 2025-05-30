@@ -8,17 +8,17 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2wra"]
 cull_mode = 2
+shading_mode = 0
 albedo_texture = ExtResource("2_ojfjk")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tepnt"]
-size = Vector3(1.94507, 2.06641, 0.303711)
+size = Vector3(0.982422, 1.01343, 0.303711)
 
 [node name="CloroxBossfightEdition" type="Area3D" groups=["clorox_bossfight"]]
 script = ExtResource("1_u618g")
 speed = 20.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("QuadMesh_uidvk")
 surface_material_override/0 = SubResource("StandardMaterial3D_i2wra")
 
