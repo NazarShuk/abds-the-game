@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://ymt1e0fvt8bg"]
+[gd_scene load_steps=93 format=3 uid="uid://ymt1e0fvt8bg"]
 
 [ext_resource type="Script" uid="uid://c2sq3d02m016" path="res://scripts/game.gd" id="1_y4eyb"]
 [ext_resource type="Script" uid="uid://b81fr33wsu4q7" path="res://scripts/Lighting and stuff.gd" id="2_uakk8"]
@@ -30,6 +30,8 @@
 [ext_resource type="AudioStream" uid="uid://dsc7uk018m2k" path="res://pacer_songs/pacer_lap.mp3" id="23_psl6s"]
 [ext_resource type="AudioStream" uid="uid://b56skyxnpwv64" path="res://sounds/leahy time_loop.mp3" id="24_4u2ak"]
 [ext_resource type="AudioStream" uid="uid://bdsxwte072ftk" path="res://pacer_songs/pacer_level.mp3" id="24_s8xkw"]
+[ext_resource type="Script" uid="uid://ds7mbhsu428hd" path="res://scenes/game_xr_menu.gd" id="33_js0lu"]
+[ext_resource type="Texture2D" uid="uid://b2r7lba4oyrdr" path="res://textures/player_hand.png" id="33_v2yb1"]
 [ext_resource type="PackedScene" uid="uid://6t2hpss7soa2" path="res://models/3d/SCHOOL BUS.glb" id="57_56gn1"]
 [ext_resource type="PackedScene" uid="uid://daj05mmyg1iwj" path="res://models/Road block.glb" id="58_avmo2"]
 
@@ -1158,7 +1160,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect2"]
-root_node = NodePath("../../ColorRect2")
 libraries = {
 &"": SubResource("AnimationLibrary_3g3yf")
 }
@@ -2123,6 +2124,21 @@ libraries = {
 }
 autoplay = "goo"
 
+[node name="XROrigin3D" type="XROrigin3D" parent="pre_start_game_anim" node_paths=PackedStringArray("game")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 250, 0)
+script = ExtResource("33_js0lu")
+game = NodePath("../..")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="pre_start_game_anim/XROrigin3D"]
+
+[node name="XRController3D" type="XRController3D" parent="pre_start_game_anim/XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="Sprite3D" type="Sprite3D" parent="pre_start_game_anim/XROrigin3D/XRController3D"]
+transform = Transform3D(-1.09278e-08, 1.09278e-08, -0.25, 0.25, -1.09278e-08, -1.09278e-08, -1.09278e-08, -0.25, -1.09278e-08, 0, 0, 0)
+pixel_size = 0.001
+texture = ExtResource("33_v2yb1")
+
 [connection signal="timeout" from="Bet timer" to="." method="_on_bet_timer_timeout"]
 [connection signal="timeout" from="LeahyTime" to="." method="_on_leahy_time_timeout"]
 [connection signal="pressed" from="CanvasLayer/Lobby/Label4/reset_to_default" to="CanvasLayer/Lobby" method="_on_reset_to_default_pressed"]
@@ -2138,3 +2154,4 @@ autoplay = "goo"
 [connection signal="timeout" from="Music2/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer" to="." method="_on_pacer_start_timer_timeout"]
 [connection signal="timeout" from="FakeFox/PacerTest/PacerStartTimer2" to="." method="_on_pacer_start_timer_2_timeout"]
+[connection signal="button_pressed" from="pre_start_game_anim/XROrigin3D/XRController3D" to="pre_start_game_anim/XROrigin3D" method="_on_xr_controller_3d_button_pressed"]

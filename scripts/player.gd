@@ -27,12 +27,12 @@ var is_moving = false
 var can_move = true
 var is_ragdolled = false
 
-@onready var progress_bar: ProgressBar = $"CanvasLayer/Control/Progress bar handler/ProgressBar"
-@onready var progress_bar_handler = $"CanvasLayer/Control/Progress bar handler"
+@onready var progress_bar: ProgressBar = $"UI/CanvasLayer/Control/Progress bar handler/ProgressBar"
+@onready var progress_bar_handler = $"UI/CanvasLayer/Control/Progress bar handler"
 
 @export var is_dead = false
 
-@onready var ray = $RayCast3D
+@onready var ray = $XROrigin3D/right_hand/RayCast3D
 
 var cam_fov = 75
 var can_cam_move = true
@@ -47,7 +47,7 @@ var on_top_counter = 0
 
 var can_get_item = true
 
-@export var camera_3d : Camera3D
+@export var camera_3d : XRCamera3D
 @onready var minimap_cam = $Minimap/Camera3D
 
 var leahy_dst = 0
@@ -59,9 +59,9 @@ var can_use_shop = true
 
 var parent : GameScene = null
 
-@onready var leahy_approaching = $CanvasLayer/Control/LeahyApproaching
+@onready var leahy_approaching = $UI/CanvasLayer/Control/LeahyApproaching
 
-@onready var shop_timer = $"CanvasLayer/Control/Shop/shop timer"
+@onready var shop_timer = $"UI/CanvasLayer/Control/Shop/shop timer"
 
 var is_freaky = false
 var can_use_breaker = true
@@ -76,7 +76,7 @@ var baja_previous_pos = Vector3()
 
 var last_breath = false
 
-@onready var tv: Control = $CanvasLayer/Control/TV
+@onready var tv: Control = $UI/CanvasLayer/Control/TV
 
 var camera_wobble = Vector2.ZERO
 var wobble_time = 0
@@ -102,9 +102,9 @@ func _enter_tree():
 	steam_name = SteamManager.steam_name
 	parent = get_parent()
 	
-	$CanvasLayer.hide()
+	$UI/CanvasLayer.hide()
 	if is_multiplayer_authority():
-		$CanvasLayer.show()
+		$UI/CanvasLayer.show()
 
 
 func _ready():
@@ -162,7 +162,7 @@ func _process(delta: float) -> void:
 	item_give_functions()
 	item_use_functions()
 	
-	$visual_body.head_rotation = -$Camera3D.global_rotation.x / 4
+	$visual_body.head_rotation = -camera_3d.global_rotation.x / 4
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
@@ -257,7 +257,7 @@ func dropped_items_physics():
 			collider.push_item.rpc(push_direction,push_force)
 
 func minimap_controls():
-	$CanvasLayer/Control/Minimap.visible = is_minimap_open
+	$UI/CanvasLayer/Control/Minimap.visible = is_minimap_open
 	
 	if Input.is_action_just_pressed("open_minimap"):
 		if !is_shop_open:
@@ -323,11 +323,11 @@ func shop_ui_updates():
 	if Input.is_action_just_pressed("submit") and is_shop_open:
 		_on_submit_button_pressed() 
 	
-	$CanvasLayer/Control/Shop/ColorRect/timer.text = str(floori(shop_timer.time_left)) + "s left"
-	$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds/Label".text = str(floori(shop_timer.time_left))
+	$UI/CanvasLayer/Control/Shop/ColorRect/timer.text = str(floori(shop_timer.time_left)) + "s left"
+	$"UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds/Label".text = str(floori(shop_timer.time_left))
 	
-	$CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits)
-	$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore/Label".text = str(credits)
+	$UI/CanvasLayer/Control/Shop/ColorRect/Label2.text = str(credits)
+	$"UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore/Label".text = str(credits)
 
 func camera_effects(delta):
 	if !parent.leahy_look:
@@ -343,7 +343,7 @@ func camera_effects(delta):
 	camera_wobble_function(delta)
 
 func phone(delta):
-	$CanvasLayer/Control/pending_suspension.visible = pending_suspension
+	$UI/CanvasLayer/Control/pending_suspension.visible = pending_suspension
 	
 	if Input.is_action_just_pressed("push_to_talk"):
 		if has_phone:
@@ -351,22 +351,22 @@ func phone(delta):
 				$Phone/AnimationPlayer.play("get_da_phone")
 				phone_open = true
 				GuiManager.show_cursor()
-				$CanvasLayer/Control/TextureRect.hide()
+				$UI/CanvasLayer/Control/TextureRect.hide()
 				$Phone/phon.play()
 			else:
 				phone_open = false
 				$Phone/AnimationPlayer.play_backwards("get_da_phone")
 				GuiManager.hide_cursor()
-				$CanvasLayer/Control/TextureRect.show()
+				$UI/CanvasLayer/Control/TextureRect.show()
 				$Phone/phon.stop()
 				
 	
-	$CanvasLayer/Control/phone_indicator.visible = has_phone
+	$UI/CanvasLayer/Control/phone_indicator.visible = has_phone
 	if phone_open:
 		camera_3d.rotation.x = lerp(camera_3d.rotation.x, 0.0, delta * 5)
 	
-	var secondary_alpha = $CanvasLayer/Control/Vignette2.material.get("shader_parameter/SecondaryAlpha")
-	$CanvasLayer/Control/Vignette2.material.set("shader_parameter/SecondaryAlpha", lerp(secondary_alpha, float(pending_suspension_meter) / 100.0, delta * 50))
+	var secondary_alpha = $UI/CanvasLayer/Control/Vignette2.material.get("shader_parameter/SecondaryAlpha")
+	$UI/CanvasLayer/Control/Vignette2.material.set("shader_parameter/SecondaryAlpha", lerp(secondary_alpha, float(pending_suspension_meter) / 100.0, delta * 50))
 	
 	if pending_suspension_meter > 5:
 		$focus.volume_db = min(0, -40  + pending_suspension_meter)
@@ -415,9 +415,9 @@ func ui_updates(delta):
 	
 	
 	if parent.can_escape and not is_dead:
-		$CanvasLayer/Control.do_shake = true
+		$UI/CanvasLayer/Control.do_shake = true
 	else:
-		$CanvasLayer/Control.do_shake = false
+		$UI/CanvasLayer/Control.do_shake = false
 
 func freaky_ending_check():
 	if parent.selected_map != "tutorial":
@@ -567,7 +567,7 @@ func _on_revive_timer_timeout():
 	else:
 		global_position = get_tree().get_first_node_in_group("suspension_place").global_position
 		parent.set_player_dead.rpc(name.to_int(), true,false)
-	$"CanvasLayer/Control/Died thing".hide()
+	$"UI/CanvasLayer/Control/Died thing".hide()
 	AudioServer.set_bus_mute(1, false)
 	AudioServer.set_bus_mute(2, false)
 	
@@ -576,10 +576,10 @@ func _on_revive_timer_timeout():
 	$CollisionShape3D.disabled = false
 	close_gambling(false)
 	
-	$"CanvasLayer/Control/Died thing/darel death".hide()
-	$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer".stop()
+	$"UI/CanvasLayer/Control/Died thing/darel death".hide()
+	$"UI/CanvasLayer/Control/Died thing/darel death/AnimationPlayer".stop()
 	is_dead_of_dariel = false
-	$"CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".stop()
+	$"UI/CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".stop()
 	
 	if death_cause == "mine":
 		GuiManager.show_tip_once("landmine","[color=green]Bananas[/color]\nDo [b]NOT[/b] add to the death counter in a normal game. Be careful!")
@@ -757,8 +757,8 @@ var death_cause = ""
 func die(cause, do_die = true):
 	if is_dead: return
 	if last_breath:
-		$"CanvasLayer/Control/Last breath/anim".play("boom")
-		$"CanvasLayer/Control/Last breath/audio".play()
+		$"UI/CanvasLayer/Control/Last breath/anim".play("boom")
+		$"UI/CanvasLayer/Control/Last breath/audio".play()
 		last_breath = false
 		add_speed_boost(1, 3)
 		is_dead = true
@@ -771,7 +771,7 @@ func die(cause, do_die = true):
 	$visual_body.global_rotation_degrees.x = 0
 	can_move = false
 	parent.set_player_dead.rpc(name.to_int(), true, do_die)
-	$"CanvasLayer/Control/Died thing".show()
+	$"UI/CanvasLayer/Control/Died thing".show()
 	if !parent.can_escape:
 		$ReviveTimer.start(5)
 	else:
@@ -782,7 +782,7 @@ func die(cause, do_die = true):
 	if !parent.can_escape:
 		AudioServer.set_bus_mute(1, true)
 	AudioServer.set_bus_mute(2, true)
-	$"CanvasLayer/Control/Died thing/AudioStreamPlayer".play()
+	$"UI/CanvasLayer/Control/Died thing/AudioStreamPlayer".play()
 	#TODO: make this work $CollisionShape3D.disabled = true
 	Achievements.deaths += 1
 	Achievements.save_all()
@@ -804,38 +804,38 @@ func die(cause, do_die = true):
 		
 		$Phone/AnimationPlayer.play_backwards("get_da_phone")
 		GuiManager.hide_cursor()
-		$CanvasLayer/Control/TextureRect.show()
+		$UI/CanvasLayer/Control/TextureRect.show()
 		$Phone/phon.stop()
 	
 	if Game.game_params.get_param("silent_lunch"):
 		if pending_suspension:
-			$CanvasLayer/Control/silentLunch.show()
-			$CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
+			$UI/CanvasLayer/Control/silentLunch.show()
+			$UI/CanvasLayer/Control/silentLunch.text = "You got silent lunch\nyou can leave in 15" 
 			is_suspended = true
 			$"Silent Lunch".start(15)
 			pending_suspension = false
 	
 	if cause == "leahy":
-		$"CanvasLayer/Control/Died thing/jumpscare".play()
+		$"UI/CanvasLayer/Control/Died thing/jumpscare".play()
 	elif cause == "wall":
-		$"CanvasLayer/Control/Died thing/jumpscare3".play()
+		$"UI/CanvasLayer/Control/Died thing/jumpscare3".play()
 	elif cause == "fox":
-		$"CanvasLayer/Control/Died thing/jumpscare4".play()
+		$"UI/CanvasLayer/Control/Died thing/jumpscare4".play()
 	elif cause == "azzu":
-		$"CanvasLayer/Control/Died thing/jumpscare5".play()
+		$"UI/CanvasLayer/Control/Died thing/jumpscare5".play()
 	elif cause == "gainy":
-		$"CanvasLayer/Control/Died thing/jumpscare6".play()
+		$"UI/CanvasLayer/Control/Died thing/jumpscare6".play()
 	elif cause == "misuraca":
-		$"CanvasLayer/Control/Died thing/jumpscare7".play()
+		$"UI/CanvasLayer/Control/Died thing/jumpscare7".play()
 	elif cause == "neil":
-		$"CanvasLayer/Control/Died thing/jumpscare8".play()
+		$"UI/CanvasLayer/Control/Died thing/jumpscare8".play()
 	elif cause == "darel":
-		$"CanvasLayer/Control/Died thing/darel death".show()
-		$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer".play("ha")
+		$"UI/CanvasLayer/Control/Died thing/darel death".show()
+		$"UI/CanvasLayer/Control/Died thing/darel death/AnimationPlayer".play("ha")
 		is_dead_of_dariel = true
 		get_tree().get_first_node_in_group("evil darel").health = 100
-		$"CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".play()
-		$"CanvasLayer/Control/Died thing/darel death/AnimationPlayer2".play("textfadein")
+		$"UI/CanvasLayer/Control/Died thing/darel death/AudioStreamPlayer2".play()
+		$"UI/CanvasLayer/Control/Died thing/darel death/AnimationPlayer2".play("textfadein")
 		
 		for lil_darel in get_tree().get_nodes_in_group("lil darel"):
 			lil_darel.queue_free()
@@ -844,7 +844,7 @@ func die(cause, do_die = true):
 func _on_silent_lunch_timeout():
 	is_suspended = false
 	parent.set_player_dead.rpc(name.to_int(), false,false)
-	$CanvasLayer/Control/silentLunch.hide()
+	$UI/CanvasLayer/Control/silentLunch.hide()
 
 
 func _on_anti_wall_walk_timeout():
@@ -877,22 +877,22 @@ var is_shop_open = false
 func open_shop():
 	if can_use_shop:
 		is_minimap_open = false
-		$CanvasLayer/Control/Shop.show()
-		$CanvasLayer/Control/Shop/AudioStreamPlayer.play()
+		$UI/CanvasLayer/Control/Shop.show()
+		$UI/CanvasLayer/Control/Shop/AudioStreamPlayer.play()
 		GuiManager.show_cursor()
 		AudioServer.set_bus_solo(6,true)
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 		can_use_shop = false
 		Game.get_closest_node_in_group(global_position,"shop").hide()
 		shop_timer.start(30)
-		$CanvasLayer/Control/Shop/ColorRect/MainPanel.show()
-		$"CanvasLayer/Control/Shop/ColorRect/question panel".hide()
-		$"CanvasLayer/Control/Shop/ColorRect/rewards panel".hide()
+		$UI/CanvasLayer/Control/Shop/ColorRect/MainPanel.show()
+		$"UI/CanvasLayer/Control/Shop/ColorRect/question panel".hide()
+		$"UI/CanvasLayer/Control/Shop/ColorRect/rewards panel".hide()
 		is_shop_open = true
 
 func close_shop(set_death = true):
-	$CanvasLayer/Control/Shop.hide()
-	$CanvasLayer/Control/Shop/AudioStreamPlayer.stop()
+	$UI/CanvasLayer/Control/Shop.hide()
+	$UI/CanvasLayer/Control/Shop/AudioStreamPlayer.stop()
 	GuiManager.hide_cursor()
 	AudioServer.set_bus_solo(6,false)
 	if set_death:
@@ -909,8 +909,8 @@ func _on_shop_timeout_timeout():
 		closest_shop.show()
 
 func _on_credits_btn_pressed():
-	$"CanvasLayer/Control/Shop/ColorRect/question panel".show()
-	$CanvasLayer/Control/Shop/ColorRect/MainPanel.hide()
+	$"UI/CanvasLayer/Control/Shop/ColorRect/question panel".show()
+	$UI/CanvasLayer/Control/Shop/ColorRect/MainPanel.hide()
 	generate_show_question()
 	
 
@@ -918,12 +918,12 @@ func _on_shop_timer_timeout():
 	close_shop()
 
 func _on_rewards_btn_pressed():
-	$CanvasLayer/Control/Shop/ColorRect/MainPanel.hide()
-	$"CanvasLayer/Control/Shop/ColorRect/rewards panel".show()
+	$UI/CanvasLayer/Control/Shop/ColorRect/MainPanel.hide()
+	$"UI/CanvasLayer/Control/Shop/ColorRect/rewards panel".show()
 
 var right_ans
 
-@onready var line_edit = $"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/LineEdit"
+@onready var line_edit = $"UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/LineEdit"
 
 
 func generate_show_question():
@@ -932,17 +932,17 @@ func generate_show_question():
 	right_ans = num1 + num2
 	
 	line_edit.text = ""
-	$"CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Label2".text = str(num1) + " + " + str(num2) + " ="
+	$"UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Label2".text = str(num1) + " + " + str(num2) + " ="
 
 func _on_submit_button_pressed():
 	if line_edit.text.to_int() == right_ans:
 		credits += 5
 		generate_show_question()
-		$CanvasLayer/Control/Shop/correct.play()
-		$"CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation".show()
+		$UI/CanvasLayer/Control/Shop/correct.play()
+		$"UI/CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation".show()
 		shop_timer.start(shop_timer.time_left + 2.5)
 	else:
-		$CanvasLayer/Control/Shop/incorrect.play()
+		$UI/CanvasLayer/Control/Shop/incorrect.play()
 		close_shop()
 
 func set_mouth(mouth_id):
@@ -970,7 +970,7 @@ func _on_buy_book_pressed():
 
 @rpc("any_peer","call_local")
 func buy_book_rpc(pname, id):
-	$CanvasLayer/Control/TV.switch("moneyminor")
+	$UI/CanvasLayer/Control/TV.switch("moneyminor")
 	if multiplayer.is_server():
 		
 		Game.players[name.to_int()].books_collected += 1 + Game.book_boost
@@ -1202,7 +1202,7 @@ var gamble = []
 
 func open_gambling():
 	GuiManager.show_cursor()
-	$CanvasLayer/Control/paper.show()
+	$UI/CanvasLayer/Control/paper.show()
 	gamble = []
 	
 	for i in range(0,3):
@@ -1214,12 +1214,12 @@ func open_gambling():
 		}
 		gamble.append(g)
 		
-		$CanvasLayer/Control/paper.get_node(NodePath("gamble" + str(i + 1))).text = "if you get %s notebooks in %s seconds, i will give everyone a %s. If you don't, i will take %s books." % [g.books,g.time,hand.get_child(g.reward).name,g.loss]
+		$UI/CanvasLayer/Control/paper.get_node(NodePath("gamble" + str(i + 1))).text = "if you get %s notebooks in %s seconds, i will give everyone a %s. If you don't, i will take %s books." % [g.books,g.time,hand.get_child(g.reward).name,g.loss]
 		parent.set_player_dead.rpc(name.to_int(), true,false)
 
 func close_gambling(do_deaths = true):
 	GuiManager.hide_cursor()
-	$CanvasLayer/Control/paper.hide()
+	$UI/CanvasLayer/Control/paper.hide()
 	if do_deaths:
 		parent.set_player_dead.rpc(name.to_int(), false,false)
 
@@ -1281,7 +1281,7 @@ func movement_function(delta):
 			can_move = true
 			is_in_freezer = false
 			parent.set_player_dead.rpc(name.to_int(), false,false)
-			$CanvasLayer/Control/Freezer/AnimationPlayer.play("RESET")
+			$UI/CanvasLayer/Control/Freezer/AnimationPlayer.play("RESET")
 			$freezerDeath.stop()
 	
 	if parent.canPlayersMove:
@@ -1399,7 +1399,7 @@ func _on_pp_timeout_timeout():
 
 func play_interact_anim():
 	if get_selected_item() == -1:
-		$Camera3D/interact_hand/AnimationPlayer.play("interact")
+		camera_3d.get_node("interact_hand/AnimationPlayer").play("interact")
 		await get_tree().create_timer(0.25, false).timeout
 
 func interaction_functions():
@@ -1476,7 +1476,7 @@ func interaction_functions():
 				global_rotation.y = -collider.global_rotation.y
 				parent.set_player_dead.rpc(name.to_int(), true,false)
 				is_in_freezer = true
-				$CanvasLayer/Control/Freezer/AnimationPlayer.play("freez")
+				$UI/CanvasLayer/Control/Freezer/AnimationPlayer.play("freez")
 				
 				$freezerDeath.start()
 			if collider.is_in_group("last_breath"):
@@ -1506,7 +1506,7 @@ func interaction_functions():
 						farthest_obj = spawn
 				can_toilet_tp = false
 				$ToiletTimeout.start()
-				$CanvasLayer/Control/toilet.show()
+				$UI/CanvasLayer/Control/toilet.show()
 				global_position = farthest_obj.global_position
 				await Game.sleep(2)
 				play_sound("res://sounds/flush.mp3",5)
@@ -1536,7 +1536,7 @@ func item_use_functions():
 			add_speed_boost(1, 3)
 		elif get_selected_item() == 1:
 			remove_item(selected_slot)
-			spawn_clorox.rpc($RayCast3D.global_position, camera_3d.global_rotation, name.to_int())
+			spawn_clorox.rpc(ray.global_position, camera_3d.global_rotation, name.to_int())
 		elif get_selected_item() == 2:
 			remove_item(selected_slot)
 			velocity.y += 20
@@ -1639,7 +1639,7 @@ func _on_voice_chat_toggled(toggled_on):
 func freezer_death():
 	if is_in_freezer:
 		die("freezer")
-		$CanvasLayer/Control/Freezer/AnimationPlayer.play("RESET")
+		$UI/CanvasLayer/Control/Freezer/AnimationPlayer.play("RESET")
 		$freezerDeath.stop()
 
 func add_speed_boost(multiplier : float, duration : float):

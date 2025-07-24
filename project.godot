@@ -197,4 +197,7 @@ occlusion_culling/use_occlusion_culling=true
 
 [xr]
 
+openxr/enabled=true
+openxr/default_action_map="uid://d0ejlauju5gc6"
 openxr/startup_alert=false
+shaders/enabled=true

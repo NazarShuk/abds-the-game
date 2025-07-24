@@ -1,7 +1,8 @@
-[gd_scene load_steps=232 format=3 uid="uid://dmiwtnuhovfv5"]
+[gd_scene load_steps=237 format=3 uid="uid://dmiwtnuhovfv5"]
 
 [ext_resource type="Script" uid="uid://cr71283wvm1cg" path="res://scripts/player.gd" id="1_la8in"]
 [ext_resource type="PackedScene" uid="uid://c6ir5pmxmbuqj" path="res://scenes/visual_body.tscn" id="2_0ug05"]
+[ext_resource type="Script" uid="uid://bcj8highbpon7" path="res://scenes/player_xr_controller.gd" id="2_lw0jh"]
 [ext_resource type="Texture2D" uid="uid://mbp707vcisem" path="res://textures/player.png" id="2_q3hoo"]
 [ext_resource type="Texture2D" uid="uid://tcxitg63835m" path="res://Mouth/mouth_0.png" id="3_rutws"]
 [ext_resource type="AudioStream" uid="uid://4ug2jt2muw6i" path="res://sounds/walk.mp3" id="5_muu2l"]
@@ -322,6 +323,19 @@ _data = {
 &"interact": SubResource("Animation_04cqw")
 }
 
+[sub_resource type="QuadMesh" id="QuadMesh_vx63k"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lw0jh"]
+viewport_path = NodePath("UI")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ry8ed"]
+resource_local_to_scene = true
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_lw0jh")
+disable_receive_shadows = true
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tu1hv"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_orlgu"]
@@ -363,6 +377,9 @@ properties/9/replication_mode = 1
 properties/10/path = NodePath(".:player_rotation")
 properties/10/spawn = true
 properties/10/replication_mode = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vx63k"]
+viewport_path = NodePath("UI")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofe5t"]
 shader = ExtResource("20_kprs4")
@@ -720,7 +737,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/Freezer:color")
+tracks/0/path = NodePath("UI/CanvasLayer/Control/Freezer:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -732,7 +749,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/Freezer:visible")
+tracks/1/path = NodePath("UI/CanvasLayer/Control/Freezer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -748,7 +765,7 @@ length = 10.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/Freezer:color")
+tracks/0/path = NodePath("UI/CanvasLayer/Control/Freezer:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -760,7 +777,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/Freezer:visible")
+tracks/1/path = NodePath("UI/CanvasLayer/Control/Freezer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1363,7 +1380,7 @@ void fragment(){
 #undef gl_FragColor"
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_nxc1c"]
-viewport_path = NodePath("CanvasLayer/Control/Died thing/Spectate thing/Spectator/SubViewport")
+viewport_path = NodePath("UI/CanvasLayer/Control/Died thing/Spectate thing/Spectator/SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5rkxb"]
 resource_local_to_scene = true
@@ -2435,27 +2452,52 @@ collision_layer = 7
 collision_mask = 7
 script = ExtResource("1_la8in")
 hand = NodePath("HandOrientation/Hand")
-camera_3d = NodePath("Camera3D")
-controls_text = NodePath("CanvasLayer/Control/ControlsText")
+camera_3d = NodePath("XROrigin3D/Camera3D")
+controls_text = NodePath("UI/CanvasLayer/Control/ControlsText")
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43934, -0.0894957)
-target_position = Vector3(0, 0, -2.5)
+[node name="XROrigin3D" type="XROrigin3D" parent="." node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+script = ExtResource("2_lw0jh")
+player = NodePath("..")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="Camera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 cull_mask = 1044477
 
-[node name="interact_hand" type="Sprite3D" parent="Camera3D"]
+[node name="interact_hand" type="Sprite3D" parent="XROrigin3D/Camera3D"]
 transform = Transform3D(0.0932012, -0.0265374, -0.024684, 0.0333998, 0.089332, 0.0300706, 0.0140707, -0.0362706, 0.092122, 0.105, -0.065, -0.275)
 visible = false
 pixel_size = 0.001
 texture = ExtResource("53_0cocr")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/interact_hand"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="XROrigin3D/Camera3D/interact_hand"]
 libraries = {
 &"": SubResource("AnimationLibrary_vihdy")
 }
+
+[node name="ui" type="MeshInstance3D" parent="XROrigin3D/Camera3D"]
+transform = Transform3D(1.778, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
+mesh = SubResource("QuadMesh_vx63k")
+surface_material_override/0 = SubResource("StandardMaterial3D_ry8ed")
+
+[node name="right_hand" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="Sprite3D" type="Sprite3D" parent="XROrigin3D/right_hand"]
+transform = Transform3D(-1.09278e-08, 1.09278e-08, -0.25, 0.25, -1.09278e-08, -1.09278e-08, -1.09278e-08, -0.25, -1.09278e-08, 0, 0, 0)
+pixel_size = 0.001
+texture = ExtResource("53_0cocr")
+
+[node name="RayCast3D" type="RayCast3D" parent="XROrigin3D/right_hand"]
+target_position = Vector3(0, 0, -2.5)
+
+[node name="left_hand" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="Sprite3D" type="Sprite3D" parent="XROrigin3D/left_hand"]
+transform = Transform3D(-1.09278e-08, 1.09278e-08, -0.25, 0.25, -1.09278e-08, -1.09278e-08, -1.09278e-08, -0.25, -1.09278e-08, 0, 0, 0)
+pixel_size = 0.001
+texture = ExtResource("53_0cocr")
 
 [node name="visual_body" parent="." instance=ExtResource("2_0ug05")]
 
@@ -2549,11 +2591,23 @@ one_shot = true
 wait_time = 0.1
 autostart = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="ui_texture" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_vx63k")
+
+[node name="UI" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(1280, 720)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="UI"]
 layer = 10
 visible = false
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Control" type="Control" parent="UI/CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2563,7 +2617,7 @@ grow_vertical = 2
 script = ExtResource("6_8er58")
 shake_strength = 2
 
-[node name="Vignette" type="TextureRect" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
+[node name="Vignette" type="TextureRect" parent="UI/CanvasLayer/Control" node_paths=PackedStringArray("player")]
 material = SubResource("ShaderMaterial_ofe5t")
 layout_mode = 1
 anchors_preset = 15
@@ -2573,9 +2627,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_4s0wx")
 script = ExtResource("21_jucw3")
-player = NodePath("../../..")
+player = NodePath("../../../..")
 
-[node name="Vignette2" type="TextureRect" parent="CanvasLayer/Control"]
+[node name="Vignette2" type="TextureRect" parent="UI/CanvasLayer/Control"]
 material = SubResource("ShaderMaterial_cy2ki")
 layout_mode = 1
 anchors_preset = 15
@@ -2585,7 +2639,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_4s0wx")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2602,7 +2656,7 @@ pivot_offset = Vector2(2.5, 2.5)
 texture = ExtResource("18_c15q6")
 expand_mode = 1
 
-[node name="ControlsText" type="Label" parent="CanvasLayer/Control"]
+[node name="ControlsText" type="Label" parent="UI/CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2617,7 +2671,7 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 2
 
-[node name="Progress bar handler" type="Control" parent="CanvasLayer/Control"]
+[node name="Progress bar handler" type="Control" parent="UI/CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2625,7 +2679,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control/Progress bar handler"]
+[node name="ProgressBar" type="ProgressBar" parent="UI/CanvasLayer/Control/Progress bar handler"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -2640,7 +2694,7 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_styles/background = SubResource("StyleBoxFlat_2uvd1")
 theme_override_styles/fill = SubResource("StyleBoxFlat_oicg1")
 
-[node name="silentLunch" type="Label" parent="CanvasLayer/Control"]
+[node name="silentLunch" type="Label" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -2660,7 +2714,7 @@ theme_override_font_sizes/font_size = 51
 text = "You got silent lunch
 you can leave in 15"
 
-[node name="LeahyApproaching" type="TextureRect" parent="CanvasLayer/Control"]
+[node name="LeahyApproaching" type="TextureRect" parent="UI/CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 160.0
@@ -2669,7 +2723,7 @@ offset_bottom = 301.0
 texture = ExtResource("11_jx8is")
 script = ExtResource("52_cn57o")
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/LeahyApproaching"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/LeahyApproaching"]
 layout_mode = 0
 offset_left = 172.0
 offset_top = 14.0
@@ -2681,7 +2735,7 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/LeahyApproaching"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/LeahyApproaching"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 15.0
@@ -2690,7 +2744,7 @@ offset_bottom = 127.0
 texture = SubResource("ViewportTexture_bgiyt")
 expand_mode = 1
 
-[node name="CollectedBooksLabel" type="Label" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
+[node name="CollectedBooksLabel" type="Label" parent="UI/CanvasLayer/Control" node_paths=PackedStringArray("player")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0265625
@@ -2708,10 +2762,10 @@ text = "team
 find an ela book
 bet"
 script = ExtResource("11_2xmp4")
-player = NodePath("../../..")
+player = NodePath("../../../..")
 metadata/_edit_use_anchors_ = true
 
-[node name="Inventory" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("player", "hand")]
+[node name="Inventory" type="Panel" parent="UI/CanvasLayer/Control" node_paths=PackedStringArray("player", "hand")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -2723,10 +2777,10 @@ offset_bottom = 87.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ulseo")
 script = ExtResource("10_777lu")
-player = NodePath("../../..")
-hand = NodePath("../../../HandOrientation/Hand")
+player = NodePath("../../../..")
+hand = NodePath("../../../../HandOrientation/Hand")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Inventory"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/CanvasLayer/Control/Inventory"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2734,7 +2788,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="phone_indicator" type="TextureRect" parent="CanvasLayer/Control"]
+[node name="phone_indicator" type="TextureRect" parent="UI/CanvasLayer/Control"]
 visible = false
 modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 1
@@ -2750,7 +2804,7 @@ texture = ExtResource("76_ee2o4")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TV" type="Control" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
+[node name="TV" type="Control" parent="UI/CanvasLayer/Control" node_paths=PackedStringArray("player")]
 visible = false
 layout_mode = 1
 anchors_preset = 1
@@ -2762,9 +2816,9 @@ offset_right = -174.0
 offset_bottom = 104.0
 grow_horizontal = 0
 script = ExtResource("12_fxeha")
-player = NodePath("../../..")
+player = NodePath("../../../..")
 
-[node name="Main" type="AnimatedSprite2D" parent="CanvasLayer/Control/TV"]
+[node name="Main" type="AnimatedSprite2D" parent="UI/CanvasLayer/Control/TV"]
 position = Vector2(-38, 37)
 scale = Vector2(1.6129, 1.59677)
 sprite_frames = SubResource("SpriteFrames_pwf5n")
@@ -2773,10 +2827,10 @@ autoplay = "default"
 frame = 1
 frame_progress = 0.862788
 
-[node name="Static" type="AnimatedSprite2D" parent="CanvasLayer/Control/TV/Main"]
+[node name="Static" type="AnimatedSprite2D" parent="UI/CanvasLayer/Control/TV/Main"]
 sprite_frames = SubResource("SpriteFrames_cvbaq")
 
-[node name="Freezer" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="Freezer" type="ColorRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -2786,13 +2840,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Freezer"]
-root_node = NodePath("../../../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Freezer"]
+root_node = NodePath("../../../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_x8cwj")
 }
 
-[node name="Shop" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="Shop" type="ColorRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -2808,7 +2862,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/Shop"]
+[node name="ColorRect" type="ColorRect" parent="UI/CanvasLayer/Control/Shop"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2820,7 +2874,7 @@ offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2832,7 +2886,7 @@ grow_vertical = 2
 texture = ExtResource("12_xfb3j")
 expand_mode = 1
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/TextureRect"]
+[node name="ColorRect" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/TextureRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2841,7 +2895,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.835294)
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="Label2" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 1
 offset_left = 63.0
 offset_top = 16.0
@@ -2852,7 +2906,7 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 48
 text = "0"
 
-[node name="timer" type="Label" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="timer" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -2868,13 +2922,13 @@ theme_override_font_sizes/font_size = 48
 text = "30s left"
 horizontal_alignment = 1
 
-[node name="MainPanel" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="MainPanel" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 color = Color(1, 1, 1, 0)
 
-[node name="BookPreview" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+[node name="BookPreview" type="SubViewportContainer" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2889,7 +2943,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview"]
+[node name="SubViewport" type="SubViewport" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview"]
 own_world_3d = true
 world_3d = SubResource("World3D_jha5s")
 transparent_bg = true
@@ -2897,27 +2951,27 @@ handle_input_locally = false
 size = Vector2i(178, 184)
 render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
 
-[node name="Meshes" type="Node3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
+[node name="Meshes" type="Node3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.87)
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport/Meshes"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport/Meshes"]
 transform = Transform3D(0.04, 0, 0, 0, -1.74846e-09, -0.04, 0, 0.04, -1.74846e-09, 0, 0, 0)
 layers = 512
 material_override = SubResource("StandardMaterial3D_gvl5x")
 mesh = ExtResource("25_mph3v")
 skeleton = NodePath("../..")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport/Meshes"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/BookPreview/SubViewport/Meshes"]
 libraries = {
 &"": SubResource("AnimationLibrary_x1ff7")
 }
 autoplay = "spin"
 
-[node name="booklabel" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+[node name="booklabel" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2936,7 +2990,7 @@ theme_override_font_sizes/font_size = 48
 text = "rewards"
 horizontal_alignment = 1
 
-[node name="rewards btn" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+[node name="rewards btn" type="Button" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 0
 offset_left = 163.0
 offset_top = 142.0
@@ -2948,7 +3002,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_k6dj7")
 
-[node name="MtnDew" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+[node name="MtnDew" type="SubViewportContainer" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2963,7 +3017,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew"]
+[node name="SubViewport" type="SubViewport" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew"]
 own_world_3d = true
 world_3d = SubResource("World3D_jha5s")
 transparent_bg = true
@@ -2971,22 +3025,22 @@ handle_input_locally = false
 size = Vector2i(178, 184)
 render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.98)
 material_override = SubResource("StandardMaterial3D_k8tbe")
 mesh = SubResource("BoxMesh_k4vu1")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport/MeshInstance3D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/MtnDew/SubViewport/MeshInstance3D"]
 libraries = {
 &"": SubResource("AnimationLibrary_wuc1l")
 }
 autoplay = "spin"
 
-[node name="mtndewlabel" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+[node name="mtndewlabel" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3005,7 +3059,7 @@ theme_override_font_sizes/font_size = 48
 text = "credits"
 horizontal_alignment = 1
 
-[node name="credits btn" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/MainPanel"]
+[node name="credits btn" type="Button" parent="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel"]
 layout_mode = 0
 offset_left = 564.0
 offset_top = 142.0
@@ -3017,7 +3071,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_vgtva")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_vgtva")
 theme_override_styles/normal = SubResource("StyleBoxFlat_vgtva")
 
-[node name="question panel" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="question panel" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3027,7 +3081,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel"]
+[node name="ColorRect" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3036,7 +3090,7 @@ offset_top = 69.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3048,7 +3102,7 @@ grow_vertical = 2
 texture = ExtResource("24_ocn25")
 expand_mode = 1
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="ColorRect2" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -3059,7 +3113,7 @@ offset_right = 133.0
 offset_bottom = 6.0
 grow_vertical = 2
 
-[node name="ColorRect6" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="ColorRect6" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -3074,7 +3128,7 @@ grow_horizontal = 0
 grow_vertical = 0
 color = Color(0.937255, 0.427451, 0.223529, 1)
 
-[node name="Seconds" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="Seconds" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3088,7 +3142,7 @@ offset_bottom = 21.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Seconds"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3102,7 +3156,7 @@ text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect9" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="ColorRect9" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3117,7 +3171,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0.980392, 0.956863, 0.980392, 1)
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/ColorRect9"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/ColorRect9"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3131,7 +3185,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QuestionCount" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="QuestionCount" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3146,7 +3200,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0.980392, 0.956863, 0.980392, 1)
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/QuestionCount"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/QuestionCount"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3160,7 +3214,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Smartscore" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="Smartscore" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3175,7 +3229,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0.980392, 0.956863, 0.980392, 1)
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/Smartscore"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3189,7 +3243,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect7" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="ColorRect7" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3204,7 +3258,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0.117647, 0.709804, 0.913725, 1)
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/ColorRect7"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/ColorRect7"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3216,7 +3270,7 @@ theme_override_font_sizes/font_size = 11
 text = "left"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="Label2" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -3233,7 +3287,7 @@ text = "11 + 99 ="
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="LineEdit" type="LineEdit" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -3248,7 +3302,7 @@ theme_override_fonts/font = ExtResource("25_48n8b")
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_qxkch")
 
-[node name="SubmitButton" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
+[node name="SubmitButton" type="Button" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -3264,7 +3318,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lt6hd")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_lt6hd")
 theme_override_styles/normal = SubResource("StyleBoxFlat_lt6hd")
 
-[node name="AnsweredAnimation" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel"]
+[node name="AnsweredAnimation" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3279,7 +3333,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("26_216if")
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation"]
+[node name="Panel" type="Panel" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 65.0
@@ -3288,7 +3342,7 @@ offset_right = 359.0
 offset_bottom = 183.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_hjnlw")
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation/Panel"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation/Panel"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3307,7 +3361,7 @@ text = "Excellent!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation/Panel"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation/Panel"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -3320,12 +3374,12 @@ grow_vertical = 2
 texture = ExtResource("26_3gci0")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation"]
 libraries = {
 &"": SubResource("AnimationLibrary_050yu")
 }
 
-[node name="rewards panel" type="ColorRect" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="rewards panel" type="ColorRect" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3335,7 +3389,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="BookPreview" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="BookPreview" type="SubViewportContainer" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3350,7 +3404,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview"]
+[node name="SubViewport" type="SubViewport" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview"]
 own_world_3d = true
 world_3d = SubResource("World3D_jha5s")
 transparent_bg = true
@@ -3358,26 +3412,26 @@ handle_input_locally = false
 size = Vector2i(178, 184)
 render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
 
-[node name="Meshes" type="Node3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
+[node name="Meshes" type="Node3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.87)
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport/Meshes"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport/Meshes"]
 transform = Transform3D(0.04, 0, 0, 0, -1.74846e-09, -0.04, 0, 0.04, -1.74846e-09, 0, 0, 0)
 layers = 512
 material_override = SubResource("StandardMaterial3D_gvl5x")
 mesh = ExtResource("25_mph3v")
 skeleton = NodePath("../..")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport/Meshes"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BookPreview/SubViewport/Meshes"]
 libraries = {
 &"": SubResource("AnimationLibrary_x1ff7")
 }
 
-[node name="Label3" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="Label3" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3397,7 +3451,7 @@ text = "20"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="buy book" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="buy book" type="Button" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 0
 offset_left = 101.0
 offset_top = 142.0
@@ -3409,7 +3463,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_k6dj7")
 
-[node name="ticket" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="ticket" type="TextureRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 0
 offset_left = 70.0
 offset_top = 306.0
@@ -3418,7 +3472,7 @@ offset_bottom = 370.0
 texture = ExtResource("26_bhd5m")
 expand_mode = 1
 
-[node name="DuckPreview" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="DuckPreview" type="SubViewportContainer" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3433,7 +3487,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview"]
+[node name="SubViewport" type="SubViewport" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview"]
 own_world_3d = true
 world_3d = SubResource("World3D_jha5s")
 transparent_bg = true
@@ -3441,20 +3495,20 @@ handle_input_locally = false
 size = Vector2i(178, 184)
 render_target_update_mode = 0
 
-[node name="Root Scene" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport" instance=ExtResource("44_aekf8")]
+[node name="Root Scene" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport" instance=ExtResource("44_aekf8")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -0.145, -0.345)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport/Root Scene"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport/Root Scene"]
 libraries = {
 &"": SubResource("AnimationLibrary_ke47x")
 }
 autoplay = "spin"
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/DuckPreview/SubViewport"]
 
-[node name="Label4" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="Label4" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3474,7 +3528,7 @@ text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="buy duck" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="buy duck" type="Button" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 0
 offset_left = 361.0
 offset_top = 142.0
@@ -3486,7 +3540,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_k6dj7")
 
-[node name="ticket2" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="ticket2" type="TextureRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3502,7 +3556,7 @@ grow_vertical = 2
 texture = ExtResource("26_bhd5m")
 expand_mode = 1
 
-[node name="BajaPreview" type="SubViewportContainer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="BajaPreview" type="SubViewportContainer" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3517,7 +3571,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview"]
+[node name="SubViewport" type="SubViewport" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview"]
 own_world_3d = true
 world_3d = SubResource("World3D_jha5s")
 transparent_bg = true
@@ -3525,21 +3579,21 @@ handle_input_locally = false
 size = Vector2i(178, 184)
 render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport"]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport"]
 root_node = NodePath("../mtndewbajamod")
 libraries = {
 &"": SubResource("AnimationLibrary_31hlf")
 }
 autoplay = "spin"
 
-[node name="mtndewbajamod" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport" instance=ExtResource("49_uh1ld")]
+[node name="mtndewbajamod" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/BajaPreview/SubViewport" instance=ExtResource("49_uh1ld")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.105, -0.52)
 
-[node name="Label5" type="Label" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="Label5" type="Label" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3559,7 +3613,7 @@ text = "15"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ticket3" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="ticket3" type="TextureRect" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3575,7 +3629,7 @@ grow_vertical = 2
 texture = ExtResource("26_bhd5m")
 expand_mode = 1
 
-[node name="buy baja" type="Button" parent="CanvasLayer/Control/Shop/ColorRect/rewards panel"]
+[node name="buy baja" type="Button" parent="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel"]
 layout_mode = 0
 offset_left = 596.0
 offset_top = 142.0
@@ -3587,7 +3641,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_k6dj7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_k6dj7")
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="Button" type="Button" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3611,7 +3665,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_3mp62")
 theme_override_styles/normal = SubResource("StyleBoxFlat_3mp62")
 text = "X"
 
-[node name="ticket" type="TextureRect" parent="CanvasLayer/Control/Shop/ColorRect"]
+[node name="ticket" type="TextureRect" parent="UI/CanvasLayer/Control/Shop/ColorRect"]
 layout_mode = 1
 offset_top = 13.0
 offset_right = 59.0
@@ -3619,25 +3673,25 @@ offset_bottom = 77.0
 texture = ExtResource("26_bhd5m")
 expand_mode = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Shop"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Shop"]
 stream = ExtResource("12_u07an")
 bus = &"shop"
 
-[node name="shop timer" type="Timer" parent="CanvasLayer/Control/Shop"]
+[node name="shop timer" type="Timer" parent="UI/CanvasLayer/Control/Shop"]
 wait_time = 30.0
 one_shot = true
 
-[node name="shop question timer" type="Timer" parent="CanvasLayer/Control/Shop"]
+[node name="shop question timer" type="Timer" parent="UI/CanvasLayer/Control/Shop"]
 
-[node name="correct" type="AudioStreamPlayer" parent="CanvasLayer/Control/Shop"]
+[node name="correct" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Shop"]
 stream = ExtResource("27_xfgq1")
 bus = &"shop"
 
-[node name="incorrect" type="AudioStreamPlayer" parent="CanvasLayer/Control/Shop"]
+[node name="incorrect" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Shop"]
 stream = ExtResource("24_yj6h8")
 bus = &"shop"
 
-[node name="paper" type="TextureRect" parent="CanvasLayer/Control"]
+[node name="paper" type="TextureRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -3654,7 +3708,7 @@ grow_vertical = 2
 texture = ExtResource("28_k1c3m")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/paper"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -3667,7 +3721,7 @@ theme_override_font_sizes/font_size = 36
 text = "mr.misuraca's bet"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/paper"]
+[node name="Button" type="Button" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3685,7 +3739,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_4sv6d")
 theme_override_styles/normal = SubResource("StyleBoxFlat_4sv6d")
 text = "X"
 
-[node name="gamble1" type="Label" parent="CanvasLayer/Control/paper"]
+[node name="gamble1" type="Label" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -3700,7 +3754,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="gamble2" type="Label" parent="CanvasLayer/Control/paper"]
+[node name="gamble2" type="Label" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -3715,7 +3769,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="gamble3" type="Label" parent="CanvasLayer/Control/paper"]
+[node name="gamble3" type="Label" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -3730,7 +3784,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="gamblebtn1" type="Button" parent="CanvasLayer/Control/paper"]
+[node name="gamblebtn1" type="Button" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -3744,7 +3798,7 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 26
 text = "TAKE THE BET"
 
-[node name="gamblebtn2" type="Button" parent="CanvasLayer/Control/paper"]
+[node name="gamblebtn2" type="Button" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -3758,7 +3812,7 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 26
 text = "TAKE THE BET"
 
-[node name="gamblebtn3" type="Button" parent="CanvasLayer/Control/paper"]
+[node name="gamblebtn3" type="Button" parent="UI/CanvasLayer/Control/paper"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -3772,7 +3826,7 @@ theme_override_fonts/font = ExtResource("6_l1x2u")
 theme_override_font_sizes/font_size = 26
 text = "TAKE THE BET"
 
-[node name="toilet" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="toilet" type="ColorRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3782,7 +3836,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("32_3qmes")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/toilet"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/toilet"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3798,15 +3852,15 @@ grow_vertical = 2
 texture = ExtResource("32_jmipm")
 expand_mode = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/toilet"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/toilet"]
 bus = &"Music"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/toilet"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/toilet"]
 libraries = {
 &"": SubResource("AnimationLibrary_qkcp4")
 }
 
-[node name="lastbreaththing" type="Control" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
+[node name="lastbreaththing" type="Control" parent="UI/CanvasLayer/Control" node_paths=PackedStringArray("player")]
 visible = false
 layout_mode = 1
 anchors_preset = 6
@@ -3821,9 +3875,9 @@ offset_bottom = 77.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("31_6rife")
-player = NodePath("../../..")
+player = NodePath("../../../..")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/lastbreaththing"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/lastbreaththing"]
 modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 1
 anchors_preset = 15
@@ -3834,7 +3888,7 @@ grow_vertical = 2
 texture = ExtResource("31_gmk5u")
 expand_mode = 1
 
-[node name="Last breath" type="TextureRect" parent="CanvasLayer/Control"]
+[node name="Last breath" type="TextureRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -3852,16 +3906,16 @@ pivot_offset = Vector2(192, 227)
 texture = ExtResource("31_gmk5u")
 expand_mode = 1
 
-[node name="audio" type="AudioStreamPlayer" parent="CanvasLayer/Control/Last breath"]
+[node name="audio" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Last breath"]
 stream = ExtResource("32_tixqx")
 bus = &"Dialogs"
 
-[node name="anim" type="AnimationPlayer" parent="CanvasLayer/Control/Last breath"]
+[node name="anim" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Last breath"]
 libraries = {
 &"": SubResource("AnimationLibrary_w6llb")
 }
 
-[node name="Died thing" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="Died thing" type="ColorRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3870,7 +3924,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Spectate thing" type="Panel" parent="CanvasLayer/Control/Died thing"]
+[node name="Spectate thing" type="Panel" parent="UI/CanvasLayer/Control/Died thing"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3880,7 +3934,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ol4fw")
 
-[node name="Spectator" type="SubViewportContainer" parent="CanvasLayer/Control/Died thing/Spectate thing" node_paths=PackedStringArray("player", "label")]
+[node name="Spectator" type="SubViewportContainer" parent="UI/CanvasLayer/Control/Died thing/Spectate thing" node_paths=PackedStringArray("player", "label")]
 material = SubResource("ShaderMaterial_5rkxb")
 layout_mode = 1
 anchors_preset = 15
@@ -3890,18 +3944,18 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 script = ExtResource("30_iahmv")
-player = NodePath("../../../../..")
+player = NodePath("../../../../../..")
 label = NodePath("../Label")
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/Died thing/Spectate thing/Spectator"]
+[node name="SubViewport" type="SubViewport" parent="UI/CanvasLayer/Control/Died thing/Spectate thing/Spectator"]
 handle_input_locally = false
 use_occlusion_culling = true
 size = Vector2i(1280, 720)
 render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/Died thing/Spectate thing/Spectator/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="UI/CanvasLayer/Control/Died thing/Spectate thing/Spectator/SubViewport"]
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Died thing/Spectate thing"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Died thing/Spectate thing"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -3916,7 +3970,7 @@ theme_override_font_sizes/font_size = 46
 text = "Spectating "
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Died thing"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/Died thing"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -3933,12 +3987,12 @@ grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_mv5hh")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 stream = ExtResource("8_4ilia")
 volume_db = -80.0
 bus = &"Non Mute"
 
-[node name="jumpscare" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="jumpscare" type="VideoStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3949,7 +4003,7 @@ stream = ExtResource("9_7mdnm")
 expand = true
 bus = &"Non Mute"
 
-[node name="jumpscare3" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="jumpscare3" type="VideoStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3960,7 +4014,7 @@ stream = ExtResource("15_dupy4")
 expand = true
 bus = &"Non Mute"
 
-[node name="jumpscare4" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="jumpscare4" type="VideoStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3971,7 +4025,7 @@ stream = ExtResource("16_a751i")
 expand = true
 bus = &"Non Mute"
 
-[node name="jumpscare5" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="jumpscare5" type="VideoStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3982,7 +4036,7 @@ stream = ExtResource("17_co3v2")
 expand = true
 bus = &"Non Mute"
 
-[node name="jumpscare6" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="jumpscare6" type="VideoStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3993,7 +4047,7 @@ stream = ExtResource("19_vcsq8")
 expand = true
 bus = &"Non Mute"
 
-[node name="jumpscare7" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="jumpscare7" type="VideoStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4004,7 +4058,7 @@ stream = ExtResource("36_rou35")
 expand = true
 bus = &"Non Mute"
 
-[node name="jumpscare8" type="VideoStreamPlayer" parent="CanvasLayer/Control/Died thing"]
+[node name="jumpscare8" type="VideoStreamPlayer" parent="UI/CanvasLayer/Control/Died thing"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4015,7 +4069,7 @@ stream = ExtResource("65_5vs2b")
 expand = true
 bus = &"Non Mute"
 
-[node name="darel death" type="ColorRect" parent="CanvasLayer/Control/Died thing"]
+[node name="darel death" type="ColorRect" parent="UI/CanvasLayer/Control/Died thing"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -4025,7 +4079,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="open" type="TextureRect" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="open" type="TextureRect" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -4042,7 +4096,7 @@ grow_vertical = 2
 texture = ExtResource("41_bsrbc")
 expand_mode = 2
 
-[node name="closed" type="TextureRect" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="closed" type="TextureRect" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -4058,20 +4112,20 @@ grow_vertical = 2
 texture = ExtResource("42_288w1")
 expand_mode = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 libraries = {
 &"": SubResource("AnimationLibrary_b8gyo")
 }
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 bus = &"Non Mute"
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 stream = ExtResource("44_yuw5a")
 volume_db = 5.0
 bus = &"Non Mute"
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -4084,7 +4138,7 @@ text = "YOU ARE DEAD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="Label2" type="Label" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -4100,12 +4154,12 @@ text = "PRESS [R] TO RESTART"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="CanvasLayer/Control/Died thing/darel death"]
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Died thing/darel death"]
 libraries = {
 &"": SubResource("AnimationLibrary_qaqna")
 }
 
-[node name="GainyFact" type="ColorRect" parent="CanvasLayer/Control" node_paths=PackedStringArray("player")]
+[node name="GainyFact" type="ColorRect" parent="UI/CanvasLayer/Control" node_paths=PackedStringArray("player")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -4120,9 +4174,9 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
 script = ExtResource("55_feeoa")
-player = NodePath("../../..")
+player = NodePath("../../../..")
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/GainyFact"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/GainyFact"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -4135,7 +4189,7 @@ text = "GAINY FACT!!!!"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/GainyFact"]
+[node name="Label2" type="Label" parent="UI/CanvasLayer/Control/GainyFact"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -4150,7 +4204,7 @@ TOWARDS YOU ARE LOCATION"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="CanvasLayer/Control/GainyFact"]
+[node name="Label3" type="Label" parent="UI/CanvasLayer/Control/GainyFact"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -4166,7 +4220,7 @@ text = "START RUNNING..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/Control/GainyFact"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI/CanvasLayer/Control/GainyFact"]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 18.0
@@ -4174,20 +4228,20 @@ offset_right = 178.0
 offset_bottom = 189.0
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/GainyFact/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="UI/CanvasLayer/Control/GainyFact/SubViewportContainer"]
 handle_input_locally = false
 scaling_3d_scale = 0.25
 gui_disable_input = true
 size = Vector2i(174, 171)
 render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control/GainyFact/SubViewportContainer/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="UI/CanvasLayer/Control/GainyFact/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
 cull_mask = 1048569
 projection = 1
 size = 15.0
 
-[node name="Tip" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="Tip" type="ColorRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -4204,12 +4258,12 @@ grow_vertical = 0
 color = Color(0, 0, 0, 0.501961)
 script = ExtResource("45_6blne")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Tip"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/Tip"]
 libraries = {
 &"": SubResource("AnimationLibrary_2b5lc")
 }
 
-[node name="Label" type="RichTextLabel" parent="CanvasLayer/Control/Tip"]
+[node name="Label" type="RichTextLabel" parent="UI/CanvasLayer/Control/Tip"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4229,14 +4283,14 @@ bbcode_enabled = true
 fit_content = true
 shortcut_keys_enabled = false
 
-[node name="Timer" type="Timer" parent="CanvasLayer/Control/Tip"]
+[node name="Timer" type="Timer" parent="UI/CanvasLayer/Control/Tip"]
 one_shot = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Control/Tip"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/CanvasLayer/Control/Tip"]
 stream = ExtResource("46_6m3r2")
 bus = &"Dialogs"
 
-[node name="Subtitle" type="Label" parent="CanvasLayer/Control"]
+[node name="Subtitle" type="Label" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -4258,7 +4312,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("47_m8xrv")
 
-[node name="Minimap" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="Minimap" type="ColorRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -4273,7 +4327,7 @@ offset_bottom = 202.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Minimap"]
+[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/Control/Minimap"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4287,7 +4341,7 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_tk2de")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Minimap"]
+[node name="Label" type="Label" parent="UI/CanvasLayer/Control/Minimap"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -4299,7 +4353,7 @@ theme_override_font_sizes/font_size = 21
 text = "the minimap"
 horizontal_alignment = 1
 
-[node name="pending_suspension" type="Label" parent="CanvasLayer/Control"]
+[node name="pending_suspension" type="Label" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -4322,13 +4376,13 @@ text = "You have a pending suspension!!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/pending_suspension"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CanvasLayer/Control/pending_suspension"]
 libraries = {
 &"": SubResource("AnimationLibrary_77e46")
 }
 autoplay = "loop"
 
-[node name="parry" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="parry" type="ColorRect" parent="UI/CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -4338,7 +4392,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.501961)
 
-[node name="SomeoneDid" type="Label" parent="CanvasLayer/Control"]
+[node name="SomeoneDid" type="Label" parent="UI/CanvasLayer/Control"]
 top_level = true
 layout_mode = 1
 anchors_preset = 12
@@ -4359,7 +4413,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 script = ExtResource("51_vep60")
 
-[node name="stamina flash" type="Timer" parent="CanvasLayer/Control"]
+[node name="stamina flash" type="Timer" parent="UI/CanvasLayer/Control"]
 wait_time = 0.25
 autostart = true
 
@@ -4679,12 +4733,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 visible = false
 
 [node name="hand" type="Sprite3D" parent="Phone"]
-transform = Transform3D(0.0939693, -0.034202, -7.5943e-10, 0.0319303, 0.0877279, 0.0358368, -0.0122569, -0.0336756, 0.093358, 0.1, 0.364, -0.294)
+transform = Transform3D(0.0939693, -0.034202, -4.37691e-10, 0.0319303, 0.0877279, 0.0358368, -0.0122569, -0.0336756, 0.093358, 0.1, 0.364, -0.294)
 pixel_size = 0.001
 texture = ExtResource("53_0cocr")
 
 [node name="phone" type="Sprite3D" parent="Phone/hand"]
-transform = Transform3D(8.92708, 3.2492, 4.04993e-06, -3.03338, 8.33415, -3.4045, -1.16441, 3.19918, 8.86901, -0.265, 1.205, 0.215)
+transform = Transform3D(8.92708, 3.2492, 4.08452e-06, -3.03338, 8.33415, -3.4045, -1.16441, 3.19918, 8.86901, -0.265, 1.205, 0.215)
 pixel_size = 0.001
 texture_filter = 0
 texture = ExtResource("76_ee2o4")
@@ -4770,7 +4824,13 @@ bus = &"Dialogs"
 stream = SubResource("AudioStreamSynchronized_htija")
 volume_db = -5.0
 
-[connection signal="inventory_changed" from="." to="CanvasLayer/Control/Inventory" method="_on_player_inventory_changed"]
+[connection signal="inventory_changed" from="." to="UI/CanvasLayer/Control/Inventory" method="_on_player_inventory_changed"]
+[connection signal="button_pressed" from="XROrigin3D/right_hand" to="XROrigin3D" method="_on_right_hand_button_pressed"]
+[connection signal="button_released" from="XROrigin3D/right_hand" to="XROrigin3D" method="_on_right_hand_button_released"]
+[connection signal="input_vector2_changed" from="XROrigin3D/right_hand" to="XROrigin3D" method="_on_right_hand_input_vector_2_changed"]
+[connection signal="button_pressed" from="XROrigin3D/left_hand" to="XROrigin3D" method="_on_left_hand_button_pressed"]
+[connection signal="button_released" from="XROrigin3D/left_hand" to="XROrigin3D" method="_on_left_hand_button_released"]
+[connection signal="input_vector2_changed" from="XROrigin3D/left_hand" to="XROrigin3D" method="_on_left_hand_input_vector_2_changed"]
 [connection signal="area_entered" from="PlayerArea" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="PlayerArea" to="." method="_on_area_3d_area_exited"]
 [connection signal="timeout" from="Stamina" to="." method="_on_timer_timeout"]
@@ -4787,23 +4847,23 @@ volume_db = -5.0
 [connection signal="timeout" from="baja trail" to="." method="_on_baja_trail_timeout"]
 [connection signal="timeout" from="freezerDeath" to="." method="freezer_death"]
 [connection signal="timeout" from="PendingSuspension" to="." method="_on_pending_suspension_timeout"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/rewards btn" to="." method="_on_rewards_btn_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/MainPanel/credits btn" to="." method="_on_credits_btn_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/SubmitButton" to="." method="_on_submit_button_pressed"]
-[connection signal="visibility_changed" from="CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation" to="CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation" method="_on_visibility_changed"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy book" to="." method="_on_buy_book_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy duck" to="." method="_on_buy_duck_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/rewards panel/buy baja" to="." method="_on_buy_baja_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Shop/ColorRect/Button" to="." method="close_shop"]
-[connection signal="timeout" from="CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
-[connection signal="pressed" from="CanvasLayer/Control/paper/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn1" to="." method="_on_gamblebtn_1_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn2" to="." method="_on_gamblebtn_2_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/paper/gamblebtn3" to="." method="_on_gamblebtn_3_pressed"]
-[connection signal="visibility_changed" from="CanvasLayer/Control/toilet" to="CanvasLayer/Control/toilet" method="_on_visibility_changed"]
-[connection signal="timeout" from="CanvasLayer/Control/Tip/Timer" to="CanvasLayer/Control/Tip" method="_on_timer_timeout"]
-[connection signal="gui_input" from="CanvasLayer/Control/Minimap/TextureRect" to="." method="_on_texture_rect_gui_input"]
-[connection signal="timeout" from="CanvasLayer/Control/stamina flash" to="." method="_on_stamina_flash_timeout"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/rewards btn" to="." method="_on_rewards_btn_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/Shop/ColorRect/MainPanel/credits btn" to="." method="_on_credits_btn_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/Shop/ColorRect/question panel/TextureRect/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="visibility_changed" from="UI/CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation" to="UI/CanvasLayer/Control/Shop/ColorRect/question panel/AnsweredAnimation" method="_on_visibility_changed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/buy book" to="." method="_on_buy_book_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/buy duck" to="." method="_on_buy_duck_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/Shop/ColorRect/rewards panel/buy baja" to="." method="_on_buy_baja_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/Shop/ColorRect/Button" to="." method="close_shop"]
+[connection signal="timeout" from="UI/CanvasLayer/Control/Shop/shop timer" to="." method="_on_shop_timer_timeout"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/paper/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/paper/gamblebtn1" to="." method="_on_gamblebtn_1_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/paper/gamblebtn2" to="." method="_on_gamblebtn_2_pressed"]
+[connection signal="pressed" from="UI/CanvasLayer/Control/paper/gamblebtn3" to="." method="_on_gamblebtn_3_pressed"]
+[connection signal="visibility_changed" from="UI/CanvasLayer/Control/toilet" to="UI/CanvasLayer/Control/toilet" method="_on_visibility_changed"]
+[connection signal="timeout" from="UI/CanvasLayer/Control/Tip/Timer" to="UI/CanvasLayer/Control/Tip" method="_on_timer_timeout"]
+[connection signal="gui_input" from="UI/CanvasLayer/Control/Minimap/TextureRect" to="." method="_on_texture_rect_gui_input"]
+[connection signal="timeout" from="UI/CanvasLayer/Control/stamina flash" to="." method="_on_stamina_flash_timeout"]
 [connection signal="pressed" from="MenuLayer/Menu/Main/ContinueBtn" to="MenuLayer/Menu" method="toggle_menu"]
 [connection signal="pressed" from="MenuLayer/Menu/Main/DisconnectBtn" to="MenuLayer/Menu" method="_on_disconnect_btn_pressed"]
 [connection signal="timeout" from="emotes/Timer" to="emotes" method="_on_timer_timeout"]

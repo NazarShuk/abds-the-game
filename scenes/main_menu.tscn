@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://ci3ghmr34gc8f"]
+[gd_scene load_steps=99 format=3 uid="uid://ci3ghmr34gc8f"]
 
 [ext_resource type="Script" uid="uid://bchcjyrm0kfys" path="res://scripts/main_menu.gd" id="1_g6hs6"]
 [ext_resource type="FontFile" uid="uid://bsqmnvt4wifwp" path="res://fonts/Ldfcomicsans-jj7l.ttf" id="1_r45wx"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://dppqsqvhn47mm" path="res://textures/pages-from-1262-m16_site-submittal_2017-06-08-page-0011.jpg" id="14_1uws6"]
 [ext_resource type="Script" uid="uid://bvcukq71xib0h" path="res://scripts/menu_camera.gd" id="16_5pajh"]
 [ext_resource type="AudioStream" uid="uid://c6npmx7cksqg6" path="res://sounds/ricoshet.mp3" id="17_j7ex8"]
+[ext_resource type="Texture2D" uid="uid://b2r7lba4oyrdr" path="res://textures/player_hand.png" id="18_a8gd2"]
+[ext_resource type="Script" uid="uid://dmw5gv4bwkfhn" path="res://scenes/main_menu_xr.gd" id="18_hstxw"]
 [ext_resource type="Texture2D" uid="uid://dvgm7yqf1y040" path="res://models/walls2.png" id="21_qjel6"]
 [ext_resource type="Material" uid="uid://8yareg4uwv67" path="res://textures/school.tres" id="36_l8nvw"]
 [ext_resource type="PackedScene" uid="uid://40h3xkvclt2r" path="res://models/door.tscn" id="37_vnbjd"]
@@ -316,6 +318,10 @@ volumetric_fog_density = 0.0
 volumetric_fog_emission = Color(0.277528, 0.277528, 0.277528, 1)
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_5m8kt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_a8gd2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a8gd2"]
 
 [node name="MainMenu" type="Node3D"]
 script = ExtResource("1_g6hs6")
@@ -947,6 +953,43 @@ camera_attributes = SubResource("CameraAttributesPractical_5m8kt")
 stream = ExtResource("17_j7ex8")
 bus = &"Dialogs"
 
+[node name="XROrigin3D" type="XROrigin3D" parent="." node_paths=PackedStringArray("main_menu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+script = ExtResource("18_hstxw")
+main_menu = NodePath("..")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Marker3D" type="Marker3D" parent="XROrigin3D/XRCamera3D"]
+gizmo_extents = 1.23
+
+[node name="XRController3D" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.666088, 0)
+tracker = &"right_hand"
+
+[node name="Sprite3D" type="Sprite3D" parent="XROrigin3D/XRController3D"]
+transform = Transform3D(-1.09278e-08, 1.09278e-08, -0.25, 0.25, -1.09278e-08, -1.09278e-08, -1.09278e-08, -0.25, -1.09278e-08, 0, 0, 0)
+pixel_size = 0.001
+texture = ExtResource("18_a8gd2")
+
+[node name="RayCast3D" type="RayCast3D" parent="XROrigin3D/XRController3D"]
+target_position = Vector3(0, 0, -5)
+
+[node name="start_game" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.517375, 7.24578)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="start_game"]
+mesh = SubResource("BoxMesh_a8gd2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="start_game"]
+shape = SubResource("BoxShape3D_a8gd2")
+
+[node name="Label3D" type="Label3D" parent="start_game"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.783721, 0)
+billboard = 1
+text = "Start the game"
+
 [connection signal="pressed" from="CanvasLayer/Control/Debug/host local" to="." method="_on_host_local_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Debug/connect local" to="." method="_on_connect_local_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Debug/connect local2" to="." method="_on_connect_local_2_pressed"]
@@ -957,3 +1000,4 @@ bus = &"Dialogs"
 [connection signal="pressed" from="CanvasLayer/Control/azzu" to="CanvasLayer/Control/azzu" method="_on_pressed"]
 [connection signal="lobby_clicked" from="CanvasLayer/Control/lobby_list" to="." method="_on_lobby_list_lobby_clicked"]
 [connection signal="pressed" from="CanvasLayer/Control/refresh" to="." method="_on_refresh_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/XRController3D" to="XROrigin3D" method="_on_xr_controller_3d_button_pressed"]
