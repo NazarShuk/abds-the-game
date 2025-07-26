@@ -80,7 +80,7 @@ func stop_emoting(video_path : String, audio_path: String, emote_path: String, b
 	emote_node.hide()
 	audio.stop()
 	video.stop()
-	visual_body.hide()
+	visual_body.show()
 
 
 func _exit_tree() -> void:
